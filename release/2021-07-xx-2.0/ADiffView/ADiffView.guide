@@ -55,13 +55,13 @@ If you use DOpus 5.x you can setup a button to run ADiffView from there:
 2) In DOpus create or edit a button, name it e.g. "Diff" and set this ARexx script to be executed on the button click:
 @{fg shine}DOpus5:ARexx/Compare.dopus5 {Qp}@{fg text}
 
-Now when clicking on "Diff" ADiffView will be started, immediately comparing the first two selected files. The files to compare can be selected in one lister or in two different listers.
+Now when clicking on "Diff" ADiffView will be started, immediately comparing the first two selected files. The files to compare can be selected from one lister or from two different listers.
 
 @endnode
 
 @node argsttypes "Arguments and tool types"
 
-@{b}Files as Shell arguments@{ub}
+@{b}Files as CLI arguments@{ub}
 The files to compare can be provided as command line arguments, simply calling 'ADiffViews file1 file2'
 
 @{b}Files as Workbench arguments@{ub}
@@ -70,18 +70,24 @@ The files also can be provided as Workbench arguments:
 - Hold Shift and left-click the other file
 - Hold Shift and double-click ADiffView
 
-@{b}Options as Shell arguments or as Workbench tool types@{ub}
+@{b}CLI arguments, Workbench tool types@{ub}
 
-Additionally some options can be provided allowing a little more control. They can be set when calling ADiffView from the command line or they can be provided as tool types of the ADiffView Workbench icon.
+For a better control of program behavior ADiffView supports some options which can be provided as CLI arguments or tool types of its Workbench icon.
+
+@{i}TABSIZE@{ui}
+The number of spaces each tabulator char is replaced with during rendering.
+
+@{i}NOAPPICON@{ui}
+No appicon is displayed when started from Workbench. (When started from CLI an AppIcon is never displayed.)
 
 @{i}DONOTASK@{ui}
-The file comparing starts immediately after program start. The window for selecting the files will not be shown. This only will work if the files to compare also are provided.
+The file comparison starts immediately after the program start. The window for selecting the files will not be shown. This only will work if the files to compare also are provided.
 
 @{i}NOLINENUMBERS@{ui}
-The line numbers are not displayed. Saves a little memory and time processing power.
+The line numbers are not displayed. Saves a little memory and processing time.
 
 @{i}PUBSCREEN@{ui}
-The program will be opened on the provided public screen. If this is not set ADiffView will open its own screen which will mostly be a clone of the Workbench screen but with the exception that it will have at least eight colors.
+The program will be opened on the provided public screen. If this is not set ADiffView will open its own screen which will mostly be a clone of the Workbench screen but with the exception that it will have eight colors.
 
 
 
