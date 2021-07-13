@@ -29,17 +29,17 @@ Matthias Hertel. See the file LICENSE-3RD-PARTY for more information.
 
 2.0 (xx.07.2021)
 - Rendering: Added tabulator support, defaults to 8 spaces for each tab.
-  Can be configured with the the (Tooltype / CLI) argument TABSIZE.
+  Can be configured with the the (ToolType / CLI) argument TABSIZE.
 - Navigation: Added a text search function.
 - Navigation: Added more commands to navigate between diff blocks. 
-- App behavior: The (Tooltype / CLI) argument ASKONWORKBENCH is obsolete 
+- App behavior: The (ToolType / CLI) argument ASKONWORKBENCH is obsolete 
   now. An AppIcon is used instead. When ADiffView is started from the 
   Workbench, the AppIcon is displayed. Double clicking on it brings 
   ADiffView to front. When files are dropped on the AppIcon, their 
   names are inserted into the open files window on an empty file name 
-  gadget. The AppIcon can be disabled with the Tooltype NOAPPICON.
+  gadget. The AppIcon can be disabled with the ToolType NOAPPICON.
 - App layout: Improved the progress window layout.
-- App behavior: Improved reading of the input files. Now each file is 
+- App behavior: Improved the reading of input files. Now each file is 
   read as a whole and no unnecessary string copying is done anymore.
 - General: Widely changed the internal application structure.
   Now using C++ exceptions and some STL - cleaner code and more coding 
@@ -53,7 +53,7 @@ Matthias Hertel. See the file LICENSE-3RD-PARTY for more information.
 - Fixed problem in text rendering where some lines were displayed 
   intermeshed.
 - The Line numbers of the source files are now displayed in diff result.
-- Added the (Tooltype / CLI) argument NOLINENUMBERS to turn of the
+- Added the (ToolType / CLI) argument NOLINENUMBERS to turn of the
   display of the line numbers.
 
 1.1 (22.12.2019)
