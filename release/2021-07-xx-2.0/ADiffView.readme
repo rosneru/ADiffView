@@ -6,6 +6,14 @@ Version:      2.0
 Architecture: m68k-amigaos >= 3.0, 68020+
 Distribution: Aminet
 
+
+ **********************************************************************
+ * IMPORTANT: Starting with version 2.0 ADiffView needs at least      *
+ *            an 68020 CPU! It will crash when started from an 68000  *
+ *            Amiga. For 68000 users the old v1.2 binary is provided. *
+ **********************************************************************
+
+
 =====
 ABOUT
 =====
@@ -17,25 +25,27 @@ The diff engine uses the Myers diff algorithm and an optimization by
 Matthias Hertel. See the file LICENSE-3RD-PARTY for more information.
 
 
-=======
-CHANGES
-=======
-2.0 (xx.xx.2021)
-- Replaced the Shell / Workbench argument ASKONWORKBENCH with an appicon
-  mechanism. Now, when ADiffView is started from WorkBench but is 
-  running on screen other than Workbench, an AppIcon is displayed. 
-  Double clicking on it brings ADiffView to front. The AppIcon allows 
-  drag'n'drop of files to insert their names into the open files window 
-  on an empty file place. The AppIcon can be disabled with the 
-  (tooltype / cli) option NOAPPICON.
-- Optimized reading of the input files. Now each file is read as a whole
-  and no unnecessary string copying is done anymore. Improved overall
-  speed.
-- Widely changed the internal application structure: Now using C++ 
-  exceptions and some STL - cleaner code and more coding fun for me.
-  Comes at the cost of a bigger binary (70k => 190k even before new
-  features were implemented). The use of exceptions also drops MC68000
-  compatibility, so at least a 68020 CPU is needed now.
+======= CHANGES ======= 
+
+2.0 (xx.07.2021)
+- Rendering: Added tabulator support, defaults to 8 spaces for each tab.
+  Can be configured with the the (Tooltype / CLI) argument TABSIZE.
+- Navigation: Added a text search function.
+- Navigation: Added more commands to navigate between diff blocks. 
+- App behavior: The (Tooltype / CLI) argument ASKONWORKBENCH is obsolete 
+  now. An AppIcon is used instead. When ADiffView is started from the 
+  Workbench, the AppIcon is displayed. Double clicking on it brings 
+  ADiffView to front. When files are dropped on the AppIcon, their 
+  names are inserted into the open files window on an empty file name 
+  gadget. The AppIcon can be disabled with the Tooltype NOAPPICON.
+- App layout: Improved the progress window layout.
+- App behavior: Improved reading of the input files. Now each file is 
+  read as a whole and no unnecessary string copying is done anymore.
+- General: Widely changed the internal application structure.
+  Now using C++ exceptions and some STL - cleaner code and more coding 
+  fun for me. Comes at the cost of a bigger binary (70k => 190k even 
+  before new features were implemented). The use of exceptions also 
+  drops MC68000 compatibility, so at least a 68020 CPU is needed now.
 
 1.2 (01.01.2020)
 - Fixed a bug introduced in version 1.1 which produced Enforcer hits in 
@@ -43,8 +53,8 @@ CHANGES
 - Fixed problem in text rendering where some lines were displayed 
   intermeshed.
 - The Line numbers of the source files are now displayed in diff result.
-- Added the (tooltype / cli) option NOLINENUMBERS to disable displaying
-  the line numbers.
+- Added the (Tooltype / CLI) argument NOLINENUMBERS to turn of the
+  display of the line numbers.
 
 1.1 (22.12.2019)
 - Now using the Myers diff algorithm for better results.

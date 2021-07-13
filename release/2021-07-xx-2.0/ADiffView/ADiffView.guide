@@ -3,13 +3,14 @@
 @wordwrap
 @node Main "ADiffView - Introduction"
 
-@{fg shine}ADiffView 1.2 released on 01.01.2020.@{fg text}
+@{fg shine}ADiffView 2.0 released on 01.07.2021.@{fg text}
 
 @{b}About@{ub}
 
 ADiffView compares two ASCII text files and displays the differences graphically inside a window.
 
-Minimum system requirement is an Amiga with 1.0 MB RAM and AmigaOS3.0.
+Minimum system requirement is an Amiga with at least a 68020 CPU, 
+2.0 MB RAM and AmigaOS3.0.
 
 
 @{b}Origin of the diff algorithm@{ub}
