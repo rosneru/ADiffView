@@ -35,13 +35,13 @@ CHANGES
   Can be configured with the the (ToolType / CLI) argument TABSIZE.
 - Navigation: Added a text search function.
 - Navigation: Added more commands to navigate between diff blocks. 
+- App layout: Improved the progress window layout.
 - App behavior: The (ToolType / CLI) argument ASKONWORKBENCH is obsolete 
   now. An AppIcon is used instead. When ADiffView is started from the 
   Workbench, the AppIcon is displayed. Double clicking on it brings 
   ADiffView to front. When files are dropped on the AppIcon, their 
   names are inserted into the open files window on an empty file name 
   gadget. The AppIcon can be disabled with the ToolType NOAPPICON.
-- App layout: Improved the progress window layout.
 - App behavior: Improved the reading of input files. Now each file is 
   read as a whole and no unnecessary string copying is done anymore.
 - General: Widely changed the internal application structure.
