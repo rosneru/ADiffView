@@ -485,7 +485,7 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
 
   ULONG currentTextColumn;
   ULONG currentDisplayColumn;
-  long maxRemainingCharsToRender;
+  ULONG maxRemainingCharsToRender;
   if (numCharLimit < 0)
   {
     // Only render 'numCharLimit' chars  at the right of the lines
@@ -595,14 +595,13 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
       /*
        * After-rendering checks
        */
-
       if (hasMarkedNormalBlockLimitReached)
       {
         maxRemainingCharsToRender -= nextNumCharsToRender;
         currentDisplayColumn += nextNumCharsToRender;
         resultingTextColumn += nextNumCharsToRender;
 
-        // Block finished
+        // Block {normal text|marked text} finished
         break;
       }
 
