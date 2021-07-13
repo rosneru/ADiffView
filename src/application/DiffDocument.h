@@ -30,7 +30,8 @@ public:
                bool& isCancelRequested,
                StopWatch& stopWatch,
                ProgressReporter& progress,
-               bool lineNumbersEnabled);
+               bool lineNumbersEnabled,
+               unsigned long tabSize);
 
   virtual ~DiffDocument();
 

@@ -14,6 +14,17 @@
 #include <vector>
 
 
+/**
+ * A text area which can display DiffOutputFiles. These files are the
+ * result of a text compare operation and contain informations about
+ * inserted, deleted and changed lines. This text area can display these
+ * documents with or without line numbers. The background color of the
+ * rendered text lines is set to reflect normal, unchanged text or one
+ * the states mentioned above.
+ * 
+ * @author Uwe Rosner
+ * @date 12/08/2020
+ */
 class DiffWindowTextArea : public Rect
 {
 public:
@@ -21,7 +32,8 @@ public:
                      DiffWindowRastports*& pRPorts,
                      TextFont* pTextFont,
                      bool lineNumbersEnabled,
-                     ULONG maxNumChars);
+                     ULONG maxNumChars,
+                     ULONG tabSize);
 
   virtual ~DiffWindowTextArea();
 
@@ -125,6 +137,10 @@ private:
   bool m_AreLineNumbersEnabled;
   ULONG m_LongestLineChars; ///> Number of chars of the longest line of DiffFile.
 
+  TextPositionInfo m_PositionInfo;  ///> Destination to calculate current column informations
+  ULONG m_TabSize;         ///> Number of spaces of each tabulator
+  char* m_pLineOfSpaces;    ///> A text containing m_AreaMaxChars spaces, initialized in setSize()
+
   UWORD m_FontWidth_pix;    ///> Width of the rastport text font
   UWORD m_FontHeight_pix;   ///> Height of the rastport text font
   UWORD m_FontBaseline_pix; ///> Baseline (from top) of the rastport text font
@@ -152,9 +168,9 @@ private:
    * to the right of the display area.
    */
   void renderLine(ULONG lineId, 
-                     bool doDisplayLineNumbers, 
-                     long lineTop, 
-                     long numCharLimit = 0);
+                  bool doDisplayLineNumbers, 
+                  long lineTop, 
+                  long numCharLimit = 0);
 
   /**
    * Calculate how many chars of given DiffLine must be print 
@@ -164,6 +180,7 @@ private:
   ULONG calcNumPrintChars(const DiffLine* pDiffLine, 
                           int count,
                           int startIndex);
+
 
   /**
    * Returns the appropriate rastport for a DiffLine with given

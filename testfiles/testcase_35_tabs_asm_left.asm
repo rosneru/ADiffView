@@ -1,12 +1,13 @@
+	XDEF	_SysBase
+	XDEF	_GfxBase
+	XDEF	_DOSBase
+
 	include "dos/dos.i"
 	include "exec/memory.i"
 	include "graphics/GfxBase.i"
 	include "hardware/custom.i"
 	include "hardware/cia.i"
 
-	XDEF	_SysBase
-	XDEF	_GfxBase
-	XDEF	_DOSBase
 
 	;
 	; Stating the used LVOs

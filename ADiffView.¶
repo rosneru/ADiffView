@@ -86,7 +86,7 @@ Linker
 Run
 30 "" "" "" 0
 ""
-Shared:dev/projects_2018_2020/ADiffView/testfiles/testcase_24_1500_numbers_left.txt Shared:dev/projects_2018_2020/ADiffView/testfiles/testcase_24_1500_numbers_right.txt
+Shared:dev/projects_2018_2020/ADiffView/testfiles/testcase_35_tabs_asm_left.asm Shared:dev/projects_2018_2020/ADiffView/testfiles/testcase_35_tabs_asm_right.asm
 1 "CON://400/180/Storm Console/AUTO/WAIT/SCREEN StormScreen" "RAM:Output" "RAM:Input"
 0 0
 0 0 0 "" ""
@@ -379,6 +379,20 @@ File
 "src/worker/WorkerStartupMsg.h"
 Storm Shell Project (Dependencies)
 "build-stromc/CmdNavigateBase.o" "build-stromc/CmdNavigateBase.debug"
+""
+1 1
+File
+1 "src/commands/CmdNavigateFirstDiff.cpp"
+"src/commands/CmdNavigateFirstDiff.cpp"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdNavigateFirstDiff.o" "build-stromc/CmdNavigateFirstDiff.debug"
+""
+1 1
+File
+1 "src/commands/CmdNavigateLastDiff.cpp"
+"src/commands/CmdNavigateLastDiff.cpp"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdNavigateLastDiff.o" "build-stromc/CmdNavigateLastDiff.debug"
 ""
 1 1
 File
@@ -964,6 +978,20 @@ Storm Shell Project (Dependencies)
 File
 2 "src/commands/CmdNavigateBase.h"
 "src/commands/CmdNavigateBase.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdNavigateFirstDiff.h"
+"src/commands/CmdNavigateFirstDiff.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdNavigateLastDiff.h"
+"src/commands/CmdNavigateLastDiff.h"
 Storm Shell Project (Dependencies)
 "" ""
 ""

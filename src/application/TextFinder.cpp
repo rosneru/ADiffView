@@ -11,9 +11,11 @@
 
 
 TextFinder::TextFinder(const DiffWorker& diffWorker,
-                       DiffWindow& diffWindow)
+                       DiffWindow& diffWindow,
+                       unsigned long tabSize)
   : m_DiffWorker(diffWorker),
     m_DiffWindow(diffWindow),
+    m_TabSize(tabSize),
     m_pDiffDocument(NULL),
     m_pSearchEngine(NULL),
     m_pNewSearchEngine(NULL),
@@ -146,41 +148,22 @@ bool TextFinder::displayNextResult()
   // search result of the old search engine
   applyNewSearchEngine();
 
-  /**
-   * Get the next search result from current document top line id
-   */
-  DiffFileSearchResult* pResult = NULL;
 
-  if(m_pFormerResult == NULL)
+  DiffFileSearchResult* pResult = NULL;
+  if(m_pFormerResult == NULL || 
+     !pLeftTextArea->isLineVisible(m_pFormerResult->getLineId()))
   {
+    // No former search result exists or it is currently not displayed
+    // in window. So get the next search result from current window top
+    // line id.
     pResult = m_pSearchEngine->getNextResult(pLeftTextArea->getY());
   }
-  else if(pLeftTextArea->isLineVisible(m_pFormerResult->getLineId()))
+  else
   {
     // The former result is currently displayed. So getting the 
     // next result after that former result, not from the window 
     // top line.
     pResult = m_pSearchEngine->getNextResult();
-  }
-  else
-  {
-    pResult = m_pSearchEngine->getNextResult(pLeftTextArea->getY());
-
-    if((pResult != NULL) &&
-      (pResult->getLineId() == m_pFormerResult->getLineId()))
-    {
-      // New result is on the same line as former result. If Necessary,
-      // repeat getNextResult until new result is after former result on
-      // this line.
-      while(!m_pFormerResult->isBefore(pResult))
-      {
-        pResult = m_pSearchEngine->getNextResult();
-        if(pResult == NULL)
-        {
-          break;
-        }
-      }
-    }
   }
 
   if(pResult == NULL)
@@ -220,42 +203,23 @@ bool TextFinder::displayPrevResult()
   // search result of the old search engine
   applyNewSearchEngine();
 
-  /**
-   * Get the prev search result from current document top line id
-   */
-  DiffFileSearchResult* pResult = NULL;
 
-  if(m_pFormerResult == NULL)
+  DiffFileSearchResult* pResult = NULL;
+  if(m_pFormerResult == NULL || 
+     !pLeftTextArea->isLineVisible(m_pFormerResult->getLineId()))
   {
+    // No former search result exists or it is currently not displayed
+    // in window. So get the previous search result from current window
+    // bottom line id.
     pResult = m_pSearchEngine->getPrevResult(pLeftTextArea->getY() 
                                              + pLeftTextArea->getMaxVisibleLines());
   }
-  else if(pLeftTextArea->isLineVisible(m_pFormerResult->getLineId()))
-  {
-    // The former result is currently displayed. So getting the 
-    // next result after that former result, not from the window 
-    // top line.
-    pResult = m_pSearchEngine->getPrevResult();
-  }
   else
   {
-    pResult = m_pSearchEngine->getPrevResult(pLeftTextArea->getY());
-
-    if((pResult != NULL) &&
-      (pResult->getLineId() == m_pFormerResult->getLineId()))
-    {
-      // New result is on the same line as former result. If Necessary,
-      // repeat getNextResult until new result is after former result on
-      // this line.
-      while(!pResult->isBefore(m_pFormerResult))
-      {
-        pResult = m_pSearchEngine->getPrevResult();
-        if(pResult == NULL)
-        {
-          break;
-        }
-      }
-    }
+    // The former result is currently displayed. So getting the 
+    // previous result above that former result, not from the window 
+    // top line.
+    pResult = m_pSearchEngine->getPrevResult();
   }
 
   if(pResult == NULL)
@@ -386,10 +350,42 @@ void TextFinder::markNewResult(DiffFileSearchResult* pResult)
 
 void TextFinder::scrollToNewResult(DiffFileSearchResult* pResult)
 {
-  size_t searchStringLength = m_pSearchEngine->getSearchString().length();
+  if((pResult == NULL) || (m_pDiffDocument == NULL) || (m_pSearchEngine == NULL))
+  {
+    return;
+  }
+
+  // Get the DiffLine which contains the result  
+  const DiffLine* pResultLine = NULL;
+  if(pResult->getLocation() == DiffFileSearchResult::LeftFile)
+  {
+    pResultLine = m_pDiffDocument->getLeftDiffFile()[pResult->getLineId()];
+  }
+  else if(pResult->getLocation() == DiffFileSearchResult::RightFile)
+  {
+    pResultLine = m_pDiffDocument->getRightDiffFile()[pResult->getLineId()];
+  }
+  else
+  {
+    return;
+  }
+
+  if(pResultLine == NULL)
+  {
+    return;
+  }
+
+  // Get the postition (column) of the search string in original text line
+  size_t srcTextColumn = pResult->getCharId();
+
+  // Get the position of search string in rendered line (with TABulators
+  // calculated in). TODO: Parametrize TAB_WIDTH
+  size_t resultingTextColumn = pResultLine->getRenderColumn(srcTextColumn,
+                                                            m_TabSize);
 
   // If necessary scroll the window to have the result visible
-  bool hasScrolled = m_DiffWindow.scrollToPage(pResult->getCharId(),
+  size_t searchStringLength = m_pSearchEngine->getSearchString().length();
+  bool hasScrolled = m_DiffWindow.scrollToPage(resultingTextColumn,
                                                pResult->getLineId(),
                                                searchStringLength,
                                                1);
@@ -408,8 +404,8 @@ void TextFinder::scrollToNewResult(DiffFileSearchResult* pResult)
 
 
 DiffFileSearchEngine* TextFinder::createNewSearchEngine(const char* pSearchText,
-                                                       bool isCaseIgnored,
-                                                       SearchLocation location)
+                                                        bool isCaseIgnored,
+                                                        SearchLocation location)
 {
   DiffFileSearchEngine* pNewSearchEngine = NULL;
 

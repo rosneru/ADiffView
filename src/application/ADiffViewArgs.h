@@ -80,6 +80,12 @@ public:
    */
   bool ShowLineNumbers() const;
 
+  /**
+   * Returns the tab size specified by startup argument or the default
+   * value.
+   */
+  long getTabSize() const;
+
 private:
   int m_ArgC;
   char** m_pArgV;
@@ -91,6 +97,7 @@ private:
   bool m_bDontAsk;
   bool m_bNoAppIcon;
   bool m_bShowLineNumbers;
+  long m_TabSize;
 
   void readWorkbenchArgs();
   void readCommandLineArgs();

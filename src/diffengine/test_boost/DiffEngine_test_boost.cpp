@@ -1270,7 +1270,7 @@ BOOST_AUTO_TEST_CASE( search_algorithm_extended_1 )
 
 
     size_t numDifferences = diffEngine.getNumDifferences();
-    BOOST_CHECK_EQUAL(numDifferences, 2);
+    BOOST_CHECK_EQUAL(numDifferences, 4);
 
     DiffFileSearchEngine searchEngine(diffA, 
                                       diffB, 
@@ -1413,7 +1413,7 @@ BOOST_AUTO_TEST_CASE( search_algorithm_case_ignored )
 
 
     size_t numDifferences = diffEngine.getNumDifferences();
-    BOOST_CHECK_EQUAL(numDifferences, 2);
+    BOOST_CHECK_EQUAL(numDifferences, 4);
 
     DiffFileSearchEngine searchEngine(diffA, 
                                       diffB, 
@@ -1504,7 +1504,7 @@ BOOST_AUTO_TEST_CASE( search_algorithm_get_prev_result )
 
 
     size_t numDifferences = diffEngine.getNumDifferences();
-    BOOST_CHECK_EQUAL(numDifferences, 2);
+    BOOST_CHECK_EQUAL(numDifferences, 4);
 
     DiffFileSearchEngine searchEngine(diffA, 
                                       diffB, 
@@ -1603,7 +1603,7 @@ BOOST_AUTO_TEST_CASE( search_algorithm_get_next_and_prev_from_current_position )
 
 
     size_t numDifferences = diffEngine.getNumDifferences();
-    BOOST_CHECK_EQUAL(numDifferences, 2);
+    BOOST_CHECK_EQUAL(numDifferences, 4);
 
     DiffFileSearchEngine searchEngine(diffA, 
                                       diffB, 
@@ -1679,4 +1679,249 @@ BOOST_AUTO_TEST_CASE( search_algorithm_get_next_and_prev_from_current_position )
     // To let the test fail
     BOOST_CHECK_EQUAL(1, 2);
   }
+}
+
+BOOST_AUTO_TEST_CASE( test_DiffLine_getTextPositionInfo_1 )
+{
+  DiffLine line("\tThis\tis\ta\ttab\ttest\tyeah", 
+                DiffLine::Normal,
+                "001");
+
+  BOOST_CHECK_EQUAL(line.getNumChars(), 24);
+
+  TextPositionInfo nominal[] =
+  {
+    // {numRemainingSpaces, numRemainingChars, srcTextColumn}
+    { 8, 0, 0 },
+    { 7, 0, 0 },
+    { 6, 0, 0 },
+    { 5, 0, 0 },
+    { 4, 0, 0 },
+    { 3, 0, 0 },
+    { 2, 0, 0 },
+    { 1, 0, 0 },
+    { 0, 4, 1 },
+    { 0, 3, 2 },
+    { 0, 2, 3 },
+    { 0, 1, 4 },
+    { 4, 0, 5 },
+    { 3, 0, 5 },
+    { 2, 0, 5 },
+    { 1, 0, 5 },
+    { 0, 2, 6 },
+    { 0, 1, 7 },
+    { 6, 0, 8 },
+    { 5, 0, 8 },
+    { 4, 0, 8 },
+    { 3, 0, 8 },
+    { 2, 0, 8 },
+    { 1, 0, 8 },
+    { 0, 1, 9 },
+    { 7, 0, 10 }, 
+    { 6, 0, 10 }, 
+    { 5, 0, 10 }, 
+    { 4, 0, 10 }, 
+    { 3, 0, 10 }, 
+    { 2, 0, 10 }, 
+    { 1, 0, 10 }, 
+    { 0, 3, 11 }, 
+    { 0, 2, 12 }, 
+    { 0, 1, 13 }, 
+    { 5, 0, 14 }, 
+    { 4, 0, 14 }, 
+    { 3, 0, 14 }, 
+    { 2, 0, 14 }, 
+    { 1, 0, 14 }, 
+    { 0, 4, 15 }, 
+    { 0, 3, 16 }, 
+    { 0, 2, 17 }, 
+    { 0, 1, 18 }, 
+    { 4, 0, 19 }, 
+    { 3, 0, 19 }, 
+    { 2, 0, 19 }, 
+    { 1, 0, 19 }, 
+    { 0, 4, 20 }, 
+    { 0, 3, 21 }, 
+    { 0, 2, 22 }, 
+    { 0, 1, 23 }, 
+    { 0, 0, 24 },
+  };
+
+  size_t arraySize = sizeof(nominal) / sizeof(nominal[0]);
+  for(size_t i = 0; i < arraySize; i++)
+  {
+    TextPositionInfo actual;
+    line.getTextPositionInfo(&actual, i, 8);
+    BOOST_CHECK_EQUAL(actual.numRemainingSpaces, nominal[i].numRemainingSpaces);
+    BOOST_CHECK_EQUAL(actual.numRemainingChars, nominal[i].numRemainingChars);
+    BOOST_CHECK_EQUAL(actual.srcTextColumn, nominal[i].srcTextColumn);
+  }
+
+}
+
+BOOST_AUTO_TEST_CASE( test_DiffLine_getTextPositionInfo_2 )
+{
+  DiffLine line("\tXDEF\t_SysBase", 
+                DiffLine::Normal,
+                "001");
+
+  BOOST_CHECK_EQUAL(line.getNumChars(), 14);
+
+  TextPositionInfo nominal[] =
+  {
+    // {numRemainingSpaces, numRemainingChars, srcTextColumn}
+    { 8, 0, 0  },
+    { 7, 0, 0  },
+    { 6, 0, 0  },
+    { 5, 0, 0  },
+    { 4, 0, 0  },
+    { 3, 0, 0  },
+    { 2, 0, 0  },
+    { 1, 0, 0  },
+    { 0, 4, 1  },
+    { 0, 3, 2  },
+    { 0, 2, 3  },
+    { 0, 1, 4  },
+    { 4, 0, 5  },
+    { 3, 0, 5  },
+    { 2, 0, 5  },
+    { 1, 0, 5  },
+    { 0, 8, 6  },
+    { 0, 7, 7  },
+    { 0, 6, 8  },
+    { 0, 5, 9  },
+    { 0, 4, 10 },
+    { 0, 3, 11 },
+    { 0, 2, 12 },
+    { 0, 1, 13 },
+    { 0, 0, 14 },
+  };
+
+  size_t arraySize = sizeof(nominal) / sizeof(nominal[0]);
+  for(size_t i = 0; i < arraySize; i++)
+  {
+    TextPositionInfo actual;
+    line.getTextPositionInfo(&actual, i, 8);
+    BOOST_CHECK_EQUAL(actual.numRemainingSpaces, nominal[i].numRemainingSpaces);
+    BOOST_CHECK_EQUAL(actual.numRemainingChars, nominal[i].numRemainingChars);
+    BOOST_CHECK_EQUAL(actual.srcTextColumn, nominal[i].srcTextColumn);
+  }
+
+}
+
+
+BOOST_AUTO_TEST_CASE( test_DiffLine_getTextPositionInfo_3 )
+{
+  DiffLine line("\t\tdc.w\tdmacon,$0020\t;Disable sprites", 
+                DiffLine::Normal,
+                "001");
+
+  BOOST_CHECK_EQUAL(line.getNumChars(), 36);
+
+  TextPositionInfo nominal[] =
+  {
+    // {numRemainingSpaces, numRemainingChars, srcTextColumn}
+    { 8,  0,  0 },
+    { 7,  0,  0 },
+    { 6,  0,  0 },
+    { 5,  0,  0 },
+    { 4,  0,  0 },
+    { 3,  0,  0 },
+    { 2,  0,  0 },
+    { 1,  0,  0 },
+    { 8,  0,  1 },
+    { 7,  0,  1 },
+    { 6,  0,  1 },
+    { 5,  0,  1 },
+    { 4,  0,  1 },
+    { 3,  0,  1 },
+    { 2,  0,  1 },
+    { 1,  0,  1 },
+    { 0,  4,  2 },
+    { 0,  3,  3 },
+    { 0,  2,  4 },
+    { 0,  1,  5 },
+    { 4,  0,  6 },
+    { 3,  0,  6 },
+    { 2,  0,  6 },
+    { 1,  0,  6 },
+    { 0, 12,  7 },
+    { 0, 11,  8 },
+    { 0, 10,  9 },
+    { 0,  9, 10 },
+    { 0,  8, 11 },
+    { 0,  7, 12 },
+    { 0,  6, 13 },
+    { 0,  5, 14 },
+    { 0,  4, 15 },
+    { 0,  3, 16 },
+    { 0,  2, 17 },
+    { 0,  1, 18 },
+    { 4,  0, 19 },
+    { 3,  0, 19 },
+    { 2,  0, 19 },
+    { 1,  0, 19 },
+    { 0, 16, 20 },
+    { 0, 15, 21 },
+    { 0, 14, 22 },
+    { 0, 13, 23 },
+    { 0, 12, 24 },
+    { 0, 11, 25 },
+    { 0, 10, 26 },
+    { 0,  9, 27 },
+    { 0,  8, 28 },
+    { 0,  7, 29 },
+    { 0,  6, 30 },
+    { 0,  5, 31 },
+    { 0,  4, 32 },
+    { 0,  3, 33 },
+    { 0,  2, 34 },
+    { 0,  1, 35 },
+    { 0,  0, 36 },
+  };
+
+  size_t arraySize = sizeof(nominal) / sizeof(nominal[0]);
+  for(size_t i = 0; i < arraySize; i++)
+  {
+    TextPositionInfo actual;
+    line.getTextPositionInfo(&actual, i, 8);
+    BOOST_CHECK_EQUAL(actual.numRemainingSpaces, nominal[i].numRemainingSpaces);
+    BOOST_CHECK_EQUAL(actual.numRemainingChars, nominal[i].numRemainingChars);
+    BOOST_CHECK_EQUAL(actual.srcTextColumn, nominal[i].srcTextColumn);
+  }
+}
+
+
+BOOST_AUTO_TEST_CASE( test_DiffLine_getRenderColumn )
+{
+  const int TAB_WIDTH = 8;
+  DiffLine line("\tThis\tis\ta\ttab\ttest\tyeah", 
+                DiffLine::Normal,
+                "001");
+
+  BOOST_CHECK_EQUAL(line.getNumChars(), 24);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(0, TAB_WIDTH), 0);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(1, TAB_WIDTH), 8);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(2, TAB_WIDTH), 9);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(3, TAB_WIDTH), 10);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(4, TAB_WIDTH), 11);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(5, TAB_WIDTH), 12);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(6, TAB_WIDTH), 16); // position of 'is' on TAB_WIDTH = 8
+  BOOST_CHECK_EQUAL(line.getRenderColumn(7, TAB_WIDTH), 17);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(8, TAB_WIDTH), 18);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(9, TAB_WIDTH), 24);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(10, TAB_WIDTH), 25);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(11, TAB_WIDTH), 32); // position of 'tab' on TAB_WIDTH = 8
+  BOOST_CHECK_EQUAL(line.getRenderColumn(12, TAB_WIDTH), 33);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(13, TAB_WIDTH), 34);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(14, TAB_WIDTH), 35);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(15, TAB_WIDTH), 40);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(16, TAB_WIDTH), 41);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(17, TAB_WIDTH), 42);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(18, TAB_WIDTH), 43);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(19, TAB_WIDTH), 44);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(20, TAB_WIDTH), 48);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(21, TAB_WIDTH), 49);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(22, TAB_WIDTH), 50);
+  BOOST_CHECK_EQUAL(line.getRenderColumn(23, TAB_WIDTH), 51);
 }

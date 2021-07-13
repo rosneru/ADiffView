@@ -135,7 +135,8 @@ DiffFileSearchResult* DiffFileSearchEngine::getNextResult(size_t startLineId)
     if(m_ResultsIterator == m_Results.end())
     {
       // Avoid overflow: back to last valid item
-      m_ResultsIterator = m_Results.begin();
+      m_ResultsIterator--;
+      return NULL;
     }
   }
 

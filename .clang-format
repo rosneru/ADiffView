@@ -29,7 +29,7 @@ IndentCaseLabels: false
 IndentWidth: 2
 IndentWrappedFunctionNames: false
 IndentFunctionDeclarationAfterType: false
-MaxEmptyLinesToKeep: 1
+MaxEmptyLinesToKeep: 2
 KeepEmptyLinesAtTheStartOfBlocks: false
 NamespaceIndentation: None
 PenaltyBreakBeforeFirstCallParameter: 1

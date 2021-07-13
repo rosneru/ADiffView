@@ -20,7 +20,8 @@ class TextFinder
 {
 public:
   TextFinder(const DiffWorker& diffWorker,
-             DiffWindow& diffWindow);
+             DiffWindow& diffWindow,
+             unsigned long tabSize);
 
   virtual ~TextFinder();
 
@@ -41,6 +42,7 @@ public:
 private:
   const DiffWorker& m_DiffWorker;
   DiffWindow& m_DiffWindow;
+  unsigned long m_TabSize;
 
   const DiffDocument* m_pDiffDocument;
   DiffFileSearchEngine* m_pSearchEngine;
