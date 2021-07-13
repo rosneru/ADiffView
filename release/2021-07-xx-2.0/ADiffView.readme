@@ -7,17 +7,16 @@ Architecture: m68k-amigaos >= 3.0, 68020+
 Distribution: Aminet
 
 
- **********************************************************************
- * IMPORTANT: Starting with version 2.0 ADiffView needs at least      *
- *            an 68020 CPU! It will crash when started from an 68000  *
- *            Amiga. For 68000 users the old v1.2 binary is provided. *
- **********************************************************************
+IMPORTANT: Dropped 68000 compatibility
+====================================== 
+Starting with version 2.0 ADiffView needs at least a 68020 CPU.
+It will crash when started from a 68000 Amiga. For 68000 users the 
+v1.2 binary from January 2020 is provided.
 
 
-=====
+
 ABOUT
 =====
-
 ADiffView compares two ASCII text files and displays the differences 
 in a window.
 
@@ -25,8 +24,9 @@ The diff engine uses the Myers diff algorithm and an optimization by
 Matthias Hertel. See the file LICENSE-3RD-PARTY for more information.
 
 
-======= CHANGES ======= 
 
+CHANGES
+======= 
 2.0 (xx.07.2021)
 - Rendering: Added tabulator support, defaults to 8 spaces for each tab.
   Can be configured with the the (ToolType / CLI) argument TABSIZE.
@@ -81,10 +81,9 @@ Matthias Hertel. See the file LICENSE-3RD-PARTY for more information.
 - Initial version
 
 
-===========
+
 DEVELOPMENT
 ===========
-
 Development was done on an Amiga with StormC4 in C++/gcc mode and also
 in Linux with Visual Studio Code. Unit tests for the diff engine were 
 done in Linux with QtCreator and the BOOST framework.
