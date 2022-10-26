@@ -1,0 +1,97 @@
+Short:        graphical ASCII file compare/diff viewer
+Author:       Uwe Rosner
+Uploader:     u.rosner@ymail.com (Uwe Rosner)
+Type:         util/misc
+Version:      2.0
+Architecture: m68k-amigaos >= 3.0, 68020+
+Distribution: Aminet
+
+
+====================================== 
+IMPORTANT: Dropped 68000 compatibility
+====================================== 
+Starting with version 2.0 ADiffView needs at least a 68020 CPU.
+It will crash when started from a 68000 Amiga. For 68000 users the 
+v1.2 binary from January 2020 is provided.
+
+
+=====
+ABOUT
+=====
+ADiffView compares two ASCII text files and displays the differences 
+in a window.
+
+The diff engine uses a custom implementation of the Myers diff
+algorithm, optimized for non-recursive processing, as described on
+Matthias Hertel's website www.mathertel.de. See the file
+LICENSE-3RD-PARTY for more information.
+
+
+======= 
+CHANGES
+======= 
+2.0 (27.07.2021)
+- Added new color icon in AmigaOS3.2 style - many thanks to Mason!
+- Rendering: Added tabulator support, defaults to 8 spaces for each tab.
+  Can be configured with the (ToolType / CLI) argument TABSIZE.
+- Navigation: Added a text search function.
+- Navigation: Added more commands to navigate between diff blocks. 
+- Layout: Improved the progress window layout.
+- Behavior: Removed the (ToolType / CLI) argument ASKONWORKBENCH. 
+  An AppIcon is used instead but only available when ADiffView is 
+  started from the Workbench. Double clicking on the AppIcon brings 
+  ADiffView to front. When files are dropped on the AppIcon, their 
+  names are inserted into the open files window on an empty file name 
+  gadget. The AppIcon can be disabled with the ToolType NOAPPICON.
+- Performance: Improved the reading of input files. Now each file is 
+  read as a whole and no unnecessary string copying is done anymore.
+- Development: Widely changed the internal application structure.
+  Now using C++ exceptions and some basic STL - cleaner code and more 
+  coding fun for me. But this comes at a cost. The binary size increased
+  from about 70k to 190k even before new features were implemented. 
+  The use of exceptions also drops MC68000 compatibility, so at least 
+  a 68020 CPU is needed now.
+
+1.2 (01.01.2020)
+- Fixed a bug introduced in version 1.1 which produced Enforcer hits in 
+  progress window.
+- Fixed problem in text rendering where some lines were displayed 
+  intermeshed.
+- The Line numbers of the source files are now displayed in diff result.
+- Added the (ToolType / CLI) argument NOLINENUMBERS to turn of the
+  display of the line numbers.
+
+1.1 (22.12.2019)
+- Now using the Myers diff algorithm for better results.
+- File select window: When a file was selected with the file request, 
+  the request for the other file opens in the same directory.
+- File select window: Keyboard shortcuts are now working.
+- File select window: Added a feature to swap left and right file.
+- File select window: Added support for Drag'n drop. If the program 
+  runs on Workbench you can drag the files to compare into that window.
+- Diff result window: Added a feature to navigate to next / previous 
+  difference.
+- Now OS3.0+ memory pools are used. Speeds up the freeing of memory. 
+  There's a noticeable speed improvement on exit after big files have 
+  been compared.
+
+1.0.1 (13.03.2019)
+- Fixed a bug which caused a crash when comparing long files
+- Fixed a minor problem in the about window where the title was always 
+  inherited by the parent window.
+- Added some more info into the manual chapter about ADiffView and 
+  Directory Opus
+
+1.0.0 (21.02.2019)
+- Initial version
+
+
+===========
+DEVELOPMENT
+===========
+Development was done on an Amiga with StormC4 in C++/gcc mode and also
+in Linux with Visual Studio Code. Unit tests for the diff engine were 
+done in Linux with QtCreator and the BOOST framework.
+
+Starting with version 1.1 the build of the release binary is done with
+gcc 6.5 on Linux using this toolchain: https://github.com/bebbo/amiga-gcc

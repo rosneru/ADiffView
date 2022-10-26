@@ -1,0 +1,9 @@
+So, how can can the search function be verified?
+
+Maybe this little test test testfile is the solution.
+
+Some lines only apply in the left side
+
+And some in the right.
+
+right RIGHT Right

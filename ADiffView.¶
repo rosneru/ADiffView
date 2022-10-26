@@ -1,0 +1,1405 @@
+Storm Shell Project (0018)
+Settings (Start)
+C/C++ Environment
+"StormC:include"
+0
+"StormC:STLPort"
+0
+"src/application"
+0
+"src/amigautils"
+0
+"src/commands"
+0
+"src/diffengine"
+0
+"src/menus"
+0
+"src/model"
+0
+"src/screen"
+0
+"src/textsearch"
+0
+"src/textselect"
+0
+"src/windows"
+0
+"src/worker"
+0
+Includepath (End)
+0 "" 80
+1 "build-stromc"
+1 0 "makelog.txt"
+""
+0
+0 0
+0
+0 0
+C/C++ Preprozessor
+0 "NDEBUG" ""
+0
+Defines (End)
+1 1 1
+0 0
+C/C++ Options
+1 1 1 2 1 0 0 0 1 0 0 0 0 0 0
+0 0 0
+0
+0 1 0
+C/C++ Optimizer
+9
+C/C++ Warnings
+1 1 1 1 1 1 0 1
+0 0
+GCC Options (1)
+0 "NDEBUG" ""
+0
+Defines (End)
+1 0 0 1 0
+3 0 0 1 1 1 0
+0 2 1 0 0
+0 0 0 0 1 1 0
+0 0 0 0
+0 ""
+0 0 0 0
+1 0 0 1 0 1 0 1 0 1
+1 1 0 1 0 1
+0 1 1 1 1 0 0
+1 0 0 0 0
+Assembler
+0 ""
+0 "CON://640/200/Storm Assembler/AUTO/WAIT/SCREEN StormScreen"
+0 0
+0 1 60 0 1 0 0 20 0
+Sets (End)
+0 1 0 0 0 2 1 0 0
+1 1 1 1 0 0 0 0 0
+1 0
+0 0 0 0 0
+Linker
+0 0 "PROGDIR:startup.o" 0 0 1 0 1 0 0
+"StormC:lib/" 0 "StormC:lib/logfile" 0 0 0
+0 "_WizardSurface"
+0 0 50 0 50 0 50 0 0
+0 0 0 0 0 0 0 0
+Run
+30 "" "" "" 0
+""
+Shared:dev/projects_2018_2020/ADiffView/testfiles/testcase_36_trailing_spaces_left.txt Shared:dev/projects_2018_2020/ADiffView/testfiles/testcase_36_trailing_spaces_right.txt IGNORETRAILINGSPACES
+1 "CON://400/180/Storm Console/AUTO/WAIT/SCREEN StormScreen" "RAM:Output" "RAM:Input"
+0 0
+0 0 0 "" ""
+Settings (End)
+Storm Shell Project (Custom Sections End)
+Section
+26 1 110
+0 0 1 0
+9
+File
+26 "Diff.qiq"
+"Diff.qiq"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+Section
+1 1 100
+0 1 1 0
+4
+File
+1 "src/amigautils/AmigaFile.cpp"
+"src/amigautils/AmigaFile.cpp"
+"src/amigautils/AmigaFile.h"
+Storm Shell Project (Dependencies)
+"build-stromc/AmigaFile.o" "build-stromc/AmigaFile.debug"
+""
+1 1
+File
+1 "src/amigautils/MemoryPool.cpp"
+"src/amigautils/MemoryPool.cpp"
+"src/amigautils/MemoryPool.h"
+Storm Shell Project (Dependencies)
+"build-stromc/MemoryPool.o" "build-stromc/MemoryPool.debug"
+""
+1 1
+File
+1 "src/amigautils/MessageBox.cpp"
+"src/amigautils/MessageBox.cpp"
+"src/amigautils/MessageBox.h"
+Storm Shell Project (Dependencies)
+"build-stromc/MessageBox.o" "build-stromc/MessageBox.debug"
+""
+1 1
+File
+1 "src/amigautils/StopWatch.cpp"
+"src/amigautils/StopWatch.cpp"
+"src/amigautils/StopWatch.h"
+Storm Shell Project (Dependencies)
+"build-stromc/StopWatch.o" "build-stromc/StopWatch.debug"
+""
+1 1
+File
+1 "src/application/ADiffViewArgs.cpp"
+"src/application/ADiffViewArgs.cpp"
+"src/application/ADiffViewArgs.h"
+Storm Shell Project (Dependencies)
+"build-stromc/ADiffViewArgs.o" "build-stromc/ADiffViewArgs.debug"
+""
+1 1
+File
+1 "src/application/ADiffViewPens.cpp"
+"src/application/ADiffViewPens.cpp"
+"src/application/ADiffViewPens.h"
+Storm Shell Project (Dependencies)
+"build-stromc/ADiffViewPens.o" "build-stromc/ADiffViewPens.debug"
+""
+1 1
+File
+1 "src/application/ADiffViewPorts.cpp"
+"src/application/ADiffViewPorts.cpp"
+"src/application/ADiffViewPorts.h"
+Storm Shell Project (Dependencies)
+"build-stromc/ADiffViewPorts.o" "build-stromc/ADiffViewPorts.debug"
+""
+1 1
+File
+1 "src/application/ADiffViewSettings.cpp"
+"src/application/ADiffViewSettings.cpp"
+"src/application/ADiffViewSettings.h"
+Storm Shell Project (Dependencies)
+"build-stromc/ADiffViewSettings.o" "build-stromc/ADiffViewSettings.debug"
+""
+1 1
+File
+1 "src/application/Application.cpp"
+"src/application/Application.cpp"
+"src/application/ADiffView_rev.h"
+"src/application/Application.h"
+"src/application/ADiffViewArgs.h"
+"src/application/ADiffViewPorts.h"
+"src/commands/CmdOpenWindow.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+"src/windows/ScrollbarWindow.h"
+"src/application/ADiffViewPens.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/textsearch/DiffFileSearchResult.h"
+"src/textsearch/SearchOptions.h"
+"src/commands/CmdNavigateBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/Application.o" "build-stromc/Application.debug"
+""
+1 1
+File
+1 "src/application/DiffDocument.cpp"
+"src/application/DiffDocument.cpp"
+"src/application/DiffDocument.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffDocument.o" "build-stromc/DiffDocument.debug"
+""
+1 1
+File
+1 "src/application/DiffWorker.cpp"
+"src/application/DiffWorker.cpp"
+"src/application/DiffWorker.h"
+"src/commands/CmdOpenWindow.h"
+"src/commands/CommandBase.h"
+"src/application/DiffDocument.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+"src/windows/ScrollbarWindow.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffWorker.o" "build-stromc/DiffWorker.debug"
+""
+1 1
+File
+1 "src/application/DiffWorkerProgressReporter.cpp"
+"src/application/DiffWorkerProgressReporter.cpp"
+"src/application/DiffWorkerProgressReporter.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffWorkerProgressReporter.o" "build-stromc/DiffWorkerProgressReporter.debug"
+""
+1 1
+File
+1 "src/application/TextFinder.cpp"
+"src/application/TextFinder.cpp"
+"src/application/TextFinder.h"
+"src/application/DiffDocument.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/textsearch/SearchOptions.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/windows/ScrollbarWindow.h"
+"src/application/DiffWorker.h"
+"src/commands/CmdOpenWindow.h"
+"src/commands/CommandBase.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+Storm Shell Project (Dependencies)
+"build-stromc/TextFinder.o" "build-stromc/TextFinder.debug"
+""
+1 1
+File
+1 "src/commands/CmdChangeTabulatorWidth.cpp"
+"src/commands/CmdChangeTabulatorWidth.cpp"
+"src/commands/CmdChangeTabulatorWidth.h"
+"src/commands/CommandBase.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/windows/ScrollbarWindow.h"
+"src/commands/CmdOpenWindow.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdChangeTabulatorWidth.o" "build-stromc/CmdChangeTabulatorWidth.debug"
+""
+1 1
+File
+1 "src/commands/CmdCloseWindow.cpp"
+"src/commands/CmdCloseWindow.cpp"
+"src/commands/CmdCloseWindow.h"
+"src/commands/CmdOpenWindow.h"
+"src/commands/CommandBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdCloseWindow.o" "build-stromc/CmdCloseWindow.debug"
+""
+1 1
+File
+1 "src/commands/CmdDiff.cpp"
+"src/commands/CmdDiff.cpp"
+"src/commands/CmdDiff.h"
+"src/commands/CmdOpenWindow.h"
+"src/commands/CommandBase.h"
+"src/application/DiffDocument.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+"src/windows/ScrollbarWindow.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdDiff.o" "build-stromc/CmdDiff.debug"
+""
+1 1
+File
+1 "src/commands/CmdFileRequester.cpp"
+"src/commands/CmdFileRequester.cpp"
+"src/commands/CmdFileRequester.h"
+"src/commands/CommandBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdFileRequester.o" "build-stromc/CmdFileRequester.debug"
+""
+1 1
+File
+1 "src/commands/CmdFindNext.cpp"
+"src/commands/CmdFindNext.cpp"
+"src/commands/CmdFindNext.h"
+"src/application/DiffDocument.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/textsearch/DiffFileSearchResult.h"
+"src/textsearch/SearchOptions.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/windows/ScrollbarWindow.h"
+"src/application/DiffWorker.h"
+"src/commands/CmdOpenWindow.h"
+"src/commands/CommandBase.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdFindNext.o" "build-stromc/CmdFindNext.debug"
+""
+1 1
+File
+1 "src/commands/CmdFindPrev.cpp"
+"src/commands/CmdFindPrev.cpp"
+"src/commands/CmdFindPrev.h"
+"src/application/DiffDocument.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/textsearch/DiffFileSearchResult.h"
+"src/textsearch/SearchOptions.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/windows/ScrollbarWindow.h"
+"src/application/DiffWorker.h"
+"src/commands/CmdOpenWindow.h"
+"src/commands/CommandBase.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdFindPrev.o" "build-stromc/CmdFindPrev.debug"
+""
+1 1
+File
+1 "src/commands/CmdNavigateBase.cpp"
+"src/commands/CmdNavigateBase.cpp"
+"src/commands/CmdNavigateBase.h"
+"src/commands/CommandBase.h"
+"src/commands/CmdOpenWindow.h"
+"src/application/DiffDocument.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/windows/ScrollbarWindow.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+"src/commands/CmdWindowTitleQuickMsg.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdNavigateBase.o" "build-stromc/CmdNavigateBase.debug"
+""
+1 1
+File
+1 "src/commands/CmdNavigateFirstDiff.cpp"
+"src/commands/CmdNavigateFirstDiff.cpp"
+"src/commands/CmdNavigateFirstDiff.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/windows/ScrollbarWindow.h"
+"src/windows/WindowBase.h"
+"src/commands/CmdNavigateBase.h"
+"src/commands/CommandBase.h"
+"src/commands/CmdOpenWindow.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+"src/commands/CmdWindowTitleQuickMsg.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdNavigateFirstDiff.o" "build-stromc/CmdNavigateFirstDiff.debug"
+""
+1 1
+File
+1 "src/commands/CmdNavigateLastDiff.cpp"
+"src/commands/CmdNavigateLastDiff.cpp"
+"src/commands/CmdNavigateLastDiff.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/windows/ScrollbarWindow.h"
+"src/windows/WindowBase.h"
+"src/commands/CmdNavigateBase.h"
+"src/commands/CommandBase.h"
+"src/commands/CmdOpenWindow.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+"src/commands/CmdWindowTitleQuickMsg.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdNavigateLastDiff.o" "build-stromc/CmdNavigateLastDiff.debug"
+""
+1 1
+File
+1 "src/commands/CmdNavigateNextDiff.cpp"
+"src/commands/CmdNavigateNextDiff.cpp"
+"src/commands/CmdNavigateNextDiff.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/windows/ScrollbarWindow.h"
+"src/windows/WindowBase.h"
+"src/commands/CommandBase.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/commands/CmdNavigateBase.h"
+"src/commands/CmdOpenWindow.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+"src/commands/CmdWindowTitleQuickMsg.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdNavigateNextDiff.o" "build-stromc/CmdNavigateNextDiff.debug"
+""
+1 1
+File
+1 "src/commands/CmdNavigatePrevDiff.cpp"
+"src/commands/CmdNavigatePrevDiff.cpp"
+"src/commands/CmdNavigatePrevDiff.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/windows/ScrollbarWindow.h"
+"src/windows/WindowBase.h"
+"src/commands/CommandBase.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/commands/CmdNavigateBase.h"
+"src/commands/CmdOpenWindow.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+"src/commands/CmdWindowTitleQuickMsg.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdNavigatePrevDiff.o" "build-stromc/CmdNavigatePrevDiff.debug"
+""
+1 1
+File
+1 "src/commands/CmdOpenWindow.cpp"
+"src/commands/CmdOpenWindow.cpp"
+"src/commands/CmdOpenWindow.h"
+"src/commands/CommandBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdOpenWindow.o" "build-stromc/CmdOpenWindow.debug"
+""
+1 1
+File
+1 "src/commands/CmdQuit.cpp"
+"src/commands/CmdQuit.cpp"
+"src/commands/CmdQuit.h"
+"src/commands/CommandBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdQuit.o" "build-stromc/CmdQuit.debug"
+""
+1 1
+File
+1 "src/commands/CmdRequester.cpp"
+"src/commands/CmdRequester.cpp"
+"src/commands/CmdRequester.h"
+"src/commands/CommandBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdRequester.o" "build-stromc/CmdRequester.debug"
+""
+1 1
+File
+1 "src/commands/CmdWindowTitleQuickMsg.cpp"
+"src/commands/CmdWindowTitleQuickMsg.cpp"
+"src/commands/CmdWindowTitleQuickMsg.h"
+"src/commands/CommandBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdWindowTitleQuickMsg.o" "build-stromc/CmdWindowTitleQuickMsg.debug"
+""
+1 1
+File
+1 "src/commands/CommandBase.cpp"
+"src/commands/CommandBase.cpp"
+"src/commands/CommandBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CommandBase.o" "build-stromc/CommandBase.debug"
+""
+1 1
+File
+1 "src/diffengine/DiffEngine.cpp"
+"src/diffengine/DiffEngine.cpp"
+"src/diffengine/DiffEngine.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffOutputFileBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffEngine.o" "build-stromc/DiffEngine.debug"
+""
+1 1
+File
+1 "src/diffengine/DiffFileBase.cpp"
+"src/diffengine/DiffFileBase.cpp"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffFileBase.o" "build-stromc/DiffFileBase.debug"
+""
+1 1
+File
+1 "src/diffengine/DiffInputFileAmiga.cpp"
+"src/diffengine/DiffInputFileAmiga.cpp"
+"src/diffengine/DiffInputFileAmiga.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffInputFileAmiga.o" "build-stromc/DiffInputFileAmiga.debug"
+""
+1 1
+File
+1 "src/diffengine/DiffInputFileBase.cpp"
+"src/diffengine/DiffInputFileBase.cpp"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffInputFileBase.o" "build-stromc/DiffInputFileBase.debug"
+""
+1 1
+File
+1 "src/diffengine/DiffInputFileLinux.cpp"
+"src/diffengine/DiffInputFileLinux.cpp"
+"src/diffengine/DiffInputFileLinux.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffInputFileLinux.o" "build-stromc/DiffInputFileLinux.debug"
+""
+1 1
+File
+1 "src/diffengine/DiffLine.cpp"
+"src/diffengine/DiffLine.cpp"
+"src/diffengine/DiffLine.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffLine.o" "build-stromc/DiffLine.debug"
+""
+1 1
+File
+1 "src/diffengine/DiffOutputFileAmiga.cpp"
+"src/diffengine/DiffOutputFileAmiga.cpp"
+"src/diffengine/DiffOutputFileAmiga.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffOutputFileAmiga.o" "build-stromc/DiffOutputFileAmiga.debug"
+""
+1 1
+File
+1 "src/diffengine/DiffOutputFileBase.cpp"
+"src/diffengine/DiffOutputFileBase.cpp"
+"src/diffengine/DiffOutputFileBase.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffOutputFileBase.o" "build-stromc/DiffOutputFileBase.debug"
+""
+1 1
+File
+1 "src/diffengine/DiffOutputFileLinux.cpp"
+"src/diffengine/DiffOutputFileLinux.cpp"
+"src/diffengine/DiffOutputFileLinux.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffOutputFileLinux.o" "build-stromc/DiffOutputFileLinux.debug"
+""
+1 1
+File
+1 "src/diffengine/SelectableDiffFile.cpp"
+"src/diffengine/SelectableDiffFile.cpp"
+"src/diffengine/SelectableDiffFile.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+Storm Shell Project (Dependencies)
+"build-stromc/SelectableDiffFile.o" "build-stromc/SelectableDiffFile.debug"
+""
+1 1
+File
+1 "src/main.cpp"
+"src/main.cpp"
+"src/application/ADiffViewPorts.h"
+"src/commands/CmdOpenWindow.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+"src/windows/ScrollbarWindow.h"
+"src/application/ADiffViewPens.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/textsearch/DiffFileSearchResult.h"
+"src/textsearch/SearchOptions.h"
+"src/commands/CmdNavigateBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/main.o" "build-stromc/main.debug"
+""
+1 1
+File
+1 "src/menus/MenuBase.cpp"
+"src/menus/MenuBase.cpp"
+"src/menus/MenuBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/MenuBase.o" "build-stromc/MenuBase.debug"
+""
+1 1
+File
+1 "src/menus/MenuDiffWindow.cpp"
+"src/menus/MenuDiffWindow.cpp"
+"src/menus/MenuDiffWindow.h"
+Storm Shell Project (Dependencies)
+"build-stromc/MenuDiffWindow.o" "build-stromc/MenuDiffWindow.debug"
+""
+1 1
+File
+1 "src/menus/MenuFilesWindow.cpp"
+"src/menus/MenuFilesWindow.cpp"
+"src/menus/MenuFilesWindow.h"
+Storm Shell Project (Dependencies)
+"build-stromc/MenuFilesWindow.o" "build-stromc/MenuFilesWindow.debug"
+""
+1 1
+File
+1 "src/model/Pair.cpp"
+"src/model/Pair.cpp"
+"src/model/Pair.h"
+Storm Shell Project (Dependencies)
+"build-stromc/Pair.o" "build-stromc/Pair.debug"
+""
+1 1
+File
+1 "src/model/Rect.cpp"
+"src/model/Rect.cpp"
+"src/model/Rect.h"
+Storm Shell Project (Dependencies)
+"build-stromc/Rect.o" "build-stromc/Rect.debug"
+""
+1 1
+File
+1 "src/screen/OpenClonedWorkbenchScreen.cpp"
+"src/screen/OpenClonedWorkbenchScreen.cpp"
+"src/screen/OpenClonedWorkbenchScreen.h"
+"src/screen/OpenScreenBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/OpenClonedWorkbenchScreen.o" "build-stromc/OpenClonedWorkbenchScreen.debug"
+""
+1 1
+File
+1 "src/screen/OpenJoinedPublicScreen.cpp"
+"src/screen/OpenJoinedPublicScreen.cpp"
+"src/screen/OpenJoinedPublicScreen.h"
+"src/screen/OpenScreenBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/OpenJoinedPublicScreen.o" "build-stromc/OpenJoinedPublicScreen.debug"
+""
+1 1
+File
+1 "src/screen/OpenScreenBase.cpp"
+"src/screen/OpenScreenBase.cpp"
+"src/screen/OpenScreenBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/OpenScreenBase.o" "build-stromc/OpenScreenBase.debug"
+""
+1 1
+File
+1 "src/textsearch/DiffFileSearchEngine.cpp"
+"src/textsearch/DiffFileSearchEngine.cpp"
+"src/textsearch/DiffFileSearchEngine.h"
+"src/diffengine/DiffLine.h"
+"src/textsearch/DiffFileSearchResult.h"
+"src/textsearch/SearchOptions.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffFileSearchEngine.o" "build-stromc/DiffFileSearchEngine.debug"
+""
+1 1
+File
+1 "src/textsearch/DiffFileSearchResult.cpp"
+"src/textsearch/DiffFileSearchResult.cpp"
+"src/textsearch/DiffFileSearchResult.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffFileSearchResult.o" "build-stromc/DiffFileSearchResult.debug"
+""
+1 1
+File
+1 "src/textselect/TextSelection.cpp"
+"src/textselect/TextSelection.cpp"
+"src/textselect/TextSelection.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+Storm Shell Project (Dependencies)
+"build-stromc/TextSelection.o" "build-stromc/TextSelection.debug"
+""
+1 1
+File
+1 "src/textselect/TextSelectionLine.cpp"
+"src/textselect/TextSelectionLine.cpp"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+Storm Shell Project (Dependencies)
+"build-stromc/TextSelectionLine.o" "build-stromc/TextSelectionLine.debug"
+""
+1 1
+File
+1 "src/textselect/TextSelectionRange.cpp"
+"src/textselect/TextSelectionRange.cpp"
+"src/textselect/TextSelectionRange.h"
+Storm Shell Project (Dependencies)
+"build-stromc/TextSelectionRange.o" "build-stromc/TextSelectionRange.debug"
+""
+1 1
+File
+1 "src/windows/DiffWindow.cpp"
+"src/windows/DiffWindow.cpp"
+"src/windows/DiffWindow.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/windows/ScrollbarWindow.h"
+"src/windows/WindowBase.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffWindow.o" "build-stromc/DiffWindow.debug"
+""
+1 1
+File
+1 "src/windows/DiffWindowRastports.cpp"
+"src/windows/DiffWindowRastports.cpp"
+"src/windows/DiffWindowRastports.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffWindowRastports.o" "build-stromc/DiffWindowRastports.debug"
+""
+1 1
+File
+1 "src/windows/DiffWindowTextArea.cpp"
+"src/windows/DiffWindowTextArea.cpp"
+"src/windows/DiffWindowTextArea.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/windows/DiffWindowRastports.h"
+"src/diffengine/DiffLine.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+Storm Shell Project (Dependencies)
+"build-stromc/DiffWindowTextArea.o" "build-stromc/DiffWindowTextArea.debug"
+""
+1 1
+File
+1 "src/windows/FilesWindow.cpp"
+"src/windows/FilesWindow.cpp"
+"src/windows/FilesWindow.h"
+Storm Shell Project (Dependencies)
+"build-stromc/FilesWindow.o" "build-stromc/FilesWindow.debug"
+""
+1 1
+File
+1 "src/windows/ProgressWindow.cpp"
+"src/windows/ProgressWindow.cpp"
+"src/windows/ProgressWindow.h"
+"src/windows/WindowBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/ProgressWindow.o" "build-stromc/ProgressWindow.debug"
+""
+1 1
+File
+1 "src/windows/ScrollbarWindow.cpp"
+"src/windows/ScrollbarWindow.cpp"
+"src/windows/ScrollbarWindow.h"
+"src/windows/WindowBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/ScrollbarWindow.o" "build-stromc/ScrollbarWindow.debug"
+""
+1 1
+File
+1 "src/windows/SearchWindow.cpp"
+"src/windows/SearchWindow.cpp"
+"src/windows/SearchWindow.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/windows/ScrollbarWindow.h"
+"src/commands/CmdOpenWindow.h"
+"src/application/DiffWorkerProgressReporter.h"
+"src/worker/WorkerStartupMsg.h"
+"src/textsearch/DiffFileSearchResult.h"
+"src/textsearch/SearchOptions.h"
+"src/application/DiffDocument.h"
+"src/application/DiffWorker.h"
+Storm Shell Project (Dependencies)
+"build-stromc/SearchWindow.o" "build-stromc/SearchWindow.debug"
+""
+1 1
+File
+1 "src/windows/WindowBase.cpp"
+"src/windows/WindowBase.cpp"
+"src/windows/WindowBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/WindowBase.o" "build-stromc/WindowBase.debug"
+""
+1 1
+File
+1 "src/worker/ProgressReporter.cpp"
+"src/worker/ProgressReporter.cpp"
+"src/worker/ProgressMessage.h"
+"src/worker/ProgressReporter.h"
+Storm Shell Project (Dependencies)
+"build-stromc/ProgressReporter.o" "build-stromc/ProgressReporter.debug"
+""
+1 1
+File
+1 "src/worker/WorkerBase.cpp"
+"src/worker/WorkerBase.cpp"
+"src/worker/WorkerBase.h"
+"src/worker/WorkerStartupMsg.h"
+"src/worker/ProgressMessage.h"
+Storm Shell Project (Dependencies)
+"build-stromc/WorkerBase.o" "build-stromc/WorkerBase.debug"
+""
+1 1
+Section
+2 1 95
+0 1 1 0
+2
+File
+2 "src/amigautils/AmigaFile.h"
+"src/amigautils/AmigaFile.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/amigautils/MemoryPool.h"
+"src/amigautils/MemoryPool.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/amigautils/MessageBox.h"
+"src/amigautils/MessageBox.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/amigautils/StopWatch.h"
+"src/amigautils/StopWatch.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/application/ADiffViewArgs.h"
+"src/application/ADiffViewArgs.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/application/ADiffViewPens.h"
+"src/application/ADiffViewPens.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/application/ADiffViewPorts.h"
+"src/application/ADiffViewPorts.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/application/ADiffViewSettings.h"
+"src/application/ADiffViewSettings.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/application/ADiffView_rev.h"
+"src/application/ADiffView_rev.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/application/Application.h"
+"src/application/Application.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/application/DiffDocument.h"
+"src/application/DiffDocument.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/application/DiffWorker.h"
+"src/application/DiffWorker.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffWorkerProgressReporter.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/application/TextFinder.h"
+"src/application/TextFinder.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdChangeTabulatorWidth.h"
+"src/commands/CmdChangeTabulatorWidth.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdCloseWindow.h"
+"src/commands/CmdCloseWindow.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdDiff.h"
+"src/commands/CmdDiff.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdFileRequester.h"
+"src/commands/CmdFileRequester.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdFindNext.h"
+"src/commands/CmdFindNext.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdFindPrev.h"
+"src/commands/CmdFindPrev.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdNavigateBase.h"
+"src/commands/CmdNavigateBase.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdNavigateFirstDiff.h"
+"src/commands/CmdNavigateFirstDiff.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdNavigateLastDiff.h"
+"src/commands/CmdNavigateLastDiff.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdNavigateNextDiff.h"
+"src/commands/CmdNavigateNextDiff.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdNavigatePrevDiff.h"
+"src/commands/CmdNavigatePrevDiff.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdOpenWindow.h"
+"src/commands/CmdOpenWindow.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdQuit.h"
+"src/commands/CmdQuit.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdRequester.h"
+"src/commands/CmdRequester.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdWindowTitleQuickMsg.h"
+"src/commands/CmdWindowTitleQuickMsg.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CommandBase.h"
+"src/commands/CommandBase.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/diffengine/DiffEngine.h"
+"src/diffengine/DiffEngine.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffFileBase.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/diffengine/DiffInputFileAmiga.h"
+"src/diffengine/DiffInputFileAmiga.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffInputFileBase.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/diffengine/DiffInputFileLinux.h"
+"src/diffengine/DiffInputFileLinux.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/diffengine/DiffLine.h"
+"src/diffengine/DiffLine.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/diffengine/DiffOutputFileAmiga.h"
+"src/diffengine/DiffOutputFileAmiga.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/diffengine/DiffOutputFileBase.h"
+"src/diffengine/DiffOutputFileBase.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/diffengine/DiffOutputFileLinux.h"
+"src/diffengine/DiffOutputFileLinux.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/diffengine/SelectableDiffFile.h"
+"src/diffengine/SelectableDiffFile.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/menus/MenuBase.h"
+"src/menus/MenuBase.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/menus/MenuDiffWindow.h"
+"src/menus/MenuDiffWindow.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/menus/MenuFilesWindow.h"
+"src/menus/MenuFilesWindow.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/model/Pair.h"
+"src/model/Pair.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/model/Rect.h"
+"src/model/Rect.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/screen/OpenClonedWorkbenchScreen.h"
+"src/screen/OpenClonedWorkbenchScreen.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/screen/OpenJoinedPublicScreen.h"
+"src/screen/OpenJoinedPublicScreen.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/screen/OpenScreenBase.h"
+"src/screen/OpenScreenBase.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/textsearch/DiffFileSearchEngine.h"
+"src/textsearch/DiffFileSearchEngine.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/textsearch/DiffFileSearchResult.h"
+"src/textsearch/DiffFileSearchResult.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/textsearch/SearchOptions.h"
+"src/textsearch/SearchOptions.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/textselect/TextSelection.h"
+"src/textselect/TextSelection.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionLine.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/textselect/TextSelectionRange.h"
+"src/textselect/TextSelectionRange.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/windows/DiffWindow.h"
+"src/windows/DiffWindow.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowRastports.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/windows/DiffWindowTextArea.h"
+"src/windows/DiffWindowTextArea.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/windows/FilesWindow.h"
+"src/windows/FilesWindow.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/windows/ProgressWindow.h"
+"src/windows/ProgressWindow.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/windows/ScrollbarWindow.h"
+"src/windows/ScrollbarWindow.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/windows/SearchWindow.h"
+"src/windows/SearchWindow.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/windows/WindowBase.h"
+"src/windows/WindowBase.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/worker/ProgressMessage.h"
+"src/worker/ProgressMessage.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/worker/ProgressReporter.h"
+"src/worker/ProgressReporter.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/worker/WorkerBase.h"
+"src/worker/WorkerBase.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/worker/WorkerStartupMsg.h"
+"src/worker/WorkerStartupMsg.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+Section
+10 1 40
+0 0 0 0
+7
+File
+10 "ADiffView"
+"ADiffView"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+Section
+5 1 -50
+0 0 0 0
+7
+File
+5 "storm.lib"
+"storm.lib"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+5 "amiga.lib"
+"amiga.lib"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+5 "debug.lib"
+"debug.lib"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+Storm Shell Project (End)

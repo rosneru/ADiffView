@@ -1,0 +1,86 @@
+FRLABEL_FIND
+Поиск
+; _Find
+;
+FRLABEL_NEXT
+Дальше
+; _Next
+;
+FRLABEL_CANCEL
+Отменить
+; _Cancel
+;
+
+FRLABEL_IGNORE_CASE
+Без учёта регистра
+; I_gnore Case
+;
+FRLABEL_ONLY_WHOLE_WORDS
+Только целые слова
+; _Only Whole Words
+;
+FRLABEL_SCAN_DATABASE
+Сканировать базу данных
+; _Scan Database
+;
+FRNODE_FOUND_NO_OCCURRENCES
+\nНет совпадений с\n\"%s\"\n
+; \nFound no occurrences of:\n\"%s\"\n
+;
+FRNODE_FOUND_ONE_OCCURRENCE
+\nНайдено одно совпадение с\n\"%s\"\n
+; \nFound 1 occurrence of:\n\"%s\"\n
+;
+FRNODE_FOUND_OCCURRENCES
+Найдено %ld совпадений с:\n\"%s\"\n
+; \nFound %ld occurrences of:\n\"%s\"\n
+;
+;--- Menus ----------------------------
+MENU_PROJECT
+Проект
+; Project
+;
+ITEM_OPEN
+O\0Открыть ...
+; O\0Open...
+;
+ITEM_SAVE_AS
+A\0Сохранить как ...
+; A\0Save As...
+;
+ITEM_PRINT
+P\0Печать
+; P\0Print
+;
+ITEM_ABOUT
+?\0О программе ...
+; ?\0About...
+;
+ITEM_QUIT
+Q\0Выход
+; Q\0Quit
+;
+MENU_EDIT
+Редактор
+; Edit
+;
+ITEM_MARK
+B\0Пометить
+; B\0Mark
+;
+ITEM_COPY
+C\0Копировать
+; C\0Copy
+;
+ITEM_SELECT_ALL
+L\0Выбрать всё
+; [\0Select All
+;
+ITEM_CLEAR_SELECTED
+]\0Отменить выбор
+; ]\0Clear Selected
+;
+MENU_SEARCH
+Поиск
+; Search
+;

@@ -1,0 +1,6 @@
+This is
+a simple test
+to demonstrate that
+marking some lines
+or even single words
+can be done now properly.

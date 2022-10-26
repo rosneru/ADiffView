@@ -1,0 +1,8 @@
+Comparison time of the files 'testcase_38_RealLifeApp2-*.cs'
+
+                       Files read time             Complete compare time 
+                       (Mobile phone stop watch)   (ADiffView state bar)
+  2.2:                 02:28 sec                   07:60 sec
+  2.1:                 02:09 sec                   07:15 sec
+  2.0:                 01:52 sec                   06:29 sec
+  1.2:                 08:47 sec                   13:29 sec

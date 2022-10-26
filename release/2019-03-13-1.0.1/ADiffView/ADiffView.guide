@@ -1,0 +1,103 @@
+@database ADiffView
+@wordwrap
+@node Main "ADiffView - Introduction"
+
+@{fg shine}ADiffView 1.0.1 released on 13.03.2019.@{fg text}
+
+@{b}About@{ub}
+
+ADiffView compares two ASCII text files and displays the differences in an Intuition window.
+
+Minimum system requirement is an Amiga with 1.0 MB RAM and AmigaOS3.0.
+
+While comparing the files the difference is calculated in a background process and a progress bar is shown to give a visual response of what's going on and that the program isn't freezed yet.
+
+Note that if you compare large files with several thousend lines ADiffView takes some time at exit to free all the allocated memory. This is due to the implementation of the memory allocation and no error. Maybe this will change some day if the memory pool functions of AmigaOS3.0+ find their way into ADiffView.
+
+@{b}Origin of the diff algorithm@{ub}
+
+The diff engine itself is a port of Stephane Rodriguez source code on 
+CodeProject: https://www.codeproject.com/Articles/3666/Diff-tool
+
+In 2005 he released an updated version which is the one I adapted: 
+http://www.arstdesign.com/articles/difftool.html
+
+@{"Installation" link installation}
+@{"Arguments and tool types" link argsttypes}
+@{"Changelog" link changelog}
+@{"Distribution" link distribution}
+
+
+@endnode
+
+@node installation "Installation"
+
+@{b}Installation@{ub}
+Just copy the binary ADiffView together with its icon to a place of your choice. A good place is e.g. @{fg shine}SYS:Tools@{fg text}.
+
+@{b}Using ADiffView with DOpus 5.x@{ub}
+Additionally if you use DOpus 5.x you can setup a button to run ADiffView from there:
+
+1) Edit the file DOpus/ARexx/Compare.dopus5 in away that the line at the bottom which starts with 'Address Command' looks like this:
+@{fg shine}Address Command 'SYS:Tools/ADiffView "' || First_Name || '" "' || Second_Name || '"' DONOTASK@{fg text}
+
+2) In DOpus create or edit a button, name it e.g. "Diff" and set this ARexx script to be executed on the button click:
+@{fg shine}DOpus5:ARexx/Compare.dopus5 {Qp}@{fg text}
+
+Now when clicking on "Diff" ADiffView will be started, immediately comparing the first two selected files. The files to compare can be selected in one lister or in two different listers.
+
+@endnode
+
+@node argsttypes "Arguments and tool types"
+
+@{b}Files as Shell arguments@{ub}
+The files to compare can be provided as command line arguments, simply calling 'ADiffViews file1 file2'
+
+@{b}Files as Workbench arguments@{ub}
+The files also can be provided as Workbench arguments:
+- Left-click one of the files that should be compared
+- Hold Shift and left-click the other file
+- Hold Shift and double-click ADiffView
+
+@{b}Options as Shell arguments or as Workbench tool types@{ub}
+
+Addtionally some options can be provided allowing a little more control. They can be set when calling ADiffView from the command line or they can be provided as tool types of the ADiffView Workbench icon.
+
+
+@{i}PUBSCREEN@{ui}
+The program will be opened on the provided public screen. If this is not set ADiffView will open its own screen which will mostly be a clone of the Workbench screen but with the exception that it will have at least eight colors.
+
+
+@{i}DONOTASK@{ui}
+The file comparing starts immediately after program start. The window for selecting the files will not be shown. This only will work if the files to compare also are provided.
+
+
+@endnode
+
+@node changelog "Changelog"
+
+@{b}Changelog@{ub}
+
+
+1.0.1 (13.03.2019)
+- Fixed a bug which caused a crash when comparing long files
+- Fixed a minor problem in the about window where the title was always inherited by the parent window.
+- Added some more info into the manual chapter about running ADiffView from Directory Opus
+
+1.0.0 (21.02.2019)
+- Initial version
+
+
+@endnode
+
+
+@node distribution "Author and distribution"
+
+@{b}Author and distribution@{ub}
+
+The autor of ADiffView is Uwe Rosner (u.rosner@ymail.com).
+
+This release of ADiffView may be freely distributed. It may not be comercially distributed without the explicit permission of the author.
+
+@endnode
+

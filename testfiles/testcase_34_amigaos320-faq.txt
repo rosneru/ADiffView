@@ -1,0 +1,4073 @@
+$VER: AmigaOS 3.2 FAQ 47.1 (09.04.2021) English
+
+
+Please note: This file contains a list of frequently asked questions 
+along with answers, sorted by topics.
+
+Before trying to contact support, please read through this FAQ to 
+determine whether or not it answers your question(s).
+
+Whilst this FAQ is focused on AmigaOS 3.2, it contains information 
+regarding previous AmigaOS versions.  
+
+Index of topics covered in this FAQ:
+
+1. Installation
+
+1.1 * What are the minimum hardware requirements for AmigaOS 3.2?
+1.2 * Why won't AmigaOS 3.2 boot with 512 KB of RAM?
+1.3 * Ok, I get it; 512 KB is not enough anymore, but can I get my way
+      with less than 2 MB of RAM?
+1.4 * How can I verify whether I correctly installed AmigaOS 3.2?
+1.5 * Do you have any tips that can help me with 3.2 using my current 
+      hardware and software combination?
+1.6 * The Help subsystem fails, it seems it is not available anymore. 
+      What happened?
+1.7 * What are GlowIcons? Should I choose to install them?
+1.8 * How can I verify the integrity of my AmigaOS 3.2 CD-ROM?
+1.9 * My Greek/Russian/Polish/Turkish fonts are not being properly 
+      displayed. How can I fix this?
+1.10 * When I boot from my AmigaOS 3.2 CD-ROM, I am being welcomed to 
+       the "AmigaOS Preinstallation Environment". What does this mean?
+1.11 * What is the optimal ADF images/floppy disk ordering for a full 
+       AmigaOS 3.2 installation?
+1.12 * LoadModule fails for some unknown reason when trying to update 
+       my ROM modules. What can I do?
+1.13 * I installed without selecting appropriate keymaps and/or printer 
+       drivers. Is there a way to fix this without reinstalling? 
+       
+2. Hard disks and file systems
+
+2.1 * Can I use partitions beyond the 4 GB boundary?
+2.2 * How do I setup a new drive with HDToolBox? I do not see the
+      drive in the selection box at all; what is wrong?
+2.3 * Long filenames--I was promised long filenames! How do I use them?
+2.4 * But Workbench still limits my filenames to 30 characters!
+2.5 * I read something about a setting called "Max Transfer", which is 
+      a value I need to manually adjust according to my system. How do 
+      I set it up?
+2.6 * When mounting the CD file system on an XSurfIDE device, reading
+      large DVDs results in an "-3" error being shown.
+2.7 * My Amiga now takes about 10 minutes to boot my new 3.2 64 GB 
+      partition. What is going on?
+2.8 * How can I make HDToolBox estimate the block size for my new 
+      drive?
+2.9 * I am trying to format and/or validate my 32 GB drive and I can't; 
+      the system gives me an error saying that there is not enough 
+      memory, but I have 8 MB of RAM. What is happening?
+2.10 * Should I defragment my drives?
+2.11 * What is a "SuperFloppy"?
+2.12 * How do I mount a SuperFloppy?
+2.13 * How do I properly create CrossDOS mount file? I have no clue.
+2.14 * Why is it that HDToolBox does not allow me to use my CF
+       (Compact Flash) card?
+2.15 * Is there a way to completely dismount a device?
+2.16 * Is it possible for AmigaOS to use Mac drives?
+2.17 * Should "SCSI Direct Transfer" always be enabled in HDToolBox?
+2.18 * What is the problem in using different DOSType partitions?
+2.19 * Why does my existing SmartFilesystem (SFS) partitions show up 
+       twice?
+2.20 * Why does HDToolBox limit partitions on A2091/A590 to 4 GB?
+2.21 * Why did my 4x IDE adapter stopped working when I installed 3.2?
+2.22 * My CD-ROM drive does not work on my SCSI/IDE bus when it is set 
+       to unit 0. What is the problem?
+2.23 * I have issues partitioning my Ultra Wide SCSI disks on my 
+CyberStorm PPC/CyberStorm Mk3 accelerator. What can I do?
+
+3. CPU Support and SetPatch
+
+3.1 * I manually installed (and now get a warning from) SetPatch on 
+      unknown options.
+3.2 * Where did the extended functionality of SetPatch go?
+3.3 * Does my 68060 work out-of-the-box now or do I still have to hack
+      the ROM?
+3.4 * When booting the system, the Startup-sequence stops and gives me 
+      a warning about an incomplete installation. What is missing?
+3.5 * Where do I find the CPU libraries, and how do I install them?
+3.6 * ...but I lost my original support disk of my accelerator board!
+3.7 * Where do I find a 68030.library? My board did not come with one.
+3.8 * Couldn't you just package the CPU libraries with the OS?
+3.9 * Couldn't you just ship the Commodore 68040.library?
+3.10 * What about the dummy 68040.library? My old turbo board manual 
+       mentions that I have to install it, and rename it.
+3.11 * I get a note from the CPU command on CPU errata. What should 
+       I do?
+3.12 * Why is it that when I use the 68030.library, 68040.library or 
+       68060.library from the MMULib package some extra megabytes of 
+       memory are consumed?
+
+4. Performance and compatibility
+
+4.1 * The Pointer and/or Locale Prefs render incorrectly on my screen.
+4.2 * Why is SetPatch so slow?
+4.3 * OS 3.2 is terribly slow!
+4.4 * The system crashes as soon as I play a stereo 8SVX audio file.
+4.5 * What about all those widely used system patches? Can I use them?
+4.6 * Can I use the FBlit patch with AmigaOS 3.2?
+4.7 * I am using Picasso96 with the "Native" driver, both downloaded 
+      from Aminet, and I get some issues displaying transparent images.
+4.8 * How can I display HAM or EHB animations on my graphics card?
+4.9 * Is there a way to speed up CDXL animations?
+4.10 * How can I make anims go faster?
+4.11 * Why is an AmigaGuide that has built-in images consuming so much 
+       Chip RAM?
+4.12 * ClassAction and IconEdit from 3.9 do not install/work under 
+       AmigaOS 3.2. What is the problem?
+4.13 * Final Writer 3 does not work on my system. What can I do?
+
+5. Intuition Library V47
+ 
+5.1 * What is the V47 intuition.library?
+5.2 * Why is my Amiga exhibiting graphic glitches and corruption?
+5.3 * Some windows display a weird new gadget. What is this?
+5.4 * I don't like the new mouse pointer behavior where it changes 
+      its image when it finds window resize gadgets. Is there a way to 
+      go back to the old way of doing things?
+5.5 * Pointer over windows is noticeably slower changing the pointer. 
+      How do I solve this?
+5.6 * Why is it that my opaque solid window moving patch does not work 
+      anymore?
+
+6. Printers
+
+6.1 * Which printer drivers do I need, and which driver supports which
+      printer?
+6.2 * I have a printer that is not listed, but was supported with OS
+      3.1. What should I do?
+6.3 * My OS 3.5/OS 3.9 printer drivers refuse to work with OS 3.2. 
+      Where is the problem?
+6.4 * I have an unsupported printer. What can I do?
+6.5 * Where is the "print to file" printer driver?
+6.6 * Do I still need TurboPrint?
+6.7 * Is there a way to use other device than the parallel port with 
+      my printer?
+6.8 * Can I use multiple printers in AmigaOS 3.2? How?
+
+7. CLI/Shell and Console 
+
+7.1 * Where is the PIPE program? I want to use pipes in my Shell.
+7.2 * I cannot interrupt pipes from the Shell, or programs continue to 
+      run if I interrupt a piped command sequence.
+7.3 * Why doesn't Shell or Workbench respect the "h" protection bit
+      and hide the files whose "h" bit is set?
+7.4 * Where is C:Execute? It still works but it is not there.
+7.5 * I 've heard of a new command called "history"; what is this?
+7.6 * Are there any other new fancy Shell features in 3.2?
+7.7 * How do I include a forward slash "/" or backwards slash "\" in 
+      the window title of a console?
+7.8 * Is there a way to debug commands being executed by the Shell?
+7.9 * How do I debug or trace Shell scripts? 
+
+8. Tools, utilities and commands
+
+8.1 * ShowConfig is missing hardware expansion details and even then, 
+      my MMU is not detected.
+8.2 * Are there any new command line arguments I should know of?
+8.3 * Where are Lacer, MEmacs, HDBackup, Bru and MagTape?
+8.4 * Is C:AssignWedge what I think it is?
+8.5 * What can I do with the Mounter Tool?
+8.6 * What is DefIcons? How do I use this?
+8.7 * Is there an easy way to mount Amiga ADF files?
+
+9. DiskDoctor
+
+9.1 * What is DiskDoctor?
+9.2 * What can it do for me?
+9.3 * What are DiskDoctor's limitations?
+9.4 * How do I use it to diagnose my drive?
+9.5 * How do I salvage files in a damaged disk?
+9.6 * I seem to be running out of memory when using DiskDoctor. But I 
+      have 4 MB of Fast RAM and an 8 GB partition.
+
+10. ReAction                             
+                                
+10.1 * What is the history of ReAction? How did it come to AmigaOS? 
+10.2 * But wait a minute... What is ReAction?
+10.3 * What are its features?
+10.4 * And how do I install and run it?
+10.5 * What programs do you know that use ReAction? 
+10.6 * What is the difference between ReAction offered in 
+       AmigaOS 3.5/3.9 and the currently available ReAction V47?
+10.7 * Where can I get development information for ReAction V47?
+10.8 * Why is it that all Prefs programs, tools and utilities in 
+       AmigaOS 3.2 don't use ReAction?
+10.9 * Why doesn't my ReAction program work under AmigaOS 3.2?
+10.10 * Which ReAction classes are included with 3.2?
+10.11 * Why did you choose ReAction and not MUI or other third party 
+        toolkit to integrate within AmigaOS 3.2?
+
+11. OS 3.2 and OS 3.9
+
+11.1 * Can I mix OS 3.9 components with OS 3.2?
+11.2 * I'm using the OS 3.9 ReAction GUI for Preferences, but the GUI
+       contains unreadable strings.
+11.3 * IControl Preferences of OS 3.9 had a setting to render window
+       gadgets in 1:1 aspect. Where is it?
+11.4 * The background image of my Workbench now uses dithering, even
+       though I'm using a true color screen mode. What's wrong?
+11.5 * How do I set/change picture.datatype settings?
+11.6 * How can I make the Euro symbol?
+11.7 * Why didn't you base your work on OS 3.9 and instead used OS 
+       3.1.4.1 as a basis?
+11.8 * How can I load icons into Fast RAM? There's no program or 
+       Preference setting for it.
+
+12. ROM Modules
+
+12.1 * Can I use the modules from the modules disk to build my own 
+       custom Kickstart ROM?
+12.2 * But why doesn't LoadModule load the modules into Fast RAM in 
+       the first place?
+12.3 * I get a "Please insert a volume containing workbench.library..." 
+       during start-up. What is going on?
+12.4 * Why are workbench.library and icon.library no longer in ROM?
+12.5 * I installed all the files in the right places, but the OS does 
+       not seem to pick them up. Instead, I just get the OS 3.1 
+       Workbench back. What's wrong?
+12.6 * Some file permissions on my installation look really weird. Is 
+       that normal?
+12.7 * Which ROM Modules are now required to have the "p" bit set?
+12.8 * Are there any completely new ROM modules I should be aware of?
+12.9 * I get new alerts that I have never seen before. What is 
+       going on?
+
+13. Miscellaneous
+
+13.1 * What are the issues with PCMCIA cards?
+13.2 * Can I get the guru back?
+13.3 * I have now 28 KB less Chip RAM; where did the RAM go?
+13.4 * Where can I find the env-handler/happy-env feature I read about? 
+       How do I use it?
+13.5 * WBPattern offers an option to interpolate a background picture. 
+       What does "Interpolated" mean in this context?
+13.6 * Is it somewhat possible to use multiple input devices 
+       simultaneously?
+13.7 * Where can I find font sensitive programs?
+13.8 * How can I customize the text message on the Workbench title bar 
+       screen?       
+13.9 * How can I Change the "Release 3.2" text that appears both on my 
+       Workbench title bar and the About requester?
+13.10 * Some files/drawers are displayed on Workbench with an 
+        underlined label. Why does this happen?
+13.11 * How do I achieve a Kickstart/Workbench 1.x look?
+
+14. The Amiga CDTV, CDTV-II (CDTV-CR), A570 and CD32
+
+14.1 * What does this "Experimental Amiga CDTV and Amiga CD32 support" 
+       means?
+14.2 * What are the CDTV, CDTV-II (CDTV-CR) and A570?
+14.3 * How can I differentiate a CDTV from a CDTV-II (CDTV-CR)?
+14.4 * Which types of ROMs do these CD-ROM-based machines use?
+14.5 * which are the known CDTV Extended ROM versions?
+14.6 * Where can I get a newer CDTV Extended ROM set for my CDTV?
+14.7 * Why does Workbench's About menu requester display a weird 
+       Kickstart ROM version number?
+14.8 * Can I use accelerators and fast RAM on my CDTV
+14.9 * What is the CD32?
+14.10 * Are there any hard drive size limitations for all these Amiga 
+        CD-ROM based models?
+14.11 * Are there any restrictions regarding AmigaOS usage?
+14.12 * How do I create and burn an AmigaOS 3.2 CD32 ROM?
+14.13 * Which chips do I need to burn the CDTV Extended ROM set?
+
+15. Support, Documentation, and Future
+
+15.1 * Why didn't you support feature XYZ, World Domination, etc.?
+15.2 * Speaking of support--where can I get any for this product?
+15.3 * Will there be more updates? 
+15.4 * Are there any Easter Eggs in OS 3.2?
+15.5 * Is there any other AmigaOS 3.2 documentation available?
+15.6 * What is the origin of the AmigaOS 3.2 motto?
+
+
+
+
+1. Installation
+_______________
+
+
+
+
+1.1 * What are the minimum hardware requirements for AmigaOS 3.2?
+
+A) Kickstart ROM 3.2 (recommended), or a 3.1.4 one, or older 3.1 
+Kickstart ROM. We recommend the former as it will boot faster, require 
+less RAM, and also includes fixes in the hardware configuration 
+process, the latter of which cannot be replaced by code loaded from 
+disk.
+
+B) 2 MB of total memory. Total memory is calculated by adding 
+Chip RAM and Fast RAM. Consider an additional half megabyte if you are 
+not using a physical Kickstart ROM 3.2.
+
+C) 10 MB of free hard disk space.
+
+And of course, an Amiga is needed. We cannot ensure that OS 3.2
+operates correctly under all the different types of emulation since we 
+cannot control these environments. We tried our best, however, to keep 
+it as compatible as possible.
+
+
+
+1.2 * Why won't AmigaOS 3.2 boot with 512 KB of RAM?
+
+Well, we all heard the dummy phrase "512 KB ought to be enough for
+anyone", but we are in 2021; not 1985.
+
+Along with all the relevant OS core improvements we made--especially
+to Workbench--it is not reasonable to expect to run it in such a bare 
+bones system. In other words, more changes require more RAM. It is the 
+price of progress; embrace it!
+
+
+
+1.3 * Ok, I get it; 512 KB is not enough anymore, but can I get my way
+      with less than 2 MB of RAM?
+
+This is how we break down memory usage: We have rounded up the numbers
+to be on the safe side.
+
+0.6 MB just to boot + 0.5 MB for loading ROM modules + 0.2 MB for 
+WBStartup components (AssignWedge + AutoArrangeIcons + DefIcons + 
+AsyncWB + MenuTools + RAWBInfo) which leaves 1.3 MB of free memory 
+on a 2.5 MB system.
+
+Of course, in a system with a physical Kickstart ROM v47 (from AmigaOS 
+3.2), it will work nicely with just 2 MB of RAM.
+
+The most intense, OS-memory hungry process is when you run the 3.2
+installation; the installer script compilation itself is what
+requires the most RAM.
+
+You also need to consider that FastFileSystem partitions 
+require RAM to properly validate themselves. So the bigger the 
+partitions, the more memory they will require (see section 2.8 for 
+further information). 
+
+To reduce the memory footprint of AmigaOS you can disable some of the 
+new functionality by moving out of the WBStartup drawer all visible 
+icons (These icons take care of starting some of those new features).
+This will aid in systems that are running extremely tight on RAM.
+ 
+            
+      
+1.4 * How can I verify whether I correctly installed AmigaOS 3.2?
+
+To verify whether you are running the updated AmigaOS 3.2, just open a 
+CLI/Shell and type:
+ 
+version shell 
+
+If the result is lower than 47, it means that AmigaOS 3.2 has NOT 
+been correctly installed.
+
+
+
+1.5 * Do you have any tips that can help me with 3.2 using my current 
+      hardware and software combination?
+
+Yes, here is a list that we compiled for you:
+
+a) To use AmigaOS 3.2 with the Vampire V2 accelerator, despite the 
+fact that you are using an Amiga 500 or Amiga 600 machine, you should 
+utilize the Amiga 1200 AmigaOS 3.2 options. Installation information 
+and support if any, should be available at: 
+http://www.apollo-accelerators.com
+
+b) To use AmigaOS 3.2 together with an Elbox Mediator PCI busboard, 
+make sure you change the Mediator jumper settings to make your 
+system functional. Further support should be obtained through the 
+hardware manufacturer, which is available at http://www.elbox.com
+
+c) When using a WarpEngine accelerator, please remember (from within 
+HDToolBox) to edit the partitions, select the "Direct SCSI" check box, 
+save the partitions, reboot, and all will be fine.
+
+d) If you have the ACA500plus accelerator from Individual Computers, 
+it is recommended that you flash the 3.2 Kickstart ROM using the 
+manufacturer's included utilities.
+
+e) When using a Commodore A2630 accelerator, you will find its RAM 
+expansions are sometimes not recognized. This is because the RAM was 
+set by Commodore in a non-standard way. The workaround is to use the 
+AddMem command available from Aminet.
+
+f) If you are using a Fúria accelerator, please contact its vendor or 
+manufacturer to make sure you are using the latest firmware. Old 
+firmware seems to be the cause of multiple faults and issues. Also, 
+this accelerator seems to be extremely picky on what flash storage 
+media brands it will work with.
+
+g) On the Wicher 500i series of accelerators, for the WicherBootMenu 
+to work, you must use: 
+
+C:LoadModule >NIL: DEVS:WicherBootMenu
+
+placed at the beginning of Startup-sequence. More support should be 
+available from its manufacturer at https://www.7-bit.pl/
+
+h) The Vampire 1200 V2 has technical issues that prevents both 
+the Indivision MK2 scandoubler and some PCMCIA expansions from 
+actually working. This is not an AmigaOS-related issue. A solution, if 
+any, should be available from http://www.apollo-accelerators.com
+
+i) Some hardware expansions emulate the Gayle Amiga custom chip to be 
+able to provide storage features. The machines containing such 
+expansions will most of the time be detected as another machine type 
+during installation because of this. So please follow the Install 
+process suggestion on Module installation even if it seems wrong at 
+first sight, because if not, you may end up with a non-working storage 
+media controller. This is particularly the case with expansions such 
+as Apollo-Computers Vampire 500, IrixLabs Classic 520, most of the 
+Terrible Fire product line, among many others. 
+
+j) Please note that if you will be using a CDTV-based Amiga, you will 
+require an additional CDTV Extended ROM set which must be from the 
+year 1992 or later (earlier, or 1.0 and 2.9 beta versions won't work, 
+while 2.7 and 2.30 versions will do just fine). Please refer to the 
+AmigaOS 3.2 FAQ (section 14) for further details.
+   
+k) Please be aware that test reports have shown that the TF536 
+accelerator requires the MMULib package to be installed for the IDE 
+interface to work at correct speed (The MMULib package is available as
+an AmigaOS 3.2 installation option).
+
+
+
+1.6 * The Help subsystem fails, it seems it is not available anymore. 
+      What happened?
+
+The Help subsystem is localizable, so if you switched your locale 
+settings to another without installing or upgrading that new language 
+from the AmigaOS Install3.2 disk, the system will not find it as it 
+has not been installed. 
+
+So the solution is simple, if you switch to another language and the 
+Help subsystem seems not to be available, just insert the Install3.2 
+disk and start the AmigaOS installation procedure and choose the 
+"Update Languages" option, and select the language you are currently 
+using and proceed. After this process ends and you restart your 
+system, the Help subsystem in under this new language setting should 
+be available. 
+
+
+
+1.7 * What are GlowIcons? Should I choose to install them?
+
+GlowIcons are a special kind of Amiga icon implementation that 
+features up to 256 colors and usually has its alternate image 
+represented with an added glow surrounding its depicted objects.
+
+Planar or standard Amiga icons can only display up to four colors and 
+are more historically common.
+
+If you have an Amiga that does not have a graphics card, please 
+consider that GlowIcons occupy much more Chip RAM than planar icons 
+and they only make sense if you use a screen mode with 16 colors or 
+more. 
+
+Furthermore, the overall resource overhead is significantly higher 
+when using GlowIcons. So slow CPUs and low throughput storage media 
+access are certainly not a good match for this choice.
+
+In addition, the IconEdit program located in the Tools drawer cannot 
+edit GlowIcons.
+
+That said, GlowIcons undoubtedly present a visual aesthetic enhancement 
+for those systems that have enough power to properly afford them.   
+
+
+
+1.8 * How can I verify the integrity of my AmigaOS 3.2 CD-ROM?
+
+You can now check the integrity of the AmigaOS3.2CD volume's files by 
+entering from a Shell/CLI
+
+Execute AmigaOS3.2CD:S/CDIntegrity
+
+A report will be displayed and saved onto RAM:CDIntegrity.log. Be 
+aware this is both an extreme CPU and disk demanding process that will 
+calculate MD5 hashes from the files contained in the AmigaOS3.2CD: 
+volume and compare them against a built-in database.
+
+Its purpose is to detect and diagnose any media transfer or storage 
+anomalies that could eventually occur right when the user is about to 
+roll out AmigaOS 3.2.
+
+
+
+1.9 * My Greek/Russian/Polish/Turkish fonts are not being properly 
+      displayed. How can I fix this?
+
+Download ReplaceTopaz from Aminet and install it in C:.
+     
+https://aminet.net/text/font/ReplaceTopaz.lha
+
+Open with any Text editor your Startup-sequence and add the following 
+line just below the SetPatch one.
+
+If you are using Greek add:
+
+ReplaceTopaz topaz_ISO-8859-7.8
+
+If you are using Russian add:
+
+ReplaceTopaz topaz_Amiga-1251.8
+
+If you are using Polish add:
+
+ReplaceTopaz topaz_ISO-8859-2.8
+
+If you are using Turkish add:
+
+ReplaceTopaz topaz_ISO-8859-9.8
+
+Then save the edited file, and reboot your system. Remember to have 
+topaz font selected and saved in FontPrefs for the changes to apply.
+
+ReplaceTopaz will make sure that most topaz hardcoded programs also 
+get to use the new replacement font.
+
+Take the time to read ReplaceTopaz documentation to properly finetune
+your system more adequately to meet your needs and expectations.
+
+Please be aware that you need to have Greek/Russian/Polish/Turkish 
+languages installed for these options to work. All these language 
+installation procedures also install many more non-latin customized 
+fonts. If you haven't done that when you installed AmigaOS 3.2, you 
+can do it by inserting the Install3.2 disk, and start the installation 
+procedure, and select the "Update Languages" option.
+ 
+
+
+1.10 * When I boot from my AmigaOS 3.2 CD-ROM, I am being welcomed to 
+      the "AmigaOS Preinstallation Environment". What does this mean?
+       
+The AmigaOS Preinstallation Environment (AmigaPE) is a small Operating 
+System subset used to install, deploy, and repair AmigaOS 
+installations.
+
+AmigaPE is only available in the AmigaOS 3.2 CD-ROM as a bootable 
+medium. 
+
+Its goal is not to be a full-fledged nor a general-purpose Operating 
+System, but help on installation and maintenance tasks. So don't use 
+it for productivity purposes, or you will sooner than later get to 
+meet its limitations.
+
+AmigaPE supports many AmigaOS features:
+
+- Storage management including disk partitioning and formatting
+- File system diagnostics and salvage operations with DiskDoctor
+- AmigaDOS command set
+- ED as a text editor
+- More as a text file viewer
+- Has a graphical user interface (a minimalistic Workbench)
+- Is able to manipulate ADF files
+- Can automate tasks using Shell scripts
+
+AmigaPE does not support any of the following (just to name a few):
+
+- ARexx
+- Compugraphic fonts
+- Data Types
+- Printing
+- Adjustable Preferences
+- Keymaps
+- Clipboard functionality
+- Only supports large drives (bigger than 4 GB) on systems that have 
+  Kickstart ROMs versions from 2018 or later (3.1.4, 3.2, etc.)
+  
+Hardware requirements for AmigaPE:
+
+- Any Amiga with at least Kickstart ROM 3.0 (CDTV/A570/CDTV-II and 
+  CD32 are also supported)
+        
+
+
+1.11 * What is the optimal ADF images/floppy disk ordering for a full 
+       AmigaOS 3.2 installation?
+       
+The floppy request order that may also help user flash media setup 
+optimization on Gotek-like devices is the following:
+
+Modules-[Machine] (Only required for 3.1 ROMs to support large drives)
+HDSetup3.2 (Optional)
+Install3.2
+Workbench3.2
+DiskDoctor
+Locale
+Local-[Language]
+Extras3.2
+Classes3.2
+Fonts
+Storage3.2
+Backdrops3.2
+GlowIcons3.2 (Optional)
+Modules-[Machine] (Only when there is no physical 3.2 ROM set)      
+MMULibs (Optional)
+
+
+
+1.12 * LoadModule fails for some unknown reason when trying to update 
+       my ROM modules. What can I do?
+
+LoadModule tries to make sure the system is in a stable condition to 
+be able to load ROM modules and update the system. For that purpose it 
+checks that all volumes are properly validated.
+
+So, if you have a damaged volume or one that failed to validate, 
+LoadModule will quit without doing its intended work. 
+
+Be aware that this will also happen when there are foreign file system 
+volumes, such as Macintosh, or VlabMotion audio/video partitions. 
+In those cases the safest solution is to use HDToolBox to disable the 
+"Automount this partition" option on those particular volumes. You 
+may later use a proper mount file for mounting them.
+
+A temporary workaround for the issue is to add the LoadModule 
+IGNOREVERIFY option to the Startup-sequence, which of course, prevents
+LoadModule from performing any stability checks.  
+
+
+
+1.13 * I installed without selecting appropriate keymaps and/or printer 
+       drivers. Is there a way to fix this without reinstalling?
+       
+Yes, you may follow the following procedure to install all keymaps:
+
+A) Insert your Storage3.2 floppy disk (or double-click on its .ADF 
+   image). Wait till the floppy icon shows up in Workbench.
+
+B) Open a CLI/Shell and enter:
+   copy Storage3.2:keymaps/#? SYS:Devs/Keymaps
+
+C) Go to your Prefs drawer and double-click on the Input icon.
+
+D) Select the keyboard type from the list displayed and press SAVE.
+
+For printer drivers you should follow this other procedure:
+
+A) Insert your Storage3.2 floppy disk (or double-click on its .ADF 
+   image). Wait till the floppy icon shows up in Workbench.
+
+B) Open a CLI/Shell and enter:
+   copy Storage3.2:printers/#? SYS:Devs/Printers
+
+C) Go to your Prefs drawer and double-click on the Printer icon.
+
+D) Select the printer type from the list displayed and press SAVE.
+
+
+
+
+2. Hard disks and file systems
+______________________________
+
+
+
+
+2.1 * Can I use partitions beyond the 4 GB boundary?
+
+1. To be able to use large drives (over 4 GB), consider any of 
+these options:
+
+a) Using either a 3.1.4 or 3.2 Kickstart ROM. 
+
+b) Alternatively, you can create a small (less than 1 GB) boot 
+partition, inside the first four gigabytes of your drive, which will 
+load the upgraded operating system (either AmigaOS 3.1.4 or 3.2 can be 
+used for this purpose). In this way all extended partitions will then 
+become available after the first reboot. 
+
+c) Another option is to boot from the "Modules" disk that belongs to 
+your specific Amiga model, and after Workbench loads, you can 
+double-click on the "Modules" disk icon and then on to the 
+"SYStoInstallDisk" icon. This will, after some disk swaps, properly 
+transfer the SYS: assign to your Install3.2 disk. 
+
+For this purpose, make sure you have your Install3.2 disk inserted, 
+and slide the drive-protection notch to the closed position, enabling 
+writing to the disk. Double-click the Install3.2 disk icon, and then 
+on the HDTools folder. 
+
+d) You may also use your AmigaOS 3.2 CD-ROM disc if you have it 
+already accessible and you are also using either a 3.1.4 or 3.2 
+Kickstart ROM with it.
+
+In such a case you can use the "CopyToRAMandRun_HDToolBox" script 
+located in the "Install" drawer by double-clicking its icon, which 
+will copy HDToolBox to RAM: and launch it from there. If you need to 
+adjust tool types you can easily do that by quitting HDToolBox and 
+opening your RAM: volume to make those changes and then run it again.
+
+2. Make sure the host adapter is correctly set. For this purpose, 
+select the HDToolBox icon, then holding down the right mouse button, 
+select the 'Icons' -> 'Information...' menu item. The SCSI_DEVICE_NAME 
+Tool Type is "scsi.device" by default (without the quotes), and will 
+work on most of the factory built-in Commodore Amiga controllers. Be 
+aware that each disk controller has one, and they are sometimes named 
+differently. Be sure to adjust its name to match the name in the 
+controller's manual.
+
+3. Double-click the 'HDToolBox' icon to run the program. If it opens, 
+select the 'Continue' gadget.
+
+4. All the drives connected to scsi.device (or the host-adapter name 
+you set in step #2 should appear. Only select the one you are 
+going to install.
+
+5. Click on 'Change Drive type'. 
+
+6. Click on 'Define new...'.
+
+7. Click on 'Read configuration'. If a dialog box opens, select 
+'Continue'.
+
+8. Exit the Define/Edit Drive Type window by clicking 'Ok' and yet 
+again on the other 'Ok'. If a dialog box opens, select 'Continue'.
+
+9. Now, in the main HDToolBox window, click on the 'Partition Drive' 
+gadget.
+
+10. Now adjust partition sizes as desired. Be aware that by default, 
+HDToolBox presents you with a two-partition predefined scheme for new 
+drives, which you can modify at will. 
+
+11. While in the 'Partitioning' window of HDToolBox, click 
+on 'Advanced Options'. 
+
+Check the 'Direct SCSI transfer' check box for each partition. 
+
+However, if your hard drive controller is a Commodore A2090, or the 
+one that comes with the Phase 5 CyberStorm MK3/PPC, or was 
+manufactured before the year 1990, then leave the box unchecked.
+
+12. If your controller was manufactured by Commodore (CBM) or GVP 
+(Great Valley Products), skip directly to the next step (step #13).
+
+If the above does not apply to you: 
+
+Click 'Change...'. For each partition (to be used as an 
+AmigaDOS device), you will need to set the 'MaxTransfer' value. 
+
+Please consult your controller manufacturer's manual for the 
+appropriate value.
+
+If unsure, a safe value for MaxTransfer is '0x1FE00' (without the 
+quotes).
+
+Remember to press the RETURN key on your keyboard when done entering 
+this value or the changes will not be saved.
+
+Finalize by clicking once on 'Ok'.
+
+13. Click on 'Add/Update'. A list of currently installed file systems 
+appears on the screen. This list may be empty.
+   
+14. If there is already a file system on the list, click on 'Update 
+File System...'. Accept the default by clicking on 'OK'.
+   
+15. If there is no file system on the list, click on 'Add New File 
+System...', then accept the default choice for the file system, and 
+click on 'OK'.
+      
+16. A list of file system options is now shown. Ensure that the 
+version says '47'. If not, you did not boot from an AmigaOS 3.2 disk.
+      
+17. Click on 'Ok' to accept, or modify the file system type (DOSType)
+accordingly. For most installations, the default type shown as 
+0x444f5303 is fine.
+      
+18. Click on 'OK' to go back to the list of file systems.
+   
+19. Click on 'OK' to go back to the partition list.
+
+20. Make sure at least one partition has the 'Bootable' check box 
+selected. When finished, click on 'Ok'.
+
+21. Click 'Save Changes to Drive'. A warning may appear; if 
+that happens, click on 'Continue'.
+
+22. Click on 'Exit', and if a message appears, click the 'Continue' 
+gadget. A reboot may occur.
+
+23. Now the new partition(s) should appear on the desktop as 
+unformatted/un-initialized. 
+
+24. Click once on the corresponding disk icon to select it, and then 
+from within Workbench (holding the right mouse button) select the 
+Icons menu to choose the "Format disk..." menu item.
+
+From the Format window make sure to check the options you prefer, and 
+click "Quick Format". A warning requester will appear. Click "Format".
+
+Please note that if you booted from a "Modules" disk, you may be able 
+to format volumes by double clicking on the "SYStoInstallDisk" icon 
+and after several disk swaps with the "Install3.2" disk you will be 
+able to successfully perform the procedure outlined above. 
+
+25. Now the partition is ready to store files.
+
+
+
+2.2 * How do I setup a new drive with HDToolBox? I do not see the
+      drive in the selection box at all; what is wrong?
+
+HDToolBox is a little bit old-fashioned, we know. To configure a new 
+drive:
+
+   1. Check the tool types. There should be one reading 
+      SCSI_DEVICE_NAME=scsi.device 
+      
+   2. Verify that scsi.device is the proper driver interface name that 
+      that your disk controller uses. If not, adjust it accordingly.
+   
+   3. Click on "Change Drive Type".
+   
+   4. A list of known drive types appears. Click on "Define New".
+   
+   5. Click on "Read Configuration".
+   
+   6. Click on "Continue".
+   
+   7. Click on "OK".
+
+Now you are ready to partition the drive.
+
+
+
+2.3 * Long filenames--I was promised long filenames! How do I use them?
+
+Yes, indeed; you can get them, though you need to reformat your hard
+disk. Select "DOS\7" as the file system. The identifier for this is
+0x444f5307 in HDToolBox. Or, just select the check box for "long 
+filename support". A similar check mark will also appear in the Format 
+program.
+
+This will allow you to use filenames as long as 107 characters; and
+no, it will not work without re-installation.
+
+
+
+2.4 * But Workbench still limits my filenames to 30 characters!
+
+Please check Workbench Preferences, in SYS:Prefs. You can set a
+limit there. Of course, in the end, it's the file system that decides
+whether a file name is shortened.
+
+
+
+2.5 * I read something about a setting called "Max Transfer", which is 
+      a value I need to manually adjust according to my system. How do 
+      I set it up?
+
+After some back and forth trying to solve this issue, fortunately 
+enough, the HDToolBox "max transfer" value is no longer required on 
+the built-in scsi.device driver of 3.2, and also on drive interfaces 
+made by the manufacturer formerly known as "GVP".
+
+In the case of other third-party drive interface hardware, please 
+consult the corresponding manual to determine the recommended max 
+transfer setting. 
+
+That said, please bear in mind that we also publicly made available 
+two vendor specific FAQs (GVP-FAQ.readme and PP&S-040-FAQ.readme) 
+which address this and many more issues.
+
+
+
+2.6 * When mounting the CD file system on an XSurf IDE device, reading
+      large DVDs results in a "-3" error being shown.
+
+Unfortunately, the XSurf IDE neither speaks TD64 nor NSD64, and hence 
+cannot access files beyond the 2 GB barrier without a bit of help. For 
+this little help, open the mount file of the CDFS, and add the 
+following tool type to the CD0 icon:
+
+SCSIDirect = 1
+
+Then reboot the machine. This instructs the CD file system to use SCSI 
+commands rather than trackdisk commands to address the disk, and with 
+that, the XSurf IDE can access data beyond the barrier.
+
+
+
+2.7 * My Amiga now takes about 10 minutes to boot my new 3.2 64 GB 
+      partition. What is going on?
+
+For media of this size, on a system that is slow, it is generally 
+advisable to use larger block sizes (i.e. not 512 bytes/block which 
+was the default, but at least 4096 bytes per block, i.e. one block is 
+8 sectors). This not only helps to speed up the process, but it also 
+helps flash media organize memory in larger blocks, in addition to 
+help modern hard disks which may have physically larger blocks as 
+well, while providing only an emulation of 512-byte blocks to the 
+outside world to keep legacy systems happy.
+
+
+
+2.8 * How can I make HDToolBox estimate the block size of my new
+      drive?
+
+With OS 3.2, HDToolBox now comes with the ability to estimate block 
+size defaults which are better suited to the size of the drive. 
+
+Please always remember on any new drive to first activate this 
+estimation procedure by following these steps:
+
+           1. Click on 'Change Drive type'. 
+
+           2. Click on 'Define new...'.
+
+           3. Click on 'Read configuration'. If a dialog box opens, 
+              select 'Continue'.
+
+           4. Exit the Define/Edit Drive Type window by clicking 'Ok' 
+              and yet again on the other 'Ok'. If a dialog box opens, 
+              select 'Continue'.
+
+
+
+2.9 * I am trying to format and/or validate my 32 GB drive and I can't; 
+      the system gives me an error saying that there is not enough 
+      memory, but I have 8 MB of RAM. What is happening?
+
+The error message says it all: Not enough memory. To validate a 32 GB 
+volume you may need around 16 MB of memory. That's not new--it's 
+always been this way, with all flavors of FFS. What's new is that it 
+gives an actual error message instead of just sitting there with a 
+non-validated partition.
+
+With an Amiga emulator (e.g. WinUAE) you can see the magic: just add 
+the memory. You don't even need to reformat the partition, it will 
+validate automatically.
+
+After that, you can use the card in your Amiga with less memory. But 
+beware of invalidating the partition, in which case you will once 
+again get the same error message.
+
+A permanent workaround is to reformat the partition with a larger
+block size. Unfortunately, this requires copying all data from the
+affected partition to some other place, tune the block size with
+HDToolBox, reboot, format the partition, and copy the data back. There
+is unfortunately no non-destructive mechanism. 
+
+To estimate the amount of free memory required to validate a volume,  
+you can perform the following equation:
+
+((S / B) / 32) * 8 = Free memory required for validation
+
+  S  is the volume size in bytes
+  /  is the division sign
+  *  is the multiplication sign
+  () are parentheses required to solve the expression inside first
+  B  are the bytes per block as set by HDToolBox. Sizes start at 512 
+     and are capped at 65536 bytes
+
+Make sure that you round up the numbers before dividing as we don't 
+want floating point numbers getting in the way.
+
+Examples:
+
+A 500 MB partition with 512 bytes per block = 256 KB of RAM required
+A 1 GB partition with 4096 bytes per block = 64 KB of RAM required
+A 1 GB partition with 512 bytes per block = 0.5 MB of RAM required
+A 64 GB partition with 512 bytes per block = 32 MB of RAM required
+A 64 GB partition with 4096 bytes per block = 4 MB of RAM required
+
+So always use the bigger blocks you can afford as you will save more 
+RAM at the expense of storage space. 
+
+
+
+2.10 * Should I defragment my drives?
+
+If you are using flash media you should not defragment those volumes 
+at all. This applies for example, to Compact Flash cards (CF), Solid 
+State Drives (SSD), Secure Digital cards (SD), MicroSD cards (TF), etc. 
+
+This is because flash media has a limited write lifespan due to its 
+nature. In addition, flash storage media uses random access, and this 
+means that it really does not make any difference where data blocks 
+are physically located; they will all take the same time to be 
+accessed, whether they are contiguous or not.
+
+On magnetic storage devices like traditional hard disks, defragmenting 
+makes sense, and provides performance improvements, but you have to be 
+careful that the tool you are using is both compatible with the file 
+system and the size of drive to which you are going to apply that 
+operation. 
+
+Please carefully read the defragmentation's program manual to 
+understand its limitations in this regard, because otherwise you will 
+risk destroying your precious drive data.
+
+In particular, many (dated) programs will not be able to work on
+partitions that exceed the 4GB limit.
+
+
+
+2.11 * What is a "SuperFloppy"?
+
+It is a removable medium like a floppy disk; just larger. Examples are
+the ZIP disk, the Jaz drive and the LS-120 SuperDisk. 
+
+Like floppies, SuperFloppies do not use partitions; the entire medium 
+stores data. They do not make use of the Rigid Disk Block (RDB). They
+may also come in variable sizes. And like floppies, the Amiga file
+systems, when used with the ones we prepared, are smart enough to adapt
+themselves to the size of the medium.
+
+
+
+2.12 * How do I mount a SuperFloppy?
+
+You need to use a mount file. In particular, the following entries
+need to be set:
+
+LowCyl         = 0          ; there is no RDB
+Device         = <name of the exec device, e.g. scsi.device>
+Unit           = <unit number, e.g. the SCSI ID>
+Flags          = 0          ; typically, depends on the device
+SuperFloppy    = 1          ; This turns on SuperFloppy support
+DOSType        = 0x444f5303 ; for FFS INTL 
+FileSystem     = L:FastFileSystem
+Activate       = 1
+
+The file system will figure out all remaining parameters from the
+device.
+
+
+
+2.13 * How do I properly create CrossDOS mount files? I have no clue.
+
+The following entries need to be present in the mount file:
+
+FileSystem      = L:CrossDOSFileSystem
+DOSType         = <see below>
+
+The DOSType can be one of the following:
+
+DOSType         = 0x4D534400
+
+This is a "FAT SuperFloppy" (see also below) meaning that there is no
+partition table on the device, and the entire device is used for the
+file system. For those of you that use Linux, this is equivalent to
+mounting on top of "/dev/hda" or "/dev/sda" or the like.
+
+DOSType         = 0x4D534800
+
+This is a "FAT partition", meaning that there is a partition table on
+the device CrossDOS should interpret. It also means that CrossDOS 
+needs some information on "which partition it should use". Here 
+CrossDOS follows a rather unusual convention of using the last letter 
+of the device name, with "C" as the last letter indicating the first 
+partition, "D" the second and so on. So if the device has the above 
+DOSType, and is named "DH0C", then that is the first partition on the 
+target device.
+
+For those of you who know Linux, this DOSType is equivalent to
+mounting on top of "/dev/hda1" or "/dev/sda3" or the like.
+
+
+DOSType         = 0x4D534800
+SuperFloppy     = 1
+
+This is, by convention, the same as "DOSType = 0x4D534400", i.e.
+disabling the partition interpretation and running CrossDOS on top of
+the device directly.
+
+DOSType         = 0x46415401
+
+This is a legacy DOSType that should not be used, following the
+(unfortunately broken) convention by FAT95. It indicates a partition
+mount (same as 0x4D534800) where the last digit of the above code
+indicates the partition.
+
+Why should this not be used? Very simple: It creates 256 different
+"DOSTypes", and hence for every partition requires loading another
+copy of CrossDOS in memory. Hence, *avoid*.
+
+Note: CrossDOS supports long file names, the mount flags "EnableNSD", 
+"DirectSCSI", Fat32, Fat16, Fat12 and Fat8.
+
+
+Additional hints:
+
+*) Typical USB sticks (a.k.a. "flash drives" or "thumb-drives") are 
+usually shipped with a partition table on it. That is, you need to 
+use:
+
+DOSType         = 0x4D534800
+SuperFloppy     = 0
+
+and a device name that ends with "C" (as there is usually only one
+partition on it).
+
+*) Typical floppies do not have a partition table, hence:
+
+DOSType         = 0x4D534400
+
+However, as MS-DOS floppies also use a different encoding on the 
+hardware level, the "trackdisk.device" will not do. Instead, use the 
+"mfm.device":
+
+Device          = mfm.device
+Flags           = 1
+Surfaces        = 2
+SectorsPerTrack = 9
+SectorSize      = 512
+Reserved        = 1
+Interleave      = 0
+LowCyl          = 0
+HighCyl         = 79
+
+
+
+2.14 * Why is it that HDToolBox does not allow me to use my CF (Compact 
+       Flash) card?
+
+If the HDToolBox Tool Types are properly set, then this is not an 
+issue with HDToolBox. It happens because the host adapter does not 
+report the card as a "random access device". This is the only device 
+type that allows RDBs. 
+
+Simply find another CF (Compact Flash) adapter that supports it. This 
+feature is sometimes referenced as "True IDE" by some manufacturers.
+
+
+
+2.15 * Is there a way to completely dismount a device?
+
+A user can now completely and *cleanly* dismount a device by following 
+the example below:
+
+        MOUNT HD5: SHUTDOWN && ASSIGN HD5: DISMOUNT
+
+The ASSIGN DISMOUNT command will typically leave the handler running, 
+while MOUNT SHUTDOWN attempts to shut it down. Note that not all 
+handlers can be shut down, though those coming with 3.2 should 
+support it, including CrossDOS, CDFS, the FFS, the port-handler, the 
+queue-handler, the aux-handler and the con-handler.
+
+
+
+2.16 * Is it possible for AmigaOS to use Mac drives?
+
+Intel, PowerPC and Classic (68k) Macintosh computers used a file 
+system called Hierarchical File System (HFS). The AmigaOS 3.2 
+CDFilesystem now includes support for mounting HFS CD-ROMs, which 
+makes it an ideal partner for Mac emulators and also for owners of 
+these vintage systems.
+
+We have already included a mount file for this purpose in:  
+SYS:Storage/DOSDrivers/MACCD0
+
+
+
+2.17 * Should "SCSI Direct Transfer" always be enabled in HDToolBox?
+
+The SCSI Direct standard has been in place since the release of OS 2.0 
+and the Commodore A2091/A590 controller interfaces. Therefore, most 
+third party disk controller products updated or (after that time) 
+added support for the standard in their provided driver. 
+
+Although there are newer controllers which may also support the later 
+TD_64 or NDS 64-bit API extensions, this SCSI Direct communications 
+method enjoys the widest support. It is therefore recommended to be 
+enabled for use with the OS-provided FastFileSystem (FFS) in AmigaOS 
+3.1.4 from 2018 and later updates.
+
+
+
+2.18 * What is the problem in using different DOSType partitions?
+
+If you are using several partitions and these have different DOSType 
+values, then the additional file system entry must be ADDED and NOT 
+UPDATED for the other DOSTypes. Please be careful and use the 
+correct operation, which is ADD, or otherwise you will risk losing 
+data.
+
+
+
+2.19 * Why does my existing SmartFilesystem (SFS) partitions show up 
+       twice?
+
+That is a bug of SmartFilesystem that causes ghosted "DHx:SFS\0" icons 
+on Workbench when using modern AmigaOS versions. A patch to fix this 
+can be found at: http://www.doobreynet.co.uk/amiga.html
+
+
+
+2.20 * Why does HDToolBox limit partitions on the A2091/A590 to 4 GB?
+
+This happens because even the latest version 7.0 ROM for the 
+A2091/A590 controller does not support partitions greater than 4GB. 
+
+HDToolBox will automatically limit the allocable drive capacity to 
+4GB. This is to protect users who may not have a file system 
+supporting "SCSI Direct Transfer", or who don't know how to enable 
+this SCSI Direct option with the FastFileSystem. 
+
+However, if you feel confident that you have both, then you can 
+override this protection by setting "LIMIT_4GBYTE=OFF" in the 
+HDToolBox's Tool Types. Another option is to purchase the latest 
+version of the third-party GuruROM upgrade for the A2091/A590.
+
+
+
+2.21 * Why did my 4x IDE adapter stopped working when I installed 3.2?
+
+AmigaOS always supported 2 devices on the IDE port. To be able to 
+use 4, a third-party software patch called IDEFix was often used. The 
+problem is that the IDEFix software does not work correctly under many 
+OS versions. In fact, on many scenarios, it will most likely fail.
+
+A possible solution involves downloading "AtapiMagic" from Aminet:
+
+https://aminet.net/driver/media/AtapiMagic.lha
+
+Unarchive it, and place it in LIBS:modules. To be able to use it, just 
+open your Startup-sequence with a text editor where you will find:
+
+If Exists C:LoadModule
+   C:Version exec.library version 47 >NIL:
+   If Warn
+      C:LoadModule ROMUPDATE
+   EndIf
+EndIf
+
+Just modify those six lines with the following ones:
+
+If Exists C:LoadModule
+   C:Version exec.library version 47 >NIL:
+   If Warn
+      C:LoadModule LIBS:modules/AtapiMagic ROMUPDATE
+   Else
+      C:LoadModule LIBS:modules/AtapiMagic
+   EndIf
+EndIf
+
+Save the Startup-Sequence and reboot your machine for the changes to 
+take effect.
+
+If everything went fine, you should now be able to use 4 IDE 
+interfaces without the need of any third-party software.
+
+
+
+2.22 * My CD-ROM drive does not work on my SCSI/IDE bus when it is set 
+       to unit 0. What is the problem?
+
+Avoid this configuration. Scsi.device will just shoot itself in the 
+foot (and then aim higher) trying to get an RDB off the CD-ROM drive.
+
+The problem is with the approach the scsi.device code takes to find 
+devices, coax these into producing useful information about 
+themselves, observing funny timeouts along the way, retrying 
+operations if necessary and somehow booting the system off an RDB 
+before the user's patience runs out.
+
+We advise to always put your boot disk on unit 0 (this should be a 
+hard disk, a SD/CF card adapter, or similar fixed disks), and if you 
+have to have more of the same kind of mass storage devices attached, 
+put them on units 1, 2, 3, etc. in consecutive order. Removable 
+devices such as CD-ROMs should be last. Make sure that the HDToolBox 
+settings are such that the scsi.device stops scanning after it has 
+found the last of such fixed disk devices.
+
+
+
+2.23 * I have issues partitioning my Ultra Wide SCSI disks on my 
+CyberStorm PPC/CyberStorm Mk3 accelerator. What can I do?
+
+The CyberStorm PPC and CyberStorm Mk3 series of accelerators have a 
+built-in Ultra Wide SCSI controller based on the NCR 53C770 chip. 
+
+Their built-in firmware uses a custom API to be able to manage their 
+Ultra Wide SCSI capabilities. Therefore, we suggest you avoid 
+HDToolBox and instead use the tools which were provided by its 
+manufacturer, Phase 5, which are available from:
+
+https://aminet.net/package/driver/media/CS-SCSI-Tools-31
+
+
+
+
+3. CPU Support and SetPatch
+___________________________
+
+
+
+
+3.1 * I manually installed (and now get a warning from) SetPatch on 
+      unknown options.
+
+The OS 3.9 SetPatch included additional functionality that is no
+longer present in OS 3.2 and has been moved to other
+programs. The line in the Startup-sequence calling SetPatch should
+only read as follows:
+
+SetPatch >NIL:
+
+You need to correct your Startup-sequence accordingly. In particular,
+NOROMUPDATES and NONSDPATCH are no longer options SetPatch supports.
+
+
+
+3.2 * Where did the extended functionality of SetPatch go?
+
+OS 3.9 SetPatch included a ROM-Updates functionality to install new
+ROM modules on top of the old ones. This functionality is now
+implemented by a separate program called "LoadModule". It is included
+in the C: directory of the Modules disk.
+
+There is also a new ROM module called "System-startup" that alleviates 
+LoadModule of some its loading duties.
+
+OS 3.9 SetPatch also included "NSDPatch," a feature to patch-in a
+Commodore-only command set for addressing large devices, while most
+third-party devices supported the earlier TD64 specification. This
+extension is no longer necessary; see above.
+
+If you want to continue using the NSDPatch approach, you'll find the
+NSDPatch program in the C: directory of the HDSetup3.2 disk. Copy
+the program to the C: directory of your boot disk, and insert NSDPatch
+into your Startup-sequence right after SetPatch.
+
+However, as stated above, this step is (typically) no longer
+necessary.
+
+
+
+3.3 * Does my 68060 work out-of-the-box now or do I still have to hack
+      the ROM?
+
+You don't have to hack the Kickstart ROM from 3.1.4 nor 3.2, but you 
+still need to install a proper CPU library. See below.
+
+
+
+3.4 * When booting the system, the Startup-sequence stops and gives me 
+      a warning about an incomplete installation. What is missing?
+
+The CPU support library is missing. In particular, 68040 and 
+68060-based systems need to have the 68040.library or the 
+68060.library in LIBS: Without them, the system cannot work reliably. 
+Some systems have the 68040.library or 68060.library in their 
+accelerator ROM. On such systems, no installation is necessary, and 
+you will not get any warning.
+
+For 68030-based systems, we recommend a 68030.library as well, as 
+otherwise the system can deadlock in a couple of situations. This is 
+due to a hardware errata/specification change of Motorola. Installing 
+this library will also allow you to enable the data cache when using 
+bridge boards.
+
+
+
+3.5 * Where do I find the CPU libraries, and how do I install them?
+
+Please remember: Never install your CPU libraries during the 
+AmigaOS installation procedure. Do that before or afterwards.
+
+These CPU libraries should have come with the support disk from your 
+accelerator card vendor. The installation procedure depends on the 
+vendor, but typically requires you to copy the CPU library from the 
+install disk to LIBS: with a command such as the following:
+
+copy df0:libs/680?0.library to LIBS:
+
+(Please note that the ? in the filename above is not a literal value)  
+
+We also suggest checking your vendor's documentation or FAQ. In 
+particular, we included a FAQ that covers general MC68020-MC68060 CPU 
+generic environments (CPU-FAQ.readme), another one for GVP boards 
+(GVP-FAQ.readme) and one for the PP&S A2000 68040/28 board 
+(PP&S-FAQ.readme). All of them are placed in the "FAQs" folder of the 
+AmigaOS 3.2 CD-ROM.
+
+
+
+3.6 * ...but I lost my original support disk of my accelerator board!
+
+Oh well. There is a generic replacement that is offered when going 
+through the AmigaOS installation procedure that works, in general, 
+quite well.
+
+
+
+3.7 * Where do I find a 68030.library? My board did not come with one.
+
+See above for where to find one. Boards didn't usually come with one
+because the errata was only found years after the introduction of the
+68030. Some legacy MMU tools also inadvertently prevented the issue.
+
+
+
+3.8 * Couldn't you just package the CPU libraries with the OS?
+
+We would love to, but the libraries are (in general) vendor specific,
+and most vendors are no longer in business. While the generic
+replacement we have included as an installation option works fine in 
+general, it may not work for your particular board.
+
+Please note that we do not have CPU libraries for all vendors on file,
+let alone the permission to redistribute them. However, a web search
+can often help in locating missing CPU libraries, as well as notable
+Amiga hardware reference websites. Also check the vendors' or
+third-party FAQs.
+
+
+
+3.9 * Couldn't you just ship the Commodore 68040.library?
+
+See above. It's old, may not work for your board, and we don't want to 
+damage your installation. However, for the boards that were originally
+delivered with it, the generic replacement we have included as an 
+optional installation alternative works fine without any further 
+tweaks.
+
+
+
+3.10 * What about the dummy 68040.library? My old turbo board manual 
+       mentions that I have to install it, and rename it.
+
+Disregard this. OS 3.2 does not require any dummy 68040.library. It 
+detects the right CPU library itself and does not require a dummy.
+
+In particular, for a 68060 processor, the 68060.library is sufficient 
+(plus, the mmu.library if you use a MuLib-based processor library).
+
+
+
+3.11 * I get a note from the CPU command on CPU errata. What should 
+       I do?
+
+Erratas are known defects in the CPU, typically found after
+introduction to market. Unfortunately, not all CPU libraries are able
+to work around all errata. You did install a CPU library, didn't you?
+
+For the 68030: Install a 68030.library. This will avoid the "CIIN
+disabled on write" errata.
+
+For the 68060: If you cannot use the generic 68060.library mentioned
+above, and must use your OEM provided library, add the following 
+command to the Startup-sequence:
+
+CPU DISABLELOADSTOREBUFFERBYPASS
+
+Which disables the most common errata/issue with earlier 68060 CPU 
+masks.  
+
+There is also an (F6) Errata that applies to the earliest 68060 CPU 
+mask which has no resolution option. It is a flaw that was found with 
+a unique sequence of floating point instructions, and it produces an 
+incorrect mathematical result. Most software makers with inline 
+floating instructions have coded around it. Common 680x0 program code 
+never encounters it. It is suitable to add >NIL: to the CPU command 
+to skip the error in most cases.
+
+
+
+3.12 * Why is it that when I use the 68030.library, 68040.library or 
+       68060.library from the MMULib package some extra megabytes of 
+       memory are consumed?
+
+Whether it is 5 MB or some other number that gets used, depends on how 
+much main memory you have. The 5 MB are for the MMU tables the 68040 
+or 68060 CPU require. The "CPU Checkinstall" in the Startup-sequence 
+should actually detect the case when the 68040.library or 
+68060.library are not loaded.
+
+Less memory goes away for the 68030, though. Its MMU has a feature 
+called "early termination page descriptors" that can save quite a bit 
+of memory by avoiding duplicated table descriptors. Unfortunately, 
+Motorola stopped supporting them with the introduction of the 68040.
+
+
+
+
+4. Performance and compatibility
+________________________________
+
+
+
+
+4.1 * The Pointer and/or Locale Prefs render incorrectly on my screen.
+
+Yes, we do test programs before delivering them. What you see here is
+not a bug in either the Locale or the Pointer preference program, but 
+a bug in CyberGraphX not implementing the "minterms" correctly. The 
+same program works nicely on a native or Picasso96 screen.
+
+So if you depend on this particular RTG system, you'll have to live 
+with it or request a fix to CyberGraphX from its vendor(s). 
+
+Note: Do not install two different RTG systems on the same system, as 
+this will most likely cause conflict between them. 
+
+
+
+4.2 * Why is SetPatch so slow?
+
+Since AmigaOS 3.2, SetPatch has many more jobs than ever before. It 
+doesn't just load the corresponding CPU libraries and builds MMU 
+tables.
+
+Also, there is an IDE bus scan that is necessary for some hardware to 
+ensure its proper operation. 
+
+So all these factors result in a perception that the performance has 
+been negatively impacted, while in reality we are favoring both  
+reliability and flexibility.
+
+Please consider that both the Prometheus and Mediator PCI busboard 
+expansions occupy 512 MB of address space. Assembling MMU tables for 
+such a huge address range takes time, since the hardware does not log 
+on to the system with the size it really needs, so the maximum size 
+is used.
+
+To overcome this, follow the MMULib package documentation to modify 
+your ENVARC:MMU-configuration file to limit the address used to the 
+really necessary size for the cards installed. So in this way, no 
+excessive MMU tables will be built by your MMULibs and the system will 
+boot considerably faster.
+
+
+
+4.3 * OS 3.2 is terribly slow!
+
+You are using a disk-based installation, right? Well, LoadModule needs 
+to load the updated ROM modules into some reset-resident memory. In a 
+worst-case scenario, this is done via Chip RAM, and yes, access to 
+Chip RAM is slow.
+
+However, you can do the following:
+
+1. Buy a physical ROM and install it, thus eliminating the need for
+   replacing ROM modules by RAM modules.
+
+Or, in case your system is equipped with an MMU:
+
+2. Install the MMULib option and add the following
+   command below SetPatch in the S:Startup-sequence:
+
+MuProtectModules ON REMAP
+
+This will remap the ROM modules from their current location to the 
+fastest available RAM and give you some extra speed. Bear in mind 
+though, that using this option will use RAM which you won't be able to 
+free.
+
+If you still feel certain Workbench operations are slow, you can 
+additionally move out components of the WBStartup drawer to some other 
+drawer and reboot your amiga. The firsts candidates for this should be 
+RAWBInfo and AsyncWB. Doing this will of course remove features 
+associated with those components.
+
+
+
+4.4 * The system crashes as soon as I play a stereo 8SVX audio file.
+
+Please check whether or not you have the svx.datatype (yes, really 
+"svx", not "8svx") installed. Unfortunately, this data type is not 
+compatible with the way 3.2 and OS 3.9 sound data types handle stereo
+data. Just remove it. 8svx will play stereo data perfectly fine now.
+
+
+
+4.5 * What about all those widely used system patches? Can I use them?
+
+At the time of this writing, we are proud to tell you that many of 
+those hacks are no longer necessary!
+
+Among these patches you will find: 
+
+RamLibFix, PatchRAM, StackAttack, AmberRAM, PrepareEmul, RsrvWarm, 
+SwazInfo, RomFixes, AssignWedge, AssignP, AssignZ, HappyENV, 
+Env-Handler, ZShell, PowerWindows, PowerWindowsNG, IconifyGadget, 
+wIconify, FastLayers, Quicklayers, HideWBTitle, KillTitle, FreeWheel, 
+IntuiWheel, bk_rangercheck etc.
+
+Of course, many of these programs also contained hacks to do things the
+OS was not programmed to do in the first place (Like MCP, SystemPatch,
+MultiCX, etc.). We did not implement some of these hacks, because they 
+do not follow proper Amiga coding rules and do their stuff in a 
+"dirty" way, causing potential harm to the system. You are welcome to 
+try them, but don't complain to us if they end up crashing your 
+machine. 
+
+And also be extremely careful not to activate a patch for a fix, 
+because most patches don't do proper checking and will probably end up 
+putting your system in an unstable condition. Being cautious and 
+conservative is always a wise choice.
+
+
+
+4.6 * Can I use the FBlit patch with AmigaOS 3.2?
+
+Yes you can; however we don't recommend you use it because it does not 
+follow the Amiga development guidelines, which results in an unstable 
+system.
+
+Instead, we suggest you use Picasso96 together with the "Native" 
+driver (both available on Aminet). This will bring the benefits that 
+FBlit provided, but on a clean, AmigaOS-friendly manner. And not only 
+that, but it will also enable you to use applications that only worked 
+with Retargetable Graphic Cards (RTG), despite not having one.
+
+
+
+4.7 * I am using Picasso96 with the "Native" driver, both downloaded 
+      from Aminet, and I get some issues displaying transparent images.
+      
+This is a known issue of older Picasso96 (P96) software, where 
+bitmap.image will not work correctly for transparent images on non-RTG 
+screens.
+
+The solution is simple: upgrade to latest P96 (available from 
+Individual Computers) and everything will be fine. 
+
+Note: Do not install two different RTG systems on the same system, as 
+this will most likely cause conflict between them. 
+
+
+
+4.8 * How can I display HAM or EHB animations on my graphics card?
+
+Setting the env variable "classes/datatypes/animation/NoHAMorEHB"
+to 1 enables the conversion of HAM and EHB animations to a standard 
+mode on the fly.
+
+
+
+4.9 * Is there a way to speed up CDXL animations?
+
+The CDXL data type has a couple of environment variables that can 
+be configured to make the most out of it:
+
+Prefs/Env-Archive/Classes/DataTypes/animation/cdxl/cdspeed
+  Sets the playback speed in CD-ROM speed units.
+  From 1 to 63. x1=150KB/s. When not set, it defaults 
+  to the more common 300 KB/s or x2 (Amiga CD32)
+
+Prefs/Env-Archive/Classes/DataTypes/animation/cdxl/speed
+  Sets the playback speed in KB/s. This value when set 
+  overrides the previously mentioned 'cdspeed' variable.
+  
+Prefs/Env-Archive/Classes/DataTypes/animation/cdxl/fps
+  Sets the playback speed in frames per second.
+  From 1 to 60. Setting it to 12 will probably play all CDXL files. 
+
+For slow machines, playback on a custom screen is significantly faster 
+than in window mode.
+
+
+
+4.10 * How can I make anims go faster?
+
+The anim.datatype, has the following environment variables to 
+configure its playback:
+
+Prefs/Env-Archive/classes/datatypes/animation/anim/fpslimit
+  Limits the max FPS for slower machines to prevent frame skipping.
+
+Prefs/Env-Archive/classes/datatypes/animation/anim/fps
+  Forces user defined FPS for playing the file at given speed.
+  It overrides its 'fpslimit' variable.
+
+
+
+4.11 * Why is an AmigaGuide that has built-in images consuming so much 
+       Chip RAM?
+
+The new features of amigaguide.datatype allow the display of pictures 
+in AmigaGuides. This novel feature uses the system-installed 
+data types for this purpose. And some data types don't make efficient 
+use of the system memory. This is especially the case for images that 
+have transparency set. So either removing the transparency and/or 
+replacing the affected data type may be viable solutions.
+
+Also pay attention to the dimensions and amount of colors that each of 
+these images contain, as they need to be factored in the performance 
+equation when displaying these pictures.
+
+
+
+4.12 * ClassAction and IconEdit from 3.9 do not install/work under 
+       AmigaOS 3.2. What is the problem?
+
+These are AmigaOS 3.5/3.9 exclusive programs. Both the file manager 
+named ClassAction (please do not confuse it with ClassAct) and the 
+IconEdit program from AmigaOS 3.9 do not work with AmigaOS 3.2 because 
+they require the third-party resource.library which seems to be only 
+available in both AmigaOS 3.5 and AmigaOS 3.9.
+
+But if you manually copy that library to LIBS: you should be able to 
+use these two programs without issues.
+
+ 
+
+4.13 * Final Writer 3 does not work on my system. What can I do?
+
+It is a known fact of life that some programs are buggy due to 
+questionable design choices made by their developers. This is the case 
+for Final Writer 3 where a custom-made dialog is used to save files. 
+Unfortunately, this procedure is buggy as it tries to access memory in 
+an illegal way.
+
+The workaround is to update that software to "Final Writer 97". We 
+also had several reports of other versions of Final Writer, which do 
+not have this custom save dialog and seem to work just fine.
+
+
+
+
+5. Intuition Library V47
+________________________
+
+
+
+
+5.1 * What is the V47 intuition.library?
+
+It is an update to the system library responsible for the GUI that 
+includes a couple of new features. 
+
+Among them, there is a feature to allow you to drag windows out of the 
+screen. It is now installed by default.
+
+Still, it should be activated by the Preferences editor IControl 
+that now has a toggle option for out-of-screen window dragging, a 
+feature introduced in Intuition with the previous OS 3.1.4 update.
+
+That said, window moves now "stick at screen borders", i.e. you have 
+to move "harder" if you want to move them across the screen boundary. 
+"How hard" is resolution dependent such that you should always travel 
+approximately the same distance with the mouse.
+
+Courtesy of the new Intuition, by keeping the SHIFT key depressed
+and clicking on the window zoom gadget, that window will be maximized.
+
+Furthermore, it is now possible to resize windows by dragging any of 
+their borders. Additionally it is now possible for gadgets to specify 
+a mouse pointer when over a window. Note that all of these new 
+features first need to be enabled in IControl Prefs.
+
+And last, but not least, Intuition allows windows to be iconified and 
+hidden by clicking on the new Iconify gadget.
+
+
+
+5.2 * Why is my Amiga exhibiting graphic glitches and corruption?
+
+This is neither a hardware nor an AmigaOS issue. It is the fault of 
+the CyberGraphX RTG driver software that handles your graphics card.
+
+Unfortunately, this piece of software depends on the precise layout of 
+undocumented intuition internals, and it fails to work when these 
+change. So please avoid using CyberGraphX and use Picasso96 instead. 
+
+However, if you still want to keep using CyberGraphX you can, but 
+limitations may apply.
+
+Note: Do not install two different RTG systems on the same system, as 
+this will most likely cause conflict between them. 
+
+
+
+5.3 * Some windows display a weird new gadget. What is this?
+
+Intuition now has the ability to iconify and hide windows. Be warned 
+that it is currently not VisualPrefs-friendly. 
+
+Shell, Clock and MultiView make use of this new iconification feature 
+(Multiview’s window, but not its file requester). Also, all Prefs and 
+Commodities are equipped with this function too. In the particular 
+case of Commodities, their "iconify gadget" works a bit differently by 
+actually closing the window down, and not just hiding it.
+
+The ICONIFY keyword, compatible with the ViNCEd Shell-console 
+replacement program will give new console windows an iconify gadget. 
+You can request it with a path like this:
+
+CON:leftedge/topedge/width/height/title/CLOSE/ICONIFY
+
+Be aware that iconification only works in CON: mode (but not in RAW: 
+mode).
+
+For this purpose, C:ConClip has been updated to accommodate for the 
+loading of the icon that is used by the console for its iconification. 
+This is ENV:sys/def_shell.info, or SYS:Shell.info, or 
+SYS:System/Shell.info, or SYS:System/CLI.info, in this order, using 
+the first match. If none is found, the con-handler will not be able to 
+install an iconify gadget.
+
+
+
+5.4 * I don't like the new mouse pointer behavior where it changes 
+      its image when it finds window resize gadgets. Is there a way to 
+      go back to the old way of doing things?
+
+We know that old habits are hard to kill. If you want to quickly 
+restore the mouse operation to be exactly like the 'good old times' 
+then open a Shell/CLI and type:
+
+rename envarc:sys/Pointer.prefs Pointer.bak
+
+Then reboot your machine, and you will be able to have the vintage 
+pointer operating at its former glory.
+
+
+
+5.5 * Pointer over windows is noticeably slower changing the pointer. 
+      How do I solve this?
+
+This happens because Intuition tries to avoid using all of the Amiga's 
+time reflecting pointer changes. If you have a powerful CPU you may 
+want to tell Intuition to wait shorter periods between testing for 
+pointer changes.
+
+To modify this, open IControl and adjust the slider "Pointer Hover 
+Max Lag:" (Low uses more CPU) to the desired position where you feel 
+there is an adequate balance between CPU usage and pointer change 
+reaction time.  
+
+
+
+5.6 * Why is it that my opaque solid window moving patch does not work 
+      anymore?
+      
+Patches which implement a real-time solid window moving and resizing 
+hacks, are incompatible with the new intuition.library v47.
+
+Those patches are built upon assumptions in terms of rendering speed, 
+on how Intuition reacts to the changes, with further effects down the 
+line in the Operating System components which Intuition builds upon. 
+They work well enough most of the time, but there's more than one 
+obstacle in the Operating System's architecture to spoil the fun.
+
+When you resize or drag a window in this manner, every mouse movement
+winds itself through the Intuition event handling state machine,
+generating refresh and size change events on the fly, which in turn
+cause window refresh work to follow. These events tend to be out of 
+sync with your mouse movements, because that's how Intuition is 
+designed.
+
+This is slow going and there are side-effects, e.g. memory needs to be
+allocated for the underpinnings of the windows (layers and their 
+clipping/hidden portions) and some applications may end up spending 
+more time rebuilding/refreshing previously hidden areas than they 
+ought to.
+
+An alternative is to use the included intuition-old.library to replace 
+the new one. However, you must have in mind that downgrading to the 
+old intuition means losing all fancy new features like off-screen 
+windows, iconification, TextEdit, resize windows from all corners, set 
+border aspect ratios, between many other things. Furthermore, with 
+this old library you will have to deal with various bugs we have 
+already fixed in V47.  
+
+If you have already installed the OS, you can still go back to the old 
+intuition.library by selecting the "Execute command" from the 
+Workbench menu, and entering the following series of commands:
+
+rename LIBS:intuition.library to new-intuition.library
+rename LIBS:old-intuition.library to intuition.library
+
+And then, power cycle your Amiga for the changes to take effect.
+
+
+
+
+6. Printers
+___________
+
+
+
+
+6.1 * Which printer drivers do I need, and which driver supports which
+      printer?
+
+The following printer drivers are part of 3.2:
+
+NEC_Pinwriter:        NEC P5,P6,P7,P9 and P2200
+
+EpsonX_Old:           Epson EX,FX,JX,LX,MX and RX
+
+    This driver is deprecated. Use only if the regular driver does not
+    work. It is recommended for the old MPS 1230 made by Commodore.
+                      
+EpsonX:                Epson EX,FX,JX,LX,MX and RX
+
+    This is the preferred driver. Try the "old" variant only if this
+    one does not work.
+
+EpsonQ:                Epson LQ-800,LQ-850,LQ-1000,LQ-1050,
+                       LQ-1500 and LQ-2500
+
+Postscript:            Any PostScript printer should work with this.
+
+HP_LaserJet:           HP LaserJet, HP LaserJet+, HP LaserJet II, 
+                       HP LaserJet 500 and HP LaserJet 2000
+                       This printer driver supports resolutions up
+                       300x300 dpi, in grayscale only.
+
+HP_LaserJet_III:       HP LaserJet II+ and HP LaserJet III
+                       This printer driver also supports resolutions
+                       up to 300x300 dpi in grayscale, but enables
+                       compression of graphics for faster printing.
+
+HP_LaserJet_4:         HP LaserJet 4, HP LaserJet 5, HP LaserJet 6, 
+                       HP LaserJet 1100 and HP LaserJet 3100
+                       This printer driver supports resolutions up
+                       to 600x600 dpi in grayscale with compression
+                       enabled.
+
+HP_LaserJet_2100:      HP LaserJet 2100, HP LaserJet 4000,
+                       HP LaserJet 5000 and HP LaserJet 8000
+                       This printer driver supports resolutions up to
+                       1200x1200 dpi in grayscale with compression
+                       enabled.
+
+Newer HP LaserJet printers supporting PCL might work as well. 
+Available at the time of writing is the HP LaserJet Pro M402 series, 
+which prints fine using the HP_LaserJet driver and probably other 
+driver variants as well. You'll need a USB expansion or network card 
+plus lpr.device from Aminet to connect to these modern printers. Make 
+sure to redirect parallel.device to either usbparallel.device or 
+lpr.device. Our current preferences program has been updated to allow 
+selecting a custom target and unit number. 
+
+HP_DeskJet:            HP Deskjet, HP Deskjet+, HP DeskJet 310, 
+                       HP DeskJet 320, HP_DeskJet_500,
+                       HP_DeskJet_510, HP_DeskJet_520
+                       Resolutions up to 300x300 dpi grayscale
+                       with compression.
+
+HP_DeskJet_340:        HP Deskjet 340/340CM/340CBi, HP_DeskJet_550C,
+                       and HP_DeskJet_560C
+                       Resolutions up to 300x300 dpi in color or
+                       grayscale with compression. These printers
+                       print with four types of inks (CMYK).
+
+HP_DeskJet_400:        HP_DeskJet_200C, HP_DeskJet_400, 
+                       HP_DeskJet_400L, HP_DeskJet_420C, 
+                       HP_DeskJet_500C, HP DeskJet 540C,
+                       HP_DeskJet_550C, HP_DeskJet_560C, 
+                       HP_DeskJet_670C, HP DeskJet 672C, 
+                       HP_DeskJet_1200C
+                       Resolutions up to 300x300 dpi in color with
+                       compression. These printers print with three
+                       types of ink and use color ink to mix up black.
+
+HP_DeskJet_600:        HP Deskjet 600, HP DeskJet 610C/610CL, 
+                       HP DeskJet 612C, HP_DeskJet_660C, 
+                       HP DeskJet 680C, HP DeskJet 682C,
+                       HP DeskJet 690C, HP DeskJet 692C,
+                       HP DeskJet 693C, HP DeskJet 694C, 
+                       HP_DeskJet_695C, HP DeskJet 697C,
+                       HP DeskJet 810C, HP_DeskJet_812C, 
+                       HP_DeskJet_815C, HP_DeskJet_830C, 
+                       HP_DeskJet_832C, HP_DeskJet_850C,
+                       HP_DeskJet_855C, HP_DeskJet_870C, 
+                       HP_DeskJet_880C, HP_DeskJet_882C, 
+                       HP_DeskJet_890C, HP_DeskJet_1600,
+                       HP_DeskJet_1600C and HP_DeskJet_1600CM
+                       Resolutions up to 600x600 dpi in grayscale and
+                       300x300 dpi in color, with compression. These 
+                       printers use four ink types.
+
+HP_DeskJet_895C:       HP_DeskJet_895C, HP_DeskJet_970C, 
+                       HP_DeskJet_1100C and HP_DeskJet_1120C
+                       Resolutions up to 600x600 dpi in color or 
+                       grayscale. These printers print with four ink 
+                       types.
+
+Generic:               An ASCII only, text-only printer without 
+                       graphics support you may try if everything else 
+                       fails.
+
+
+
+6.2 * I have a printer that is not listed, but was supported with OS
+      3.1. What should I do?
+
+Just copy the printer driver from OS 3.1 to DEVS:Printers, and select 
+it from the Printer Preferences editor. OS 3.1 drivers will continue 
+to work fine with OS 3.2.
+
+
+
+6.3 * My OS 3.5/OS 3.9 printer drivers refuse to work with OS 3.2. 
+      Where is the problem?
+
+The problem is a common bug in the OS 3.5/3.9 drivers that stops them 
+from working in OS 3.2. In particular, the drivers return an 
+incorrect result code from their initialization function, and the 3.9 
+printer.device never cared about whether initialization succeeded or 
+not. This has been fixed in 3.2, with the side effect of OS 3.9 
+drivers no longer working. Note, however, that all models supported in 
+3.9 are also supported by native 3.2 drivers, so no harm is done.
+
+
+
+6.4 * I have an unsupported printer. What can I do?
+
+Well. Write a printer driver, for example. (-: Or, at least, try to 
+get a technical description from its vendor, and forward it to us. 
+Unfortunately, most consumer printers today are GDI-printers that use 
+a closed, proprietary protocol to communicate with the operating 
+system of a large US company only, so good luck. And no, we do not 
+have better access to technical manuals either.
+
+Note, however, that most printers nowadays fall into four categories:
+
+PCL-based printers, mostly from HP. These should work fine with one of
+the HP printer drivers.
+
+PostScript-based printers. These work fine with the PostScript driver.
+
+EscP-based printers. They work fine with the Epson or EpsonQ drivers.
+
+GDI printers. They don't work on anything but Windows, and their 
+vendors do not care about niche products like AmigaOS anyhow.
+
+
+
+6.5 * Where is the "print to file" printer driver?
+
+We don't have one, but none is needed either. Just run the "CMD"
+program which you can find in Sys:Tools. It will redirect printer
+output to a file. It will now also give you a file requester as soon
+as you start printing.
+
+
+
+6.6 * Do I still need TurboPrint?
+
+No; at least not for the printers supported by 3.2. But, if you have
+it, you can surely use it. With the exception of the bugs 3.2 fixed, 
+the printing system did not change.
+
+
+
+6.7 * Is there a way to use other device than the parallel port with 
+      my printer?
+      
+The Printer Preferences editor in AmigaOS 3.2 allows the user to enter 
+a custom output device for the printer and select a unit number.
+
+
+
+6.8 * Can I use multiple printers in AmigaOS 3.2? How?
+
+Yes, you can have as many printer units as you want, there is no 
+restriction in 3.2 compared to what 3.9 had to offer. Just proceed as 
+follows: Copy the printer preferences, open the information window on 
+the copy, and add the Tool Type "UNIT=1" (or whatever). This icon then 
+sets the preferences for the printer.device unit 1. Continue with as 
+many units as you want to have. 
+
+Also The printer.device now also reads printergfxN.prefs and 
+PrinterPSN.prefs for consistency when using multiple printers. For 
+this purpose, the PrinterGfx and PrinterPS preferences editors now 
+support the UNIT Tool Type and the UNIT command line argument.
+
+
+
+
+7. CLI/Shell and Tools
+______________________
+
+
+
+
+7.1 * Where is the PIPE program? I want to use pipes in my Shell.
+
+Nowhere. You no longer need it. Shell version 47 natively supports 
+pipes. The | symbol pipes the output of the left program into the 
+input of the right program, || merges the output of two programs 
+together, and ( ) group programs.
+
+In 3.2 there is also a new Shell operator && in addition to ||. While 
+|| is the concatenation operator, && is the "and" operator from bash. 
+It first executes the first command, and if this fails, it aborts. If 
+not, it executes the second command.
+
+Note the binding: "||" and "|" are "left to right associative", and 
+bind stronger than &&. That is.
+
+a && b | c
+
+means a && (b | c)
+
+whereas
+
+a || b | c
+means (a || b) | b
+
+i.e. "||" and "|" have a higher priority as operators.
+
+Also error handling has been improved. We now have a functional stderr. 
+So that means we can specifically redirect error streams. For example:
+
+list >blah
+
+will redirect error and regular output to "blah", just because this is
+how it always worked, but
+
+list >blah *>errors
+
+will redirect regular output to "blah", and error output to "errors".
+
+If you want errors on the console, but regular output on a file, use
+
+list >blah *>*
+
+Note that *> is the error redirection operator and * is the console.
+
+
+
+7.2 * I cannot interrupt pipes from the Shell, or programs continue to 
+      run if I interrupt a piped command sequence.
+
+Make sure the OS 3.2 Queue-Handler is in L:. Many third-party 
+variants do not operate correctly, or cannot interrupt pipes. The 
+3.2 Shell depends on the features of the 3.2 Queue-Handler.
+
+
+
+7.3 * Why doesn't Shell or Workbench respect the "h" protection bit
+      and hide the files whose "h" bit is set?
+
+Because "h" does not stand for "hide", but "hold". An executable file
+whose "h" bit is set is automatically made resident by the Shell on
+its first use. So you save all the "Resident" commands in the
+Startup-sequence. No, we did not invent this for 3.2, just included
+a compile time option in the Shell that was disabled for ROM size
+limitations before.
+
+
+
+7.4 * Where is C:Execute? It still works, but it is not there.
+
+The "Execute" command is built into Shell now. Hence, there is no need 
+to make this command resident anymore. The benefit is that Execute can 
+share some code with the Shell, saving some space.
+
+That said, we have included the old version in several special places 
+for backwards compatibility purposes (Install3.2 disk, DiskDoctor 
+disk, and the AmigaPE that is contained in the CD-ROM).
+
+
+
+7.5 * I 've heard of a new command called "history"; what is this?
+
+The "history" command is another new built-in Shell one. This command 
+lists the contents of the Shell history buffer, you can use the up and 
+down cursor keys to search within the history. Of course, this only 
+works if you use the built-in Shell, which works with the new v47 
+con-handler.
+
+Once you reach the end of the history, the Shell signals that (by 
+flashing the screen and/or generating a sound). You can use the Sound 
+Preferences editor to configure the type of signal the OS will 
+generate.
+
+
+
+7.6 * Are there any other new fancy Shell features in 3.2?
+
+Yes, Shell now has achieved the very handy TAB auto completion skill.
+This means that you can type a partial name of a program, variable or 
+path when using the CLI/Shell, and if you press the TAB key the system 
+will try to guess and complete it and add a space. If there is no 
+match the screen will flash/beep.
+
+Now if there are multiple matches found for, a series of actions will 
+take place depending on the TAB expansion modes of operation currently 
+selected by setting the Shell variable 'SHELLCOMPLETION':
+
+The Default Mode
+ 
+If multiple matches are found, you can click on TAB a second time to 
+get a list of possible matches. After that you need to edit the string 
+by hand (like adding the next letter in what you want to write) and 
+then the next TAB will start the process over.
+
+The CYCLE Mode
+
+If multiple matches are found, you can click on TAB a second time to 
+get a list of possible matches. After that you can click on TAB many 
+times and the completion will cycle through the alternatives. By 
+pressing [Shift] + [TAB], you can cycle through the list backwards, until
+the first element is reached.
+
+The EARLYLISTING switch can be applied to any of the above modes. When 
+multiple matches are found it directly displays them without the need 
+for another TAB press.
+
+Now when the TAB expansion happens, icon (.info) files will be 
+displayed grouped by appending the "(+info)" to the corresponding 
+file or directory.
+
+Also the Shell ignores icon (.info) files during completion, unless it 
+is the only match or unless ICONSASFILES is given in the COMPLETION 
+Shell variable.
+
+So for example, typing into a CLI/Shell:
+
+        SET SHELLCOMPLETION CYCLE, EARLYLISTING
+
+Will enable cycle mode with early listing and exclude .info files from
+being selected unless explicitly suggested.
+
+By the way, ConClip/the con-handler now also allows dropping multiple 
+icons into a con-window.
+
+
+
+7.7 * How do I include a forward slash "/" or backwards slash "\" in 
+      the window title of a console?
+
+The new Con-handler includes now "ViNCEd-Style" escaping in the window 
+title. That is, if the window title should include a forwards slash 
+"/", you can escape it with a backwards slash, i.e. "\/". The 
+backwards slash is escaped by itself, i.e. "\\" results in "\". This 
+allows window paths like:
+
+CON:////6\/2=3/AUTO/CLOSE
+
+
+
+7.8 * Is there a way to debug commands being executed by the Shell?
+
+For AmigaOS 3.2 we have added the "debug" variable that, if it 
+is set to "on", pushes executed commands through the serial output. 
+
+So, to activate it, in a Shell/CLI type "set debug on" (without 
+quotes). All executed commands are then printed through the serial 
+console at 9600-8N1 (it means that the unit connected to the serial 
+port must be configured to deal with 9600 bauds, 8 bits data, no 
+parity, and 1 stop bit). 
+
+Alternatively, you can activate this debug feature if you press either 
+ALT key while booting, generating the output described above.
+
+from the bootmenu, you can also select the "Syslog" option to redirect 
+the serial output to a file (further information on Syslog is 
+available in section 12.8).
+
+
+
+7.9 * How do I debug or trace Shell scripts? 
+ 
+One particular nice feature of the Shell is Interactive debugging, 
+and tracing of Shell scripts. Tracing means that the Shell shows you 
+which command it is about to execute, and you may run the command, 
+skip over it or stop tracing.
+
+To enable tracing, use the following command in the Shell:
+
+set interactive on
+
+If this is put top in a Shell script, for example into the 
+Startup-sequence (with an editor of your choice), the shell will 
+prompt you for each command it is going to be executed. If you press 
+RETURN, the Shell will run the command. If you press N or DEL, the 
+Shell will skip over it. If you press ESC, the Shell will abort 
+tracing and execute the rest of the script without bothering you 
+further. If you press [Ctrl] + [D], the script will be aborted.
+
+Alternatively, you may also activate the Shell´s interactive features 
+by accessing the bootmenu, in particular the "Boot Options..." page 
+that got extended by a new check-mark "Trace Startup-sequence", that 
+allows users to enable the tracing of the Startup-sequence script.
+
+
+
+
+8. Tools, utilities and commands
+________________________________
+
+
+
+
+8.1 * ShowConfig is missing hardware expansion details and even then, 
+      my MMU is not detected.
+
+ShowConfig shows the basic board configuration information for 
+troubleshooting efforts. The ever-changing and expanding board and CPU 
+detail is outsourced to third parties like MMULib and BoardsLib.
+
+You can fortunately get ShowConfig to display them, as we have now 
+included the publicly available boards.library in your Libs drawer, 
+which you can always update from:
+
+http://aminet.net/util/libs/BoardsLib.lha
+ 
+And speaking of MMU, we can detect it with the aid of mmu.library 
+which is available as an installation option.
+
+
+
+8.2 * Are there any new command line arguments or Tool Types since the 
+release of the old AmigaOS 3.1 that I should know of?
+
+Yes, there are plenty. What follows is the list, with a brief
+description of each. This list is not complete though, and to some
+commands, we added features without adding options.
+
+ADDDATATYPES LIST
+This will list all data types descriptors currently in memory by 
+descriptor name.
+
+ASSIGN DENIED
+The DENIED option displays a list of all volume requests that have 
+been denied by the user while using ASSIGNWEDGE
+
+ASSIGNWEDGE
+This is a new command. Allows the user to create an Assign or 
+permanently deny the requested volume until next reboot. Further 
+information can be obtained in question 8.6 of this FAQ. For more 
+information about it, type on a Shell HELP ASSIGNWEDGE and press the 
+RETURN key.
+
+ASYNCWB 
+Is a new multiple Workbench enhancement Commodity. For more 
+information about it, type on a Shell HELP ASYNCWB and press the 
+RETURN key.
+
+AUTOPOINT KEEPSTRINGS
+The new KEEPSTRINGS option prevents AUTOPOINT from automatically 
+stealing focus from a window with an active string gadget.
+
+BREAK NAME
+Can abort a named CLI process. Please note that this wills only 
+work for command line environments such as Shell, and not for 
+arbitrary tasks or processes. This is intentional. NAME also takes 
+wildcards.
+
+CHANGETASKPRI NAME
+Can change the priority of a named CLI process. Please note that this 
+wills only work for command line environments such as Shell, and not 
+for arbitrary tasks or processes. This is intentional. NAME also takes 
+wildcards.
+
+CLICKTOFRONT TOBACK_QUALIFIER
+Allows to select a qualifier for sending windows to back (with a 
+single click). Defaults to LEFT_ALT. If set to NONE, or to the same 
+value as the regular QUALIFIER option, the "send to back" 
+functionality is deactivated.
+
+CMD DEVICE
+The user can now specify a concrete device name.
+
+COPY FORCE
+Overwrites protected targets.
+
+CPU CHECKINSTALL
+Tests for the presence of a CPU library on affected CPU models.
+
+CPU CPUTYPE
+Prints only the CPU information for scripting purposes.
+
+CPU FPUTYPE
+Prints only the FPU information for scripting purposes.
+
+CPU MMUTYPE
+Prints only the MMU information for scripting purposes if it can. The 
+mmu.library is required for this to work.
+
+CPU TO
+Switch to redirect the output of the CPU command.
+
+There are plenty of other switches of the CPU command to fiddle with 
+some of the internals of the CPU. You don't need them, unless we say 
+so. Really. They can only make your system go slower, or less stable. 
+And we don't want this to happen, right?
+
+DACONTROL
+This is a new command. It loads, mounts, ejects or creates an Amiga 
+Disk File (ADF). For more information about it, type on a Shell 
+HELP DACONTROL and press the RETURN key.
+
+DEFICONS
+This is a new command that associates default icons with files that 
+don't have any. For more information about it, type on a Shell
+HELP DEFICONS and press the RETURN key.
+
+DISKDOCTOR
+This is a new command. It diagnoses and salvages data from 
+FastFileSystem volumes. For more detailed DiskDoctor information, 
+please refer to section 9 of this FAQ. For more information about it, 
+type on a Shell HELP DISKDOCTOR and press the RETURN key.
+
+EVAL ^
+It now interprets "^" as "binary xor". The same was available before 
+as "xor".
+
+FIND
+Is a new Workbench tool that searches for files. For more information 
+about it, type on a Shell HELP FIND and press the RETURN key.
+
+FORMAT LONGNAMES
+Formats the selected volume with (DOS/6 or DOS/7) and enables the use 
+of the new long name feature of the Fast File System which allows for 
+filenames with a size of up to 107 characters.
+
+FORMAT NOLONGNAMES
+Formats the selected volume with (DOS/6 or DOS/7), but disables long 
+filenames use, in order to preserve backwards compatibility.
+
+GROUP
+This is a new command. Changes the access rights of a file or 
+directory. More information about it is available in the Help 
+Subsystem.
+
+HDTOOLBOX LIMIT_4GBYTE
+Which can be ON/TRUE or OFF/FALSE. Artificially recreates the 4 GB 
+limit.
+
+HDTOOLBOX MIN_SECTOR_SIZE
+Overrides minimum sector size. Value must be a multiple of 512 bytes, 
+and it must be a power of two.
+
+HDTOOLBOX MAX_SECTOR_SIZE
+Overrides maximum sector size. Value must be a multiple of 512 bytes, 
+and it must be a power of two.
+
+HDTOOLBOX MASK
+Overrides the default values used by the RDB settings written to disk. 
+They must all be in hexadecimal notation, just as you would in a mount 
+file.
+
+HDTOOLBOX BUFMEMTYPE
+Overrides the default values used by the RDB settings written to disk. 
+They must all be in hexadecimal notation, just as you would in a mount 
+file.
+
+HDTOOLBOX MAXTRANSFER
+Overrides the default values used by the RDB settings written to disk. 
+They must all be in hexadecimal notation, just as you would in a mount 
+file.
+
+HDTOOLBOX SKIP_WRITE_PROTECTED 
+Can be set to YES/ON/TRUE or NO/OFF/FALSE. If enabled, will pretend 
+that any drive definition file updates were written to disk just fine 
+if either the respective file is write-protected, or the volume on 
+which it resides/would reside is not writable.
+
+HELP
+This is a new command. It opens up the built-in help subsystem that 
+comes with AmigaOS 3.2. For more information about it, type on a Shell
+HELP HELP and press the RETURN key.
+
+HISTORY
+This is a new internal command that displays the command line history.
+For more information about it, type on a Shell HELP HISTORY and press 
+the RETURN key.
+
+INTELLIFONT NODISKSCAN
+Disables the initial automatic disk scan.
+
+LIST FLAT
+Does not enter directories even if the argument is a directory. Also 
+if the command line argument is a softlink, List no longer attempts to 
+enter it as a directory.
+
+LIST SORT
+Sorts the directory entries before displaying them, based upon certain 
+criteria.
+
+LIST USERS
+Attempt to resolve the name of the 'owner' of a file.
+
+LIST GROUP
+Attempt to resolve the name of the group the 'owner' of a file.
+
+LIST LFORMATQUOTE
+changes how the output of LIST is produced by the LFORMAT option so 
+that it may be more suitable for use with script files.
+
+LOADMONDRVS
+Simplifies and speeds up monitor driver’s initialization.
+
+LOADWB LEGACY
+Allows you to launch older versions of Workbench.
+
+LOADWB SIMPLEGELS
+Uses simpler shapes for dragging icons on the Workbench.
+
+LOADWB SKIP
+Skips starting programs in the WBStartup drawer.
+
+MAKEDIR ALL
+Creates directories recursively.
+
+MAKELINK SOFT
+Creates soft links.
+
+MD5SUM
+This is a new command. Calculates and compares checksums of files.
+For more information about it, type on a Shell HELP MD5SUM and press 
+the RETURN key.
+
+MOUNT SHUTDOWN
+Attempts to shutdown handlers (without destroying the device node).
+
+MOUNTER
+This is a new tool that interactively mounts partitions. For more 
+information about it, type on a Shell HELP MOUNTER and press 
+the RETURN key.
+
+MOUNTINFO
+This is a new command. Creates Mount files for file systems.
+For more information about it, type on a Shell HELP MOUNTINFO and 
+press the RETURN key.
+
+MULTIVIEW REPEAT
+Indicates whether the animation/audio should loop. It defaults to 
+"don't loop".
+
+MULTIVIEW IMMEDIATE
+Indicates whether the animation/audio should immediately begin playing 
+after calling MultiView. Default is to "don't start immediately".
+
+MULTIVIEW PRTUNIT
+Configures the printer.device unit used for printer dumps.
+
+MULTIVIEW WINDOWLEFT
+Defines the horizontal coordinate of MultiView's window.
+
+MULTIVIEW WINDOWTOP
+Defines the vertical coordinate of MultiView's window.
+
+MULTIVIEW WINDOWWIDTH
+Describes the complete width size of the window instead of the inner 
+dimensions (without border).
+
+MULTIVIEW WINDOWHEIGHT
+Describes the complete height size of the window instead of the inner 
+dimensions (without border).
+
+MULTIVIEW AUTORESIZE
+Makes MultiView resize its window when you open a new image.
+
+NUMERICPAD
+This is a new commodity that remaps numeric pad keys to the keyboard. 
+This can be particularly useful on machines such as the Amiga 600, 
+which don't come with a numeric pad. For more information about it, 
+type on a Shell HELP NUMERICPAD and press the RETURN key.
+
+OWNER
+Changes the ownership of a file or directory. For more information 
+about it, type on a Shell HELP OWNER and press the RETURN key.
+
+PROTECT USER
+Only modifies the 'user' protection bits (default).
+ 
+PROTECT GROUP
+Only modifies the 'group' protection bits.
+
+PROTECT OTHER 
+Only modifies the 'other' protection bits.
+
+PROTECT CLONE
+Changes the 'group' and/or 'other' protection bits to the same value 
+as the 'user' protection bits.
+
+PROTECT CLEAR
+Clears all protection bits.
+
+PROTECT FILES
+Only changes the protection bits of the files found.
+
+PROTECT DIRS
+Only changes the protection bits of the directories found.
+
+RAWBINFO
+This is a new commodity that enhances and replaces the Workbench icon 
+information. For more information about it, type on a Shell
+HELP RAWBINFO and press the RETURN key.
+
+REBOOT
+Directly restarts your Amiga. It has no arguments and no template. 
+Unlike many similar programs, before rebooting it makes sure that it 
+waits for any ongoing drive write operation to be finished in order to 
+prevent file system validation issues.
+
+REQUESTCHOICE SET
+Copies the selected choice into a Shell variable.
+
+REQUESTFILE SET
+Copies the selected file (or files) to a Shell variable.
+
+RX SCRIPT=NAME/K
+Defines the script to be executed. This must be explicitly given if 
+the script name is enclosed in quotes; otherwise RX attempts to 
+interpret the enclosed string as a series of REXX commands to be 
+executed directly.
+
+RX CMD
+Explicitly requests a command (not a script) to be executed. For this 
+option, Shell quoting rules (and not REXX quoting rules) apply, so 
+"rx cmd" can be used also in Shell scripts where the Shell 
+(or execute) applies its escape mechanism. That is, a quote must be 
+escaped with an asterisk if the CMD argument is given.
+
+RX "..."
+Defines an ARexx command or ARexx file to be executed. If in double 
+quotes, a direct command is assumed, otherwise a file. This is 
+backwards compatible to the V36 release of RX.
+
+In addition, the RX command can also be invoked from Workbench and 
+then accepts the following additional Tool Types:
+
+    CONSOLE=<pathname> or WINDOW=<pathname>
+    Defines a pathname where output should go to. The default is a 
+    console.
+
+    STARTUP="cmd"
+    Defines an AmigaDOS command to startup the REXX host in case it is 
+    not running. This is by default "RexxMast".
+
+SEARCH CASE
+Case-sensitive searching. Note that this switch is INACTIVE when 
+searching for files.
+
+SETDATE FROM
+Copies the date from another file.
+
+SETPATCH NODRIVELEDPATCH 
+Fixes the IDE LED bug that occurs with some ATAPI devices, especially 
+the CD-ROM drive of the A4000T, that makes the LED drive light stay 
+constantly lit.
+
+SETPATCH CONTENTS
+Lists all patches contained in the current SetPatch release.
+
+SHOWCONFIG GUI
+Brings up the user interface when called from the Shell.
+
+SORT DESCENDING
+Reverses the sort order.
+
+SORT SKIPBLANKS
+Ignores leading blanks.
+
+SORT NUMERIC
+Sorts numerically, not lexicographically.
+
+TEXTEDIT
+As its name suggests, TextEdit is a new multi-document text editor. 
+For more information about it, type on a Shell HELP TEXETEDIT and 
+press the RETURN key.
+
+TYPE AUTO
+Will examine the first 256 characters of the file. If non-printable 
+characters are found, TYPE will show the file as if the HEX option had 
+been specified. 
+
+TYPE TEXTONLY 
+Will replace unprintable characters before output. Any unprintable
+character will be replaced with '.'.
+
+TYPE WIDTH
+Controls how long each line in HEX mode form should become.
+
+TYPE BUFFER options.
+Controls how much data is read and output at a time (default is 2048). 
+
+WAIT FILE
+Waits for the existence of a given file.
+
+WBLOAD
+Loads Workbench programs from the CLI/Shell. However, it does not 
+require the Workbench. Hence, it is safe to use in the 
+Startup-sequence before LoadWB, and it operates synchronously, i.e. it 
+does not return until the started program returns. For more 
+information about it, type on a Shell HELP WBLOAD and press the RETURN 
+key.
+
+There are also a couple of hidden features and improvements, such as 
+DIR being able to adjust its output to the size of the console, LIST 
+showing hard- and soft-links and COPY copying them correctly. Also 
+IPREFS no longer triggers visually annoying multiple screen refreshes. 
+It just piles up changes and applies them in one instance and also, it 
+now prints the titles of the windows that block the screen from 
+closing (with up to four window names, otherwise, it includes the 
+window count).
+
+
+
+8.3 * Where are Lacer, MEmacs, HDBackup, Bru and MagTape?
+
+For good reasons we decided to phase out these archaic components. 
+"These belong in a museum", as Indy would put it.
+
+
+
+8.4 * Is C:AssignWedge what I think it is?
+
+Well, we are not fortune tellers, so we don't know what you were 
+thinking about. But let's not make a fuss about it, shall we? ;-)
+
+AssignWedge is, as the name suggests, a clean re-implementation of the 
+popular AssignWedge patch that extends the standard AmigaDOS volume 
+request ("Please insert volume...") with additional features that 
+allows the user to create an Assign or permanently deny the requested 
+volume until next reboot.
+
+To make it work, we already placed it for you in the WBStartup folder.
+
+AssignWedge can be terminated by sending a CTRL-C to its process.
+
+
+
+8.5 * What can I do with the Mounter Tool?
+
+It helps you to mount partitions that have no mount file defined in a 
+quick manner. These partitions are required to conform to the Rigid 
+Disk Block (RDB) standard in order for Mounter to do its job. 
+
+
+
+8.6 * What is DefIcons? How do I use this?
+
+DefIcons is a program that based on a configuration file, attempts to 
+figure out the type of file and applies a default icon for it if that 
+file does not already come with one.
+
+DefIcons is started automatically every time Workbench loads. For this 
+purpose, an icon for it is available in the WBStartup drawer. 
+
+DefIcons comes already preconfigured but can be fine-tuned using the 
+DefaultIcons Preferences editor located inside you Prefs drawer.
+
+More information can be obtained by opening a CLI/Shell and typing:
+HELP DEFICONS
+
+
+
+8.7 * Is there an easy way to mount Amiga ADF files?
+
+DAControl is a new command that is already built into AmigaOS 3.2. It 
+can load ADF (Amiga Disk File) image files and make them available to 
+the system in a very similar way to how physical floppy disks are 
+handled. DAControl works together with the new trackfile.device to 
+load, eject, change and create ADF files.
+
+More information can be obtained by opening a CLI/Shell and typing:
+HELP DACONTROL
+
+
+
+
+9. DiskDoctor
+_____________
+
+
+
+
+9.1 * What is DiskDoctor?
+
+It is a CLI/Shell program located in C: that is designed to diagnose 
+and salvage your volume data.
+
+
+
+9.2 * What can it do for me?
+
+It will diagnose your Amiga file system and let you back up files, and 
+that makes it handy if the file system becomes unreliable. It has no 
+problems supporting volumes bigger than 4 GB in size. But bear in mind 
+that large volumes require more free RAM for DiskDoctor to do its job. 
+
+
+
+9.3 * What are DiskDoctor's limitations?
+
+Currently, it can only diagnose and salvage files, but it cannot 
+perform any repair operations. Though this may change in the future.
+
+Also it only works on the Amiga Original File System (OFS) and the 
+FastFileSystem variants (FFS and DCFFS). So third party file systems 
+like the Smart File System (SFS) and Professional File System (PFS) 
+are not supported, and that is also the case for the undocumented and 
+rarely seen DOSType 8 variant of FFS.
+
+
+
+9.4 * How do I use it to diagnose my drive?
+
+Just open a CLI/Shell and type:
+
+DiskDoctor examine DH0:
+
+Of course, you can replace DH0: with any other volume name.
+
+
+
+9.5 * How do I salvage files in a damaged disk?
+
+If you find out that your precious data is at risk, and you want to 
+perform a backup you can open a CLI/Shell and type:
+
+DiskDoctor COPY DH0: TO RESCUED:
+
+Here DH0: is the source volume and RESCUED: is the safe destination 
+volume which will have all the files copied to it.
+
+
+
+9.6 * I seem to be running out of memory when using DiskDoctor. But I 
+have 4 MB of Fast RAM and an 8 GB partition.
+
+The original Disk Doctor needed about 1.5% the size of the volume as 
+working memory (RAM). For example, in order to "repair" a 20 Megabyte 
+hard disk partition, you would have to have at least 330 Kilobytes of 
+free RAM available. This would not fly on the original Amiga 
+500/1000/2000. Now imagine how the math would work out for a 1 
+Gigabyte hard disk partition. 
+
+For the new Disk Doctor there is a special type of data structure 
+which lowers the memory requirements to around 0.1% of the volume 
+size. Which means that about 1 Megabyte may be sufficient to deal with 
+a 1 Gigabyte partition, and 8 Megabytes for an 8 Gigabyte partition. 
+
+So, with 4 MB of fast memory you will not be able to work with 
+DiskDoctor on an 8 GB partition. You need about 4 more MB of RAM.
+
+
+
+
+10. ReAction                             
+____________
+
+
+
+                                    
+10.1 * What is the history of ReAction? How did it come to AmigaOS?                                   
+
+ReAction started life on the Amiga in 1996 as a third-party GUI 
+toolkit called ClassAct. It was later incorporated with a few 
+enhancements into AmigaOS 3.5 and subsequently to 3.9 where it was 
+renamed to ReAction. 
+
+When the PowerPC AmigaOS project started, it was a no brainer 
+that ReAction had to be the building block on which to deliver a 
+better user interface experience. There, it was further refined and 
+greatly extended to provide all sorts of cool features. 
+
+And now, with AmigaOS 3.2 we decided to port it back to its origins, 
+bringing along the improvements that it had during all these years of 
+absence from the classic 68k platform.
+
+
+
+10.2 * But wait a minute... What is ReAction?
+
+ReAction is a collection of graphic user interface elements grouped 
+into several libraries (also known as classes) according to their 
+functionality. It is the natural progression of what Commodore 
+delivered way back in 1992 with gradientslider.gadget, 
+colorwheel.gadget and tapedeck.gadget.
+
+ReAction supports everything from simple buttons to an advanced list 
+management class, and includes a complete set of window GUI layout 
+system classes that let's programmers create font-sensitive and 
+resizable interfaces quickly and easily, including any 
+preference-based window backfill pattern loadable via the system 
+data types.
+
+ReAction is a powerful and time-saving choice for software developers, 
+and an aesthetically pleasing and convenient one, for end users.
+
+
+
+10.3 * What are its features?
+
+Since ReAction classes are BOOPSI, which means that they extend the 
+AmigaOS windowing system in a standard way with an object-oriented 
+subsystem, they automatically support all kinds of great features such 
+as window resizability, help, notification, and interconnections with 
+other BOOPSI classes (which do not necessarily have to be ReAction 
+classes). 
+
+ReAction classes are built for power, efficiency and compatibility.
+
+ReAction is an expanding project, providing you with the graphical 
+user interface tools needed to use and develop applications. 
+
+ReAction v47 currently has 39 different classes, and the list is 
+growing!
+
+
+
+10.4 * And how do I install and run it?
+
+No action is needed as an AmigaOS 3.2 user. Everything is ready to go: 
+ReAction is installed by default and is sitting there waiting to be 
+called into action by programs that support it. 
+
+Yes, it is that simple!
+
+
+
+10.5 * What programs do you know that use ReAction? 
+
+Well, Aminet is literally filled with them, you just need to properly 
+search its database using the terms "ReAction" or "ClassAct" (without 
+quotes obviously!).
+
+Also, most AmigaOS 3.5 and 3.9-compatible programs use ReAction.
+
+And even then, there are many third-party programs available elsewhere 
+that harvest the benefits that ReAction brings.  
+
+
+
+10.6 * What is the difference between ReAction offered in 
+       AmigaOS 3.5/3.9 and the currently available ReAction V47?
+
+There is a huge difference: AmigaOS 3.5/3.9 reached its end of life 
+back in the year 2002, and that was the last we saw of ReAction on 
+68k. 
+
+From there onwards, on the PowerPC AmigaOS platform, it received a ton 
+of bug fixes and an incredible wide range of extensions that made it 
+the powerhouse it is today. And all of this came with backwards 
+compatibility. 
+
+The current V47 ReAction we included in AmigaOS 3.2 is a direct 
+descendant from the highly evolved version developed on the PowerPC 
+AmigaOS platform. This eases and seriously opens up portability back 
+and forth from the AmigaOS PowerPC project to the Classic 68k one.
+
+All of this makes the current V47 ReAction present in AmigaOS 3.2, the 
+most advanced one to this day for the Classic 68k Amiga platform. 
+
+So there is absolutely no reason to look back.
+
+
+
+10.7 * Where can I get development information for ReAction V47?
+
+Release 1 of the Native Developer Kit for AmigaOS 3.2 is contained 
+within the AmigaOS 3.2 CD-ROM and it includes:
+
+- Autodocs in text and AmigaGuide format telling you how to use each 
+  class.
+
+- C includes that you will need for writing programs that use ReAction.
+
+- C example programs that showcase usage of the different ReAction 
+  classes.
+
+
+
+10.8 * Why is it that all Prefs programs, tools and utilities in 
+       AmigaOS 3.2 don't use ReAction?
+  
+Please don't underestimate the amount of work that went into making 
+ReAction a reality:
+
+Classes were in OS 4.x style, so they needed to be reviewed, broken 
+down to a 3.x interface, tested, and someone still had to write the 
+development material, documentation, and the tools for them. 
+
+You get the picture: it's a long road, and we had only little man 
+power.
+
+So for 3.2 we opted to adapt the current GadTools GUI to become font 
+sensitive without any toolkit extensions. This has the side benefit of 
+being able to work properly even in the most modest Amiga 
+configurations, yet still concurrently provide ReAction support for 
+programs that can take advantage of it.
+
+
+
+10.9 * Why doesn't my ReAction program work under AmigaOS 3.2?
+
+For AmigaOS 3.2, we made ReAction operable on 68000-based Amigas. 
+This was not the case for 3.5 and 3.9 where ReAction required at least 
+a 68020 CPU.
+
+That said, many of those 3.5 and 3.9 ReAction programs were 
+specifically compiled and optimized for 68020 processors, so if your 
+system has a 68000 processor, it will most likely not work when a 
+program demands a 68020 to be present.
+
+Furthermore, you must also consider that having a more complex visual 
+interface, with much more details, requires more RAM than what the 
+traditional GadTools user interface demanded, so if you are running 
+AmigaOS 3.2 with the bare minimum of RAM, don't expect miracles.
+
+It is also important to understand that many ReAction classes are 
+property of third parties, so if the documentation of a program states 
+that a specific class is required, please check that it comes with 
+AmigaOS 3.2, and if that is not the case, you should (most likely) be 
+able to download it from Aminet. 
+
+
+
+10.10 * Which ReAction classes are included with 3.2?
+                     
+  arexx.class            requester.class        window.class
+
+  button.gadget          checkbox.gadget        chooser.gadget
+  clicktab.gadget        colorwheel.gadget      datebrowser.gadget
+  fuelgauge.gadget       getcolor.gadget        getfile.gadget         
+  getfont.gadget         getscreenmode.gadget   gradientslider.gadget  
+  integer.gadget         layout.gadget          listbrowser.gadget     
+  listview.gadget        palette.gadget         radiobutton.gadget     
+  scroller.gadget        sketchboard.gadget     slider.gadget          
+  space.gadget           speedbar.gadget        string.gadget          
+  tabs.gadget            tapedeck.gadget        texteditor.gadget      
+  virtual.gadget
+
+  bevel.image      bitmap.image     boingball.image  drawlist.image
+  glyph.image      label.image      led.image        penmap.image
+
+
+
+10.11 * Why did you choose ReAction and not MUI or other third party 
+        toolkit to integrate within AmigaOS 3.2?
+        
+The decision was taken over twenty years ago, and now we have a legacy 
+of Amiga Operating Systems which used ReAction, starting with 3.5, 
+followed by 3.9 and then 4.0 and all its sucessors (on the PowerPC 
+platform).
+
+ReAction was chosen due to several factors. For starters, it closely 
+follows the BOOPSI design which was originally implemented under 
+AmigaOS 3.0 by Commodore. This was way back in 1992.
+
+Secondly, ReAction is more leanient towards systems with a low amount 
+of RAM.
+
+Thirdly, ReAction is easily extensible, in a much easier AmigaOS 
+conformant manner than other counterparts. So future expansions are 
+much easier to be carried out without having to rework it to a major 
+degree due to its modular design nature.  
+
+So given the above, it made absolutely no sense to take another route.
+
+
+
+
+11. OS 3.2 and OS 3.9
+_____________________
+
+
+
+
+11.1 * Can I mix OS 3.9 components with OS 3.2?
+
+Typically, yes. There are a couple of caveats, though.
+
+You need to ensure that you use the OS 3.9 "prefs.catalog" 
+instead of the one that comes with OS 3.2. But please bear in 
+mind--and this goes for all programs within AmigaOS--3.9 catalogs are 
+somewhat incompatible with both 3.1 and 3.2. Mixing components 
+requires careful consideration when using languages other than English, 
+or you will end up with misleading translations.
+
+AmigaOS 3.9 mount files will be overwritten by 3.2 default 
+counterparts, so some of them may need to be readjusted to meet your 
+needs. This is clearly the case in CD0: (your CD-ROM device), as 
+AmigaOS 3.2 has its own new CD-ROM file system, which by the way, 
+won't work with the previous 3.9 CD Prefs program called CacheCDFS.
+
+Be warned that if you customized the Tool Types of some 3.9 programs, 
+when installed, AmigaOS 3.2 will overwrite them with its default new 
+settings.
+
+
+
+11.2 * I'm using the OS 3.9 ReAction GUI for Preferences, but the GUI
+       contains unreadable strings.
+
+Unfortunately, OS 3.9 did not simply extend the OS 3.1 catalogs, but 
+instead populated the catalog in an incompatible way. If you want to 
+continue to use OS 3.9, ensure that the following file comes from an 
+OS 3.9 installation:
+
+LOCALE:Catalogs/<your language goes here>/sys/prefs.catalog
+
+Copy the OS 3.9 catalog on top of the OS 3.2 catalog to get a 
+working OS 3.9 GUI back.
+
+OS 3.2 tries to be compatible with OS 3.1, 3.1.4 and 3.1.4.1 so it 
+extended its catalogs in a backwards-compatible way. OS 3.9 
+unfortunately selected another route and picked incompatible IDs for 
+its translation. So, we are sorry, but we cannot fix this.
+
+
+
+11.3 * IControl Preferences of OS 3.9 had a setting to render window
+       gadgets in 1:1 aspect. Where is it?
+
+We decided to implement a much more configurable system. If you go to 
+IControl you will find an "Appearance Settings..." gadget which allows 
+you to configure aspect ratio settings to make window and screen 
+borders look more pleasant with nearly or exactly square shapes on any 
+display device and resolution. 
+
+For this, window and screen border aspect ratio can be set to "Legacy 
+Look" which makes the horizontal borders 2 pixels thick, "18x14 (9:7)" 
+which makes them 3 pixels thick (much like AmigaOS 3.9 with 1:1 aspect 
+ratio enabled), "18x16 (9:8)", "18x18 (1:1)", all of which make them 4 
+pixels thick like the vertical borders. You can also set a "Square 
+Proportional Look" as a percentage of the title bar.
+
+Furthermore, there is a new option that allows you to increment the 
+size (in pixels) of both screens and windows title bars in order to 
+achieve the desired appearance.
+
+There is also an exception list to exclude programs and screens that 
+present difficulties when their aspect ratio is modified. To find out 
+the proper name of a screen for this exclusion list you can use 
+publicly available utilities such as Scout, XOpa, etc. (most of them 
+are available on Aminet).
+
+
+
+11.4 * The background image of my Workbench now uses dithering, even
+       though I'm using a true color screen mode. What's wrong?
+
+The syntax of the picture.datatype settings have changed, and if you 
+had custom settings there, the new picture data type will likely 
+misinterpret them to enable dithering for many applications. The 
+easiest remedy is to simply delete the old settings of the picture 
+data type--see the next point.
+
+
+
+11.5 * How do I set/change picture.datatypes settings?
+
+AmigaOS 3.9 came with SYS:Prefs/PictDT. With it, you could explicitly 
+set which application supports the V43 mode of the data type. This 
+mode offers support for screens with more than 256 colors. In 
+addition, you could specify whether pictures should be dithered on 
+high color screens (65,536 colors) or not. Disabling dithering 
+decreases image quality on these screens, but improves the speed of 
+the data type considerably.
+
+In AmigaOS 3.2 the env variable 
+ENVARC:classes/datatypes/picture/ForceV43 which contains a list of all 
+programs that should be forced to v43 mode. In particular, this list 
+should contain the string:
+
+<< IPrefs >>
+<< ConClip >>
+
+Include the double angle brackets to avoid dithering on Workbench. 
+
+If you leave the environment variable empty, it means that there is a 
+list of programs to be promoted, and this list is empty. 
+
+If the environment variable does not exist however, the known 
+well-working OS components receive full true color images. So it is 
+easiest just to delete ENVARC:classes/datatypes/picture/ForceV43.
+
+Dithering of the picture.datatype can be set or unset by the env 
+variable "Classes/DataTypes/picture/DitherHiColour" which can hold 
+either a 0 or 1 value (0 = off and 1 = on).
+
+Please remember that each time you change a setting, a reboot is 
+required for the changes to be applied.
+
+
+
+11.6 * How can I make the Euro symbol?
+
+Only Helvetica font sizes 13 and 15 contain the Euro sign. The Euro 
+symbol and other non-Latin characters will be properly addressed in a 
+future update.
+
+
+
+11.7 * Why didn't you base your work on OS 3.9 and instead used OS 
+       3.1.4.1 as a basis?
+       
+In most aspects, 3.1.4.1 is a more solid, robust and enhanced OS than 
+3.9 ever was. Don't get fooled by the eye candy and focus on technical
+merits of it to judge.
+
+However, we would have loved to incorporate some of 3.9's third-party 
+applications. Unfortunately, we do not have the sources to rebuild 
+them, nor sufficient rights to redistribute the licensed portions of 
+many of the OS 3.9 efforts. 
+
+Many components you get with 3.2 are new, a few are re-implementations 
+of 3.9 components, most are more recently updated than the 3.9 ones, 
+and even a couple of them are backports from the AmigaOS PowerPC 
+project (OS 4.x). 
+
+
+
+11.8 * How can I load icons into Fast RAM? There's no program or 
+       Preference setting for it.
+
+Because it's not needed. In fact, please do not use the WBCtrl program 
+anymore. Workbench is smart enough to detect cases where it can put 
+icons into Fast RAM, and it will do so automatically whenever it is 
+able to.
+
+
+
+
+12. ROM Modules
+______________
+
+
+
+
+12.1 * Can I use the modules from the Modules disk to build my own 
+       custom Kickstart ROM?
+
+At this point in time we are only able to support a limited number of 
+Kickstart ROMs (only the ones that are advertised); and this is due to 
+the unlimited amount of combinations that custom ROMs may lead to. So 
+sure; go ahead, but don't ask us for support if you take this route.
+
+
+
+12.2 * But why doesn't LoadModule load the modules into Fast RAM in 
+       the first place?
+
+Because the available Fast RAM may not be reset-resident; i.e. the 
+modules would go away after a reset. LoadModule can only use what is 
+available to the system. What MuProtectModules does is create a mirror 
+of this memory via the MMU, but this mirror disappears after a reset, 
+unlike the original module image.
+
+Alternatively, you can try and use the LoadModule command with the 
+NOMEMFKICK switch. But be warned that this only works on some systems.
+
+
+
+12.3 * I get a "Please insert a volume containing workbench.library..." 
+       during start-up. What is going on?
+
+You installed manually, right? Just do as requested. The Install3.2
+disk contains the requested library, so just copy that library to 
+LIBS:. And for next time, please use the Installer. Or at least, copy 
+both workbench.library and icon.library from the Install3.2 disk to
+LIBS:, such as follows:
+
+copy df0:libs/workbench.library to LIBS: clone
+copy df0:libs/icon.library to LIBS: clone
+
+
+
+12.4 * Why are workbench.library and icon.library no longer in ROM?
+
+These libraries are now much larger than before, and they simply do 
+not fit in the physical ROM chip. So we had to find some other place. 
+The nice file requester you see is the ROM looking for its missing 
+sources.
+
+Not all Amiga models support larger ROMs, and even those that do may 
+fail to identify a larger physical ROM chip. As of this writing, we 
+haven't been able to find a better solution, and until one is found, 
+it is just too risky.
+
+
+
+12.5 * I installed all the files in the right places, but the OS does 
+       not seem to pick them up. Instead, I just get the OS 3.1 
+       Workbench back. What's wrong?
+
+You installed manually, right? Well, in that case, chances are that
+the file permissions are wrong. It is important that the files
+containing the replacement ROM components have their "p" bit set,
+which stands for "pure".
+
+You can now do the following:
+
+Copy all the files from the Modules disk (specific to your Amiga
+model) again, making sure that the "p" bit is set this time, for
+example by using:
+
+copy ... TO ... CLONE
+
+instead of just "COPY".
+
+
+
+12.6 * Some file permissions on my installation look really weird. Is 
+       that normal?
+
+You mean, as in "p-r---"?
+
+Yes, that is normal, and intentional for some ROM module replacements. 
+"p" stands for "pure" and is required for LoadModule as it otherwise 
+does not pick up the file. "r" means that the file is readable, 
+because LoadModule needs to read it.
+
+The files are intentionally not writable, executable or deletable as
+removing or altering these files will potentially damage your
+installation.
+
+
+
+12.7 * Which ROM Modules are now required to have the "p" bit set?
+
+With AmigaOS 3.2 things changed a bit compared to previous versions, 
+due to the inclusion of the new System-startup module. The following 
+is a list of modules which require the "p" bit to be set:
+
+Devs
+    trackdisk.device          
+    timer.device              
+    ramdrive.device            
+    keyboard.device           
+    input.device              
+    gameport.device
+    
+Devs/A???? (The ???? depends on the Amiga model number you are using)
+          scsi.device
+
+L
+ System-startup
+ FastFileSystem
+
+Libs
+    workbench.library
+    utility.library            
+    layers.library
+    icon.library           
+    graphics.library          
+    dos.library             
+
+Libs/A???? (The ???? depends on the Amiga model number you are using)
+          exec.library          
+
+Libs/Modules
+            syscheck                    
+            bootmenu                   
+
+Libs/Resources
+              FileSystem.resource
+              card.resource (Only available on the A600 and A1200)
+              battclock.resource
+
+
+
+12.8 * Are there any completely new ROM modules I should be aware of?
+
+Yes, we now have two new ROM modules. One of them is called 
+"System-startup". Its job is to make ROM updates easier and alleviate 
+LoadModule from some of its work. System-startup attempts to load 
+system components from disk, replacing ROM components. In particular, 
+if the disk contains any of the following modules, it will load them, 
+and use them to replace the ROM contents: 
+
+L:Con-Handler
+L:Ram-Handler
+L:Shell-Seg
+L:Syslog
+DEVS:console.device
+DEVS:audio.device
+LIBS:mathieeesingbas.library
+LIBS:mathffp.library
+LIBS:gadtools.library
+LIBS:intuition.library (if not yet opened)
+
+So with System-startup there is no need to LoadModule all of them 
+anymore and it has the advantage that it does not require a reboot to 
+perform its duty (unlike LoadModule).
+
+Additionally, if your hard disk's Rigid Disk Block stores a version of 
+the Fast File System that is equal to or more recent than 46.18, then 
+the floppy drives "df0:" also get the new file system and do not stick 
+to the ROM file system. 
+
+If Con-Handler, Shell-Seg or Ram-Handler are missing from ROM, and 
+also missing on disk, "System-startup" will put up the same "Please 
+insert any volume containing XXXXX in any drive" on the screen, the 
+same type of requester you already know from searching Workbench or 
+icon.library (which are no longer in ROM).
+
+The bootmenu, in particular the "Boot Options..." page got extended, 
+and the new check box "Update ROM modules" allows users to disable the 
+ROM update mechanism of System-startup if left unchecked.
+
+System-startup includes a feature to avoid upgrades. For this, just 
+place a dummy file on the boot volume of the name of the component you 
+do not want to have upgraded. System-startup will then stop scanning 
+other volumes for the missing component. 
+
+The other new ROM module is "Syslog", whose purpose is to capture 
+output that would normally go through the serial port and redirect it 
+to "RAM:Syslog". Syslog is enabled in the boot menu (a new check mark), 
+and it will also enable logging of the Shell. 
+
+In case you use "System-startup", Syslog can go to "L:Syslog", there 
+is no need to LoadModule it.
+System-startup will pick it up from L: as it is a disk-upgradable 
+component.
+
+
+
+12.9 * I get new alerts that I have never seen before. What is 
+       going on?
+       
+There are the two new alerts that may be generated:
+
+8700000f: "I forgot to update dos.library" -or- "failed update shell"
+This alert is generated if the Shell and the dos.library are 
+incompatible with each other.
+
+04000012: "Someone called the obsolete copy of intuition".
+This alert is generated if intuition got updated, but some program 
+still holds a pointer to the older version of intuition and called it 
+instead.
+       
+
+
+
+13. Miscellaneous
+_________________
+
+
+
+
+13.1 * What are the issues with PCMCIA cards?
+
+The Gayle chip maps the 4MB PCMCIA memory window at $600000. This is 
+also the upper 4 MB block of the Zorro II memory space. Some simple 
+A1200 accelerators map their expansion memory in the Zorro II space to 
+offer more than just 4 MB of additional RAM, and this causes an 
+address conflict once the user inserts a PCMCIA card.
+
+Disabling the PCMCIA card interface in a conflict situation is the 
+only safe way to avoid memory overlapping as the Gayle chip decodes 
+PCMCIA accesses once a card is inserted.
+
+Furthermore, due to a hardware design flaw that specifically affects 
+the Amiga 1200, if you insert a PCMCIA network card, and then boot the 
+machine, there is a chance it might not get detected. There are 
+currently two ways to overcome this:
+
+On one hand, you can try to obtain a PCMCIA hardware reset fix some 
+dealers offer.
+
+On the other hand, you can get CardReset.lha from Aminet and just add 
+it to your Startup-Sequence, just after the SetPatch line.
+
+
+
+13.2 * Can I get the guru back?
+
+The Guru comes from an era where the Amiga was not a robust platform 
+and prone to crashes.
+
+The Guru was the result of an uncomfortable situation that brought 
+frustration to many users. We don't think that it reflects on the 
+current state of AmigaOS. 
+
+So for the time being, we have decided not to reimplement it.
+
+However the subject is not a closed matter, it may be subject to 
+reconsideration sometime in the future.
+
+
+
+13.3 * I have now 28 KB less Chip RAM; where did the RAM go?
+
+It's reserved. Actually, the lower 32K is now reserved for Mac
+emulators. The benefit of this is that you no longer need MuMove4K or
+PrepareEmul. Just start Mac emulations right away.
+
+If you really need the 28 KB back, download the following archive 
+from Aminet:
+
+http://aminet.net/util/boot/MoveLow.lha
+
+This is a program that will, through a second reset, deliver the 
+missing RAM. It's kind of "MuMove4K backwards".
+
+But, seriously--what's 28K among friends?
+
+
+
+13.4 * Where can I find the env-handler/happy-env feature I read about? 
+       How do I use it?
+
+The RAM-Disk now supports "external hardlinks". You can create, for 
+RAM: only, hardlinks to files and directories *outside* of RAM:. 
+
+A practical example:
+
+MakeLink RAM:ENV to ENVARC: FORCE
+
+This creates a hardlink from "RAM:ENV" to the ENVARC: assign, which
+lives outside of RAM:. Clearly, a contradiction in terms, but wait...
+
+Whenever you now access a file in that "hardlinked" directory, RAM: 
+will automatically retrieve that file from the external resource.
+
+So what the line above does is that it performs a "copy on demand" 
+from ENVARC: to ENV:
+
+And that is exactly the purpose: Integrate env-handling features into
+RAM, and avoid unnecessary copying of files into RAM: in the
+Startup-sequence script.
+
+We already incorporated the changes necessary in the Startup-sequence 
+to work right out of the box. This feature ends up saving a discrete 
+amount of memory and makes the system boot a tiny bit faster.
+
+
+
+13.5 * WBPattern offers an option to interpolate a background picture. 
+       What does "Interpolated" mean in this context?
+  
+The Prefs program WBPattern received some updates. If a picture 
+is selected as a background, window or screen, it provides layout 
+options to Scale, Tile, Interpolate, and Center it. 
+
+Interpolation in digital imaging, is the process of artificially 
+increasing the quantity of pixels, so that when you zoom an image, you 
+will see more detail. Interpolation works by using known data to 
+estimate values at unknown points.
+
+So, this option is certainly valuable when the chosen picture 
+background has a smaller resolution than the one you chose to use for  
+your Workbench screen.
+
+
+
+13.6 * Is it somewhat possible to use multiple input devices 
+       simultaneously?
+
+Are you an octopus? No, seriously, we did some changes to input.device 
+so that it can now manage multiple input events appropriately, and 
+this means better support for USB solutions. It now interprets 
+keyboard and mouse events and creates synthetic keyboard events (auto 
+repeat) if necessary.
+
+This becomes necessary for software that injects events, such as the 
+Poseidon USB stack. For this purpose there is an updated "hid.class" 
+for the Poseidon stack that should be obtained from Individual 
+Computers at https://icomp.de/
+
+
+
+13.7 * Where can I find font sensitive programs?
+
+You can find scalable (font sensitive) GadTools GUIs in all the Prefs 
+programs, as well as the Format, and DiskCopy tools located in the 
+System drawer. In addition, you will also find that the tools like
+IconEdit, PrepCard and Calculator have this same feature too. And 
+finally we also have added the Clock utility to the lot.
+
+They all properly adjust to different font sizes, so you are no longer 
+forced to stare at their hard-coded topaz font anymore.
+
+
+
+13.8 * How can I customize the text message on the Workbench title bar 
+       screen?
+
+You can now customize the text message on the Workbench title bar 
+screen by typing into the text gadget provided in the Workbench 
+Preferences editor. The only restriction is the number of characters 
+that can fit on a single line across the top of the Workbench, and 
+this depends on your screen resolution. 
+
+You can also include system variables as part of the text. 
+
+The final field shown in this section of the Workbench Preferences 
+editor is "Update Delay" which is used to control how long the default
+message is allowed to display before the custom one replaces it, each 
+time you boot the system and is measured in tenths of a second.
+
+
+
+13.9 * How can I Change the "Release 3.2" text that appears both on my 
+       Workbench title bar and the About requester?
+       
+To customize this string, just modify within a text editor the 
+following file:
+
+SYS:Prefs/Env-Archive/Versions/Release       
+   
+      
+
+13.10 * Some files/drawers are displayed on Workbench with an 
+        underlined label. Why does this happen?
+
+Don't worry, nothing is wrong. Workbench checks whether an added 
+object is a link (rather than a file or drawer), and displays it with 
+an underlined label if that's the case.
+
+It is a faster way to let users visually distinguish a link from an 
+ordinary file or drawer.
+
+
+
+13.11 * How do I achieve a Kickstart/Workbench 1.x look?
+
+PalettePrefs has some color presets built-in which may help you 
+achieve a specific look without much effort. These are available by 
+accessing the Edit pull-down menu and by selecting either 
+"Classic Presets" or "NewLook Presets" submenus.
+
+To achieve a Kickstart/Workbench 1.x look go to the above mentioned 
+"NewLook Presets" submenu and select "Kick 1.x style". Remember to 
+"Save" your settings for permanent use.
+
+
+
+
+14. The Amiga CDTV, CDTV-II (CDTV-CR), A570 and CD32
+____________________________________________________
+
+
+
+
+14.1 * What does this "Experimental Amiga CDTV and Amiga CD32 support" 
+       means?
+
+Instead of sitting idle on this AmigaOS support material that could 
+have eventually helped some users of these often-marginalized Amiga 
+models to be able to enjoy the benefits of AmigaOS 3.2, we decided it 
+was in their best interest to release it to the wild, together with a 
+big fat warning and a clear disclaimer: WHAT YOU DO REGARDING THE 
+AMIGA CD32 AND CDTV-BASED MACHINES IS AT YOUR OWN RISK. NO SUPPORT 
+WILL BE PROVIDED.
+
+So by experimental, we imply that both installing and using 
+AmigaOS 3.2 may or may not work on these machines, but that it also 
+requires an additional effort and skill from you. It is not a straight 
+forward process, and you will probably find problems along the way for 
+which we cannot offer support.
+
+
+14.2 * What are the CDTV, CDTV-II (CDTV-CR) and A570?
+
+The CDTV is essentially a Commodore Amiga 500 computer with a CD-ROM 
+drive and remote control, presented in a VCR-style case as a home 
+multimedia entertainment system. With optional peripherals it can 
+function as a regular Amiga.
+
+The CDTV-II, also known as CDTV-CR, is an improved and cost-reduced 
+CDTV. It was never released, but many prototypes were sold after 
+Commodore's liquidation. While it shares most of the functionality of 
+the standard CDTV, its hardware has some differences.
+
+The Amiga A570 is a single-speed external CD-ROM drive for the 
+Amiga 500. It was designed to be compatible with Commodore CDTV 
+software as well as being able to read ordinary CD-ROM discs.
+
+The AmigaOS 3.2 CD-ROM can boot an AmigaOS 3.2 Preinstallation 
+Environment on the CDTV, CDTV-II (CDTV-CR) and A570, as long as 
+Kickstart 3.1 or newer is properly installed.
+
+
+
+14.3 * How can I differentiate a CDTV from a CDTV-II (CDTV-CR)?
+
+There are multiple ways to distinguish a CDTV from a CDTV-II 
+(CDTV-CR). You can quickly do it by performing a simple visual 
+inspection.
+
+                    CDTV                     CDTV-II (CDTV-CR)
+Front case:  no 3.5" floppy drive      built-in 3.5" floppy drive
+Back case:   D-sub serial connector    round mini-din serial connector
+
+
+
+14.4 * Which types of ROMs do these CD-ROM-based machines use?
+
+The CDTV uses a standard A500 Kickstart ROM in socket U13. It also 
+comes with an additional pair of ROMs in sockets U34 and U35 
+containing CDTV specific code (these are called the 
+"CDTV Extended ROM" set).
+
+To be able to use an AmigaOS equal or higher than 3.1 you will also 
+need to make sure you have a CDTV Extended ROM set version 2.7 or 
+2.30. Higher versions than 3.0 might work too, but only on selected 
+prototypes (so be extremely careful as they rely on hardware that does 
+not exist on the retail CDTV). In any case, we have included the new 
+CDTV Extended ROM 47.1 in the AmigaOS 3.2 CD-ROM, which should work 
+just fine on your standard CDTV. 
+
+You can check your CDTV Extended ROM set version by booting your CDTV 
+without any disc to let it display the spinning CDTV logo boot 
+animation. In that boot image, in a tiny font on the lower left 
+portion of the screen, where rocks/mountains are displayed, you will 
+be able to read the CDTV Extended ROM set version number.
+
+The A570 external CD-ROM drive for the Amiga 500 already comes with a 
+properly updated CDTV Extended ROM set. Of course, the attached Amiga 
+500 has a traditional Kickstart ROM in socket U13 that needs to be 
+separately considered.
+
+The CDTV-II uses a standard A500 Kickstart ROM in socket U101 which 
+can be easily upgraded. On the other hand, it is not suggested to 
+change the Extended ROM set of the CDTV-II at all.
+
+On the Amiga CD32 game console, its single specialized ROM should be 
+inserted in the socket labeled as U6A.
+
+
+
+14.5 * which are the known CDTV Extended ROM versions?
+
+2.9 beta  - Avoid like the plague.
+
+0.1 Gamma - Does not work with Kickstart ROMs v2 or higher, so avoid.
+
+1.0       - Does not work with Kickstart ROMs v2 or higher, so avoid.
+
+2.0       - Does not work with Kickstart ROMs v3 or higher, so avoid.
+
+2.7       - Works for updating the Kickstart ROM.
+       
+2.30      - Official release from Commodore for the A570. This version 
+            is usable on CDTV too, but not recommended for it as it 
+            generates some memory conflicts. Works for updating the 
+            Kickstart ROM.
+       
+3.??      - Used only in the CDTV-II also known as CDTV-CR, which is 
+            an unreleased prototype. Its hardware differs from a stock 
+            CDTV. Use it only if it came with your CDTV-II unit. Do 
+            not use it on stock CDTVs. Works for updating the 
+            Kickstart ROM.
+            
+47.1      - Included in the AmigaOS 3.2 CD-ROM. It is the recommended 
+            CDTV Extended ROM set for AmigaOS 3.2 usage.
+
+
+
+
+14.6 * Where can I get a newer CDTV Extended ROM set for my CDTV?
+
+The CDTV Extended ROM set contains the firmware that lets CDTV-based 
+Amigas control the built-in CD-ROM drive specific functions (do not 
+confuse it with the Kickstart ROM). 
+
+We have not reviewed the CDTV Extended ROM code because our manpower 
+is still limited and priorities, out of necessity, shifted elsewhere. 
+However, you will find in the "ROM" directory of your AmigaOS 3.2 
+CD-ROM a functional CDTV Extended ROM v47.1 that works as an update 
+for your CDTV, and properly enables it for AmigaOS 3.2 use. 
+
+That said, everything you do is at your own risk. We highly recommend 
+you to contact a specialized technician to properly carry out this job 
+for you.
+
+
+
+14.7 * Why does Workbench's About menu requester display a weird 
+       Kickstart ROM version number?
+
+This only happens on CDTV-based machines. The revision number (which 
+are the numbers displayed after the dot symbol in the version string), 
+adopt a change to reflect the current CTDV Extended ROM set version 
+being used. Otherwise, no harm is done, so there is nothing to be 
+worried about.
+
+So, for example, if you are using Kickstart 3.2 and a CDTV Extended 
+ROM set v2.30 it will display "Kickstart version 47.30".
+
+If on the other hand, you are using Kickstart 3.2 and a CDTV Extended 
+ROM set v2.7 it should display "Kickstart version 47.999".
+
+The new v47.1 CDTV Extended ROM should display matching 47.1 version
+numbers.
+
+
+
+14.8 * Can I use accelerators and fast RAM on my CDTV
+
+You can use accelerators on the CDTV but you must be aware of the 
+memory expansions they use.
+
+There is a bug in the DMA controller (DMAC custom chip) inside the 
+CDTV that causes an issue regarding RAM support. 
+
+This prevents you from using AutoConfig based FastMem in the 32-bit 
+(Zorro III) address range in a compatible way. If you still insist on 
+using this memory anyway, you will have to pay the cost of having to 
+live without CD-ROM drive support or in most cases not being able to 
+boot at all.
+
+In any case, CDTV Fast RAM mapped in the 24-bit (Zorro II) address 
+range can be used without any problems or loss of functionality.
+
+An alternative is to open the CDTV's motherboard jumper labeled 
+as "JP15" (or disconnect its solder pads) to effectively turn this 
+model into a sort of standard Amiga 500, disabling all CDTV's CD-ROM 
+specific functions. 
+
+
+
+14.9 * What is the CD32?
+
+The Amiga CD32 is a 32-bit home video game console. It uses CD-ROMs as 
+its storage medium. It shares some specifications of the Amiga 1200 
+and by using third-party devices it is possible to upgrade the CD32 
+turning it into a sort of functional equivalent of an Amiga 1200.
+
+The AmigaOS 3.2 CD-ROM can boot an AmigaOS 3.2 Preinstallation 
+Environment on the CD32.
+
+
+
+14.10 * Are there any hard drive size limitations for all these Amiga 
+        CD-ROM based models?
+
+These Amigas never came with a hard drive controller from factory so 
+any hard drive support will depend on the controller and driver the
+user selected for their machines.
+
+Whether any third-party hardware expansions support more than 4 GB of 
+storage space will depend largely on their particular implementation 
+and driver interface as provided by their respective manufacturers.
+
+Note: Some hard drive controllers may be able to use drives larger 
+than 4 GB by reusing the new scsi.device for the Amiga 1200 which is 
+present in the ModulesA1200_3.2.adf disk image. You may have to 
+manually copy it and give it a try with LoadModule.
+
+
+
+14.11 * Are there any restrictions regarding AmigaOS usage?
+
+The CDTV and CD32 have two common limitations:
+
+1) Only the vintage CDFS that resides in ROM will be available for the 
+built-in CD-ROM drive unit (this means no HFS, no long file names, 
+etc.). This is the price we pay for legacy compatibility. 
+
+2) When there is no CD-ROM disc in the built-in CD-ROM drive, Format 
+displays a requester complaining about the lack of such disc. This 
+requester can be easily dismissed and Format operations will resume 
+without problems. This is only just a minor inconvenience caused by 
+the vintage built-in CDFS in ROM.
+
+
+
+14.12 * How do I create and burn an AmigaOS 3.2 CD32 ROM?
+
+The CD32 also has two ROM images much like the CDTV, a Standard CD32 
+Kickstart ROM image and an Extended CD32 ROM image. The CD32 Extended 
+ROM image is also designed to handle all the built-in CD-ROM specific 
+functionality. But unlike the CDTV, both ROM images are built together 
+resulting in a single physical ROM unit (just one chip). 
+
+Burning a new AmigaOS 3.2 CD32 physical ROM is a complex job that 
+requires advanced skills. It implies selecting the adequate 1MB ROM 
+chip and generating the proper 1MB ROM image. 
+
+To generate this 1MB ROM image you would have to mix the Standard CD32 
+Kickstart ROM image with the Extended CD32 ROM image in a custom 
+interleaved manner.
+
+All CD32s come with the same CD32 Extended ROM built-in. So extracting 
+it is a matter of finding the appropriate software tool that can grab 
+it from your existing CD32 unit. 
+
+You may also grab your built-in Kickstart 3.1 Standard CD32 ROM image 
+and later update it with the contents of the ModulesCD32_3.2 disk by 
+using specialized software. 
+
+Despite we have provided you with the general guidelines on how to 
+proceed to generate this elusive physical CD32 ROM, we have decided to 
+currently not supply any CD32 ROM images to avoid a multitude of 
+issues that will eventually arise. Also further support following this 
+complex procedure will not be provided. Instead, we suggest you to 
+just stick to using the ModulesCD32_3.2 disk along with LoadModule, 
+just like the AmigaOS 3.2 install procedure defaults to.
+
+
+
+14.13 * Which chips do I need to burn the CDTV Extended ROM set?
+
+All CDTV extended ROMs are composed of two units of 128 KB EPROMS with 
+32 pins (1 M-bit) each.
+
+A good advice is to always double check the datasheet from the 
+particular manufacturer of your chips for the pinout confirmation.
+
+CDTV Extended ROM expected EPROM pinout:
+
+Vpp  1 +-v-+ 32  Vcc
+OE/  2 |   | 31  PGM/
+A15  3 |   | 30  nc
+A12  4 |   | 29  A14
+A7   5 |   | 28  A13
+A6   6 |   | 27  A8
+A5   7 |   | 26  A9
+A4   8 |   | 25  A11
+A3   9 |   | 24  A16
+A2  10 |   | 23  A10
+A1  11 |   | 22  CE/
+A0  12 |   | 21  D7
+D0  13 |   | 20  D6
+D1  14 |   | 19  D5
+D2  15 |   | 18  D4
+GND 16 +---+ 17  D3
+
+Compatible EPROM chips: 27C1000, 27C100, TC571001, 27C301.
+
+WARNING: The Macronix MX27C1000 has a different pinout!
+
+However, there are a few EPROM chip replacements that require minor 
+workarounds, and maybe used with little effort.
+
+Semi-compatible chips that require workarounds: 27C1001, 27C010, 
+                                                27C101, TC571000 and 
+                                                MX27C1000.
+
+The only difference seems to be that 2 pins are swapped, so you could 
+easily hack them using a pair of 32 pin DIL sockets or some jumper 
+wires.
+
+Pinout of semi-compatible EPROM chips:
+
+Vpp  1 +-v-+ 32  Vcc
+A16  2 |   | 31  PGM/
+A15  3 |   | 30  nc
+A12  4 |   | 29  A14
+A7   5 |   | 28  A13
+A6   6 |   | 27  A8
+A5   7 |   | 26  A9
+A4   8 |   | 25  A11
+A3   9 |   | 24  OE/
+A2  10 |   | 23  A10
+A1  11 |   | 22  CE/
+A0  12 |   | 21  D7
+D0  13 |   | 20  D6
+D1  14 |   | 19  D5
+D2  15 |   | 18  D4
+GND 16 +---+ 17  D3
+
+
+
+
+15. Support, Documentation, and Future
+______________________________________
+
+
+
+
+15.1 * Why didn't you support feature XYZ, World Domination, etc.?
+
+We wanted to commence with the habit of releasing more often, and this 
+means less time to allocate to other tasks. It is certainly better 
+this way than having to wait for twenty years, don't you think?
+
+
+
+15.2 * Speaking of support--where can I get any for this product?
+
+Official support will be provided on the forums at: 
+
+http://forum.hyperion-entertainment.com
+
+
+
+15.3 * Will there be more updates?
+
+We hope we have already delivered a stable and bug-free OS. However, 
+we are human, and mistakes do happen, and also some unforeseen 
+circumstances may require us to deliver an update to address them.
+
+And after that? Tell us about your wishes and preferences concerning 
+an even further updated classic AmigaOS.
+
+
+
+15.4 * Are there any Easter Eggs in OS 3.2?
+
+Who knows?  ;-)
+
+
+
+15.5 * Is there any other AmigaOS 3.2 documentation available?
+
+AmigaOS 3.2 comes with a built-in Help subsystem that covers the 
+entire AmigaOS 3.2 set of components, serving as a reference manual 
+easily accessible to users.
+
+It can be activated by either pressing the HELP Amiga keyboard key 
+(PAGE DOWN key on Amiga emulators), by double clicking on the "Help" 
+icon located in the "System" drawer, or even by simply typing HELP 
+and a program name on a CLI/Shell window.
+
+That said, you can also find the following documentation included in 
+the AmigaOS 3.2 package distribution:
+
+1. A comprehensive AmigaOS 3.2 installation guide 
+(Installation.readme).
+
+2. A FAQ that covers general MC68020-MC68060 CPU generic environments 
+(CPU-FAQ.readme).
+
+3. A FAQ that covers GVP Accelerators, Disk, and I/O Interfaces 
+(GVP-FAQ.readme).
+
+4. A FAQ that covers the PP&S A2000 68040/28 accelerator board 
+(PP&S-040-FAQ.readme).
+
+
+
+15.6 * What is the origin of the AmigaOS 3.2 motto?
+
+Some context on where the phrase "Nothing that's really good ever gets 
+really lost" came from: it's from one of the conversations in the 
+"Coders at work" book, with Dan Ingalls.
+
+Dan Ingalls is one of the designers and implementors of the Smalltalk 
+language, which survives to this day. It was one of the first dynamic 
+object-oriented languages, originally intended to be used as 
+educational tool "for children of all ages".
+
+This goes way back to the late 1960'ies/early 1970'ies when you were 
+still allowed to have dreams such as these. Naturally, this project 
+evolved at the Xerox PARC facility in California, where the future of 
+computing was invented. We're living in the world which PARC created 
+
+As for Smalltalk: we are all familiar with the concept of just-in-time 
+compilation. It's being used in dynamic languages such as JavaScript, 
+with Java itself being one of the first adopters (it was still close 
+to unusably slow when it shipped in the late 1990'ies, look at where 
+we are today). The concept of JITs, however, was designed for 
+Smalltalk to make use of it. Few people know what.
+
+Smalltalk, warts and everything, still is an interesting technical 
+dream which its implementors had a hard time bringing it to reality 
+and furthering its adoption. That opportunity passed, and then we got 
+C++ instead with practical dynamic languages following it (Python 
+comes to mind, and of course that strange brew which is JavaScript). 
+None of which realized the ambitious technical dream of Smalltalk.
+
+The quote we use as motto, refers to technology which seems to get 
+left behind as competing ideas appear to overtake it. Smalltalk as a 
+language, a platform and so much more was overtaken by C++ in the 
+1980'ies, or so it seemed. Funny enough, its core ideas were never 
+adopted by C++ or more modern dynamic languages.
+
+These ideas are still being rediscovered and applied, though. This is 
+what is meant by "Nothing that's really good ever gets really lost".
+
+The evolution of Smalltalk is worth looking at (check out its 
+Wikipedia page at https://en.wikipedia.org/wiki/Smalltalk). Reading 
+about "Squeak" and "eToys" makes me wonder if this tech could find a 
+home on the Amiga.
+
+A small part of this is already part of the Amiga: Intuition's BOOPSI 
+model is based upon the Smalltalk message/object/class model.
+
+---------------------------- End of FAQ ------------------------------

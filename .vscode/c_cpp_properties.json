@@ -1,0 +1,33 @@
+{
+    "configurations": [
+        {
+            "name": "Amiga 68k",
+            "includePath": [
+                "/opt/amiga/m68k-amigaos/ndk-include/",
+                "/opt/amiga/m68k-amigaos/sys-include/",
+                "/opt/amiga/m68k-amigaos/include/",
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/src/amigautils",
+                "${workspaceFolder}/src/application",
+                "${workspaceFolder}/src/commands",
+                "${workspaceFolder}/src/diffengine",
+                "${workspaceFolder}/src/menus",
+                "${workspaceFolder}/src/model",
+                "${workspaceFolder}/src/screen",
+                "${workspaceFolder}/src/textsearch",
+                "${workspaceFolder}/src/textselect",
+                "${workspaceFolder}/src/windows",
+                "${workspaceFolder}/src/worker"
+            ],
+            "defines": [
+                "__clang__"
+            ],
+            "compilerPath": "/opt/amiga/bin/m68k-amigaos-gcc",
+            "cStandard": "c99",
+            "cppStandard": "c++98",
+            "intelliSenseMode": "clang-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}

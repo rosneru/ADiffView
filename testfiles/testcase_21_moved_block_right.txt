@@ -1,0 +1,29 @@
+#include <iostream>
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+  string firstTest = "Totally first test";
+  cout << firstTest << endl;
+
+  std::string secondTest = "Test with own string object";
+  cout << secondTest.c_str() << endl;
+}
+
+void * operator new (std::size_t sz)
+{
+  void *p = malloc(sz);
+  if (p)
+  {
+    cout << " (Overloaded new allocating " << sz << " bytes)" << endl;
+    return p;
+  }
+
+  perror("std::bad_alloc");
+  abort();
+}

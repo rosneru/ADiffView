@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Make project",
+            "command": "/usr/bin/make",
+            "args": [
+                "-j3"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build/"
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "fileLocation": "autoDetect"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Make boost-Tests",
+            "command": "/usr/bin/make",
+            "args": [
+                "-j3"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build-tests/"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}

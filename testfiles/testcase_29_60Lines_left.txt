@@ -1,0 +1,60 @@
+using RealLifeApp.DB;
+using RealLifeApp.DB.QueryLibrary;
+using RealLifeApp.Model;
+using RealLifeApp.Net.Device;
+using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Windows.Forms;
+using MigraDoc.DocumentObjectModel.IO;
+using MigraDoc.Rendering.Forms;
+using MigraDocProtocol;
+using static RealLifeApp.DB.QueryLibrary.QueryLibraryRefracto;
+using System.Globalization;
+using System.Drawing.Printing;
+using MigraDocProtocol.MigraDocExtensions;
+using MigraDoc.Rendering;
+
+namespace RealLifeApp.Print
+{
+  public class PrintModule
+  {
+    string varDevSerial;
+    string varDevFilename;
+    string varDevType;
+    string varUser;
+    string varDate;
+    Dictionary<string, checklistdata> varCheckList;
+    List<checklistdata> varCheckList0;
+    List<checklistdata> varCheckList1;
+    List<checklistdata> varCheckList2;
+    List<checklistdata> varCheckList3;
+    List<checklistdata> varCheckList4;
+    List<checklistdata> varCheckList5;
+    List<checklistdata> varCheckList6;
+
+    int devType;
+    int devID;
+    int devBits;
+    CustomDeviceType deviceType;
+
+    DateTime refractoAdjustmentDate;
+    private bool doPrintDR6000Chart;
+    private bool isKrRico;
+    List<RefractoMeasValue> refractoAdjustment;
+
+    Form owner;
+
+    Dictionary<string, string> contextDescription;
+    Dictionary<string, int> contextGroup;
+
+    // TODO Removed "protocol" from groupName
+    string[] groupName = { "montage", "general", "func", "calib", "final", "finalize", "box" };
+    string[] groupText = { "Montage", "Grundeinstellungen", "Funktionstest", "Justierung", "Endtest", "Abschluss Software", "Gehäuse" };
+
+    public PrintModule(TreeNode root, bool chartOk, bool isKrRico, Form owner)
+    {
+      this.doPrintDR6000Chart = chartOk;
+      this.isKrRico = isKrRico;
+      this.owner = owner;

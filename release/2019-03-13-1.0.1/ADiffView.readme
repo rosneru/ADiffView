@@ -1,0 +1,83 @@
+Short:        A graphical file compare / diff viewer
+Author:       Uwe Rosner
+Uploader:     u.rosner@ymail.com (Uwe Rosner)
+Type:         util/misc
+Version:      1.0.1
+Architecture: m68k-amigaos >= 3.0
+Distribution: Aminet
+
+=======
+CHANGES
+=======
+
+1.0.1 (13.03.2019)
+- Fixed a bug which caused a crash when comparing long files
+- Fixed a minor problem in the about window where the title was always 
+  inherited by the parent window.
+- Added some more info into the manual chapter about ADiffView and 
+  Directory Opus
+
+1.0.0 (21.02.2019)
+- Initial version
+
+=====
+ABOUT
+=====
+
+ADiffView compares two ASCII text files and graphically displays the 
+differences in an Intuition window.
+
+The diff engine itself is a port of Stephane Rodriguez source code on 
+CodeProject: https://www.codeproject.com/Articles/3666/Diff-tool
+
+In 2005 he released an updated version which is the one I adapted: 
+http://www.arstdesign.com/articles/difftool.html
+
+
+========
+FEATURES
+========
+
+- A window allows you to choose the files to compare.
+
+- While comparing the files the difference is calculated in a
+background process and a progress bar is shown to give a visual
+response of what's going on and that the program isn't freezed yet.
+
+- Optionally the files to diff can be given as command line arguments 
+from CLI or as Workbench arguments.
+
+- Some options can be given as command line arguments or by Workbench
+tool types.
+
+
+======
+FUTURE
+======
+
+Some features that I consider implementing in a future version are:
+
+- Adding an option to display the line numbers of the files.
+
+- Adding support for the clipboard, allowing to copy text and paste it 
+in another application
+
+- Optimizing the scrolling. Currently it works good in RTG / emulation 
+but not perfect on original hardware.
+
+- Using the memory pool functions of OS3.0 exec.library to reduce 
+memory fragmentation and for faster freeing the memory.
+
+
+===========
+DEVELOPMENT
+===========
+
+Development was done in C++ with StormC4 in gcc mode.
+
+
+=========
+THANK YOU
+=========
+Many thanks to the helpful people in the Amiga Forums which still keep 
+the spirit alive!

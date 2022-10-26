@@ -1,0 +1,127 @@
+@database ADiffView
+@author Uwe Rosner
+@wordwrap
+@node Main "ADiffView - Introduction"
+
+@{fg shine}ADiffView 1.2 released on 01.01.2020.@{fg text}
+
+@{b}About@{ub}
+
+ADiffView compares two ASCII text files and displays the differences graphically inside a window.
+
+Minimum system requirement is an Amiga with 1.0 MB RAM and AmigaOS3.0.
+
+
+@{b}Origin of the diff algorithm@{ub}
+
+Starting with version 1.1 the Myers diff algorithm is used. That's the algorithm used by the *nix diff utils and git.
+
+A part of the implemented diff engine uses code from Matthias Hertel, http://www.mathertel.de/.
+
+In particular moving the vector allocations out of a recursive function and making the algorithm work with 0-based indices (instead of being 1-based) are very helpful optimizations of Myers original algorithm.
+
+See the file LICENSE-3RD-PARTY.txt for the license of that code.
+
+In obsolete version 1.0 (and following bugfix release 1.0.1) the used diff engine was a port of Stephane Rodriguez source code on CodeProject: https://www.codeproject.com/Articles/3666/Diff-tool
+
+@{"Installation and usage" link installation}
+@{"Arguments and tool types" link argsttypes}
+@{"Changelog" link changelog}
+@{"Distribution" link distribution}
+
+
+@endnode
+
+@node installation "Installation"
+
+@{b}Installation@{ub}
+Just copy the binary ADiffView together with its icon to a place of your choice, e.g. to @{fg shine}SYS:Tools@{fg text}.
+
+@{b}Usage@{ub}
+When comparing big files, you'll probably notice the progress bar window. It is there to show you that ADiffView is still working and doesn't hang. However, the used diff algorithm isn't linear. So it's possible that there is no progress for some seconds. This will especially be the case when comparing files with many differences. Don't panic. Please wait a little longer.
+
+After the differences are calculated successfully, both files are shown next to each other in a window. The different lines are marked with a special background color according to the legend at the bottom of the window. The numbers of ADDED, CHANGED and DELETED doesn't refer to lines. Instead they refer to groups of difference blocks. For example 4 Added lines are reported as '1 Added' if they are directly one after another.
+
+In the diff result window you can use the navigation menu to jump to the next or previous difference. Again, the differences that can be jumped to aren't single lines, but groups of difference blocks.
+
+@{b}Using ADiffView with DOpus 5.x@{ub}
+If you use DOpus 5.x you can setup a button to run ADiffView from there:
+
+1) Edit the file DOpus/ARexx/Compare.dopus5 in away that the line at the bottom which starts with 'Address Command' looks like this:
+@{fg shine}Address Command 'SYS:Tools/ADiffView "' || First_Name || '" "' || Second_Name || '"' DONOTASK@{fg text}
+
+2) In DOpus create or edit a button, name it e.g. "Diff" and set this ARexx script to be executed on the button click:
+@{fg shine}DOpus5:ARexx/Compare.dopus5 {Qp}@{fg text}
+
+Now when clicking on "Diff" ADiffView will be started, immediately comparing the first two selected files. The files to compare can be selected in one lister or in two different listers.
+
+@endnode
+
+@node argsttypes "Arguments and tool types"
+
+@{b}Files as Shell arguments@{ub}
+The files to compare can be provided as command line arguments, simply calling 'ADiffViews file1 file2'
+
+@{b}Files as Workbench arguments@{ub}
+The files also can be provided as Workbench arguments:
+- Left-click one of the files that should be compared
+- Hold Shift and left-click the other file
+- Hold Shift and double-click ADiffView
+
+@{b}Options as Shell arguments or as Workbench tool types@{ub}
+
+Addtionally some options can be provided allowing a little more control. They can be set when calling ADiffView from the command line or they can be provided as tool types of the ADiffView Workbench icon.
+
+@{i}DONOTASK@{ui}
+The file comparing starts immediately after program start. The window for selecting the files will not be shown. This only will work if the files to compare also are provided.
+
+@{i}NOLINENUMBERS@{ui}
+The linenumbers are not displayed. Saves a little memory and time processing power.
+
+@{i}PUBSCREEN@{ui}
+The program will be opened on the provided public screen. If this is not set ADiffView will open its own screen which will mostly be a clone of the Workbench screen but with the exception that it will have at least eight colors.
+
+
+
+@endnode
+
+@node changelog "Changelog"
+
+@{b}Changelog@{ub}
+1.2 (01.01.2020)
+- Fixed a bug introduced in version 1.1 which produced Enhancer hits in progress window.
+- Fixed problem in text rendering where some lines were displayed intermeshed.
+- The line numbers of the source files are now displayed in diff result.
+- Added the (tooltype / cli) option NOLINENUMBERS to disable displaying the line numbers.
+
+1.1 (22.12.2019)
+- Now using the Myers diff algorithm for better results.
+- File select window: When a file was selected with the file request, the request for the other file opens in the same directory.
+- File select window: Keyboard shortcuts are now working.
+- File select window: Added a feature to swap left and right file.
+- File select window: Added support for Drag'n drop. If the program runs on Workbench you can drag the files to compare into that window.
+- Diff result window: Added a feature to navigate to next / previous difference.
+- Now OS3.0+ memory pools are used. Speeds up the freeing of memory. There's a noticeable speed improvement on exit after big files have been compared.
+
+1.0.1 (13.03.2019)
+- Fixed a bug which caused a crash when comparing long files
+- Fixed a minor problem in the about window where the title was always inherited by the parent window.
+- Added some more info into the manual chapter about running ADiffView from Directory Opus
+
+1.0.0 (21.02.2019)
+- Initial version
+
+
+@endnode
+
+
+@node distribution "Author and distribution"
+
+@{b}Author and distribution@{ub}
+
+The autor of ADiffView is Uwe Rosner (u.rosner@ymail.com).
+
+This release of ADiffView may be freely distributed. It may not be comercially distributed without the explicit permission of the author.
+
+@endnode
+

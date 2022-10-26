@@ -1,0 +1,199 @@
+@database ADiffView
+@author Uwe Rosner
+@wordwrap
+@node Main "ADiffView - Introduction"
+
+@{fg shine}ADiffView 2.1 released on 02.12.2021.@{fg text}
+
+@{b}About@{ub}
+
+ADiffView compares two ASCII text files and displays the differences graphically inside a window.
+
+Starting with version 2.0 ADiffView needs @{b}at least a 68020 CPU@{ub} and AmigaOS3.0. It will crash when started from a 68000 Amiga.
+
+Many thanks to Mason for creating the nice, new color icon in AmigaOS3.2 style!
+
+
+@{b}Why does it only run on 68020+ ?@{ub}
+
+In early development state of this new version 2.0 I decided to use C++ exceptions and some basic STL - cleaner code and more coding fun for me. But this comes at a cost. The binary size increased from about 70k to 190k even before new features were implemented. The use of exceptions drops MC68000 compatibility.
+
+For 68000 users the v1.2 binary from January 2020 is provided in 'ADiffView1.2' directory.
+
+@{b}Origin of the diff algorithm@{ub}
+
+Starting with version 1.1 the Myers diff algorithm is used. That's the algorithm used by the *nix diff utils and git.
+
+A part of the implemented diff engine uses code from Matthias Hertel, http://www.mathertel.de/.
+
+In particular moving the vector allocations out of a recursive function and making the algorithm work with 0-based indices (instead of being 1-based) are very helpful optimizations of Myers original algorithm.
+
+See the file LICENSE-3RD-PARTY.txt for the license of that code.
+
+In obsolete version 1.0 (and following bugfix release 1.0.1) the used diff engine was a port of Stephane Rodriguez source code on CodeProject: https://www.codeproject.com/Articles/3666/Diff-tool
+
+@{"How to use" link usage}
+@{"Menus and functions" link menus}
+@{"Using ADiffView with DOpus 5.x" link dopus}
+@{"Arguments and tool types" link arguments}
+@{"Changelog" link changelog}
+@{"Distribution" link distribution}
+
+@endnode
+
+@node usage "How to use"
+
+@{b}Installation@{ub}
+Just copy the binary ADiffView together with its icon to a place of your choice, e.g. to @{fg shine}SYS:Tools@{fg text}.
+
+@{b}Usage@{ub}
+When started without arguments, ADiffView will first open a window to select the left and right file to compare. There are buttons to to open a file requester to select the files, to swap the left and right file, to clear the selected files, to cancel and to start the compare process. Keyboard shortcuts are underlined on some buttons. 
+
+With ESC you can close this window. With RETURN the function of the leftmost bottom button 'Compare' is executed - if possible. These shortcuts do not work when the cursor is active in one of the file path gadgets.
+
+After the differences are calculated successfully, both files are shown next to each other in a window. The different lines are marked with a special background color according to the legend at the bottom of the window. The numbers of ADDED, CHANGED and DELETED doesn't refer to lines. Instead they refer to groups of difference blocks. For example 4 Added lines are reported as '1 Added' if they are directly one after another.
+
+@{b}No more progress, is it frozen?@{ub}
+The time needed to calculate the differences increases with the number of differences in the files and also with their size. So if you compare large files that contain many differences it can take a while depending on the CPU. Since the algorithm is not linear, it may seem that the program is frozen during this time. Then please be patient: in most cases it is not.
+
+@endnode
+
+@node menus "Menus and functions"
+@{b}Navigation@{ub}
+In the diff result window you can use the navigation menu to display the first, last, next or previous difference block. Note the new behavior of the navigation functions. When you call 'Next difference' it will jump to the next one according @{i}to your position in text@{ui}, not according to the last hit you jumped to. If no next / previous difference block exists, the screen flashes briefly and a notification appears in the window title.
+
+The new function 'Find...' allows to search for a keyword of text in one or both compared files. 
+
+With ESC you can close the Find... window. With RETURN the function of the leftmost bottom button 'Find' is executed. These shortcuts do not work when the cursor is active in the search keyword gadget.
+
+Searching starts immediately after typing the search keyword is finished by pressing RETURN or TAB.
+
+Then you can click on one of the buttons below to display the corresponding search result: 'Find' - for the next result from your current position in text, 'From start' - for the the first one or 'Backwards' - for the last one.
+
+If the search keyword is not found, the screen flashes briefly and a notification appears in the window title. Depending on the implementation of the DisplayBeep() system function, the screen may not flash on some RTG screens.
+
+However, if the search text is found, the search window is closed and the result is displayed.
+
+Use 'Find next' and 'Find prev' navigation menu to quickly navigate between search results. Like the 'Next/Prev difference' functions the navigation works from your current position in text, not from the result you formerly navigated to.
+
+Re-open the 'Find...' window and again click on 'From start' or 'Backwards' to quickly navigate to the first or last result.
+
+@{b}View@{ub}
+Currently the only function in the View menu is on-the-fly switching between different tab widths. 
+
+The options "2", "4" and "8" are available. If you have specified an alternative TABSIZE as start argument of ADiffView, this can also be selected in the menu; it then is located there after the label "Custom: ". 
+
+Selecting a different tab width has no effect if the text does not contain tab characters.
+
+@endnode
+
+@node dopus "Using ADiffView with DOpus 5.x"
+If you use DOpus 5.x you can setup a button to run ADiffView from there:
+
+1) Edit the file DOpus/ARexx/Compare.dopus5 in away that the line at the bottom which starts with 'Address Command' looks like this:
+@{fg shine}Address Command 'SYS:Tools/ADiffView "' || First_Name || '" "' || Second_Name || '"' DONOTASK@{fg text}
+
+2) In DOpus create or edit a button, name it e.g. "Diff" and set this ARexx script to be executed on the button click:
+@{fg shine}DOpus5:ARexx/Compare.dopus5 {Qp}@{fg text}
+
+Now when clicking on "Diff" ADiffView will be started, immediately comparing the first two selected files. The files to compare can be selected from one lister or from two different listers.
+
+@endnode
+
+@node arguments "Arguments and tool types"
+
+@{b}Files as CLI arguments@{ub}
+The files to compare can be provided as command line arguments, simply calling 'ADiffViews file1 file2'
+
+@{b}Files as Workbench arguments@{ub}
+The files also can be provided as Workbench arguments:
+- Left-click one of the files that should be compared
+- Hold Shift and left-click the other file
+- Hold Shift and double-click ADiffView
+
+@{b}CLI arguments, Workbench tool types@{ub}
+
+For a better control of program behavior ADiffView supports some options which can be provided as CLI arguments or tool types of its Workbench icon.
+
+@{i}IGNORETRAILINGSPACES@{ui}
+If this is set, spaces or tabs at line ends are not recognized as differences.
+
+@{i}TABSIZE@{ui}
+The tabulator width used when rendering text that contains tabulator characters. If this is not specified, the default value of "8" is used.
+
+@{i}NOAPPICON@{ui}
+No appicon is displayed when started from Workbench. (When started from CLI an AppIcon is never displayed.)
+
+@{i}DONOTASK@{ui}
+The file comparison starts immediately after the program start. The window for selecting the files will not be shown. This only will work if the files to compare also are provided.
+
+@{i}NOLINENUMBERS@{ui}
+The line numbers are not displayed. Saves a little memory and processing time.
+
+@{i}PUBSCREEN@{ui}
+The program will be opened on the provided public screen. If this is not set ADiffView will open its own screen which will mostly be a clone of the Workbench screen but with the exception that it will have eight colors.
+
+On non RTG systems I recommend not to use a public screen, but to open ADiffView on its own screen. This is the only way to be sure that all colors/pens are correct.
+
+
+@endnode
+
+@node changelog "Changelog"
+
+@{b}Changelog@{ub}
+2.1 (02.12.2021)
+- Navigation: Now displays a message in the window title if no next/previous difference or search pattern match was found.
+- View: Added the 'View' menu with currently the only function to switch between different tabulator widths.
+- Behavior: Added (ToolType / CLI) argument IGNORETRAILINGSPACES. When this is set to true all white spaces at line endings are skipped for comparison. So for example, files that differ only by spaces at the end of lines are displayed as if they had no differences.
+- Behavior: Added support for selecting multiple menu items at one time as it is common on the Amiga.
+- Behavior: Now starting the comparison will be prevented if the same file name is selected for the left and right file (only string comparison of the filenames).
+- Fixed an issue where window titles were broken after comparing files without differences.
+- Fixed a MuForce hit when 'Navigate to last diff' was called.
+
+2.0 (27.07.2021)
+- Added new color icon in AmigaOS3.2 style - many thanks to Mason!
+- Rendering: Added tabulator support, defaults to 8 spaces for each tab. Can be configured with the (ToolType / CLI) argument TABSIZE.
+- Navigation: Added a text search function.
+- Navigation: Added more commands to navigate between diff blocks. 
+- Layout: Improved the progress window layout.
+- Behavior: Removed the (ToolType / CLI) argument ASKONWORKBENCH. An AppIcon is used instead but only available when ADiffView is started from the Workbench. Double clicking on the AppIcon brings ADiffView to front. When files are dropped on the AppIcon, their names are inserted into the open files window on an empty file name gadget. The AppIcon can be disabled with the ToolType NOAPPICON.
+- Performance: Improved the reading of input files. Now each file is read as a whole and no unnecessary string copying is done anymore.
+- Development: Widely changed the internal application structure. Now using C++ exceptions and some basic STL - cleaner code and more coding fun for me. But this comes at a cost. The binary size increased from about 70k to 190k even before new features were implemented. The use of exceptions also drops MC68000 compatibility, so at least a 68020 CPU is needed now.
+
+1.2 (01.01.2020)
+- Fixed a bug introduced in version 1.1 which produced Enforcer hits in progress window.
+- Fixed problem in text rendering where some lines were displayed intermeshed.
+- The line numbers of the source files are now displayed in diff result.
+- Added the (tooltype / cli) option NOLINENUMBERS to disable displaying the line numbers.
+
+1.1 (22.12.2019)
+- Now using the Myers diff algorithm for better results.
+- File select window: When a file was selected with the file request, the request for the other file opens in the same directory.
+- File select window: Keyboard shortcuts are now working.
+- File select window: Added a feature to swap left and right file.
+- File select window: Added support for Drag'n drop. If the program runs on Workbench you can drag the files to compare into that window.
+- Diff result window: Added a feature to navigate to next / previous difference.
+- Now OS3.0+ memory pools are used. Speeds up the freeing of memory. There's a noticeable speed improvement on exit after big files have been compared.
+
+1.0.1 (13.03.2019)
+- Fixed a bug which caused a crash when comparing long files
+- Fixed a minor problem in the about window where the title was always inherited by the parent window.
+- Added some more info into the manual chapter about running ADiffView from Directory Opus
+
+1.0.0 (21.02.2019)
+- Initial version
+
+
+@endnode
+
+
+@node distribution "Author and distribution"
+
+@{b}Author and distribution@{ub}
+
+The author of ADiffView is Uwe Rosner (u.rosner@ymail.com).
+
+This release of ADiffView may be freely distributed. It may not be commercially distributed without the explicit permission of the author.
+
+@endnode
+

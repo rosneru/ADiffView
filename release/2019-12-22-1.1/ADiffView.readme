@@ -1,0 +1,94 @@
+Short:        A graphical file compare / diff viewer
+Author:       Uwe Rosner
+Uploader:     u.rosner@ymail.com (Uwe Rosner)
+Type:         util/misc
+Version:      1.1
+Architecture: m68k-amigaos >= 3.0
+Distribution: Aminet
+
+=======
+CHANGES
+=======
+
+1.1 (22.12.2019)
+- Now using the Myers diff algorithm for better results.
+- File select window: When a file was selected with the file request, 
+  the request for the other file opens in the same directory.
+- File select window: Keyboard shortcuts are now working.
+- File select window: Added a feature to swap left and right file.
+- File select window: Added support for Drag'n drop. If the program 
+  runs on Workbench you can drag the files to compare into that window.
+- Diff result window: Added a feature to navigate to next / previous 
+  difference.
+- Now OS3.0+ memory pools are used. Speeds up the freeing of memory. 
+  There's a noticeable speed improvement on exit after big files have 
+  been compared.
+
+1.0.1 (13.03.2019)
+- Fixed a bug which caused a crash when comparing long files
+- Fixed a minor problem in the about window where the title was always 
+  inherited by the parent window.
+- Added some more info into the manual chapter about ADiffView and 
+  Directory Opus
+
+1.0.0 (21.02.2019)
+- Initial version
+
+
+=====
+ABOUT
+=====
+
+ADiffView compares two ASCII text files and graphically displays the 
+differences in an window.
+
+Starting with version 1.1 a Myers diff algorithm is used. That's the 
+algorithm used by the *nix diff utils and git.
+
+A part of the implemented diff engine uses code from Matthias Hertel, 
+http://www.mathertel.de/.
+
+In particular moving the vector allocations out of a recursive function
+and making the algorithm work with 0-based indices (instead of being 
+1-based) are very helpful optimizations of Myers original algorithm.
+
+See the file LICENSE-3RD-PARTY.txt for the license of that code.
+
+
+========
+FEATURES
+========
+
+- A window allows you to choose the files to compare.
+
+- While comparing the files the difference is calculated in a
+background process and a progress bar is shown to give a visual
+response of what's going on and that the program isn't freezed yet.
+
+- Optionally the files to diff can be given as command line arguments 
+from CLI or as Workbench arguments.
+
+- Some options can be given as command line arguments or by Workbench
+tool types.
+
+
+======
+FUTURE
+======
+
+Some features that I consider implementing in a future version are:
+
+- Adding an option to display the line numbers of the files.
+
+- Adding support for the clipboard, allowing to copy text and paste it 
+in another application
+
+- Optimizing the scrolling. Currently it works good in RTG / emulation 
+but not perfect on original hardware.
+
+
+===========
+DEVELOPMENT
+===========
+
+Development was done on an Amiga with StormC4 in C++/gcc mode.
