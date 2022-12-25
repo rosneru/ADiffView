@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "MessageBox.h"
 #include "DiffWindow.h"
 
 
@@ -488,7 +489,7 @@ void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
 
     case IDCMP_MOUSEBUTTONS:
     {
-
+      handleMouseButtons(pMsg);
     }
   }
 }
@@ -711,6 +712,46 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
   {
     case SELECTDOWN:
     {
+      if(m_pLeftTextArea == NULL || m_pRightTextArea == NULL)
+      {
+        return;
+      }
+
+      if(m_pLeftTextArea->getTextRectangle().isPointInside(pMsg->MouseX,
+                                                           pMsg->MouseY))
+      {
+        m_SelectionMode = SM_LEFT;
+      }
+      else if(m_pRightTextArea->getTextRectangle().isPointInside(pMsg->MouseX,
+                                                                 pMsg->MouseY))
+      {
+        m_SelectionMode = SM_RIGHT;
+      }
+      else
+      {
+        m_SelectionMode = SM_NONE;
+      }
+      break;
+    }
+
+    case SELECTUP:
+    {
+      if(m_SelectionMode == SM_NONE)
+      {
+        return;
+      }
+      else if(m_SelectionMode == SM_LEFT)
+      {
+        MessageBox mbx(getIntuiWindow());
+        mbx.Show("You clicked into left text.", "Ok");
+        m_SelectionMode = SM_NONE;
+      }
+      else if(m_SelectionMode == SM_RIGHT)
+      {
+        MessageBox mbx(getIntuiWindow());
+        mbx.Show("You clicked into right text.", "Ok");
+        m_SelectionMode = SM_NONE;
+      }
       break;
     }
   }

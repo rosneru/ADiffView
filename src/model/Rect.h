@@ -46,6 +46,13 @@ public:
   virtual void setSize(unsigned long width, unsigned long height);
 
   bool hasSize() const;
+
+  /**
+   * Returns true if the given point is inside the rectangle.
+   */
+  bool isPointInside(unsigned long pointX, unsigned long pointY) const;
+
+
   unsigned long getArea() const;
 
   unsigned long getLeft() const;

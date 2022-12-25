@@ -145,6 +145,8 @@ public:
 
   void clearSelection();
 
+  const Rect& getTextRectangle() const;
+
 
 private:
   SelectableDiffFile m_DiffFile;

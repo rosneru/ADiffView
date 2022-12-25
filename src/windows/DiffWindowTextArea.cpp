@@ -160,6 +160,12 @@ void DiffWindowTextArea::clearSelection()
 }
 
 
+const Rect& DiffWindowTextArea::getTextRectangle() const
+{
+  return m_HScrollRect;
+}
+
+
 void DiffWindowTextArea::scrollTopToRow(ULONG rowId)
 {
   // Prevent to scroll below the last line

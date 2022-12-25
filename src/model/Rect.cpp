@@ -66,6 +66,15 @@ bool Rect::hasSize() const
 }
 
 
+bool Rect::isPointInside(unsigned long pointX, unsigned long pointY) const
+{
+  return pointX >= m_Left &&
+         pointX <= m_Right &&
+         pointY >= m_Top &&
+         pointY <= m_Bottom;
+}
+
+
 unsigned long Rect::getArea() const
 {
   return getWidth() * getHeight();
