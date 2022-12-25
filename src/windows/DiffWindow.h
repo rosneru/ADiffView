@@ -165,6 +165,15 @@ private:
   DiffWindowTextArea* m_pLeftTextArea;
   DiffWindowTextArea* m_pRightTextArea;
 
+  enum SelectionMode
+  {
+    SM_NONE = 0,
+    SM_LEFT,
+    SM_RIGHT
+  };
+
+  SelectionMode m_SelectionMode;
+
   char m_ChangedText[20];
   char m_AddedText[20];
   char m_DeletedText[20];
@@ -178,6 +187,7 @@ private:
   //
   void handleGadgetEvent(struct Gadget* pGadget);
   void handleVanillaKey(UWORD code);
+  void handleMouseButtons(const struct IntuiMessage* msg);
 
   void cleanup();
 

@@ -47,7 +47,8 @@ DiffWindow::DiffWindow(ScreenBase& screen,
     m_TextAreasWidth(0),
     m_TextAreasHeight(0),
     m_pLeftTextArea(NULL),
-    m_pRightTextArea(NULL)
+    m_pRightTextArea(NULL),
+    m_SelectionMode(DiffWindow::SM_NONE)
 {
   // If parent window already defined gadgets, we store the last of
   // these gadgets and the count of defined gadgets. They are needed
@@ -74,7 +75,9 @@ DiffWindow::DiffWindow(ScreenBase& screen,
   // Setting the IDCMP messages we want to receive for this window
   addIDCMP(IDCMP_MENUPICK |       // Inform about menu selection
            IDCMP_CLOSEWINDOW |    // Inform about click on close gadget
-           IDCMP_NEWSIZE);        // Inform about resizing
+           IDCMP_NEWSIZE |        // Inform about resizing
+           IDCMP_MOUSEMOVE |      // Inform about mouse movement
+           IDCMP_MOUSEBUTTONS);   // Inform about mouse buttons
 }
 
 
@@ -280,6 +283,8 @@ bool DiffWindow::setDocument(DiffDocument* pDiffDocument)
                                         pDiffDocument->getMaxLineLength(),
                                         m_TabSize);
 
+  m_SelectionMode = DiffWindow::SM_NONE;
+
   // Set location and size of the left text area
   m_pLeftTextArea->setPosition(m_IndentX, m_IndentY);
   m_pLeftTextArea->setSize(m_TextAreasWidth, m_TextAreasHeight);
@@ -481,6 +486,11 @@ void DiffWindow::handleIDCMP(ULONG msgClass,
     {
       close();
       break;
+    }
+
+    case IDCMP_MOUSEBUTTONS:
+    {
+
     }
   }
 }
@@ -694,6 +704,18 @@ void DiffWindow::handleGadgetEvent(struct Gadget* pGadget)
 void DiffWindow::handleVanillaKey(UWORD code)
 {
   // Currently nothing to handle
+}
+
+
+void DiffWindow::handleMouseButtons(const struct IntuiMessage* msg)
+{
+  switch(msg->Code)
+  {
+    case SELECTDOWN:
+    {
+      break;
+    }
+  }
 }
 
 
