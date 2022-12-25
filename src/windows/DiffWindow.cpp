@@ -742,14 +742,16 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       }
       else if(m_SelectionMode == SM_LEFT)
       {
-        MessageBox mbx(getIntuiWindow());
-        mbx.Show("You clicked into left text.", "Ok");
+        m_pRightTextArea->clearSelection();
+        m_pLeftTextArea->addSelection(0, 0, 4);
+        renderDocuments(0);
         m_SelectionMode = SM_NONE;
       }
       else if(m_SelectionMode == SM_RIGHT)
       {
-        MessageBox mbx(getIntuiWindow());
-        mbx.Show("You clicked into right text.", "Ok");
+        m_pLeftTextArea->clearSelection();
+        m_pRightTextArea->addSelection(0, 0, 4);
+        renderDocuments(0);
         m_SelectionMode = SM_NONE;
       }
       break;
