@@ -1,9 +1,11 @@
 #ifdef __clang__
+  #include <clib/exec_protos.h>
   #include <clib/gadtools_protos.h>
   #include <clib/icon_protos.h>
   #include <clib/intuition_protos.h>
   #include <clib/wb_protos.h>
 #else
+  #include <proto/exec.h>
   #include <proto/gadtools.h>
   #include <proto/icon.h>
   #include <proto/intuition.h>
@@ -292,19 +294,26 @@ void Application::handleProgressMessages()
 
 void Application::handleIdcmpMessages()
 {
-  struct IntuiMessage* pMsg = NULL;
-  while ((pMsg = GT_GetIMsg(m_Ports.Idcmp())) != NULL)
+  struct IntuiMessage msg;
+  struct IntuiMessage* pReceivedMsg = NULL;
+  while ((pReceivedMsg = GT_GetIMsg(m_Ports.Idcmp())) != NULL)
   {
-    if(pMsg->Class == IDCMP_MENUPICK)
+    // Copy message to handle it later / after reply
+    CopyMem(pReceivedMsg, &msg, sizeof(struct IntuiMessage));
+
+    // When we're through with a message, reply
+    GT_ReplyIMsg(pReceivedMsg);
+
+    if(msg.Class == IDCMP_MENUPICK)
     {
       //
       // Menu pick messages are handled here
       //
-      UWORD menuNumber = pMsg->Code;
+      UWORD menuNumber = msg.Code;
       while(menuNumber != MENUNULL)
       {
         // Try to find the item
-        struct MenuItem* pSelectedItem = ItemAddress(pMsg->IDCMPWindow->MenuStrip, 
+        struct MenuItem* pSelectedItem = ItemAddress(msg.IDCMPWindow->MenuStrip, 
                                                      menuNumber);
         if(pSelectedItem != NULL)
         {
@@ -317,7 +326,7 @@ void Application::handleIdcmpMessages()
             CommandBase* pSelectedCommand = static_cast<CommandBase*>(pUserData);
 
             // Execute this command
-            pSelectedCommand->Execute(pMsg->IDCMPWindow);
+            pSelectedCommand->Execute(msg.IDCMPWindow);
           }
 
           // If the user has selected multiple menu items, handle the
@@ -336,14 +345,11 @@ void Application::handleIdcmpMessages()
       std::vector<WindowBase*>::iterator it;
       for(it = m_AllWindowsList.begin(); it != m_AllWindowsList.end(); it++)
       {
-        if(pMsg->IDCMPWindow == (*it)->getIntuiWindow())
+        if(msg.IDCMPWindow == (*it)->getIntuiWindow())
         {
-          (*it)->handleIDCMP(pMsg);
+          (*it)->handleIDCMP(&msg);
         }
       }
     }
-
-    // When we're through with a message, reply
-    GT_ReplyIMsg(pMsg);
   }
 }
