@@ -48,7 +48,7 @@ public:
    * @returns
    * If this event was handled: true; if it was not handled: false..
    */
-  void handleIDCMP(ULONG msgClass, UWORD msgCode, APTR pItemAddress);
+  void handleIDCMP(const struct IntuiMessage* pMsg);
 
 
 private:

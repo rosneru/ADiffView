@@ -391,20 +391,18 @@ bool FilesWindow::open(InitialPosition initialPos)
 }
 
 
-void FilesWindow::handleIDCMP(ULONG msgClass,
-                              UWORD msgCode,
-                              APTR pItemAddress)
+void FilesWindow::handleIDCMP(const struct IntuiMessage* pMsg)
 {
   if(!isOpen())
   {
     return;
   }
 
-  switch (msgClass)
+  switch (pMsg->Class)
   {
     case IDCMP_GADGETUP:
     {
-      struct Gadget* pGadget = (struct Gadget*) pItemAddress;
+      struct Gadget* pGadget = (struct Gadget*) pMsg->IAddress;
       handleGadgetEvent(pGadget);
       break;
     }
@@ -425,7 +423,7 @@ void FilesWindow::handleIDCMP(ULONG msgClass,
 
     case IDCMP_VANILLAKEY:
     {
-      handleVanillaKey(msgCode);
+      handleVanillaKey(pMsg->Code);
       break;
     }
   }

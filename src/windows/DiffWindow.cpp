@@ -455,24 +455,22 @@ DiffWindowTextArea* DiffWindow::getRightTextArea() const
   return m_pRightTextArea;
 }
 
-void DiffWindow::handleIDCMP(ULONG msgClass,
-                             UWORD msgCode,
-                             APTR pItemAddress)
+void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
 {
-  ScrollbarWindow::handleIDCMP(msgClass, msgCode, pItemAddress);
+  ScrollbarWindow::handleIDCMP(pMsg);
 
-  switch (msgClass)
+  switch (pMsg->Class)
   {
     case IDCMP_GADGETUP:
     {
-      struct Gadget* pGadget = (struct Gadget*) pItemAddress;
+      struct Gadget* pGadget = (struct Gadget*) pMsg->IAddress;
       handleGadgetEvent(pGadget);
       break;
     }
 
     case IDCMP_VANILLAKEY:
     {
-      handleVanillaKey(msgCode);
+      handleVanillaKey(pMsg->Code);
       break;
     }
 
@@ -707,9 +705,9 @@ void DiffWindow::handleVanillaKey(UWORD code)
 }
 
 
-void DiffWindow::handleMouseButtons(const struct IntuiMessage* msg)
+void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
 {
-  switch(msg->Code)
+  switch(pMsg->Code)
   {
     case SELECTDOWN:
     {

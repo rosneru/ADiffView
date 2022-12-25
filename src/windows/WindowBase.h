@@ -185,9 +185,7 @@ public:
    * Abstract method. Must be implemented in derived classes to handle
    * the given IDCMP event.
    */
-  virtual void handleIDCMP(ULONG msgClass,
-                           UWORD msgCode,
-                           APTR pItemAddress) = 0;
+  virtual void handleIDCMP(const struct IntuiMessage* pMsg) = 0;
 
   /**
    * IMPORTENT: Resizable childs should override this and re-paint their

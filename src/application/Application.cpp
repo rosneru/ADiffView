@@ -292,28 +292,19 @@ void Application::handleProgressMessages()
 
 void Application::handleIdcmpMessages()
 {
-  struct IntuiMessage* pIdcmpMsg = NULL;
-  while ((pIdcmpMsg = GT_GetIMsg(m_Ports.Idcmp())) != NULL)
+  struct IntuiMessage* pMsg = NULL;
+  while ((pMsg = GT_GetIMsg(m_Ports.Idcmp())) != NULL)
   {
-    // Get all data we need from message
-    ULONG msgClass = pIdcmpMsg->Class;
-    UWORD msgCode = pIdcmpMsg->Code;
-    APTR msgIAddress = pIdcmpMsg->IAddress;
-    struct Window* pMsgWindow = pIdcmpMsg->IDCMPWindow;
-
-    // When we're through with a message, reply
-    GT_ReplyIMsg(pIdcmpMsg);
-
-    if(msgClass == IDCMP_MENUPICK)
+    if(pMsg->Class == IDCMP_MENUPICK)
     {
       //
       // Menu pick messages are handled here
       //
-      UWORD menuNumber = msgCode;
+      UWORD menuNumber = pMsg->Code;
       while(menuNumber != MENUNULL)
       {
         // Try to find the item
-        struct MenuItem* pSelectedItem = ItemAddress(pMsgWindow->MenuStrip, 
+        struct MenuItem* pSelectedItem = ItemAddress(pMsg->IDCMPWindow->MenuStrip, 
                                                      menuNumber);
         if(pSelectedItem != NULL)
         {
@@ -326,7 +317,7 @@ void Application::handleIdcmpMessages()
             CommandBase* pSelectedCommand = static_cast<CommandBase*>(pUserData);
 
             // Execute this command
-            pSelectedCommand->Execute(pMsgWindow);
+            pSelectedCommand->Execute(pMsg->IDCMPWindow);
           }
 
           // If the user has selected multiple menu items, handle the
@@ -345,11 +336,14 @@ void Application::handleIdcmpMessages()
       std::vector<WindowBase*>::iterator it;
       for(it = m_AllWindowsList.begin(); it != m_AllWindowsList.end(); it++)
       {
-        if(pMsgWindow == (*it)->getIntuiWindow())
+        if(pMsg->IDCMPWindow == (*it)->getIntuiWindow())
         {
-          (*it)->handleIDCMP(msgClass, msgCode, msgIAddress);
+          (*it)->handleIDCMP(pMsg);
         }
       }
     }
+
+    // When we're through with a message, reply
+    GT_ReplyIMsg(pMsg);
   }
 }

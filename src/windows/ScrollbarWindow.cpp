@@ -265,26 +265,25 @@ bool ScrollbarWindow::open(InitialPosition initialPos)
 }
 
 
-void ScrollbarWindow::handleIDCMP(ULONG msgClass, UWORD msgCode, APTR pItemAddress)
+void ScrollbarWindow::handleIDCMP(const struct IntuiMessage* pMsg)
 {
   if(!isOpen())
   {
     return;
   }
 
-  switch (msgClass)
+  switch (pMsg->Class)
   {
     case IDCMP_IDCMPUPDATE:
     {
-      ULONG tagData = GetTagData(GA_ID, 0, (struct TagItem *)pItemAddress);
+      ULONG tagData = GetTagData(GA_ID, 0, (struct TagItem *)pMsg->IAddress);
       switch(tagData)
       {
         case ScrollbarWindow::GID_PropX:
         {
           // Get the top value of the prop gadget from the tag data of
           // the message
-          size_t newX = GetTagData(PGA_Top, 0, (struct TagItem *)
-            pItemAddress);
+          size_t newX = GetTagData(PGA_Top, 0, (struct TagItem *) pMsg->IAddress);
 
           // If there are other GID_PropX addressed to this window,
           // delete them and get the top value from the latest found
@@ -304,7 +303,7 @@ void ScrollbarWindow::handleIDCMP(ULONG msgClass, UWORD msgCode, APTR pItemAddre
           // the message
           size_t newY = GetTagData(PGA_Top,
                                    0,
-                                   (struct TagItem *) pItemAddress);
+                                   (struct TagItem *) pMsg->IAddress);
 
           // If there are other GID_PropY addressed to this window,
           // delete them and get the top value from the latest found
@@ -348,19 +347,19 @@ void ScrollbarWindow::handleIDCMP(ULONG msgClass, UWORD msgCode, APTR pItemAddre
 
     case IDCMP_RAWKEY:
     {
-      if(msgCode == CURSORLEFT)
+      if(pMsg->Code == CURSORLEFT)
       {
         handleXDecrease(2);
       }
-      else if(msgCode == CURSORRIGHT)
+      else if(pMsg->Code == CURSORRIGHT)
       {
         handleXIncrease(2);
       }
-      else if(msgCode == CURSORDOWN)
+      else if(pMsg->Code == CURSORDOWN)
       {
         handleYIncrease(2);
       }
-      else if(msgCode == CURSORUP)
+      else if(pMsg->Code == CURSORUP)
       {
         handleYDecrease(2);
       }
@@ -368,11 +367,11 @@ void ScrollbarWindow::handleIDCMP(ULONG msgClass, UWORD msgCode, APTR pItemAddre
     }
     case IDCMP_VANILLAKEY:
     {
-      if(msgCode == 32) // SPACE
+      if(pMsg->Code == 32) // SPACE
       {
         handleYIncrease(m_MaxVisibleLines);
       }
-      else if(msgCode == 8) // BACKSPACE
+      else if(pMsg->Code == 8) // BACKSPACE
       {
         handleYDecrease(m_MaxVisibleLines);
       }

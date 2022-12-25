@@ -97,9 +97,7 @@ public:
   /**
    * @extends method of base class ScrollbarWindow.
    */
-  virtual void handleIDCMP(ULONG msgClass,
-                           UWORD msgCode,
-                           APTR pItemAddress);
+  virtual void handleIDCMP(const struct IntuiMessage* pMsg);
 
 protected:
   /**
@@ -187,7 +185,7 @@ private:
   //
   void handleGadgetEvent(struct Gadget* pGadget);
   void handleVanillaKey(UWORD code);
-  void handleMouseButtons(const struct IntuiMessage* msg);
+  void handleMouseButtons(const struct IntuiMessage* pMsg);
 
   void cleanup();
 

@@ -41,9 +41,7 @@ public:
    * @returns
    * If this event was handled: true; if it was not handled: false.
    */
-  virtual void handleIDCMP(ULONG msgClass,
-                           UWORD msgCode,
-                           APTR pItemAddress);
+  virtual void handleIDCMP(const struct IntuiMessage* pMsg);
 
   /**
    * Handles the given progress event.

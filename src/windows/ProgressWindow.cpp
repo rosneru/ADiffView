@@ -233,20 +233,18 @@ bool ProgressWindow::open(InitialPosition initialPos)
 }
 
 
-void ProgressWindow::handleIDCMP(ULONG msgClass,
-                                 UWORD msgCode,
-                                 APTR pItemAddress)
+void ProgressWindow::handleIDCMP(const struct IntuiMessage* pMsg)
 {
   if(!isOpen())
   {
     return;
   }
 
-  switch (msgClass)
+  switch (pMsg->Class)
   {
     case IDCMP_GADGETUP:
     {
-      struct Gadget* pGadget = (struct Gadget*) pItemAddress;
+      struct Gadget* pGadget = (struct Gadget*) pMsg->IAddress;
       switch(pGadget->GadgetID)
       {
         case GID_BtnStop:

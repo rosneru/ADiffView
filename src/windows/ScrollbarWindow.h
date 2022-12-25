@@ -35,9 +35,7 @@ public:
   /**
    * @implements abstract method of base class WindowBase.
    */
-  virtual void handleIDCMP(ULONG msgClass,
-                           UWORD msgCode,
-                           APTR pItemAddress);
+  virtual void handleIDCMP(const struct IntuiMessage* pMsg);
 
 protected:
   long m_InnerWindowRight;  ///> X-position of the right-most pixel before the scrollbar
