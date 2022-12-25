@@ -1,9 +1,10 @@
 {
-  "C_Cpp.intelliSenseEngineFallback": "Enabled",
+  "C_Cpp.intelliSenseEngineFallback": "enabled",
   "editor.rulers": [
     72
   ],
   "cSpell.enabled": true,
+  "cSpell.diagnosticLevel": "Hint",
   "files.associations": {
     "fstream": "cpp",
     "array": "cpp",
