@@ -166,8 +166,10 @@ private:
   enum SelectionMode
   {
     SM_NONE = 0,
-    SM_LEFT,
-    SM_RIGHT
+    SM_SELECTION_LEFT_STARTED,
+    SM_SELECTION_LEFT_DONE,
+    SM_SELECTION_RIGHT_STARTED,
+    SM_SELECTION_RIGHT_DONE
   };
 
   SelectionMode m_SelectionMode;

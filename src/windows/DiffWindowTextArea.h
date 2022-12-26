@@ -143,6 +143,9 @@ public:
    */
   void addSelection(ULONG lineId, ULONG fromColumn, ULONG toColumn);
 
+  void startSelection(WORD mouseX, WORD mouseY);
+  void updateSelection(WORD mouseX, WORD mouseY);
+
   void clearSelection();
 
   const Rect& getTextRectangle() const;

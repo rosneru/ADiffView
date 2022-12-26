@@ -154,6 +154,23 @@ void DiffWindowTextArea::addSelection(ULONG lineId,
 }
 
 
+void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
+{
+  clearSelection();
+  ULONG colID = (mouseX - m_HScrollRect.getLeft()) / m_FontWidth_pix;
+  ULONG rowID = (mouseY - m_HScrollRect.getTop()) / m_FontHeight_pix;
+  printf("Rect left=%d, top=%d\n", m_HScrollRect.getLeft(), m_HScrollRect.getTop());
+  printf("Selecting column=%d in row=%d\n\n", colID, rowID);
+  addSelection(rowID, colID, colID);
+}
+
+
+void DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
+{
+
+}
+
+
 void DiffWindowTextArea::clearSelection()
 {
   m_DiffFile.clearSelection();

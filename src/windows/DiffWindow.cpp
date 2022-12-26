@@ -720,12 +720,18 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       if(m_pLeftTextArea->getTextRectangle().isPointInside(pMsg->MouseX,
                                                            pMsg->MouseY))
       {
-        m_SelectionMode = SM_LEFT;
+        m_pLeftTextArea->clearSelection();
+        m_pRightTextArea->clearSelection();
+        m_SelectionMode = SM_SELECTION_LEFT_STARTED;
+        m_pLeftTextArea->startSelection(pMsg->MouseX, pMsg->MouseY);
       }
       else if(m_pRightTextArea->getTextRectangle().isPointInside(pMsg->MouseX,
                                                                  pMsg->MouseY))
       {
-        m_SelectionMode = SM_RIGHT;
+        m_pLeftTextArea->clearSelection();
+        m_pRightTextArea->clearSelection();
+        m_SelectionMode = SM_SELECTION_RIGHT_STARTED;
+        m_pRightTextArea->startSelection(pMsg->MouseX, pMsg->MouseY);
       }
       else
       {
@@ -740,17 +746,15 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       {
         return;
       }
-      else if(m_SelectionMode == SM_LEFT)
+      else if(m_SelectionMode == SM_SELECTION_LEFT_STARTED)
       {
-        m_pRightTextArea->clearSelection();
-        m_pLeftTextArea->addSelection(0, 0, 4);
+        m_pLeftTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
         renderDocuments(0);
         m_SelectionMode = SM_NONE;
       }
-      else if(m_SelectionMode == SM_RIGHT)
+      else if(m_SelectionMode == SM_SELECTION_RIGHT_STARTED)
       {
-        m_pLeftTextArea->clearSelection();
-        m_pRightTextArea->addSelection(0, 0, 4);
+        m_pRightTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
         renderDocuments(0);
         m_SelectionMode = SM_NONE;
       }
