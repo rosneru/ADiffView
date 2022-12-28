@@ -25,7 +25,7 @@ void SelectableDiffFile::addSelection(unsigned long lineId,
                                       unsigned long fromColumn, 
                                       unsigned long toColumn)
 {
-  m_Selection.add(lineId, fromColumn, toColumn);
+  m_Selection.addBlock(lineId, fromColumn, toColumn);
 }
 
 void SelectableDiffFile::clearSelection()

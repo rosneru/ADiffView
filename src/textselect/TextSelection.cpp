@@ -11,9 +11,9 @@ TextSelection::~TextSelection()
 }
 
 
-void TextSelection::add(unsigned long lineId, 
-                        unsigned long fromColumn, 
-                        unsigned long toColumn)
+void TextSelection::addBlock(unsigned long lineId, 
+                             unsigned long fromColumn, 
+                             unsigned long toColumn)
 {
   TextSelectionLine* pSelectionLine = findSelectionLine(lineId);
   if(pSelectionLine != NULL)

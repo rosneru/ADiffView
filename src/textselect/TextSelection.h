@@ -15,9 +15,13 @@ class TextSelection
 public:
   TextSelection();
   virtual ~TextSelection();
-  void add(unsigned long lineId, 
-           unsigned long fromColumn, 
-           unsigned long toColumn);
+
+  /**
+   * Adds a selection block (range) to a line.
+   */
+  void addBlock(unsigned long lineId, 
+                unsigned long fromColumn, 
+                unsigned long toColumn);
 
   void clear();
 
