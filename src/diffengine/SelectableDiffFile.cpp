@@ -1,7 +1,8 @@
 #include "SelectableDiffFile.h"
 
 SelectableDiffFile::SelectableDiffFile(const DiffFileBase& diffFile)
-  : m_DiffFile(diffFile)
+  : m_DiffFile(diffFile),
+    m_Selection(diffFile.getLines())
 {
 
 }

@@ -23,6 +23,7 @@ public:
   const DiffLine* operator[](unsigned long index) const;
   DiffLine* operator[](unsigned long index);
 
+  const std::vector<DiffLine*>& getLines() const;
 
 protected:
   std::vector<DiffLine*> m_Lines;

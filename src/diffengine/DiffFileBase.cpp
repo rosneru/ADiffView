@@ -33,6 +33,11 @@ DiffLine* DiffFileBase::operator[](unsigned long index)
   return m_Lines[index];
 }
 
+const std::vector<DiffLine*>& DiffFileBase::getLines() const
+{
+  return m_Lines;
+}
+
 size_t DiffFileBase::numDigits(size_t number)
 {
   size_t digits = 1;

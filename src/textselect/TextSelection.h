@@ -2,6 +2,8 @@
 #define TEXT_SELECTION_H
 
 #include <list>
+#include <vector>
+#include "DiffLine.h"
 #include "TextSelectionLine.h"
 
 /**
@@ -13,7 +15,7 @@
 class TextSelection
 {
 public:
-  TextSelection();
+  TextSelection(const std::vector<DiffLine*>& textLines);
   virtual ~TextSelection();
 
   /**
@@ -34,6 +36,7 @@ public:
   long getNextSelectionStart(unsigned long lineId, unsigned long columnId);
 
 private:
+  const std::vector<DiffLine*>& m_TextLines;
   std::list<TextSelectionLine*> m_SelectedLines;
 
   TextSelectionLine* findSelectionLine(unsigned long lineId);

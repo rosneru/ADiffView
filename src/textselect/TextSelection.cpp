@@ -1,7 +1,8 @@
 #include <stddef.h>
 #include "TextSelection.h"
 
-TextSelection::TextSelection()
+TextSelection::TextSelection(const std::vector<DiffLine*>& textLines)
+  : m_TextLines(textLines)
 {
 }
 
