@@ -31,7 +31,7 @@ void TextSelection::addBlock(unsigned long lineId,
 
 void TextSelection::clear()
 {
-  std::vector<TextSelectionLine*>::iterator it;
+  std::list<TextSelectionLine*>::iterator it;
   for(it = m_SelectedLines.begin(); it != m_SelectedLines.end(); it++)
   {
     delete *it;
@@ -43,7 +43,7 @@ void TextSelection::clear()
 long TextSelection::getNumMarkedChars(unsigned long lineId, 
                                       unsigned long columnId)
 {
-  std::vector<TextSelectionLine*>::iterator it;
+  std::list<TextSelectionLine*>::iterator it;
   for(it = m_SelectedLines.begin(); it != m_SelectedLines.end(); it++)
   {
     if((*it)->getLineId() > lineId)
@@ -69,7 +69,7 @@ long TextSelection::getNumMarkedChars(unsigned long lineId,
 long TextSelection::getNextSelectionStart(unsigned long lineId, 
                                           unsigned long columnId)
 {
-  std::vector<TextSelectionLine*>::iterator it;
+  std::list<TextSelectionLine*>::iterator it;
   for(it = m_SelectedLines.begin(); it != m_SelectedLines.end(); it++)
   {
     if((*it)->getLineId() > lineId)
@@ -90,7 +90,7 @@ long TextSelection::getNextSelectionStart(unsigned long lineId,
 
 TextSelectionLine* TextSelection::findSelectionLine(unsigned long lineId)
 {
-  std::vector<TextSelectionLine*>::iterator it;
+  std::list<TextSelectionLine*>::iterator it;
   for(it = m_SelectedLines.begin(); it != m_SelectedLines.end(); it++)
   {
     if((*it)->getLineId() > lineId)

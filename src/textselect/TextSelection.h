@@ -1,7 +1,7 @@
 #ifndef TEXT_SELECTION_H
 #define TEXT_SELECTION_H
 
-#include <vector>
+#include <list>
 #include "TextSelectionLine.h"
 
 /**
@@ -34,7 +34,7 @@ public:
   long getNextSelectionStart(unsigned long lineId, unsigned long columnId);
 
 private:
-  std::vector<TextSelectionLine*> m_SelectedLines;
+  std::list<TextSelectionLine*> m_SelectedLines;
 
   TextSelectionLine* findSelectionLine(unsigned long lineId);
 };
