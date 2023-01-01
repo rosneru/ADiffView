@@ -88,6 +88,53 @@ long TextSelection::getNextSelectionStart(unsigned long lineId,
   return 0;
 }
 
+TextSelection::UpdateDirection TextSelection::calcUpdateDirection(
+  unsigned long lineId)
+{
+  unsigned long numLinesSelected = m_SelectedLines.size();
+  if(numLinesSelected == 1)
+  {
+    if(m_SelectionStartLine > lineId)
+    {
+      return TextSelection::START_UPWARD;
+    }
+    else if(m_SelectionStartLine < lineId)
+    {
+      return TextSelection::START_DOWNWARD;
+    }
+  }
+  else if(numLinesSelected > 1)
+  {
+    unsigned long lowest_line_id = m_SelectedLines.front()->getLineId();
+    unsigned long highest_line_id = m_SelectedLines.back()->getLineId();
+    if(lineId < lowest_line_id)
+    {
+      return TextSelection::APPEND_UPWARD;
+    }
+    else if(lineId > highest_line_id)
+    {
+      return TextSelection::APPEND_DOWNWARD;
+    }
+    else if(lineId < m_SelectionStartLine)
+    {
+      return TextSelection::REDUCE_TOP;
+    }
+    else if(lineId > m_SelectionStartLine)
+    {
+      return TextSelection::REDUCE_BOTTOM;
+    }
+    else if(lineId == highest_line_id)
+    {
+      return TextSelection::STOP_UPWARD;
+    }
+    else if(lineId == lowest_line_id)
+    {
+      return TextSelection::STOP_DOWNWARD;
+    }
+  }
+
+  return TextSelection::UNKNOWN;
+}
 
 TextSelectionLine* TextSelection::findSelectionLine(unsigned long lineId)
 {
