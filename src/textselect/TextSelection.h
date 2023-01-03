@@ -39,9 +39,6 @@ private:
   const std::vector<DiffLine*>& m_TextLines;
   std::list<TextSelectionLine*> m_SelectedLines;
 
-  unsigned long m_SelectionStartLine;
-  unsigned long m_SelectionStartColumn;
-
   enum UpdateDirection
   {
     START_UPWARD = 0,
@@ -52,9 +49,17 @@ private:
     APPEND_DOWNWARD,
     REDUCE_BOTTOM,
     STOP_DOWNWARD,
-    UNKNOWN,
+    NONE,
   };
 
+  unsigned long m_SelectionStartLine;
+  unsigned long m_SelectionStartColumn;
+  unsigned long m_LowestLineId;
+  unsigned long m_HighestLineId;
+
+  UpdateDirection m_UpdateDirection;
+
+  unsigned long limitLineId(unsigned long lineId);
   UpdateDirection calcUpdateDirection(unsigned long lineId);
 
   TextSelectionLine* findSelectionLine(unsigned long lineId);

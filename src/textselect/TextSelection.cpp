@@ -2,7 +2,8 @@
 #include "TextSelection.h"
 
 TextSelection::TextSelection(const std::vector<DiffLine*>& textLines)
-  : m_TextLines(textLines)
+  : m_TextLines(textLines),
+    m_UpdateDirection(NONE)
 {
 }
 
@@ -88,6 +89,60 @@ long TextSelection::getNextSelectionStart(unsigned long lineId,
   return 0;
 }
 
+unsigned long TextSelection::limitLineId(unsigned long lineId)
+{
+  m_LowestLineId = m_SelectedLines.front()->getLineId();
+  m_HighestLineId = m_SelectedLines.back()->getLineId();
+
+  if(m_UpdateDirection == TextSelection::NONE ||
+     m_UpdateDirection == TextSelection::STOP_UPWARD ||
+     m_UpdateDirection == TextSelection::STOP_DOWNWARD)
+  {
+    if(lineId < m_SelectionStartLine)
+    {
+      return m_SelectionStartLine - 1;
+    }
+    else if(lineId > m_SelectionStartLine)
+    {
+      return m_SelectionStartLine + 1;
+    }
+  }
+  else if(m_UpdateDirection == TextSelection::START_UPWARD ||
+          m_UpdateDirection == TextSelection::APPEND_UPWARD)
+  {
+    if(lineId < m_LowestLineId)
+    {
+      return m_LowestLineId - 1;
+    }
+    else if(lineId > m_LowestLineId)  // direction change
+    {
+      return m_LowestLineId + 1;
+    }
+  }
+  else if(m_UpdateDirection == TextSelection::REDUCE_TOP)
+  {
+    return m_LowestLineId + 1;
+  }
+  else if (m_UpdateDirection == TextSelection::START_DOWNWARD ||
+      m_UpdateDirection == TextSelection::APPEND_DOWNWARD)
+  {
+    if(lineId > m_HighestLineId)
+    {
+      return m_HighestLineId + 1;
+    }
+    else if(lineId < m_HighestLineId) // direction change
+    {
+      return m_HighestLineId - 1;
+    }
+  }
+  else if(m_UpdateDirection == TextSelection::REDUCE_BOTTOM)
+  {
+    return m_HighestLineId - 1;
+  }
+
+  return lineId;
+}
+
 TextSelection::UpdateDirection TextSelection::calcUpdateDirection(
   unsigned long lineId)
 {
@@ -105,35 +160,49 @@ TextSelection::UpdateDirection TextSelection::calcUpdateDirection(
   }
   else if(numLinesSelected > 1)
   {
-    unsigned long lowest_line_id = m_SelectedLines.front()->getLineId();
-    unsigned long highest_line_id = m_SelectedLines.back()->getLineId();
-    if(lineId < lowest_line_id)
+    if(lineId < m_LowestLineId)
     {
       return TextSelection::APPEND_UPWARD;
     }
-    else if(lineId > highest_line_id)
+    else if(lineId > m_HighestLineId)
     {
       return TextSelection::APPEND_DOWNWARD;
     }
     else if(lineId < m_SelectionStartLine)
     {
+      if(m_UpdateDirection == TextSelection::START_UPWARD ||
+         m_UpdateDirection == TextSelection::APPEND_UPWARD)
+      {
+        if(lineId == m_LowestLineId)
+        {
+          return TextSelection::NONE;
+        }
+      }
       return TextSelection::REDUCE_TOP;
     }
     else if(lineId > m_SelectionStartLine)
     {
+      if(m_UpdateDirection == TextSelection::START_DOWNWARD ||
+         m_UpdateDirection == TextSelection::APPEND_DOWNWARD)
+      {
+        if(lineId == m_HighestLineId)
+        {
+          return TextSelection::NONE;
+        }
+      }
       return TextSelection::REDUCE_BOTTOM;
     }
-    else if(lineId == highest_line_id)
+    else if(lineId == m_HighestLineId)
     {
       return TextSelection::STOP_UPWARD;
     }
-    else if(lineId == lowest_line_id)
+    else if(lineId == m_LowestLineId)
     {
       return TextSelection::STOP_DOWNWARD;
     }
   }
 
-  return TextSelection::UNKNOWN;
+  return TextSelection::NONE;
 }
 
 TextSelectionLine* TextSelection::findSelectionLine(unsigned long lineId)
