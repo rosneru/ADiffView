@@ -18,6 +18,16 @@ unsigned long TextSelectionRange::getToColumn() const
   return m_ToColumn;
 }
 
+void TextSelectionRange::setFromColumn(unsigned long fromColumn)
+{
+  m_FromColumn = fromColumn;
+}
+
+void TextSelectionRange::setToColumn(unsigned long toColumn)
+{
+  m_ToColumn = toColumn;
+}
+
 long TextSelectionRange::getNumMarkedChars(unsigned long columnId)
 {
   if(columnId < m_FromColumn)

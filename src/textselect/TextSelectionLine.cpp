@@ -1,3 +1,5 @@
+#include <stddef.h>
+
 #include "TextSelectionLine.h"
 
 TextSelectionLine::TextSelectionLine(unsigned long lineId, 
@@ -26,6 +28,16 @@ void TextSelectionLine::addBlock(unsigned long fromColumn,
   // TODO check if adding this block can be achived by increasing an existing one
 
   // TODO ensure that m_SelectedBlocks is sorted by fromColumn
+}
+
+TextSelectionRange* TextSelectionLine::getFirstSelectedBlock()
+{
+  if(m_SelectedBlocks.size() < 1)
+  {
+    return NULL;
+  }
+
+  return m_SelectedBlocks[0];
 }
 
 unsigned long TextSelectionLine::getLineId() const

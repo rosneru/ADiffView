@@ -12,6 +12,48 @@ TextSelection::~TextSelection()
   clear();
 }
 
+void TextSelection::startDynamicSelection(unsigned long lineId,
+                                          unsigned long columnId)
+{
+  m_SelectedLines.clear();
+  m_UpdateDirection = TextSelection::NONE;
+  m_SelectionStartLine = lineId;
+  m_SelectionStartColumn = columnId;
+  addBlock(lineId, columnId, columnId);
+  m_UpdatedLineIds.clear();
+
+  // TODO Before clearing the selected lines above add all line ids from
+  // there to the m_UpdatedLineIds
+  m_UpdatedLineIds.push_back(lineId);
+}
+
+void TextSelection::updateDynamicSelection(unsigned long lineId,
+                                           unsigned long columnId)
+{
+  m_UpdatedLineIds.clear();
+
+  // Check if update is on a line which already contains a selection
+  TextSelectionLine* pLineToUpdate = findSelectionLine(lineId);
+  if(pLineToUpdate != NULL)
+  {
+    TextSelectionRange* pSelectedBlock = pLineToUpdate->getFirstSelectedBlock();
+    if(pSelectedBlock != NULL)
+    {
+      if(columnId > pSelectedBlock->getToColumn())
+      {
+        pSelectedBlock->setToColumn(columnId);
+        m_UpdatedLineIds.push_back(lineId);
+        return;
+      }
+      else if(columnId < pSelectedBlock->getFromColumn())
+      {
+        pSelectedBlock->setFromColumn(columnId);
+        m_UpdatedLineIds.push_back(lineId);
+        return;
+      }
+    }
+  }
+}
 
 void TextSelection::addBlock(unsigned long lineId, 
                              unsigned long fromColumn, 

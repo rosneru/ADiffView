@@ -21,6 +21,8 @@ public:
 
   void addBlock(unsigned long fromColumn, unsigned long toColumn);
 
+  TextSelectionRange* getFirstSelectedBlock();
+  
   unsigned long getLineId() const;
 
   long getNumMarkedChars(unsigned long columnId);
@@ -30,6 +32,7 @@ public:
    * column. If there is no next selection start -1 is returned.
    */
   long getNextSelectionStart(unsigned long columnId);
+
 
 private:
   std::vector<TextSelectionRange*> m_SelectedBlocks;

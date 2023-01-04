@@ -16,6 +16,9 @@ public:
   unsigned long getFromColumn() const;
   unsigned long getToColumn() const;
 
+  void setFromColumn(unsigned long fromColumn);
+  void setToColumn(unsigned long toColumn);
+
   long getNumMarkedChars(unsigned long columnId);
 
 private:
