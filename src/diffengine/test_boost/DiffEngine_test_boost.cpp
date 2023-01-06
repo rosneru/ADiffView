@@ -956,11 +956,11 @@ BOOST_AUTO_TEST_CASE( testcase_24_1500_numbers )
  *
  * Test the method TextSelection::getNumMarkedChars().
  * 
- * See Excel sheet Excel sheet 
+ * See Excel sheet 
  *   'ADiffView - selected text and scrolling.xlsx
  * for a visual of this test.
  */
-BOOST_AUTO_TEST_CASE( test_TextSelection )
+BOOST_AUTO_TEST_CASE( test_TextSelectionBasic )
 {
   DiffLine* pLine1 = new DiffLine("");
 
@@ -1030,6 +1030,69 @@ BOOST_AUTO_TEST_CASE( test_TextSelection )
     // To let the test fail
     BOOST_CHECK_EQUAL(1, 2);
   }
+}
+
+
+/**
+ * test_TextSelectionDynamic
+ *
+ * Test the methods TextSelection::startDynamicSelection(..) and
+ * TextSelection::updateDynamicSelection(..)
+ *
+ * See Excel sheet
+ *   'text_selection_algorithm.xlsx' in other repository Python-Library,
+ * directory algo, for a visual of this test.
+ */
+BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
+{
+  DiffLine* pLine1 = new DiffLine("The first line");
+  DiffLine* pLine2 = new DiffLine("The second line");
+  DiffLine* pLine3 = new DiffLine("third line");
+  DiffLine* pLine4 = new DiffLine("line four");
+  DiffLine* pLine5 = new DiffLine("Line no. 5");
+  DiffLine* pLine6 = new DiffLine("he she it them our");
+  DiffLine* pLine7 = new DiffLine("limit_line_id() tests need this");
+  DiffLine* pLine8 = new DiffLine("and this");
+
+  std::vector<DiffLine*> textLines;
+  textLines.push_back(pLine1);
+  textLines.push_back(pLine2);
+  textLines.push_back(pLine3);
+  textLines.push_back(pLine4);
+  textLines.push_back(pLine5);
+  textLines.push_back(pLine6);
+  textLines.push_back(pLine7);
+  textLines.push_back(pLine8);
+
+  try
+  {
+    TextSelection selection(textLines);
+    
+    // BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 4), 0);
+    // BOOST_CHECK_EQUAL(selection.getNextSelectionStart(2, 0), -1);
+    
+  }
+  catch(const char* pError)
+  {
+    auto locationBoost = boost::unit_test::framework::current_test_case().p_name;
+    std::string location(locationBoost);
+    printf("Exception in test %s: %s\n", 
+           location.c_str(),
+           pError);
+
+    // To let the test fail
+    BOOST_CHECK_EQUAL(1, 2);
+  }
+
+  // Clean up
+  std::vector<DiffLine*>::iterator it;
+  for(it = textLines.begin(); it != textLines.end(); it++)
+  {
+    delete *it;
+  }
+
+  textLines.clear();
+
 }
 
 
