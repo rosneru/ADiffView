@@ -14,8 +14,9 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/framework.hpp>
 
-#include <string>
 #include <list>
+#include <string>
+#include <vector>
 
 #include "DiffInputFileLinux.h"
 #include "DiffOutputFileLinux.h"
@@ -105,11 +106,7 @@ BOOST_AUTO_TEST_CASE( testcase_02 )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
-
-    // printf("Left file:\n");
-    // printFile(diffA);
-    // printf("\nRight file:\n");
-    // printFile(diffB);
+    diffEngine.startCompare();
 
     BOOST_CHECK_EQUAL(diffA.getNumLines(), 10);
     BOOST_CHECK_EQUAL(diffA[0]->getText(), "AAAA");
@@ -214,6 +211,7 @@ BOOST_AUTO_TEST_CASE( testcase_03_simple )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
 
     BOOST_CHECK_EQUAL(diffA.getNumLines(), 7);
     BOOST_CHECK_EQUAL(diffA[0]->getText(), "AAAA");
@@ -299,6 +297,7 @@ BOOST_AUTO_TEST_CASE( testcase_03_var2 )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
 
     BOOST_CHECK_EQUAL(diffA.getNumLines(), 8);
     BOOST_CHECK_EQUAL(diffA[0]->getText(), "AAAA");
@@ -398,6 +397,7 @@ BOOST_AUTO_TEST_CASE( testcase_04 )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
 
     BOOST_CHECK_EQUAL(diffA.getNumLines(), 4);
     BOOST_CHECK_EQUAL(diffA[0]->getText(), "Line 1");
@@ -466,6 +466,7 @@ BOOST_AUTO_TEST_CASE( testcase_05 )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
 
     BOOST_CHECK_EQUAL(diffA.getNumLines(), 4);
     BOOST_CHECK_EQUAL(diffA[0]->getText(), "Line 1");
@@ -537,6 +538,7 @@ BOOST_AUTO_TEST_CASE( DiffTest_06_Mixed )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
 
     BOOST_CHECK_EQUAL(diffA.getNumLines(), 12);
     BOOST_CHECK_EQUAL(diffA[0]->getText(), "Line 1");
@@ -666,6 +668,7 @@ BOOST_AUTO_TEST_CASE( testcase_12_endless_loop )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
 
     BOOST_CHECK_EQUAL(diffA.getNumLines(), 5);
     BOOST_CHECK_EQUAL(diffA[0]->getText(), "Line 1");
@@ -743,6 +746,7 @@ BOOST_AUTO_TEST_CASE( testcase_12a )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
 
     BOOST_CHECK_EQUAL(diffA.getNumLines(), 6);
     BOOST_CHECK_EQUAL(diffA[0]->getText(), "Line 1");
@@ -854,6 +858,7 @@ BOOST_AUTO_TEST_CASE( testcase_24_1500_numbers )
                           "Comparing...", 
                           cancelRequested, 
                           m_DiffIndices);
+    diffEngine.startCompare();
 
     std::list<size_t>::iterator m_DiffIndicesIterator = m_DiffIndices.end();
 
@@ -957,16 +962,21 @@ BOOST_AUTO_TEST_CASE( testcase_24_1500_numbers )
  */
 BOOST_AUTO_TEST_CASE( test_TextSelection )
 {
+  DiffLine* pLine1 = new DiffLine("");
+
+
+  std::vector<DiffLine*> textLines;
+  textLines.push_back(pLine1);
   try
   {
-    TextSelection selection;
+    TextSelection selection(textLines);
     
-    selection.add(1, 4, 14);
-    selection.add(2, 0, 9);
-    selection.add(3, 0, 3);
+    selection.addBlock(1, 4, 14);
+    selection.addBlock(2, 0, 9);
+    selection.addBlock(3, 0, 3);
 
-    selection.add(5, 3, 5);
-    selection.add(5, 10, 13);
+    selection.addBlock(5, 3, 5);
+    selection.addBlock(5, 10, 13);
 
 
     BOOST_CHECK_EQUAL(selection.getNumMarkedChars(0, 0), 0);
@@ -1049,6 +1059,7 @@ BOOST_AUTO_TEST_CASE( test_32_SelectableDiffFile )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
 
     BOOST_CHECK_EQUAL(diffA.getNumLines(), 2);
     BOOST_CHECK_EQUAL(diffB.getNumLines(), 2);
@@ -1115,6 +1126,7 @@ BOOST_AUTO_TEST_CASE( testcase_crash )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
 
     // printf("Left file:\n");
     // printFile(diffA);
@@ -1213,6 +1225,7 @@ BOOST_AUTO_TEST_CASE( testcase_search_algorithm_basic )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
 
 
     size_t numDifferences = diffEngine.getNumDifferences();
@@ -1269,6 +1282,7 @@ BOOST_AUTO_TEST_CASE( search_algorithm_extended_1 )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
 
 
     size_t numDifferences = diffEngine.getNumDifferences();
@@ -1412,7 +1426,7 @@ BOOST_AUTO_TEST_CASE( search_algorithm_case_ignored )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
-
+    diffEngine.startCompare();
 
     size_t numDifferences = diffEngine.getNumDifferences();
     BOOST_CHECK_EQUAL(numDifferences, 4);
@@ -1503,7 +1517,7 @@ BOOST_AUTO_TEST_CASE( search_algorithm_get_prev_result )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
-
+    diffEngine.startCompare();
 
     size_t numDifferences = diffEngine.getNumDifferences();
     BOOST_CHECK_EQUAL(numDifferences, 4);
@@ -1602,7 +1616,7 @@ BOOST_AUTO_TEST_CASE( search_algorithm_get_next_and_prev_from_current_position )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
-
+    diffEngine.startCompare();
 
     size_t numDifferences = diffEngine.getNumDifferences();
     BOOST_CHECK_EQUAL(numDifferences, 4);
@@ -1980,7 +1994,7 @@ BOOST_AUTO_TEST_CASE( testcase_DiffWindowTextArea_NonTabulatorText )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
-
+    diffEngine.startCompare();
 
     size_t numDifferences = diffEngine.getNumDifferences();
     BOOST_CHECK_EQUAL(numDifferences, 11);
@@ -2075,7 +2089,7 @@ BOOST_AUTO_TEST_CASE( testcase_DiffWindowTextArea_TabulatorText )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
-
+    diffEngine.startCompare();
 
     size_t numDifferences = diffEngine.getNumDifferences();
     BOOST_CHECK_EQUAL(numDifferences, 7);
@@ -2170,7 +2184,7 @@ BOOST_AUTO_TEST_CASE( testcase_DiffWindowTextArea_NonTabulator_MARKED_Text )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
-
+    diffEngine.startCompare();
 
     size_t numDifferences = diffEngine.getNumDifferences();
     BOOST_CHECK_EQUAL(numDifferences, 11);
@@ -2269,7 +2283,7 @@ BOOST_AUTO_TEST_CASE( testcase_DiffWindowTextArea_Tabulator_MARKED_Text )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
-
+    diffEngine.startCompare();
 
     size_t numDifferences = diffEngine.getNumDifferences();
     BOOST_CHECK_EQUAL(numDifferences, 7);
@@ -2366,7 +2380,7 @@ BOOST_AUTO_TEST_CASE( testcase_DiffWindowTextArea_TabulatorRenderingProblem )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
-
+    diffEngine.startCompare();
 
     size_t numDifferences = diffEngine.getNumDifferences();
     BOOST_CHECK_EQUAL(numDifferences, 7);
@@ -2457,6 +2471,7 @@ BOOST_AUTO_TEST_CASE( test_36_IgnoreTrailingSpaces )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
 
     // Should be 0 when IGNORETRAILINGSPACES set 
     long numDifferences = diffEngine.getNumDifferences();
@@ -2495,6 +2510,7 @@ BOOST_AUTO_TEST_CASE( testcase_37_combined_added_lines )
     DiffOutputFileLinux diffB(srcB);
     DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
                           "Comparing...", cancelRequested, m_DiffIndices, true);
+    diffEngine.startCompare();
 
     BOOST_CHECK_EQUAL(diffEngine.getNumDifferences(), 7);
     BOOST_CHECK_EQUAL(diffEngine.getNumAdded(), 7);
