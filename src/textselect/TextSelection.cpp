@@ -235,6 +235,11 @@ long TextSelection::getNextSelectionStart(unsigned long lineId,
   return -1;
 }
 
+const std::list<int>& TextSelection::getUpdatedLineIds() const
+{
+  return m_UpdatedLineIds;
+}
+
 void TextSelection::clearFirstSelectionLine()
 {
   // Remove first TextSelectionLine

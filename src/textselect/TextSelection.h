@@ -53,6 +53,8 @@ public:
    */
   long getNextSelectionStart(unsigned long lineId, unsigned long columnId);
 
+  const std::list<int>& getUpdatedLineIds() const;
+
 private:
   const std::vector<DiffLine*>& m_TextLines;
   std::list<TextSelectionLine*> m_SelectedLines;
