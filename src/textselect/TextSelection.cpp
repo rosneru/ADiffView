@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <stddef.h>
 #include "TextSelection.h"
 
@@ -15,7 +16,7 @@ TextSelection::~TextSelection()
 void TextSelection::startDynamicSelection(unsigned long lineId,
                                           unsigned long columnId)
 {
-  m_SelectedLines.clear();
+  clear();
   m_UpdateDirection = TextSelection::NONE;
   m_SelectionStartLine = lineId;
   m_SelectionStartColumn = columnId;
@@ -30,6 +31,9 @@ void TextSelection::startDynamicSelection(unsigned long lineId,
 void TextSelection::updateDynamicSelection(unsigned long lineId,
                                            unsigned long columnId)
 {
+  UpdateDirection newUpdateDirection;
+  unsigned long lastColumn, fromColumn, toColumn; 
+  unsigned long oldTopLastColumn, oldBottomLastColumn;
   m_UpdatedLineIds.clear();
 
   // Check if update is on a line which already contains a selection
@@ -52,6 +56,106 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
         return;
       }
     }
+  }
+
+  lineId = limitLineId(lineId);
+  newUpdateDirection = calcUpdateDirection(lineId);
+  switch(newUpdateDirection)
+  {
+    case TextSelection::NONE:
+      break;
+    case TextSelection::START_UPWARD:
+      clear();
+      lastColumn = m_TextLines[lineId]->getNumChars() - 1;
+      m_SelectedLines.push_front(
+        new TextSelectionLine(lineId, columnId, lastColumn));
+      m_SelectedLines.push_back(
+        new TextSelectionLine(m_SelectionStartLine, 0, m_SelectionStartColumn));
+      m_UpdatedLineIds.push_back(lineId);
+      m_UpdatedLineIds.push_back(m_SelectionStartLine);
+      break;
+    case TextSelection::APPEND_UPWARD:
+      oldTopLastColumn = m_TextLines[m_LowestLineId]->getNumChars() - 1;
+
+      // Remove the partly selected former top line from selection and
+      // add it as a whole
+      clearFirstSelectionLine();
+      m_SelectedLines.push_front(
+        new TextSelectionLine(m_LowestLineId, 0, oldTopLastColumn));
+
+      // Also add the new top line
+      lastColumn = m_TextLines[lineId]->getNumChars() - 1;
+      m_SelectedLines.push_front(
+        new TextSelectionLine(lineId, columnId, lastColumn));
+      
+      m_UpdatedLineIds.push_back(lineId);
+      m_UpdatedLineIds.push_back(m_LowestLineId);
+      break;
+    case TextSelection::REDUCE_TOP:
+      clearFirstSelectionLine();
+      clearFirstSelectionLine();
+
+      lastColumn = m_TextLines[lineId]->getNumChars() - 1;
+      m_SelectedLines.push_front(
+        new TextSelectionLine(lineId, columnId, lastColumn));
+
+      m_UpdatedLineIds.push_back(m_LowestLineId);
+      m_UpdatedLineIds.push_back(lineId);
+      break;
+    case TextSelection::STOP_UPWARD:
+      clear();
+      fromColumn = std::min(columnId, m_SelectionStartColumn);
+      toColumn = std::max(columnId, m_SelectionStartColumn);
+      m_SelectedLines.push_front(
+        new TextSelectionLine(lineId, fromColumn, toColumn));
+
+      m_UpdatedLineIds.push_back(m_LowestLineId);
+      m_UpdatedLineIds.push_back(lineId);
+      break;
+    case TextSelection::START_DOWNWARD:
+      clear();
+      lastColumn = m_TextLines[m_SelectionStartLine]->getNumChars() - 1;
+      m_SelectedLines.push_front(new TextSelectionLine(m_SelectionStartLine,
+                                                       m_SelectionStartColumn,
+                                                       lastColumn));
+      m_SelectedLines.push_back(new TextSelectionLine(lineId, 0, columnId));
+
+      m_UpdatedLineIds.push_back(m_SelectionStartLine);
+      m_UpdatedLineIds.push_back(lineId);
+      break;
+    case TextSelection::APPEND_DOWNWARD:
+      oldBottomLastColumn = m_TextLines[m_HighestLineId]->getNumChars() - 1;
+
+      // Remove the former bottom line from selection and add it as a
+      // whole
+      clearLastSelectionLine();
+      m_SelectedLines.push_back(
+        new TextSelectionLine(m_HighestLineId, 0, oldBottomLastColumn));
+
+      // Also add the new bottom line
+      m_SelectedLines.push_back(
+        new TextSelectionLine(lineId, 0, columnId));
+
+      m_UpdatedLineIds.push_back(m_HighestLineId);
+      m_UpdatedLineIds.push_back(lineId);  
+      break;
+    case TextSelection::REDUCE_BOTTOM:
+      clearLastSelectionLine();
+      clearLastSelectionLine();
+      m_SelectedLines.push_back(new TextSelectionLine(lineId, 0, columnId));
+      m_UpdatedLineIds.push_back(lineId);
+      m_UpdatedLineIds.push_back(m_HighestLineId);
+      break;
+    case TextSelection::STOP_DOWNWARD:
+      clear();
+      fromColumn = std::min(columnId, m_SelectionStartColumn);
+      toColumn = std::max(columnId, m_SelectionStartColumn);
+      m_SelectedLines.push_front(
+        new TextSelectionLine(lineId, fromColumn, toColumn));
+
+      m_UpdatedLineIds.push_back(lineId);
+      m_UpdatedLineIds.push_back(m_HighestLineId);
+      break;
   }
 }
 
@@ -129,6 +233,26 @@ long TextSelection::getNextSelectionStart(unsigned long lineId,
   }
 
   return 0;
+}
+
+void TextSelection::clearFirstSelectionLine()
+{
+  // Remove first TextSelectionLine
+  std::list<TextSelectionLine*>::iterator it = m_SelectedLines.begin();
+  delete *it;
+
+  // And remove its item from the listz of selected lines
+  m_SelectedLines.pop_front();
+}
+
+void TextSelection::clearLastSelectionLine()
+{
+  // Remove last TextSelectionLine
+  std::list<TextSelectionLine*>::iterator it = m_SelectedLines.end();
+  delete *it;
+
+  // And remove its item from the listz of selected lines
+  m_SelectedLines.pop_back();
 }
 
 unsigned long TextSelection::limitLineId(unsigned long lineId)

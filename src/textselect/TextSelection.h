@@ -78,6 +78,9 @@ private:
 
   UpdateDirection m_UpdateDirection;
 
+  void clearFirstSelectionLine();
+  void clearLastSelectionLine();
+
   unsigned long limitLineId(unsigned long lineId);
   UpdateDirection calcUpdateDirection(unsigned long lineId);
 
