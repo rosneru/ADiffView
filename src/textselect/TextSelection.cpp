@@ -223,7 +223,7 @@ long TextSelection::getNextSelectionStart(unsigned long lineId,
     if((*it)->getLineId() > lineId)
     {
       // TODO This only works when m_SelectedLines is sorted by lineId
-      return 0;
+      return -1;
     }
 
     if((*it)->getLineId() == lineId)
@@ -232,7 +232,7 @@ long TextSelection::getNextSelectionStart(unsigned long lineId,
     }
   }
 
-  return 0;
+  return -1;
 }
 
 void TextSelection::clearFirstSelectionLine()
