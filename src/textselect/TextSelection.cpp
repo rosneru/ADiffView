@@ -60,6 +60,11 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
 
   lineId = limitLineId(lineId);
   newUpdateDirection = calcUpdateDirection(lineId);
+  if(newUpdateDirection != TextSelection::NONE)
+  {
+    m_UpdateDirection = newUpdateDirection;
+  }
+
   switch(newUpdateDirection)
   {
     case TextSelection::NONE:
@@ -254,6 +259,7 @@ void TextSelection::clearLastSelectionLine()
 {
   // Remove last TextSelectionLine
   std::list<TextSelectionLine*>::iterator it = m_SelectedLines.end();
+  --it;
   delete *it;
 
   // And remove its item from the listz of selected lines

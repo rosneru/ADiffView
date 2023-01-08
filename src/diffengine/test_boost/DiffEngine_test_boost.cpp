@@ -1030,6 +1030,15 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionBasic )
     // To let the test fail
     BOOST_CHECK_EQUAL(1, 2);
   }
+
+  // Clean up
+  std::vector<DiffLine*>::iterator it;
+  for(it = textLines.begin(); it != textLines.end(); it++)
+  {
+    delete *it;
+  }
+
+  textLines.clear();
 }
 
 
