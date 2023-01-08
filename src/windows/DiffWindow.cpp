@@ -71,7 +71,8 @@ DiffWindow::DiffWindow(ScreenBase& screen,
   addFlags(WFLG_CLOSEGADGET |     // Add a close gadget
            WFLG_DEPTHGADGET |     // Add a depth gadget
            WFLG_SIZEGADGET |      // Add a size gadget
-           WFLG_GIMMEZEROZERO);   // Different layers for border and content
+           WFLG_GIMMEZEROZERO |
+           WFLG_REPORTMOUSE);   // Different layers for border and content
 
   // Setting the IDCMP messages we want to receive for this window
   addIDCMP(IDCMP_MENUPICK |       // Inform about menu selection
@@ -491,6 +492,11 @@ void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
     {
       handleMouseButtons(pMsg);
     }
+
+    case IDCMP_MOUSEMOVE:
+    {
+      handleMouseMove(pMsg);
+    }
   }
 }
 
@@ -742,22 +748,27 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
 
     case SELECTUP:
     {
-      if(m_SelectionMode == SM_NONE)
-      {
-        return;
-      }
-      else if(m_SelectionMode == SM_SELECTION_LEFT_STARTED)
-      {
-        m_pLeftTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
-        renderDocuments(0);
-        m_SelectionMode = SM_NONE;
-      }
-      else if(m_SelectionMode == SM_SELECTION_RIGHT_STARTED)
-      {
-        m_pRightTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
-        renderDocuments(0);
-        m_SelectionMode = SM_NONE;
-      }
+      m_SelectionMode = SM_NONE;
+      break;
+    }
+  }
+}
+
+
+void DiffWindow::handleMouseMove(const struct IntuiMessage* pMsg)
+{
+  switch(m_SelectionMode)
+  {
+    case DiffWindow::SM_SELECTION_LEFT_STARTED:
+    {
+      // printf("Updating left\n");
+      m_pLeftTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
+      break;
+    }
+    case DiffWindow::SM_SELECTION_RIGHT_STARTED:
+    {
+      // printf("Updating right\n");
+      m_pRightTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
       break;
     }
   }

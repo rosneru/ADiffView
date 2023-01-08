@@ -20,6 +20,21 @@ public:
 
   unsigned long getNumLines() const;
 
+  /**
+   * Start a dynamic selection at given line and column
+   */
+  void startDynamicSelection(unsigned long lineId, unsigned long columnId);
+
+  /**
+   * Update a dynamic selection to given line and column.
+   *
+   * NOTE: If the new lineId is more than one line above or below the
+   * current 'selection target point' it is limited one line distance.
+   * So, in some cases this method must be called multiple times with
+   * the same lineId to reach the requested lineId.
+   */
+  void updateDynamicSelection(unsigned long lineId, unsigned long columnId);
+
   void addSelection(unsigned long lineId, 
                     unsigned long fromColumn, 
                     unsigned long toColumn);

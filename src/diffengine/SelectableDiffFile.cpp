@@ -22,6 +22,18 @@ unsigned long SelectableDiffFile::getNumLines() const
   return m_DiffFile.getNumLines();
 }
 
+void SelectableDiffFile::startDynamicSelection(unsigned long lineId,
+                                               unsigned long columnId)
+{
+  m_Selection.startDynamicSelection(lineId, columnId);
+}
+
+void SelectableDiffFile::updateDynamicSelection(unsigned long lineId,
+                                                unsigned long columnId)
+{
+  m_Selection.updateDynamicSelection(lineId, columnId);
+}
+
 void SelectableDiffFile::addSelection(unsigned long lineId, 
                                       unsigned long fromColumn, 
                                       unsigned long toColumn)

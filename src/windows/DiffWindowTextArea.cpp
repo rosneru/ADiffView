@@ -156,21 +156,29 @@ void DiffWindowTextArea::addSelection(ULONG lineId,
 
 void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
 {
-  clearSelection();
   ULONG colID = (mouseX - m_HScrollRect.getLeft()) / m_FontWidth_pix;
   ULONG rowID = (mouseY - m_HScrollRect.getTop()) / m_FontHeight_pix;
-  printf("Rect left=%d, top=%d -- mouseX=%d, mouseY=%d\n", m_HScrollRect.getLeft(),
-                                                           m_HScrollRect.getTop(),
-                                                           mouseX,
-                                                           mouseY);
-  printf("Selecting column=%d in row=%d\n\n", colID, rowID);
-  addSelection(rowID, colID, colID);
+
+  rowID -= 1;
+  // printf("Rect left=%d, top=%d -- mouseX=%d, mouseY=%d\n", m_HScrollRect.getLeft(),
+  //                                                          m_HScrollRect.getTop(),
+  //                                                          mouseX,
+  //                                                          mouseY);
+  // printf("Selecting column=%d in row=%d\n\n", colID, rowID);
+  // addSelection(rowID, colID, colID);
+  m_DiffFile.startDynamicSelection(rowID, colID);
+  printLine(rowID);
 }
 
 
 void DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
 {
+  ULONG colID = (mouseX - m_HScrollRect.getLeft()) / m_FontWidth_pix;
+  ULONG rowID = (mouseY - m_HScrollRect.getTop()) / m_FontHeight_pix;
 
+  rowID -= 1;
+  m_DiffFile.updateDynamicSelection(rowID, colID);
+  printLine(rowID);
 }
 
 

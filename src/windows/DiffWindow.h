@@ -188,6 +188,7 @@ private:
   void handleGadgetEvent(struct Gadget* pGadget);
   void handleVanillaKey(UWORD code);
   void handleMouseButtons(const struct IntuiMessage* pMsg);
+  void handleMouseMove(const struct IntuiMessage* pMsg);
 
   void cleanup();
 
