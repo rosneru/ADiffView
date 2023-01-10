@@ -162,7 +162,7 @@ void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
   rowID -= 1;
 
   m_DiffFile.startDynamicSelection(rowID, colID);
-  printLine(rowID);
+  renderSelectionUpdatedLines();
 }
 
 
@@ -174,13 +174,7 @@ void DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
   rowID -= 1;
   m_DiffFile.updateDynamicSelection(rowID, colID);
 
-  // Render all lines whose selection has changed
-  const std::list<int>& updatedLines = m_DiffFile.getUpdatedLineIds();
-  std::list<int>::const_iterator it;
-  for(it = updatedLines.begin(); it != updatedLines.end(); it++)
-  {
-    printLine(*it);
-  }
+  renderSelectionUpdatedLines();
 }
 
 
@@ -500,6 +494,17 @@ void DiffWindowTextArea::printLine(ULONG lineId)
 {
   WORD lineTopEdge = (lineId - m_Y) * m_FontHeight_pix;
   renderLine(lineId, true, lineTopEdge);
+}
+
+void DiffWindowTextArea::renderSelectionUpdatedLines()
+{
+  // Render all lines whose selection has changed
+  const std::list<int>& updatedLines = m_DiffFile.getUpdatedLineIds();
+  std::list<int>::const_iterator it;
+  for(it = updatedLines.begin(); it != updatedLines.end(); it++)
+  {
+    printLine(*it);
+  }
 }
 
 void DiffWindowTextArea::renderLine(ULONG lineId,

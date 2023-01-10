@@ -16,16 +16,19 @@ TextSelection::~TextSelection()
 void TextSelection::startDynamicSelection(unsigned long lineId,
                                           unsigned long columnId)
 {
+  m_UpdatedLineIds.clear();
   clear();
   m_UpdateDirection = TextSelection::NONE;
   m_SelectionStartLine = lineId;
   m_SelectionStartColumn = columnId;
   addBlock(lineId, columnId, columnId);
-  m_UpdatedLineIds.clear();
 
   // TODO Before clearing the selected lines above add all line ids from
   // there to the m_UpdatedLineIds
   m_UpdatedLineIds.push_back(lineId);
+
+  m_UpdatedLineIds.sort();
+  m_UpdatedLineIds.unique();
 }
 
 void TextSelection::updateDynamicSelection(unsigned long lineId,
@@ -48,12 +51,16 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       {
         pSelectedBlock->setToColumn(columnId);
         m_UpdatedLineIds.push_back(lineId);
+        m_UpdatedLineIds.sort();
+        m_UpdatedLineIds.unique();
         return;
       }
       else if(columnId < pSelectedBlock->getFromColumn())
       {
         pSelectedBlock->setFromColumn(columnId);
         m_UpdatedLineIds.push_back(lineId);
+        m_UpdatedLineIds.sort();
+        m_UpdatedLineIds.unique();
         return;
       }
     }
@@ -172,6 +179,9 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       m_UpdatedLineIds.push_back(m_HighestLineId);
       break;
   }
+
+  m_UpdatedLineIds.sort();
+  m_UpdatedLineIds.unique();
 }
 
 void TextSelection::addBlock(unsigned long lineId, 
@@ -198,6 +208,7 @@ void TextSelection::clear()
   std::list<TextSelectionLine*>::iterator it;
   for(it = m_SelectedLines.begin(); it != m_SelectedLines.end(); it++)
   {
+    m_UpdatedLineIds.push_back((*it)->getLineId());
     delete *it;
   }
 
@@ -260,6 +271,7 @@ void TextSelection::clearFirstSelectionLine()
 {
   // Remove first TextSelectionLine
   std::list<TextSelectionLine*>::iterator it = m_SelectedLines.begin();
+  m_UpdatedLineIds.push_back((*it)->getLineId());
   delete *it;
 
   // And remove its item from the listz of selected lines
@@ -270,6 +282,7 @@ void TextSelection::clearLastSelectionLine()
 {
   // Remove last TextSelectionLine
   std::list<TextSelectionLine*>::iterator it = m_SelectedLines.end();
+  m_UpdatedLineIds.push_back((*it)->getLineId());
   --it;
   delete *it;
 

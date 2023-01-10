@@ -178,6 +178,8 @@ private:
   Rect m_HScrollRect;     ///> Horizontal scroll region
   Rect m_VScrollRect;     ///> Vertical scroll region
 
+  void renderSelectionUpdatedLines();
+
   /**
    * Print a diff line.
    * @param lineTop TopEdge y-position in pixels for the line
