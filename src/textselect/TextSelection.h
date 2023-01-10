@@ -6,6 +6,7 @@
 #include "DiffLine.h"
 #include "TextSelectionLine.h"
 
+
 /**
  * A collection of lines which contain selected ranges of text.
  *
@@ -43,9 +44,6 @@ public:
                 unsigned long fromColumn, 
                 unsigned long toColumn);
 
-  /**
-   * Clears all selection blocks.
-   */
   void clear();
 
   long getNumMarkedChars(unsigned long lineId, unsigned long columnId);
@@ -56,11 +54,6 @@ public:
    */
   long getNextSelectionStart(unsigned long lineId, unsigned long columnId);
 
-
-  /**
-   * Returns al list with the ids of the lines that were changed during
-   * last dynamic selection operation.
-   */
   const std::list<int>& getUpdatedLineIds() const;
 
 private:
@@ -91,7 +84,6 @@ private:
   void clearFirstSelectionLine();
   void clearLastSelectionLine();
 
-  unsigned long limitLineId(unsigned long lineId);
   UpdateDirection calcUpdateDirection(unsigned long lineId);
 
   TextSelectionLine* findSelectionLine(unsigned long lineId);

@@ -32,6 +32,7 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
                                            unsigned long columnId)
 {
   UpdateDirection newUpdateDirection;
+  unsigned long fullySelectedLineId;
   unsigned long lastColumn, fromColumn, toColumn; 
   unsigned long oldTopLastColumn, oldBottomLastColumn;
   m_UpdatedLineIds.clear();
@@ -58,7 +59,6 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
     }
   }
 
-  lineId = limitLineId(lineId);
   newUpdateDirection = calcUpdateDirection(lineId);
   if(newUpdateDirection != TextSelection::NONE)
   {
@@ -72,29 +72,39 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
     case TextSelection::START_UPWARD:
       clear();
       lastColumn = m_TextLines[lineId]->getNumChars() - 1;
-      m_SelectedLines.push_front(
-        new TextSelectionLine(lineId, columnId, lastColumn));
+      m_SelectedLines.push_back(new TextSelectionLine(lineId, columnId, lastColumn));
+      m_UpdatedLineIds.push_back(lineId);
+      for(fullySelectedLineId = lineId + 1;
+          fullySelectedLineId < m_SelectionStartLine;
+          fullySelectedLineId++)
+      {
+        lastColumn = m_TextLines[fullySelectedLineId]->getNumChars() - 1;
+        m_SelectedLines.push_back(
+          new TextSelectionLine(fullySelectedLineId, 0, lastColumn));
+        m_UpdatedLineIds.push_back(m_SelectionStartLine);
+      }
       m_SelectedLines.push_back(
         new TextSelectionLine(m_SelectionStartLine, 0, m_SelectionStartColumn));
-      m_UpdatedLineIds.push_back(lineId);
       m_UpdatedLineIds.push_back(m_SelectionStartLine);
       break;
     case TextSelection::APPEND_UPWARD:
-      oldTopLastColumn = m_TextLines[m_LowestLineId]->getNumChars() - 1;
-
-      // Remove the partly selected former top line from selection and
-      // add it as a whole
+      // Remove the former, only partly selected top line
       clearFirstSelectionLine();
-      m_SelectedLines.push_front(
-        new TextSelectionLine(m_LowestLineId, 0, oldTopLastColumn));
+      for(fullySelectedLineId = m_LowestLineId;
+          fullySelectedLineId > lineId;
+          fullySelectedLineId--)
+      {
+        lastColumn = m_TextLines[fullySelectedLineId]->getNumChars() - 1;
+        m_SelectedLines.push_front(
+          new TextSelectionLine(fullySelectedLineId, 0, lastColumn));
+        m_UpdatedLineIds.push_front(fullySelectedLineId);
+      }
 
-      // Also add the new top line
+      // Add the new top line
       lastColumn = m_TextLines[lineId]->getNumChars() - 1;
       m_SelectedLines.push_front(
         new TextSelectionLine(lineId, columnId, lastColumn));
-      
-      m_UpdatedLineIds.push_back(lineId);
-      m_UpdatedLineIds.push_back(m_LowestLineId);
+      m_UpdatedLineIds.push_front(lineId);
       break;
     case TextSelection::REDUCE_TOP:
       clearFirstSelectionLine();
@@ -182,6 +192,7 @@ void TextSelection::addBlock(unsigned long lineId,
   }
 }
 
+
 void TextSelection::clear()
 {
   std::list<TextSelectionLine*>::iterator it;
@@ -266,64 +277,13 @@ void TextSelection::clearLastSelectionLine()
   m_SelectedLines.pop_back();
 }
 
-unsigned long TextSelection::limitLineId(unsigned long lineId)
-{
-  m_LowestLineId = m_SelectedLines.front()->getLineId();
-  m_HighestLineId = m_SelectedLines.back()->getLineId();
-
-  if(m_UpdateDirection == TextSelection::NONE ||
-     m_UpdateDirection == TextSelection::STOP_UPWARD ||
-     m_UpdateDirection == TextSelection::STOP_DOWNWARD)
-  {
-    if(lineId < m_SelectionStartLine)
-    {
-      return m_SelectionStartLine - 1;
-    }
-    else if(lineId > m_SelectionStartLine)
-    {
-      return m_SelectionStartLine + 1;
-    }
-  }
-  else if(m_UpdateDirection == TextSelection::START_UPWARD ||
-          m_UpdateDirection == TextSelection::APPEND_UPWARD)
-  {
-    if(lineId < m_LowestLineId)
-    {
-      return m_LowestLineId - 1;
-    }
-    else if(lineId > m_LowestLineId)  // direction change
-    {
-      return m_LowestLineId + 1;
-    }
-  }
-  else if(m_UpdateDirection == TextSelection::REDUCE_TOP)
-  {
-    return m_LowestLineId + 1;
-  }
-  else if (m_UpdateDirection == TextSelection::START_DOWNWARD ||
-      m_UpdateDirection == TextSelection::APPEND_DOWNWARD)
-  {
-    if(lineId > m_HighestLineId)
-    {
-      return m_HighestLineId + 1;
-    }
-    else if(lineId < m_HighestLineId) // direction change
-    {
-      return m_HighestLineId - 1;
-    }
-  }
-  else if(m_UpdateDirection == TextSelection::REDUCE_BOTTOM)
-  {
-    return m_HighestLineId - 1;
-  }
-
-  return lineId;
-}
-
 TextSelection::UpdateDirection TextSelection::calcUpdateDirection(
   unsigned long lineId)
 {
   unsigned long numLinesSelected = m_SelectedLines.size();
+  m_LowestLineId = m_SelectedLines.front()->getLineId();
+  m_HighestLineId = m_SelectedLines.back()->getLineId();
+
   if(numLinesSelected == 1)
   {
     if(m_SelectionStartLine > lineId)
@@ -339,11 +299,25 @@ TextSelection::UpdateDirection TextSelection::calcUpdateDirection(
   {
     if(lineId < m_LowestLineId)
     {
-      return TextSelection::APPEND_UPWARD;
+      if(m_HighestLineId > m_SelectionStartLine)
+      {
+        return TextSelection::START_UPWARD;
+      }
+      else
+      {
+        return TextSelection::APPEND_UPWARD;
+      }
     }
     else if(lineId > m_HighestLineId)
     {
-      return TextSelection::APPEND_DOWNWARD;
+      if(m_LowestLineId < m_SelectionStartLine)
+      {
+        return TextSelection::START_DOWNWARD;
+      }
+      else
+      {
+        return TextSelection::APPEND_DOWNWARD;
+      }
     }
     else if(lineId < m_SelectionStartLine)
     {
