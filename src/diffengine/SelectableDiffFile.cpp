@@ -34,8 +34,13 @@ void SelectableDiffFile::updateDynamicSelection(unsigned long lineId,
   m_Selection.updateDynamicSelection(lineId, columnId);
 }
 
-void SelectableDiffFile::addSelection(unsigned long lineId, 
-                                      unsigned long fromColumn, 
+const std::list<int>& SelectableDiffFile::getUpdatedLineIds() const
+{
+  return m_Selection.getUpdatedLineIds();
+}
+
+void SelectableDiffFile::addSelection(unsigned long lineId,
+                                      unsigned long fromColumn,
                                       unsigned long toColumn)
 {
   m_Selection.addBlock(lineId, fromColumn, toColumn);

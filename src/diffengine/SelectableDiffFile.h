@@ -35,6 +35,12 @@ public:
    */
   void updateDynamicSelection(unsigned long lineId, unsigned long columnId);
 
+  /**
+   * Returns al list with the ids of the lines whose selection was
+   * changed during last dynamic selection operation.
+   */
+  const std::list<int>& getUpdatedLineIds() const;
+
   void addSelection(unsigned long lineId, 
                     unsigned long fromColumn, 
                     unsigned long toColumn);

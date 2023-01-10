@@ -160,12 +160,7 @@ void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
   ULONG rowID = (mouseY - m_HScrollRect.getTop()) / m_FontHeight_pix;
 
   rowID -= 1;
-  // printf("Rect left=%d, top=%d -- mouseX=%d, mouseY=%d\n", m_HScrollRect.getLeft(),
-  //                                                          m_HScrollRect.getTop(),
-  //                                                          mouseX,
-  //                                                          mouseY);
-  // printf("Selecting column=%d in row=%d\n\n", colID, rowID);
-  // addSelection(rowID, colID, colID);
+
   m_DiffFile.startDynamicSelection(rowID, colID);
   printLine(rowID);
 }
@@ -178,7 +173,14 @@ void DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
 
   rowID -= 1;
   m_DiffFile.updateDynamicSelection(rowID, colID);
-  printLine(rowID);
+
+  // Render all lines whose selection has changed
+  const std::list<int>& updatedLines = m_DiffFile.getUpdatedLineIds();
+  std::list<int>::const_iterator it;
+  for(it = updatedLines.begin(); it != updatedLines.end(); it++)
+  {
+    printLine(*it);
+  }
 }
 
 

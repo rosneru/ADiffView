@@ -761,13 +761,11 @@ void DiffWindow::handleMouseMove(const struct IntuiMessage* pMsg)
   {
     case DiffWindow::SM_SELECTION_LEFT_STARTED:
     {
-      // printf("Updating left\n");
       m_pLeftTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
       break;
     }
     case DiffWindow::SM_SELECTION_RIGHT_STARTED:
     {
-      // printf("Updating right\n");
       m_pRightTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
       break;
     }
