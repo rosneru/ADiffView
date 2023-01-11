@@ -128,9 +128,11 @@ public:
    * printed. When this optional parameter is set to true they are not
    * printed.
    */
-  void printPage(bool dontPrintLineNumbers = false);
+  void renderPage(bool dontPrintLineNumbers = false);
 
-  void printLine(ULONG lineId);
+  void renderIndexedLine(ULONG lineId);
+
+  void renderSelectionUpdatedLines();
 
 
   /**
@@ -177,8 +179,6 @@ private:
 
   Rect m_HScrollRect;     ///> Horizontal scroll region
   Rect m_VScrollRect;     ///> Vertical scroll region
-
-  void renderSelectionUpdatedLines();
 
   /**
    * Print a diff line.

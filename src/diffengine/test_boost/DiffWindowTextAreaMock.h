@@ -110,9 +110,9 @@ public:
    * printed. When this optional parameter is set to true they are not
    * printed.
    */
-  void printPage(bool dontPrintLineNumbers = false);
+  void renderPage(bool dontPrintLineNumbers = false);
 
-  void printLine(ULONG lineId);
+  void renderIndexedLine(ULONG lineId);
 
   /**
    * Print a diff line.

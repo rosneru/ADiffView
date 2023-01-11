@@ -234,7 +234,7 @@ void DiffWindowTextArea::scrollTopToRow(ULONG rowId)
   m_Y = rowId;
 
   clearTextAndLineNumbers();
-  printPage();
+  renderPage();
 }
 
 
@@ -275,7 +275,7 @@ void DiffWindowTextArea::scrollLeftToColumn(ULONG columId)
   m_X = columId;
 
   clearText();
-  printPage(true);
+  renderPage(true);
 }
 
 
@@ -477,10 +477,10 @@ void DiffWindowTextArea::printPageAt(ULONG left, ULONG top)
   m_X = left;
   m_Y = top;
 
-  printPage();
+  renderPage();
 }
 
-void DiffWindowTextArea::printPage(bool dontPrintLineNumbers)
+void DiffWindowTextArea::renderPage(bool dontPrintLineNumbers)
 {
   for (ULONG lineId = m_Y; lineId < m_Y + m_AreaMaxLines; lineId++)
   {
@@ -489,8 +489,7 @@ void DiffWindowTextArea::printPage(bool dontPrintLineNumbers)
   }
 }
 
-
-void DiffWindowTextArea::printLine(ULONG lineId)
+void DiffWindowTextArea::renderIndexedLine(ULONG lineId)
 {
   WORD lineTopEdge = (lineId - m_Y) * m_FontHeight_pix;
   renderLine(lineId, true, lineTopEdge);
@@ -503,7 +502,7 @@ void DiffWindowTextArea::renderSelectionUpdatedLines()
   std::list<int>::const_iterator it;
   for(it = updatedLines.begin(); it != updatedLines.end(); it++)
   {
-    printLine(*it);
+    renderIndexedLine(*it);
   }
 }
 

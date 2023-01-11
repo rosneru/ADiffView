@@ -132,8 +132,8 @@ void DiffWindow::performResize()
 
   // Paint the content of the two documents (from current y-position,
   //not from start)
-  m_pLeftTextArea->printPage();
-  m_pRightTextArea->printPage();
+  m_pLeftTextArea->renderPage();
+  m_pRightTextArea->renderPage();
 
   if(m_pDocument == NULL)
   {
@@ -345,13 +345,13 @@ void DiffWindow::renderDocuments(long long justThisLineId)
 {
   if(justThisLineId < 0)
   {
-    m_pLeftTextArea->printPage();
-    m_pRightTextArea->printPage();
+    m_pLeftTextArea->renderPage();
+    m_pRightTextArea->renderPage();
   }
   else
   {
-    m_pLeftTextArea->printLine(justThisLineId);
-    m_pRightTextArea->printLine(justThisLineId);
+    m_pLeftTextArea->renderIndexedLine(justThisLineId);
+    m_pRightTextArea->renderIndexedLine(justThisLineId);
   }
   
 }
@@ -726,17 +726,19 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       if(m_pLeftTextArea->getTextRectangle().isPointInside(pMsg->MouseX,
                                                            pMsg->MouseY))
       {
-        m_pLeftTextArea->clearSelection();
-        m_pRightTextArea->clearSelection();
         m_SelectionMode = SM_SELECTION_LEFT_STARTED;
+
+        m_pRightTextArea->clearSelection();
+        m_pRightTextArea->renderSelectionUpdatedLines();
         m_pLeftTextArea->startSelection(pMsg->MouseX, pMsg->MouseY);
       }
       else if(m_pRightTextArea->getTextRectangle().isPointInside(pMsg->MouseX,
                                                                  pMsg->MouseY))
       {
-        m_pLeftTextArea->clearSelection();
-        m_pRightTextArea->clearSelection();
         m_SelectionMode = SM_SELECTION_RIGHT_STARTED;
+        m_pLeftTextArea->clearSelection();
+        m_pLeftTextArea->renderSelectionUpdatedLines();
+
         m_pRightTextArea->startSelection(pMsg->MouseX, pMsg->MouseY);
       }
       else

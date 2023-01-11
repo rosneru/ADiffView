@@ -219,7 +219,7 @@ void DiffWindowTextAreaMock::scrollTopToRow(ULONG rowId)
   EraseRect(&m_RPWindow, m_VScrollRect.getLeft(), m_VScrollRect.getTop(),
             m_VScrollRect.getRight(), m_VScrollRect.getBottom());
 
-  printPage();
+  renderPage();
 }
 
 
@@ -264,7 +264,7 @@ void DiffWindowTextAreaMock::scrollLeftToColumn(ULONG columId)
             m_HScrollRect.getRight(), m_HScrollRect.getBottom());
 
   // NOTE Commented out for debugging
-  // printPage(true);
+  // renderPage(true);
 }
 
 
@@ -458,10 +458,10 @@ void DiffWindowTextAreaMock::printPageAt(ULONG left, ULONG top)
   m_X = left;
   m_Y = top;
 
-  printPage();
+  renderPage();
 }
 
-void DiffWindowTextAreaMock::printPage(bool dontPrintLineNumbers)
+void DiffWindowTextAreaMock::renderPage(bool dontPrintLineNumbers)
 {
   for (ULONG lineId = m_Y; lineId < m_Y + m_AreaMaxLines; lineId++)
   {
@@ -471,7 +471,7 @@ void DiffWindowTextAreaMock::printPage(bool dontPrintLineNumbers)
 }
 
 
-void DiffWindowTextAreaMock::printLine(ULONG lineId)
+void DiffWindowTextAreaMock::renderIndexedLine(ULONG lineId)
 {
   WORD lineTopEdge = (lineId - m_Y) * m_FontHeight_pix;
   renderLine(lineId, true, lineTopEdge, 0, NULL);
