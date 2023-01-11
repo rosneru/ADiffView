@@ -276,14 +276,18 @@ bool DiffWindow::setDocument(DiffDocument* pDiffDocument)
                                         m_pTextFont,
                                         pDiffDocument->areLineNumbersEnabled(),
                                         pDiffDocument->getMaxLineLength(),
-                                        m_TabSize);
+                                        m_TabSize,
+                                        m_pWindow->WScreen->WBorLeft,
+                                        m_pWindow->WScreen->WBorTop);
 
   m_pRightTextArea = new DiffWindowTextArea(pDiffDocument->getRightDiffFile(),
                                         m_pRPorts,
                                         m_pTextFont,
                                         pDiffDocument->areLineNumbersEnabled(),
                                         pDiffDocument->getMaxLineLength(),
-                                        m_TabSize);
+                                        m_TabSize,
+                                        m_pWindow->WScreen->WBorLeft,
+                                        m_pWindow->WScreen->WBorTop);
 
   m_SelectionMode = DiffWindow::SM_NONE;
 

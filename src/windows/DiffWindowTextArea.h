@@ -33,7 +33,9 @@ public:
                      TextFont* pTextFont,
                      bool lineNumbersEnabled,
                      ULONG maxNumChars,
-                     ULONG tabSize);
+                     ULONG tabSize,
+                     ULONG WBorLeft,
+                     ULONG WBorTop);
 
   virtual ~DiffWindowTextArea();
 
@@ -161,6 +163,9 @@ private:
 
   TextPositionInfo m_PositionInfo;  ///> Destination to calculate current column informations
   ULONG m_TabSize;         ///> Number of spaces of each tabulator
+  ULONG m_WBorLeft;
+  ULONG m_WBorTop;
+
   char* m_pLineOfSpaces;    ///> A text containing m_AreaMaxChars spaces, initialized in setSize()
 
   UWORD m_FontWidth_pix;    ///> Width of the rastport text font

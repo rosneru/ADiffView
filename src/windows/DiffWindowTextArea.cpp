@@ -15,12 +15,16 @@ DiffWindowTextArea::DiffWindowTextArea(const DiffOutputFileBase& diffFile,
                                        TextFont* pTextFont,
                                        bool lineNumbersEnabled,
                                        ULONG maxNumChars,
-                                       ULONG tabSize)
+                                       ULONG tabSize,
+                                       ULONG WBorLeft,
+                                       ULONG WBorTop)
   : m_DiffFile(diffFile),
     m_pRPorts(pRPorts),
     m_AreLineNumbersEnabled(lineNumbersEnabled),
     m_LongestLineChars(maxNumChars),
     m_TabSize(tabSize),
+    m_WBorLeft(WBorLeft),
+    m_WBorTop(WBorTop),
     m_pLineOfSpaces(NULL),
     m_FontWidth_pix(pTextFont->tf_XSize),
     m_FontHeight_pix(pTextFont->tf_YSize),
@@ -156,9 +160,8 @@ void DiffWindowTextArea::addSelection(ULONG lineId,
 
 void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
 {
-  ULONG colID = (mouseX - m_HScrollRect.getLeft()) / m_FontWidth_pix;
-  ULONG rowID = (mouseY - m_HScrollRect.getTop()) / m_FontHeight_pix;
-
+  ULONG colID = (mouseX - m_WBorLeft - m_HScrollRect.getLeft()) / m_FontWidth_pix;
+  ULONG rowID = (mouseY - m_WBorTop - 1 - m_HScrollRect.getTop()) / m_FontHeight_pix;
   rowID -= 1;
 
   m_DiffFile.startDynamicSelection(rowID, colID);
@@ -168,10 +171,10 @@ void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
 
 void DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
 {
-  ULONG colID = (mouseX - m_HScrollRect.getLeft()) / m_FontWidth_pix;
-  ULONG rowID = (mouseY - m_HScrollRect.getTop()) / m_FontHeight_pix;
-
+  ULONG colID = (mouseX - m_WBorLeft - m_HScrollRect.getLeft()) / m_FontWidth_pix;
+  ULONG rowID = (mouseY - m_WBorTop - 1 - m_HScrollRect.getTop()) / m_FontHeight_pix;
   rowID -= 1;
+
   m_DiffFile.updateDynamicSelection(rowID, colID);
 
   renderSelectionUpdatedLines();
