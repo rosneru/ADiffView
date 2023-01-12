@@ -1869,6 +1869,132 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
 }
 
 
+
+
+/**
+ * test_TextSelectionMultiCall
+ *
+ * Testing the text selection in ADiffView unveiled problems when e.g.
+ * selection started upward and changed downward below the starting
+ * line. Now while the selecting mouse button still was pressed
+ * updateDynamicSelection() was called multiple times with equal
+ * parameters and unveiled strange effects.
+ */
+BOOST_AUTO_TEST_CASE( test_TextSelectionMultiCall )
+{
+  DiffLine* pLine1 = new DiffLine("The first line");
+  DiffLine* pLine2 = new DiffLine("The second line");
+  DiffLine* pLine3 = new DiffLine("third line");
+  DiffLine* pLine4 = new DiffLine("line four");
+  DiffLine* pLine5 = new DiffLine("Line no. 5");
+  DiffLine* pLine6 = new DiffLine("he she it them our");
+  DiffLine* pLine7 = new DiffLine("limit_line_id() tests need this");
+  DiffLine* pLine8 = new DiffLine("and this");
+
+  std::vector<DiffLine*> textLines;
+  textLines.push_back(pLine1);
+  textLines.push_back(pLine2);
+  textLines.push_back(pLine3);
+  textLines.push_back(pLine4);
+  textLines.push_back(pLine5);
+  textLines.push_back(pLine6);
+  textLines.push_back(pLine7);
+  textLines.push_back(pLine8);
+
+  try
+  {
+    long column;
+    unsigned long line;
+    std::list<int>::const_iterator it;
+    TextSelection selection(textLines);
+    
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 4), 0);
+    BOOST_CHECK_EQUAL(selection.getNextSelectionStart(2, 0), -1);
+    
+    // Start a new selection at line 4, column 5
+    selection.startDynamicSelection(4, 5);
+
+    line = 3;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 4;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 5);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 1);
+
+    line = 5;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    // Update the selection one top...
+    selection.updateDynamicSelection(3, 5);
+
+    line = 2;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 3;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 5);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+
+    line = 4;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+
+    line = 5;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    // ...and call the update multiple times
+    selection.updateDynamicSelection(3, 5);
+
+    line = 2;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 3;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 5);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+
+    line = 4;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+
+    line = 5;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+  }
+  catch(const char* pError)
+  {
+    auto locationBoost = boost::unit_test::framework::current_test_case().p_name;
+    std::string location(locationBoost);
+    printf("Exception in test %s: %s\n", 
+           location.c_str(),
+           pError);
+
+    // To let the test fail
+    BOOST_CHECK_EQUAL(1, 2);
+  }
+
+  // Clean up
+  std::vector<DiffLine*>::iterator it;
+  for(it = textLines.begin(); it != textLines.end(); it++)
+  {
+    delete *it;
+  }
+
+  textLines.clear();
+
+}
+
+
+
 /**
  * testcase_32
  *

@@ -25,7 +25,7 @@
             "label": "Make boost-Tests",
             "command": "/usr/bin/make",
             "args": [
-                "-j3"
+                "-j4"
             ],
             "options": {
                 "cwd": "${workspaceFolder}/build-tests/"
