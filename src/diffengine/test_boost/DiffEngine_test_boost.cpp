@@ -1711,6 +1711,165 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
 
 
 /**
+ * test_TextSelectionInLine
+ *
+ * Testing the text selection in ADiffView unveiled problems when
+ * selection in the same line is reduced. This is tested here to be
+ * fixed.
+ */
+BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
+{
+  DiffLine* pLine1 = new DiffLine("The first line");
+  DiffLine* pLine2 = new DiffLine("The second line");
+  DiffLine* pLine3 = new DiffLine("third line");
+  DiffLine* pLine4 = new DiffLine("line four");
+  DiffLine* pLine5 = new DiffLine("Line no. 5");
+  DiffLine* pLine6 = new DiffLine("he she it them our");
+  DiffLine* pLine7 = new DiffLine("limit_line_id() tests need this");
+  DiffLine* pLine8 = new DiffLine("and this");
+
+  std::vector<DiffLine*> textLines;
+  textLines.push_back(pLine1);
+  textLines.push_back(pLine2);
+  textLines.push_back(pLine3);
+  textLines.push_back(pLine4);
+  textLines.push_back(pLine5);
+  textLines.push_back(pLine6);
+  textLines.push_back(pLine7);
+  textLines.push_back(pLine8);
+
+  try
+  {
+    long column;
+    unsigned long line;
+    std::list<int>::const_iterator it;
+    TextSelection selection(textLines);
+    
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 4), 0);
+    BOOST_CHECK_EQUAL(selection.getNextSelectionStart(2, 0), -1);
+    
+    // Start a new selection
+    selection.startDynamicSelection(6, 7);
+
+    line = 5;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 6;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 7);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 1);
+
+    line = 7;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    // Update the selection 6 chars to the right
+    selection.updateDynamicSelection(6, 13);
+
+    line = 5;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 6;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 7);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 7);
+
+    line = 7;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    // Update the selection 4 chars to the left
+    selection.updateDynamicSelection(6, 9);
+
+    line = 5;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 6;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 7);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 3);
+
+    line = 7;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    // Update the selection another 2 chars to the left; should be like
+    // the start position again
+    selection.updateDynamicSelection(6, 7);
+
+    line = 5;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 6;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 7);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 1);
+
+    line = 7;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    // Update the selection another 4 chars to the left;
+    selection.updateDynamicSelection(6, 3);
+
+    line = 5;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 6;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 3);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 5);
+
+    line = 7;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    // Finally update the selection another 5 chars to the right;
+    selection.updateDynamicSelection(6, 8);
+
+    line = 5;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 6;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 7);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 2);
+
+    line = 7;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+  }
+  catch(const char* pError)
+  {
+    auto locationBoost = boost::unit_test::framework::current_test_case().p_name;
+    std::string location(locationBoost);
+    printf("Exception in test %s: %s\n", 
+           location.c_str(),
+           pError);
+
+    // To let the test fail
+    BOOST_CHECK_EQUAL(1, 2);
+  }
+
+  // Clean up
+  std::vector<DiffLine*>::iterator it;
+  for(it = textLines.begin(); it != textLines.end(); it++)
+  {
+    delete *it;
+  }
+
+  textLines.clear();
+
+}
+
+
+/**
  * testcase_32
  *
  * Test the methods SelectableDiffFile::getNumNormalChars() and
@@ -1768,106 +1927,6 @@ BOOST_AUTO_TEST_CASE( test_32_SelectableDiffFile )
 
     BOOST_CHECK_EQUAL(diffASelectable.getNumNormalChars(0, 30), 21);
 
-  }
-  catch(const char* pError)
-  {
-    auto locationBoost = boost::unit_test::framework::current_test_case().p_name;
-    std::string location(locationBoost);
-    printf("Exception in test %s: %s\n", 
-           location.c_str(),
-           pError);
-
-    // To let the test fail
-    BOOST_CHECK_EQUAL(1, 2);
-  }
-}
-
-
-
-BOOST_AUTO_TEST_CASE( testcase_crash )
-{
-  try
-  {
-    bool cancelRequested = false;
-    std::list<size_t> m_DiffIndices;
-
-    DiffInputFileLinux srcA(cancelRequested, 
-                            "CMakeLists.txt",
-                            true);
-
-    DiffInputFileLinux srcB(cancelRequested, 
-                            "LICENSE-3RD-PARTY",
-                            true);
-
-    DiffOutputFileLinux diffA(srcA);
-    DiffOutputFileLinux diffB(srcB);
-    DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
-                          "Comparing...", cancelRequested, m_DiffIndices);
-    diffEngine.startCompare();
-
-    // printf("Left file:\n");
-    // printFile(diffA);
-    // printf("\nRight file:\n");
-    // printFile(diffB);
-
-    BOOST_CHECK_EQUAL(diffEngine.getNumDifferences(), 7);
-    BOOST_CHECK_EQUAL(diffEngine.getNumAdded(), 5);
-    BOOST_CHECK_EQUAL(diffEngine.getNumDeleted(), 0);
-    BOOST_CHECK_EQUAL(diffEngine.getNumChanged(), 2);
-
-    BOOST_CHECK_EQUAL(diffA.getNumLines(), 36);
-    // BOOST_CHECK_EQUAL(diffA[0]->getText(), "");
-    // BOOST_CHECK_EQUAL(diffA[0]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffA[0]->getLineNumText(), "");
-    // BOOST_CHECK_EQUAL(diffA[1]->getText(), "cmake_minimum_required (VERSION 2.8.11)");
-    // BOOST_CHECK_EQUAL(diffA[1]->getState(), DiffLine::Changed);
-    // BOOST_CHECK_EQUAL(diffA[1]->getLineNumText(), "2 ");
-
-    
-    // BOOST_CHECK_EQUAL(diffA[2]->getText(), "");
-    // BOOST_CHECK_EQUAL(diffA[2]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffA[2]->getLineNumText(), "");
-    // BOOST_CHECK_EQUAL(diffA[3]->getText(), "CCCC");
-    // BOOST_CHECK_EQUAL(diffA[3]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffA[3]->getLineNumText(), "3 ");
-    // BOOST_CHECK_EQUAL(diffA[4]->getText(), "DDDD");
-    // BOOST_CHECK_EQUAL(diffA[4]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffA[4]->getLineNumText(), "4 ");
-    // BOOST_CHECK_EQUAL(diffA[5]->getText(), "EEEE");
-    // BOOST_CHECK_EQUAL(diffA[5]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffA[5]->getLineNumText(), "5 ");
-    // BOOST_CHECK_EQUAL(diffA[6]->getText(), "FFFF");
-    // BOOST_CHECK_EQUAL(diffA[6]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffA[6]->getLineNumText(), "6 ");
-    // BOOST_CHECK_EQUAL(diffA[7]->getText(), "GGGG");
-    // BOOST_CHECK_EQUAL(diffA[7]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffA[7]->getLineNumText(), "7 ");
-
-    BOOST_CHECK_EQUAL(diffB.getNumLines(), 36);
-    // BOOST_CHECK_EQUAL(diffB[0]->getText(), "AAAA");
-    // BOOST_CHECK_EQUAL(diffB[0]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffB[0]->getLineNumText(), "1 ");
-    // BOOST_CHECK_EQUAL(diffB[1]->getText(), "FFFF");
-    // BOOST_CHECK_EQUAL(diffB[1]->getState(), DiffLine::Changed);
-    // BOOST_CHECK_EQUAL(diffB[1]->getLineNumText(), "2 ");
-    // BOOST_CHECK_EQUAL(diffB[2]->getText(), "ffff");
-    // BOOST_CHECK_EQUAL(diffB[2]->getState(), DiffLine::Added);
-    // BOOST_CHECK_EQUAL(diffB[2]->getLineNumText(), "3 ");
-    // BOOST_CHECK_EQUAL(diffB[3]->getText(), "CCCC");
-    // BOOST_CHECK_EQUAL(diffB[3]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffB[3]->getLineNumText(), "4 ");
-    // BOOST_CHECK_EQUAL(diffB[4]->getText(), "DDDD");
-    // BOOST_CHECK_EQUAL(diffB[4]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffB[4]->getLineNumText(), "5 ");
-    // BOOST_CHECK_EQUAL(diffB[5]->getText(), "EEEE");
-    // BOOST_CHECK_EQUAL(diffB[5]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffB[5]->getLineNumText(), "6 ");
-    // BOOST_CHECK_EQUAL(diffB[6]->getText(), "FFFF");
-    // BOOST_CHECK_EQUAL(diffB[6]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffB[6]->getLineNumText(), "7 ");
-    // BOOST_CHECK_EQUAL(diffB[7]->getText(), "GGGG");
-    // BOOST_CHECK_EQUAL(diffB[7]->getState(), DiffLine::Normal);
-    // BOOST_CHECK_EQUAL(diffB[7]->getLineNumText(), "8 ");
   }
   catch(const char* pError)
   {

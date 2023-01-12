@@ -37,7 +37,6 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
   UpdateDirection newUpdateDirection;
   unsigned long lineIdIns;
   unsigned long lastColumn, fromColumn, toColumn; 
-  unsigned long oldTopLastColumn, oldBottomLastColumn;
   m_UpdatedLineIds.clear();
 
   // Check if update is on a line which already contains a selection
@@ -47,22 +46,28 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
     TextSelectionRange* pSelectedBlock = pLineToUpdate->getFirstSelectedBlock();
     if(pSelectedBlock != NULL)
     {
-      if(columnId > pSelectedBlock->getToColumn())
+      if(lineId == m_SelectionStartLine)
+      {
+        fromColumn = std::min(columnId, m_SelectionStartColumn);
+        toColumn = std::max(columnId, m_SelectionStartColumn);
+        pSelectedBlock->setFromColumn(fromColumn);
+        pSelectedBlock->setToColumn(toColumn);
+      }
+      else if(columnId > m_SelectionStartColumn)
       {
         pSelectedBlock->setToColumn(columnId);
-        m_UpdatedLineIds.push_back(lineId);
-        m_UpdatedLineIds.sort();
-        m_UpdatedLineIds.unique();
-        return;
       }
-      else if(columnId < pSelectedBlock->getFromColumn())
+      else if(columnId < m_SelectionStartColumn)
       {
         pSelectedBlock->setFromColumn(columnId);
-        m_UpdatedLineIds.push_back(lineId);
-        m_UpdatedLineIds.sort();
-        m_UpdatedLineIds.unique();
-        return;
       }
+      else
+      {
+        pSelectedBlock->setFromColumn(columnId);
+        pSelectedBlock->setToColumn(columnId);
+      }
+
+      m_UpdatedLineIds.push_back(lineId);
     }
   }
 
