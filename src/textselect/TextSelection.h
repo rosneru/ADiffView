@@ -49,6 +49,16 @@ public:
    */
   void clear();
 
+  /**
+   * Returns true if given line id and column id is part of this text
+   * selection:
+   */
+  bool isSelected(unsigned long lineId, unsigned long columnId) const;
+
+  /**
+   * Returns the number of selected characters from given column on
+   * given line.
+   */
   long getNumMarkedChars(unsigned long lineId, unsigned long columnId);
 
   /**
@@ -57,6 +67,10 @@ public:
    */
   long getNextSelectionStart(unsigned long lineId, unsigned long columnId);
 
+  /**
+   * Returns a list<int> of the lineIds whoese selection state was
+   * changed during last dynamic selection operation.
+   */
   const std::list<int>& getUpdatedLineIds() const;
 
 private:

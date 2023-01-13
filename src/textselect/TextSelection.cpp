@@ -207,9 +207,23 @@ void TextSelection::addBlock(unsigned long lineId,
   else
   {
     pSelectionLine = new TextSelectionLine(lineId, fromColumn, toColumn);
-    m_Selection.push_back(pSelectionLine);
+    
+    // Now inserting this new TextSelectionLine sorted acending by its
+    // LineId(). NOTE: Iterating here is done backwards assuming that
+    // addBlock() itself is mostly called with ascending line numbers
+    // (e.g. as it is done in TextSearch); and so it is faster.
+    std::list<TextSelectionLine*>::reverse_iterator it;
+    for(it = m_Selection.rbegin(); it != m_Selection.rend(); it++)
+    {
+      if((*it)->getLineId() < lineId)
+      {
+        m_Selection.insert(it.base(), pSelectionLine);
+        return;
+      }
+    }
 
-    // TODO sort m_Selection by lineId
+    // List is empty
+    m_Selection.push_front(pSelectionLine);
   }
 }
 
@@ -224,6 +238,25 @@ void TextSelection::clear()
   }
 
   m_Selection.clear();
+}
+
+bool TextSelection::isSelected(unsigned long lineId, unsigned long columnId) const
+{
+  std::list<TextSelectionLine*>::const_iterator it;
+  for(it = m_Selection.begin(); it != m_Selection.end(); it++)
+  {
+    if((*it)->getLineId() == lineId)
+    {
+      return (*it)->isSelected(columnId);
+    }
+    else if((*it)->getLineId() > lineId)
+    {
+      // TODO This only works when m_Selection is sorted by lineId
+      return false;
+    }
+  }
+
+  return false;
 }
 
 long TextSelection::getNumMarkedChars(unsigned long lineId, 

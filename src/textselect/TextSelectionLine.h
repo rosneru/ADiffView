@@ -21,6 +21,12 @@ public:
 
   void addBlock(unsigned long fromColumn, unsigned long toColumn);
 
+  /**
+   * Returns true if given line id and column id is part of this text
+   * selection:
+   */
+  bool isSelected(unsigned long columnId) const;
+
   TextSelectionRange* getFirstSelectedBlock();
   
   unsigned long getLineId() const;

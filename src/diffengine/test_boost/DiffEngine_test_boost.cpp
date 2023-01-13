@@ -978,7 +978,6 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionBasic )
     selection.addBlock(5, 3, 5);
     selection.addBlock(5, 10, 13);
 
-
     BOOST_CHECK_EQUAL(selection.getNumMarkedChars(0, 0), 0);
     
     BOOST_CHECK_EQUAL(selection.getNumMarkedChars(1, 0), 0);
@@ -1868,9 +1867,6 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
 
 }
 
-
-
-
 /**
  * test_TextSelectionMultiCall
  *
@@ -1992,6 +1988,109 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionMultiCall )
   textLines.clear();
 
 }
+
+
+/**
+ * test_TextSelectionIsSelected
+ *
+ * Testing the TextSelection::isSelected(...) method
+ */
+BOOST_AUTO_TEST_CASE( test_TextSelectionIsSelected )
+{
+  DiffLine* pLine1 = new DiffLine("The first line");
+  DiffLine* pLine2 = new DiffLine("The second line");
+  DiffLine* pLine3 = new DiffLine("third line");
+  DiffLine* pLine4 = new DiffLine("line four");
+  DiffLine* pLine5 = new DiffLine("Line no. 5");
+  DiffLine* pLine6 = new DiffLine("he she it them our");
+  DiffLine* pLine7 = new DiffLine("limit_line_id() tests need this");
+  DiffLine* pLine8 = new DiffLine("and this");
+
+  std::vector<DiffLine*> textLines;
+  textLines.push_back(pLine1);
+  textLines.push_back(pLine2);
+  textLines.push_back(pLine3);
+  textLines.push_back(pLine4);
+  textLines.push_back(pLine5);
+  textLines.push_back(pLine6);
+  textLines.push_back(pLine7);
+  textLines.push_back(pLine8);
+
+  try
+  {
+    long column;
+    unsigned long line;
+    std::list<int>::const_iterator it;
+    TextSelection selection(textLines);
+    
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 4), false);
+    selection.startDynamicSelection(2, 4);
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 4), true);
+    
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 8), false);
+    selection.updateDynamicSelection(2, 9);
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 8), true);
+
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 1), false);
+    selection.updateDynamicSelection(1, 5);
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 8), false);
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 7), false);
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 6), false);
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 5), false);
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 4), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 3), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 2), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 1), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 0), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 15), false);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 14), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 13), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 12), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 11), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 10), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 9), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 8), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 7), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 6), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 5), true);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 4), false);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 3), false);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 2), false);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 1), false);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 0), false);
+
+    selection.clear();
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 4), false);
+    selection.addBlock(2, 2, 4);
+    BOOST_CHECK_EQUAL(selection.isSelected(2, 4), true);
+
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 4), false);
+    selection.addBlock(1, 2, 4);
+    BOOST_CHECK_EQUAL(selection.isSelected(1, 4), true);
+  }
+  catch(const char* pError)
+  {
+    auto locationBoost = boost::unit_test::framework::current_test_case().p_name;
+    std::string location(locationBoost);
+    printf("Exception in test %s: %s\n", 
+           location.c_str(),
+           pError);
+
+    // To let the test fail
+    BOOST_CHECK_EQUAL(1, 2);
+  }
+
+  // Clean up
+  std::vector<DiffLine*>::iterator it;
+  for(it = textLines.begin(); it != textLines.end(); it++)
+  {
+    delete *it;
+  }
+
+  textLines.clear();
+
+}
+
 
 
 
