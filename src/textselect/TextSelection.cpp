@@ -54,14 +54,14 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
         pSelectedBlock->setToColumn(toColumn);
         m_UpdatedLineIds.push_back(lineId);
       }
-      else if(columnId > m_StartColumnId)
-      {
-        pSelectedBlock->setToColumn(columnId);
-        m_UpdatedLineIds.push_back(lineId);
-      }
-      else if(columnId < m_StartColumnId)
+      else if(lineId < m_StartLineId)
       {
         pSelectedBlock->setFromColumn(columnId);
+        m_UpdatedLineIds.push_back(lineId);
+      }
+      else if(lineId > m_StartLineId)
+      {
+        pSelectedBlock->setToColumn(columnId);
         m_UpdatedLineIds.push_back(lineId);
       }
     }
