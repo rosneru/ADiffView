@@ -52,22 +52,19 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
         toColumn = std::max(columnId, m_SelectionStartColumn);
         pSelectedBlock->setFromColumn(fromColumn);
         pSelectedBlock->setToColumn(toColumn);
+        m_UpdatedLineIds.push_back(lineId);
       }
       else if(columnId > m_SelectionStartColumn)
       {
         pSelectedBlock->setToColumn(columnId);
+        m_UpdatedLineIds.push_back(lineId);
       }
       else if(columnId < m_SelectionStartColumn)
       {
         pSelectedBlock->setFromColumn(columnId);
-      }
-      else
-      {
-        pSelectedBlock->setFromColumn(columnId);
-        pSelectedBlock->setToColumn(columnId);
+        m_UpdatedLineIds.push_back(lineId);
       }
 
-      m_UpdatedLineIds.push_back(lineId);
     }
   }
 
