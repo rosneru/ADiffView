@@ -44,6 +44,9 @@ public:
                 unsigned long fromColumn, 
                 unsigned long toColumn);
 
+  /**
+   * Clears the selection completely.
+   */
   void clear();
 
   long getNumMarkedChars(unsigned long lineId, unsigned long columnId);
@@ -58,26 +61,26 @@ public:
 
 private:
   const std::vector<DiffLine*>& m_TextLines;
-  std::list<TextSelectionLine*> m_SelectedLines;
+  std::list<TextSelectionLine*> m_Selection;
   std::list<int> m_UpdatedLineIds;
 
   enum UpdateDirection
   {
-    START_UPWARD = 0,
-    APPEND_UPWARD,
-    REDUCE_TOP,
-    STOP_UPWARD,
-    START_DOWNWARD,
-    APPEND_DOWNWARD,
-    REDUCE_BOTTOM,
-    STOP_DOWNWARD,
-    NONE,
+    UD_START_UPWARD = 0,
+    UD_APPEND_UPWARD,
+    UD_REDUCE_TOP,
+    UD_STOP_UPWARD,
+    UD_START_DOWNWARD,
+    UD_APPEND_DOWNWARD,
+    UD_REDUCE_BOTTOM,
+    UD_STOP_DOWNWARD,
+    UD_NONE,
   };
 
-  unsigned long m_SelectionStartLine;
-  unsigned long m_SelectionStartColumn;
-  unsigned long m_LowestLineId;
-  unsigned long m_HighestLineId;
+  unsigned long m_StartLineId;    ///< Line where the dynamic selection started
+  unsigned long m_StartColumnId;  ///< Column where the dynamic selection started
+  unsigned long m_LowestLineId;   ///< Lowest line in dynamic selection block
+  unsigned long m_HighestLineId;  ///< Highest line in dynamic selection block
 
   UpdateDirection m_UpdateDirection;
 
