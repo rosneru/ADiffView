@@ -50,19 +50,30 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       {
         fromColumn = std::min(columnId, m_StartColumnId);
         toColumn = std::max(columnId, m_StartColumnId);
-        pSelectedBlock->setFromColumn(fromColumn);
-        pSelectedBlock->setToColumn(toColumn);
-        m_UpdatedLineIds.push_back(lineId);
+
+        if(pSelectedBlock->getFromColumn() != fromColumn 
+        || pSelectedBlock->getToColumn() != toColumn)
+        {
+          pSelectedBlock->setFromColumn(fromColumn);
+          pSelectedBlock->setToColumn(toColumn);
+          m_UpdatedLineIds.push_back(lineId);
+        }
       }
       else if(lineId < m_StartLineId)
       {
-        pSelectedBlock->setFromColumn(columnId);
-        m_UpdatedLineIds.push_back(lineId);
+        if(pSelectedBlock->getFromColumn() != fromColumn)
+        {
+          pSelectedBlock->setFromColumn(columnId);
+          m_UpdatedLineIds.push_back(lineId);
+        }
       }
       else if(lineId > m_StartLineId)
       {
-        pSelectedBlock->setToColumn(columnId);
-        m_UpdatedLineIds.push_back(lineId);
+        if(pSelectedBlock->getToColumn() != toColumn)
+        {
+          pSelectedBlock->setToColumn(columnId);
+          m_UpdatedLineIds.push_back(lineId);
+        }
       }
     }
   }
