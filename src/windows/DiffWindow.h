@@ -167,7 +167,9 @@ private:
   {
     SM_NONE = 0,
     SM_SELECTION_LEFT_STARTED,
+    SM_SELECTION_LEFT_FINISHED,
     SM_SELECTION_RIGHT_STARTED,
+    SM_SELECTION_RIGHT_FINISHED,
   };
 
   SelectionMode m_SelectionMode;

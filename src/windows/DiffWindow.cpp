@@ -727,13 +727,15 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
         return;
       }
 
-      if(m_pLeftTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
+      if(m_SelectionMode == SM_SELECTION_LEFT_FINISHED
+      && m_pLeftTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
       {
         m_SelectionMode = SM_NONE;
         m_pLeftTextArea->clearSelection();
         m_pLeftTextArea->renderSelectionUpdatedLines();
       }
-      else if(m_pRightTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
+      else if(m_SelectionMode == SM_SELECTION_RIGHT_FINISHED
+           && m_pRightTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
       {
         m_SelectionMode = SM_NONE;
         m_pRightTextArea->clearSelection();
@@ -764,7 +766,18 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
 
     case SELECTUP:
     {
-      m_SelectionMode = SM_NONE;
+      if(m_SelectionMode == SM_SELECTION_LEFT_STARTED)
+      {
+        m_SelectionMode = SM_SELECTION_LEFT_FINISHED;
+      }
+      else if(m_SelectionMode == SM_SELECTION_RIGHT_STARTED)
+      {
+        m_SelectionMode = SM_SELECTION_LEFT_FINISHED;
+      }
+      else
+      {
+        m_SelectionMode = SM_NONE;
+      }
       break;
     }
   }
