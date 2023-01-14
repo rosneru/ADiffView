@@ -730,10 +730,14 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       if(m_pLeftTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
       {
         m_SelectionMode = SM_NONE;
+        m_pLeftTextArea->clearSelection();
+        m_pLeftTextArea->renderSelectionUpdatedLines();
       }
       else if(m_pRightTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
       {
         m_SelectionMode = SM_NONE;
+        m_pRightTextArea->clearSelection();
+        m_pRightTextArea->renderSelectionUpdatedLines();
       }
       else if(m_pLeftTextArea->isPointInTextArea(pMsg->MouseX, pMsg->MouseY))
       {
