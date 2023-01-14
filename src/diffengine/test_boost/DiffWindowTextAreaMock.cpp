@@ -680,7 +680,7 @@ ULONG DiffWindowTextAreaMock::renderLine(ULONG lineId,
 }
 
 
-ULONG DiffWindowTextAreaMock::calcNumPrintChars(const DiffLine* pDiffLine, 
+ULONG DiffWindowTextAreaMock::calcNumRenderChars(const DiffLine* pDiffLine, 
                                             int count, 
                                             int startIndex)
 {

@@ -157,6 +157,11 @@ public:
    */
   bool isPointInTextArea(unsigned long pointX, unsigned long pointY) const;
 
+  /**
+   * Returns true if the given point is inside the text area
+   */
+  bool isPointInSelection(unsigned long pointX, unsigned long pointY);
+
 
 private:
   SelectableDiffFile m_DiffFile;
@@ -189,6 +194,18 @@ private:
   Rect m_VScrollRect;     ///> Vertical scroll region
 
   /**
+   * Contains the line id of the text to which the mouse points. 
+   * NOTE: @ref calcMouseInTextPosition() must be called before.
+   */
+  ULONG m_MouseTextColumn;
+
+  /**
+   * Contains the column id of the text to which the mouse points. 
+   * NOTE: @ref calcMouseInTextPosition() must be called before.
+   */
+  ULONG m_MouseTextRow;
+
+  /**
    * Print a diff line.
    * @param lineTop TopEdge y-position in pixels for the line
    *
@@ -207,9 +224,9 @@ private:
    * considering the current scroll position m_X, the current width of
    * the text area and the startIndex.
    */
-  ULONG calcNumPrintChars(const DiffLine* pDiffLine, 
-                          int count,
-                          int startIndex);
+  ULONG calcNumRenderChars(const DiffLine* pDiffLine, int count, int startIndex);
+
+  void calcMouseInTextPosition(WORD mouseX, WORD mouseY);
 
 
   /**

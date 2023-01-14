@@ -182,7 +182,7 @@ private:
    * considering the current scroll position m_X, the current width of
    * the text area and the startIndex.
    */
-  ULONG calcNumPrintChars(const DiffLine* pDiffLine, 
+  ULONG calcNumRenderChars(const DiffLine* pDiffLine, 
                           int count,
                           int startIndex);
 

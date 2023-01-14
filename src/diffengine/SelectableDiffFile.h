@@ -47,6 +47,8 @@ public:
 
   void clearSelection();
 
+  bool isPointInSelection(unsigned long lineId, unsigned long columnId) const;
+
   long getNumNormalChars(unsigned long lineId, unsigned long columnId);
   long getNumMarkedChars(unsigned long lineId, unsigned long columnId);
 

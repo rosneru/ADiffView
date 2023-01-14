@@ -51,6 +51,12 @@ void SelectableDiffFile::clearSelection()
   m_Selection.clear();
 }
 
+bool SelectableDiffFile::isPointInSelection(unsigned long lineId,
+                                            unsigned long columnId) const
+{
+  return m_Selection.isSelected(lineId, columnId);
+}
+
 long SelectableDiffFile::getNumNormalChars(unsigned long lineId, 
                                            unsigned long columnId)
 {

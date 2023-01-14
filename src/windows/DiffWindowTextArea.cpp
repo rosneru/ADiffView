@@ -157,26 +157,25 @@ void DiffWindowTextArea::addSelection(ULONG lineId,
   m_DiffFile.addSelection(lineId, fromColumn, toColumn);
 }
 
+void DiffWindowTextArea::calcMouseInTextPosition(WORD mouseX, WORD mouseY)
+{
+    m_MouseTextColumn = (mouseX - m_WBorLeft - m_HScrollRect.getLeft()) / m_FontWidth_pix;
+    m_MouseTextRow = (mouseY - m_WBorTop - 1 - m_HScrollRect.getTop()) / m_FontHeight_pix;
+    m_MouseTextRow -= 1;
+}
 
 void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
 {
-  ULONG colID = (mouseX - m_WBorLeft - m_HScrollRect.getLeft()) / m_FontWidth_pix;
-  ULONG rowID = (mouseY - m_WBorTop - 1 - m_HScrollRect.getTop()) / m_FontHeight_pix;
-  rowID -= 1;
-
-  m_DiffFile.startDynamicSelection(rowID, colID);
+  calcMouseInTextPosition(mouseX, mouseY);
+  m_DiffFile.startDynamicSelection(m_MouseTextRow, m_MouseTextColumn);
   renderSelectionUpdatedLines();
 }
 
 
 void DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
 {
-  ULONG colID = (mouseX - m_WBorLeft - m_HScrollRect.getLeft()) / m_FontWidth_pix;
-  ULONG rowID = (mouseY - m_WBorTop - 1 - m_HScrollRect.getTop()) / m_FontHeight_pix;
-  rowID -= 1;
-
-  m_DiffFile.updateDynamicSelection(rowID, colID);
-
+  calcMouseInTextPosition(mouseX, mouseY);
+  m_DiffFile.updateDynamicSelection(m_MouseTextRow, m_MouseTextColumn);
   renderSelectionUpdatedLines();
 }
 
@@ -190,6 +189,13 @@ bool DiffWindowTextArea::isPointInTextArea(unsigned long pointX,
                                            unsigned long pointY) const
 {
   return m_HScrollRect.isPointInside(pointX, pointY);
+}
+
+bool DiffWindowTextArea::isPointInSelection(unsigned long pointX,
+                                            unsigned long pointY)
+{
+  calcMouseInTextPosition(pointX, pointY);
+  return m_DiffFile.isPointInSelection(m_MouseTextRow, m_MouseTextColumn);
 }
 
 void DiffWindowTextArea::scrollTopToRow(ULONG rowId)
@@ -695,7 +701,7 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
 }
 
 
-ULONG DiffWindowTextArea::calcNumPrintChars(const DiffLine* pDiffLine, 
+ULONG DiffWindowTextArea::calcNumRenderChars(const DiffLine* pDiffLine, 
                                             int count, 
                                             int startIndex)
 {
