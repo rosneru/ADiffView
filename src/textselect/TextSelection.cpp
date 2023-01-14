@@ -322,6 +322,11 @@ const std::list<int>& TextSelection::getUpdatedLineIds() const
   return m_UpdatedLineIds;
 }
 
+void TextSelection::clearUpdatedLineIds()
+{
+  m_UpdatedLineIds.clear();
+}
+
 void TextSelection::clearFirstSelectionLine()
 {
   // Remove first TextSelectionLine

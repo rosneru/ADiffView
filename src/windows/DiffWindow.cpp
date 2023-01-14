@@ -360,6 +360,12 @@ void DiffWindow::renderDocuments(long long justThisLineId)
   
 }
 
+void DiffWindow::renderSelectionUpdatedLines()
+{
+  m_pLeftTextArea->renderSelectionUpdatedLines();
+  m_pRightTextArea->renderSelectionUpdatedLines();
+}
+
 
 void DiffWindow::scrollTopTo(size_t top)
 {

@@ -366,7 +366,7 @@ void TextFinder::unmarkFormerResult()
 
   // Re-render the line line with the former search result to visually
   // remove the selection
-  m_DiffWindow.renderDocuments(m_pFormerResult->getLineId());
+  m_DiffWindow.renderSelectionUpdatedLines();
 }
 
 void TextFinder::markNewResult(DiffFileSearchResult* pResult)

@@ -39,6 +39,11 @@ const std::list<int>& SelectableDiffFile::getUpdatedLineIds() const
   return m_Selection.getUpdatedLineIds();
 }
 
+void SelectableDiffFile::clearUpdatedLineIds()
+{
+  m_Selection.clearUpdatedLineIds();
+}
+
 void SelectableDiffFile::addSelection(unsigned long lineId,
                                       unsigned long fromColumn,
                                       unsigned long toColumn)

@@ -73,6 +73,8 @@ public:
    */
   const std::list<int>& getUpdatedLineIds() const;
 
+  void clearUpdatedLineIds();
+
 private:
   const std::vector<DiffLine*>& m_TextLines;
   std::list<TextSelectionLine*> m_Selection;

@@ -41,6 +41,8 @@ public:
    */
   const std::list<int>& getUpdatedLineIds() const;
 
+  void clearUpdatedLineIds();
+
   void addSelection(unsigned long lineId, 
                     unsigned long fromColumn, 
                     unsigned long toColumn);

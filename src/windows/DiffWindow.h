@@ -58,6 +58,8 @@ public:
    */
   void renderDocuments(long long justThisLineId = -1);
 
+  void renderSelectionUpdatedLines();
+
   /**
    * Scroll the window to display given line at top.
    */

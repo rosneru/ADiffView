@@ -512,6 +512,8 @@ void DiffWindowTextArea::renderSelectionUpdatedLines()
   {
     renderIndexedLine(*it);
   }
+
+  m_DiffFile.clearUpdatedLineIds();
 }
 
 void DiffWindowTextArea::renderLine(ULONG lineId,
