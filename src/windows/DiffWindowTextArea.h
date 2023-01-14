@@ -152,7 +152,10 @@ public:
 
   void clearSelection();
 
-  const Rect& getTextRectangle() const;
+  /**
+   * Returns true if the given point is inside the text area.
+   */
+  bool isPointInTextArea(unsigned long pointX, unsigned long pointY) const;
 
 
 private:

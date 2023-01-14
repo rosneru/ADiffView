@@ -52,7 +52,6 @@ public:
    */
   bool isPointInside(unsigned long pointX, unsigned long pointY) const;
 
-
   unsigned long getArea() const;
 
   unsigned long getLeft() const;

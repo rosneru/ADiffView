@@ -186,12 +186,11 @@ void DiffWindowTextArea::clearSelection()
   m_DiffFile.clearSelection();
 }
 
-
-const Rect& DiffWindowTextArea::getTextRectangle() const
+bool DiffWindowTextArea::isPointInTextArea(unsigned long pointX,
+                                           unsigned long pointY) const
 {
-  return m_HScrollRect;
+  return m_HScrollRect.isPointInside(pointX, pointY);
 }
-
 
 void DiffWindowTextArea::scrollTopToRow(ULONG rowId)
 {

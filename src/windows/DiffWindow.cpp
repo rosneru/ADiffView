@@ -727,8 +727,7 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
         return;
       }
 
-      if(m_pLeftTextArea->getTextRectangle().isPointInside(pMsg->MouseX,
-                                                           pMsg->MouseY))
+      if(m_pLeftTextArea->isPointInTextArea(pMsg->MouseX, pMsg->MouseY))
       {
         m_SelectionMode = SM_SELECTION_LEFT_STARTED;
 
@@ -736,13 +735,12 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
         m_pRightTextArea->renderSelectionUpdatedLines();
         m_pLeftTextArea->startSelection(pMsg->MouseX, pMsg->MouseY);
       }
-      else if(m_pRightTextArea->getTextRectangle().isPointInside(pMsg->MouseX,
-                                                                 pMsg->MouseY))
+      else if(m_pRightTextArea->isPointInTextArea(pMsg->MouseX, pMsg->MouseY))
       {
         m_SelectionMode = SM_SELECTION_RIGHT_STARTED;
+
         m_pLeftTextArea->clearSelection();
         m_pLeftTextArea->renderSelectionUpdatedLines();
-
         m_pRightTextArea->startSelection(pMsg->MouseX, pMsg->MouseY);
       }
       else
