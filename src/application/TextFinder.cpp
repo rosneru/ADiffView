@@ -347,26 +347,7 @@ void TextFinder::signalNoResultFound()
 
 void TextFinder::unmarkFormerResult()
 {
-  // Clear the former search result visually
-  if(m_pFormerResult == NULL)
-  {
-    return;
-  }
-
-  DiffWindowTextArea* pLeftTextArea = m_DiffWindow.getLeftTextArea();
-  DiffWindowTextArea* pRightTextArea = m_DiffWindow.getRightTextArea();
-  if( (pLeftTextArea == NULL) || (pLeftTextArea == NULL) )
-  {
-    return;
-  }
-
-  // Clear all result selections
-  pLeftTextArea->clearSelection();
-  pRightTextArea->clearSelection();
-
-  // Re-render the line line with the former search result to visually
-  // remove the selection
-  m_DiffWindow.renderSelectionUpdatedLines();
+  m_DiffWindow.clearAndStopSelection();
 }
 
 void TextFinder::markNewResult(DiffFileSearchResult* pResult)

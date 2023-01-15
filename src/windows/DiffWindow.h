@@ -58,7 +58,12 @@ public:
    */
   void renderDocuments(long long justThisLineId = -1);
 
-  void renderSelectionUpdatedLines();
+
+  /**
+   * Clears all selections and stop the dynamic selection mode if there
+   * is any
+   */
+  void clearAndStopSelection();
 
   /**
    * Scroll the window to display given line at top.

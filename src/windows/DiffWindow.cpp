@@ -360,8 +360,13 @@ void DiffWindow::renderDocuments(long long justThisLineId)
   
 }
 
-void DiffWindow::renderSelectionUpdatedLines()
+
+void DiffWindow::clearAndStopSelection()
 {
+  m_pLeftTextArea->clearSelection();
+  m_pRightTextArea->clearSelection();
+
+  m_SelectionMode = SM_NONE;
   m_pLeftTextArea->renderSelectionUpdatedLines();
   m_pRightTextArea->renderSelectionUpdatedLines();
 }
