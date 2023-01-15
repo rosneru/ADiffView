@@ -193,14 +193,14 @@ void DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
   long bottomLine = m_Y - 1 + m_AreaMaxLines;
   if(m_MouseTextLine > bottomLine)
   {
-    scrollTopToRow(m_Y + 1);
-    return;
+    scrollUp(1);
+
   }
 
   if(m_MouseTextLine < m_Y)
   {
-    scrollTopToRow(m_Y - 1);
-    return;
+    scrollDown(1);
+
   }
 
 
@@ -539,7 +539,11 @@ void DiffWindowTextArea::renderSelectionUpdatedLines()
   std::list<int>::const_iterator it;
   for(it = updatedLines.begin(); it != updatedLines.end(); it++)
   {
-    renderIndexedLine(*it);
+    int lineId = *it;
+    if(lineId >= m_Y && lineId < m_Y + m_AreaMaxLines)
+    {
+      renderIndexedLine(*it);
+    }
   }
 
   m_DiffFile.clearUpdatedLineIds();
