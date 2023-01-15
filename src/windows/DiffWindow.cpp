@@ -506,10 +506,7 @@ void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
 
     case IDCMP_MOUSEBUTTONS:
     {
-      if(pMsg->Code == SELECTDOWN)
-      {
-        handleMouseButtons(pMsg);
-      }
+      handleMouseButtons(pMsg);
     }
 
     case IDCMP_MOUSEMOVE:

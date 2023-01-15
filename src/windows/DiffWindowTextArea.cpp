@@ -191,8 +191,6 @@ void DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
   calcMouseInTextPosition(mouseX, mouseY);
 
   long bottomLine = m_Y - 1 + m_AreaMaxLines;
-  // printf("topLine=%d, bottomLine=%d, mouseLine=%d\n", topLine, bottomLine, m_MouseTextLine);
-
   if(m_MouseTextLine > bottomLine)
   {
     scrollTopToRow(m_Y + 1);
