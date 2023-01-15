@@ -79,7 +79,8 @@ DiffWindow::DiffWindow(ScreenBase& screen,
            IDCMP_CLOSEWINDOW |    // Inform about click on close gadget
            IDCMP_NEWSIZE |        // Inform about resizing
            IDCMP_MOUSEMOVE |      // Inform about mouse movement
-           IDCMP_MOUSEBUTTONS);   // Inform about mouse buttons
+           IDCMP_MOUSEBUTTONS |   // Inform about mouse buttons
+           IDCMP_INTUITICKS);
 }
 
 
@@ -505,12 +506,21 @@ void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
 
     case IDCMP_MOUSEBUTTONS:
     {
-      handleMouseButtons(pMsg);
+      if(pMsg->Code == SELECTDOWN)
+      {
+        handleMouseButtons(pMsg);
+      }
     }
 
     case IDCMP_MOUSEMOVE:
     {
       handleMouseMove(pMsg);
+    }
+
+    case IDCMP_INTUITICKS:
+    {
+      handleMouseMove(pMsg);
+      break;
     }
   }
 }

@@ -159,15 +159,29 @@ void DiffWindowTextArea::addSelection(ULONG lineId,
 
 void DiffWindowTextArea::calcMouseInTextPosition(WORD mouseX, WORD mouseY)
 {
-    m_MouseTextColumn = (mouseX - m_WBorLeft - m_HScrollRect.getLeft()) / m_FontWidth_pix;
-    m_MouseTextRow = (mouseY - m_WBorTop - 1 - m_HScrollRect.getTop()) / m_FontHeight_pix;
-    m_MouseTextRow -= 1;
+    m_MouseTextColumn = (mouseX - m_WBorLeft - m_HScrollRect.getLeft()) 
+                      / m_FontWidth_pix;
+
+    m_MouseTextColumn += m_X;
+    if(m_MouseTextColumn < 0)
+    {
+      m_MouseTextColumn = 0;
+    }
+
+    m_MouseTextLine = (mouseY - m_WBorTop - 1 - m_HScrollRect.getTop()) 
+                    / m_FontHeight_pix;
+
+    m_MouseTextLine += m_Y;
+    if(m_MouseTextLine > 0)
+    {
+      m_MouseTextLine--;
+    }
 }
 
 void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
 {
   calcMouseInTextPosition(mouseX, mouseY);
-  m_DiffFile.startDynamicSelection(m_MouseTextRow, m_MouseTextColumn);
+  m_DiffFile.startDynamicSelection(m_MouseTextLine, m_MouseTextColumn);
   renderSelectionUpdatedLines();
 }
 
@@ -175,7 +189,24 @@ void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
 void DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
 {
   calcMouseInTextPosition(mouseX, mouseY);
-  m_DiffFile.updateDynamicSelection(m_MouseTextRow, m_MouseTextColumn);
+
+  long bottomLine = m_Y - 1 + m_AreaMaxLines;
+  // printf("topLine=%d, bottomLine=%d, mouseLine=%d\n", topLine, bottomLine, m_MouseTextLine);
+
+  if(m_MouseTextLine > bottomLine)
+  {
+    scrollTopToRow(m_Y + 1);
+    return;
+  }
+
+  if(m_MouseTextLine < m_Y)
+  {
+    scrollTopToRow(m_Y - 1);
+    return;
+  }
+
+
+  m_DiffFile.updateDynamicSelection(m_MouseTextLine, m_MouseTextColumn);
   renderSelectionUpdatedLines();
 }
 
@@ -195,7 +226,7 @@ bool DiffWindowTextArea::isPointInSelection(unsigned long pointX,
                                             unsigned long pointY)
 {
   calcMouseInTextPosition(pointX, pointY);
-  return m_DiffFile.isPointInSelection(m_MouseTextRow, m_MouseTextColumn);
+  return m_DiffFile.isPointInSelection(m_MouseTextLine, m_MouseTextColumn);
 }
 
 void DiffWindowTextArea::scrollTopToRow(ULONG rowId)
