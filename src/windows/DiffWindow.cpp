@@ -512,6 +512,7 @@ void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
     case IDCMP_MOUSEMOVE:
     {
       handleMouseMove(pMsg);
+      break;
     }
 
     case IDCMP_INTUITICKS:
