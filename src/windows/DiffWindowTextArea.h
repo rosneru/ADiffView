@@ -28,6 +28,15 @@
 class DiffWindowTextArea : public Rect
 {
 public:
+  enum ScrollRequest
+  {
+    SR_NONE,
+    SR_UP,
+    SR_DOWN,
+    SR_LEFT,
+    SR_RIGHT
+  };
+
   DiffWindowTextArea(const DiffOutputFileBase& diffFile, 
                      DiffWindowRastports*& pRPorts,
                      TextFont* pTextFont,
@@ -118,17 +127,16 @@ public:
   void clearTextAndLineNumbers();
 
   /**
-   * Print the diff file content in the text area at given position. The
-   * content is scrolled until the desired posion is visible.
+   * Render the diff file content in the text area at given position.
+   * The content is scrolled until the desired position is visible.
    */
-  void printPageAt(ULONG left, ULONG top);
+  void renderPageAt(ULONG left, ULONG top);
 
   /**
    * Print the diff file content in the text area.
    *
    * @param dontPrintLineNumbers Per default the line numbers are
-   * printed. When this optional parameter is set to true they are not
-   * printed.
+   * rendered. When this optional parameter is set to true they are not.
    */
   void renderPage(bool dontPrintLineNumbers = false);
 
@@ -147,8 +155,20 @@ public:
    */
   void addSelection(ULONG lineId, ULONG fromColumn, ULONG toColumn);
 
+  /**
+   * Starts a dynamic selection at given mouse coordinates
+   */
   void startSelection(WORD mouseX, WORD mouseY);
-  void updateSelection(WORD mouseX, WORD mouseY);
+
+  /**
+   * Updates the dynamic selection to given mouse coordinates and
+   * returns SR_NONE on success.
+   *
+   * If it not succeeded without the content being scrolled it returns
+   * one of the other ScrollRequest values to inform the parent about
+   * the needed scrolling.
+   */
+  ScrollRequest updateSelection(WORD mouseX, WORD mouseY);
 
   void clearSelection();
 

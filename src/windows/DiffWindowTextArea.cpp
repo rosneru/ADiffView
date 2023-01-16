@@ -186,26 +186,25 @@ void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
 }
 
 
-void DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
+DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
 {
   calcMouseInTextPosition(mouseX, mouseY);
 
   long bottomLine = m_Y - 1 + m_AreaMaxLines;
   if(m_MouseTextLine > bottomLine)
   {
-    scrollUp(1);
-
+    return SR_UP;
   }
 
   if(m_MouseTextLine < m_Y)
   {
-    scrollDown(1);
-
+    return SR_DOWN;
   }
-
 
   m_DiffFile.updateDynamicSelection(m_MouseTextLine, m_MouseTextColumn);
   renderSelectionUpdatedLines();
+
+  return SR_NONE;
 }
 
 
@@ -509,7 +508,7 @@ void DiffWindowTextArea::clearTextAndLineNumbers()
 }
 
 
-void DiffWindowTextArea::printPageAt(ULONG left, ULONG top)
+void DiffWindowTextArea::renderPageAt(ULONG left, ULONG top)
 {
   m_X = left;
   m_Y = top;

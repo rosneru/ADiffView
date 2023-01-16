@@ -301,8 +301,8 @@ bool DiffWindow::setDocument(DiffDocument* pDiffDocument)
   m_pRightTextArea->setSize(m_TextAreasWidth, m_TextAreasHeight);
 
   // Paint the content of the two documents (from start)
-  m_pLeftTextArea->printPageAt(0, 0);
-  m_pRightTextArea->printPageAt(0, 0);
+  m_pLeftTextArea->renderPageAt(0, 0);
+  m_pRightTextArea->renderPageAt(0, 0);
 
   // With the calculated sizes the gadgets must be re-sized/positioned
   resizeGadgets();
@@ -805,18 +805,48 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
 
 void DiffWindow::handleMouseMove(const struct IntuiMessage* pMsg)
 {
+  DiffWindowTextArea::ScrollRequest scrollRequest = DiffWindowTextArea::SR_NONE;
+
   switch(m_SelectionMode)
   {
     case DiffWindow::SM_SELECTION_LEFT_STARTED:
     {
-      m_pLeftTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
+      scrollRequest = m_pLeftTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
       break;
     }
     case DiffWindow::SM_SELECTION_RIGHT_STARTED:
     {
-      m_pRightTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
+      scrollRequest = m_pRightTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
       break;
     }
+  }
+
+  switch(scrollRequest)
+  {
+    case DiffWindowTextArea::SR_UP:
+    {
+      scrollTopTo(m_pLeftTextArea->getY() + 1);
+      break;
+    } 
+    case DiffWindowTextArea::SR_DOWN:
+    {
+      scrollTopTo(m_pLeftTextArea->getY() - 1);
+      break;
+    } 
+    case DiffWindowTextArea::SR_LEFT:
+    {
+      scrollTopTo(m_pLeftTextArea->getX() + 1);
+      break;
+    } 
+    case DiffWindowTextArea::SR_RIGHT:
+    {
+      scrollTopTo(m_pLeftTextArea->getX() - 1);
+      break;
+    } 
+    case DiffWindowTextArea::SR_NONE:
+    {
+      break;
+    } 
   }
 }
 
