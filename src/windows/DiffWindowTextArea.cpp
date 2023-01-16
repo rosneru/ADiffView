@@ -159,6 +159,8 @@ void DiffWindowTextArea::addSelection(ULONG lineId,
 
 void DiffWindowTextArea::calcMouseInTextPosition(WORD mouseX, WORD mouseY)
 {
+  //
+
     m_MouseTextColumn = (mouseX - m_WBorLeft - m_HScrollRect.getLeft()) 
                       / m_FontWidth_pix;
 
@@ -168,7 +170,10 @@ void DiffWindowTextArea::calcMouseInTextPosition(WORD mouseX, WORD mouseY)
       m_MouseTextColumn = 0;
     }
 
-    m_MouseTextLine = (mouseY - m_WBorTop - 1 - m_HScrollRect.getTop()) 
+    // Below line calculates wrong for this:
+    //    mouseY =  29
+    //    mouseTextLine = 29 - 2 - 1 - 27 / 11 = 390451705
+    m_MouseTextLine = ((int)mouseY - (int)m_WBorTop - 1 - (int)m_HScrollRect.getTop()) 
                     / m_FontHeight_pix;
 
     m_MouseTextLine += m_Y;
@@ -193,6 +198,7 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateSelection(WORD mouse
   long bottomLine = m_Y - 1 + m_AreaMaxLines;
   if(m_MouseTextLine > bottomLine)
   {
+    calcMouseInTextPosition(mouseX, mouseY);
     return SR_UP;
   }
 
