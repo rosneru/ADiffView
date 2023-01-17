@@ -194,6 +194,9 @@ private:
   ULONG m_WBorLeft;
   ULONG m_WBorTop;
 
+  int m_DeltaLeft;
+  int m_DeltaTop;
+
   char* m_pLineOfSpaces;    ///> A text containing m_AreaMaxChars spaces, initialized in setSize()
 
   UWORD m_FontWidth_pix;    ///> Width of the rastport text font
@@ -217,13 +220,13 @@ private:
    * Contains the line id of the text to which the mouse points. 
    * NOTE: @ref calcMouseInTextPosition() must be called before.
    */
-  long m_MouseTextColumn;
+  ULONG m_MouseTextColumn;
 
   /**
    * Contains the column id of the text to which the mouse points. 
    * NOTE: @ref calcMouseInTextPosition() must be called before.
    */
-  long m_MouseTextLine;
+  ULONG m_MouseTextLine;
 
   /**
    * Print a diff line.
