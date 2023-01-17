@@ -791,7 +791,7 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       }
       else if(m_SelectionMode == SM_SELECTION_RIGHT_STARTED)
       {
-        m_SelectionMode = SM_SELECTION_LEFT_FINISHED;
+        m_SelectionMode = SM_SELECTION_RIGHT_FINISHED;
       }
       else
       {
