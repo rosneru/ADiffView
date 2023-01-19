@@ -39,7 +39,7 @@ public:
     IP_Left,    ///> Left half of the screen; changes window dimesions
     IP_Right,   ///> Right half of the screen; changes window dimesions
     IP_Explicit,///> The position is explicitly given by the user with
-                ///> the four last parameters of SetInitialPosition
+                ///> the four last parameters of SetInitialDimension
   };
 
 

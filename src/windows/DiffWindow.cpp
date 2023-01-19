@@ -835,12 +835,12 @@ void DiffWindow::handleMouseMove(const struct IntuiMessage* pMsg)
     } 
     case DiffWindowTextArea::SR_LEFT:
     {
-      scrollTopTo(m_pLeftTextArea->getX() + 1);
+      scrollLeftTo(m_pLeftTextArea->getX() + 1);
       break;
     } 
     case DiffWindowTextArea::SR_RIGHT:
     {
-      scrollTopTo(m_pLeftTextArea->getX() - 1);
+      scrollLeftTo(m_pLeftTextArea->getX() - 1);
       break;
     } 
     case DiffWindowTextArea::SR_NONE:

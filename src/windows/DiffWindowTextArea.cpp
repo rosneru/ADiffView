@@ -194,13 +194,25 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateSelection(WORD mouse
   ULONG bottomLine = m_Y + m_AreaMaxLines - 1;
   if(m_MouseTextLine > bottomLine)
   {
-    calcMouseInTextPosition(mouseX, mouseY);
+    calcMouseInTextPosition(mouseX, mouseY); // TODO Why this line again?
     return SR_UP;
   }
 
   if(m_MouseTextLine < m_Y)
   {
     return SR_DOWN;
+  }
+
+  ULONG rightmostColumn = m_X + m_AreaMaxChars - 1;
+  if(m_MouseTextColumn > rightmostColumn)
+  {
+    calcMouseInTextPosition(mouseX, mouseY); // TODO Why this line again?
+    return SR_LEFT;
+  }
+
+  if(m_MouseTextColumn < m_X)
+  {
+    return SR_RIGHT;
   }
 
   m_DiffFile.updateDynamicSelection(m_MouseTextLine, m_MouseTextColumn);
