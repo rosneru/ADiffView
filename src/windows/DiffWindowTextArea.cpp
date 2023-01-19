@@ -194,7 +194,7 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateSelection(WORD mouse
   ULONG bottomLine = m_Y + m_AreaMaxLines - 1;
   if(m_MouseTextLine > bottomLine)
   {
-    calcMouseInTextPosition(mouseX, mouseY); // TODO Why this line again?
+    // calcMouseInTextPosition(mouseX, mouseY); // TODO Why this line again?
     return SR_UP;
   }
 
@@ -203,15 +203,17 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateSelection(WORD mouse
     return SR_DOWN;
   }
 
-  ULONG rightmostColumn = m_X + m_AreaMaxChars - 1;
+  ULONG rightmostColumn = m_X + m_AreaMaxChars;
   if(m_MouseTextColumn > rightmostColumn)
   {
-    calcMouseInTextPosition(mouseX, mouseY); // TODO Why this line again?
+    // calcMouseInTextPosition(mouseX, mouseY); // TODO Why this line again?
+    printf("request SR_LEFT (%lu > %lu)\n", m_MouseTextColumn, rightmostColumn);
     return SR_LEFT;
   }
 
   if(m_MouseTextColumn < m_X)
   {
+    printf("request SR_RIGHT (%lu > %lu)\n", m_MouseTextColumn, m_X);
     return SR_RIGHT;
   }
 

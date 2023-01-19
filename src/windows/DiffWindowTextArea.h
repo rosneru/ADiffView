@@ -75,7 +75,7 @@ public:
   void scrollTopToRow(ULONG rowId);
 
   /**
-   * Scroll the text left or right to diplay the given (by column) line
+   * Scroll the text left or right to display the given (by column) line
    * on first position left.
    */
   void scrollLeftToColumn(ULONG columId);
