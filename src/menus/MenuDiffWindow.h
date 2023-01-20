@@ -11,6 +11,7 @@ public:
   MenuDiffWindow(CommandBase* pCmdOpenFilesWindow,
                  CommandBase* pCmdAboutRequester,
                  CommandBase* pCmdQuit,
+                 CommandBase* pCmdCopySelection,
                  CommandBase* pCmdNavigateFirstDiff,
                  CommandBase* pCmdNavigatePrevDiff,
                  CommandBase* pCmdNavigateNextDiff,

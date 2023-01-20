@@ -41,6 +41,11 @@ public:
    */
   const std::list<int>& getUpdatedLineIds() const;
 
+  /**
+   * Returns the selection lines 
+   */
+  const std::list<TextSelectionLine*>* getSelectionLines() const;
+
   void clearUpdatedLineIds();
 
   void addSelection(unsigned long lineId, 

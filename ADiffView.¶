@@ -299,6 +299,25 @@ Storm Shell Project (Dependencies)
 ""
 1 1
 File
+1 "src/commands/CmdCopySelection.cpp"
+"src/commands/CmdCopySelection.cpp"
+"src/diffengine/DiffFileBase.h"
+"src/diffengine/DiffLine.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+"src/commands/CmdCopySelection.h"
+"src/diffengine/DiffInputFileBase.h"
+"src/diffengine/DiffOutputFileBase.h"
+"src/windows/DiffWindowRastports.h"
+"src/windows/DiffWindowTextArea.h"
+"src/windows/ScrollbarWindow.h"
+"src/windows/WindowBase.h"
+"src/commands/CommandBase.h"
+Storm Shell Project (Dependencies)
+"build-stromc/CmdCopySelection.o" "build-stromc/CmdCopySelection.debug"
+""
+1 1
+File
 1 "src/commands/CmdDiff.cpp"
 "src/commands/CmdDiff.cpp"
 "src/commands/CmdDiff.h"
@@ -1024,6 +1043,13 @@ Storm Shell Project (Dependencies)
 File
 2 "src/commands/CmdCloseWindow.h"
 "src/commands/CmdCloseWindow.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/commands/CmdCopySelection.h"
+"src/commands/CmdCopySelection.h"
 Storm Shell Project (Dependencies)
 "" ""
 ""

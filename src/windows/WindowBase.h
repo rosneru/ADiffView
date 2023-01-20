@@ -35,9 +35,9 @@ public:
   enum InitialPosition
   {
     IP_Center,  ///> Default. Centered on screen. Depends on window dimensions
-    IP_Fill,    ///> Fit to screen below title bar; changes window dimesions
-    IP_Left,    ///> Left half of the screen; changes window dimesions
-    IP_Right,   ///> Right half of the screen; changes window dimesions
+    IP_Fill,    ///> Fit to screen below title bar; changes window dimensions
+    IP_Left,    ///> Left half of the screen; changes window dimensions
+    IP_Right,   ///> Right half of the screen; changes window dimensions
     IP_Explicit,///> The position is explicitly given by the user with
                 ///> the four last parameters of SetInitialDimension
   };

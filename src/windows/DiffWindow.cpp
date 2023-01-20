@@ -273,22 +273,22 @@ bool DiffWindow::setDocument(DiffDocument* pDiffDocument)
   }
 
   m_pLeftTextArea = new DiffWindowTextArea(pDiffDocument->getLeftDiffFile(),
-                                        m_pRPorts,
-                                        m_pTextFont,
-                                        pDiffDocument->areLineNumbersEnabled(),
-                                        pDiffDocument->getMaxLineLength(),
-                                        m_TabSize,
-                                        m_pWindow->WScreen->WBorLeft,
-                                        m_pWindow->WScreen->WBorTop);
+                                           m_pRPorts,
+                                           m_pTextFont,
+                                           pDiffDocument->areLineNumbersEnabled(),
+                                           pDiffDocument->getMaxLineLength(),
+                                           m_TabSize,
+                                           m_pWindow->WScreen->WBorLeft,
+                                           m_pWindow->WScreen->WBorTop);
 
   m_pRightTextArea = new DiffWindowTextArea(pDiffDocument->getRightDiffFile(),
-                                        m_pRPorts,
-                                        m_pTextFont,
-                                        pDiffDocument->areLineNumbersEnabled(),
-                                        pDiffDocument->getMaxLineLength(),
-                                        m_TabSize,
-                                        m_pWindow->WScreen->WBorLeft,
-                                        m_pWindow->WScreen->WBorTop);
+                                            m_pRPorts,
+                                            m_pTextFont,
+                                            pDiffDocument->areLineNumbersEnabled(),
+                                            pDiffDocument->getMaxLineLength(),
+                                            m_TabSize,
+                                            m_pWindow->WScreen->WBorLeft,
+                                            m_pWindow->WScreen->WBorTop);
 
   m_SelectionMode = DiffWindow::SM_NONE;
 
@@ -471,6 +471,26 @@ DiffWindowTextArea* DiffWindow::getLeftTextArea() const
 DiffWindowTextArea* DiffWindow::getRightTextArea() const
 {
   return m_pRightTextArea;
+}
+
+const SelectableDiffFile* DiffWindow::getSelectionDocument() const
+{
+  if(m_SelectionMode == SM_SELECTION_LEFT_FINISHED
+  || m_SelectionMode == SM_SELECTION_LEFT_STARTED)
+  {
+    // TODO: Get rid of this cast
+    return (const SelectableDiffFile*)&(m_pDocument->getLeftDiffFile());
+  }
+  else if(m_SelectionMode == SM_SELECTION_RIGHT_FINISHED
+  || m_SelectionMode == SM_SELECTION_RIGHT_STARTED)
+  {
+    // TODO: Get rid of this cast
+    return (const SelectableDiffFile*)&(m_pDocument->getRightDiffFile());
+  }
+  else
+  {
+    return NULL;
+  }
 }
 
 void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)

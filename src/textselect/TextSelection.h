@@ -72,12 +72,17 @@ public:
    * changed during last dynamic selection operation.
    */
   const std::list<int>& getUpdatedLineIds() const;
+  
+  /**
+   * Returns the selection lines 
+   */
+  const std::list<TextSelectionLine*>* getSelectionLines() const;
 
   void clearUpdatedLineIds();
 
 private:
   const std::vector<DiffLine*>& m_TextLines;
-  std::list<TextSelectionLine*> m_Selection;
+  std::list<TextSelectionLine*> m_SelectionLines;
   std::list<int> m_UpdatedLineIds;
 
   enum UpdateDirection

@@ -23,6 +23,7 @@
 #include "OpenJoinedPublicScreen.h"
 #include "CmdChangeTabulatorWidth.h"
 #include "CmdCloseWindow.h"
+#include "CmdCopySelection.h"
 #include "CmdDiff.h"
 #include "CmdFindPrev.h"
 #include "CmdFindNext.h"
@@ -83,6 +84,7 @@ private:
   CmdNavigateNextDiff m_CmdNavigateNextDiff;
   CmdNavigateLastDiff m_CmdNavigateLastDiff;
   CmdQuit m_CmdQuit;
+  CmdCopySelection m_CmdCopySelection;
   CmdOpenWindow m_CmdOpenFilesWindow;
   CmdCloseWindow m_CmdCloseFilesWindow;
   CmdOpenWindow m_CmdOpenSearchWindow;

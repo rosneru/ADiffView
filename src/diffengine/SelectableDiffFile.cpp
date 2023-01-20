@@ -39,6 +39,12 @@ const std::list<int>& SelectableDiffFile::getUpdatedLineIds() const
   return m_Selection.getUpdatedLineIds();
 }
 
+const std::list<TextSelectionLine*>* SelectableDiffFile::getSelectionLines() const
+{
+  return m_Selection.getSelectionLines();
+}
+
+
 void SelectableDiffFile::clearUpdatedLineIds()
 {
   m_Selection.clearUpdatedLineIds();

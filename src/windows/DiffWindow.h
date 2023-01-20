@@ -100,6 +100,11 @@ public:
    */
   DiffWindowTextArea* getRightTextArea() const;
 
+  /**
+   * Get the DiffDocument which contains selected text
+   */
+  const SelectableDiffFile* getSelectionDocument() const;
+
 
   /**
    * @extends method of base class ScrollbarWindow.

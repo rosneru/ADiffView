@@ -170,6 +170,9 @@ public:
    */
   ScrollRequest updateSelection(WORD mouseX, WORD mouseY);
 
+  /**
+   * Clears the selection in the DiffDocument attached to this TextArea
+   */
   void clearSelection();
 
   /**
