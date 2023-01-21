@@ -227,13 +227,13 @@ private:
    * Contains the line id of the text to which the mouse points. 
    * NOTE: @ref calcMouseInTextPosition() must be called before.
    */
-  ULONG m_MouseTextColumn;
+  long m_MouseTextColumn;
 
   /**
    * Contains the column id of the text to which the mouse points. 
    * NOTE: @ref calcMouseInTextPosition() must be called before.
    */
-  ULONG m_MouseTextLine;
+  long m_MouseTextLine;
 
   /**
    * Print a diff line.
