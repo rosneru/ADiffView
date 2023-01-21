@@ -203,7 +203,8 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateSelection(WORD mouse
   {
     result = SR_DOWN;
   }
-  else if(m_MouseTextColumn > rightmostColumn)
+  else if(m_MouseTextColumn > rightmostColumn 
+       && m_X + m_AreaMaxChars < m_DiffFile[m_MouseTextLine]->getNumChars())
   {
     result = SR_LEFT;
   }
