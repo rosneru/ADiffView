@@ -189,34 +189,33 @@ void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
 
 DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
 {
+  DiffWindowTextArea::ScrollRequest result = SR_NONE;
   calcMouseInTextPosition(mouseX, mouseY);
 
   long bottomLine = m_Y + m_AreaMaxLines - 1;
+  long rightmostColumn = m_X + m_AreaMaxChars;
+
   if(m_MouseTextLine > bottomLine)
   {
-    return SR_UP;
+    result = SR_UP;
   }
-
-  if((ULONG)m_MouseTextLine < m_Y)
+  else if((ULONG)m_MouseTextLine < m_Y)
   {
-    return SR_DOWN;
+    result = SR_DOWN;
   }
-
-  long rightmostColumn = m_X + m_AreaMaxChars;
-  if(m_MouseTextColumn > rightmostColumn)
+  else if(m_MouseTextColumn > rightmostColumn)
   {
-    return SR_LEFT;
+    result = SR_LEFT;
   }
-
-  if((ULONG)m_MouseTextColumn < m_X)
+  else if((ULONG)m_MouseTextColumn < m_X)
   {
-    return SR_RIGHT;
+    result = SR_RIGHT;
   }
 
   m_DiffFile.updateDynamicSelection(m_MouseTextLine, m_MouseTextColumn);
   renderSelectionUpdatedLines();
 
-  return SR_NONE;
+  return result;
 }
 
 
