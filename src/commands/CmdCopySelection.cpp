@@ -30,7 +30,8 @@ void CmdCopySelection::Execute(Window* pActiveWindow)
     return;
   }
 
-  for(std::list<TextSelectionLine*>::const_iterator it = pSelectionLines->begin(); it != pSelectionLines->end(); it++)
+  std::list<TextSelectionLine*>::const_iterator it;
+  for(it = pSelectionLines->begin(); it != pSelectionLines->end(); it++)
   {
     TextSelectionLine*  pLine = *it;
     TextSelectionRange* pRange = pLine->getFirstSelectedBlock();
