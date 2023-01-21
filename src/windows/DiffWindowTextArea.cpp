@@ -368,7 +368,7 @@ ULONG DiffWindowTextArea::scrollLeft(ULONG numChars)
   // Move text area content left by n * the width of one char
   ScrollRasterBF(m_pRPorts->Window(), numChars * m_FontWidth_pix, 0,
                  m_HScrollRect.getLeft(), m_HScrollRect.getTop(),
-                 m_HScrollRect.getRight(), m_HScrollRect.getBottom());
+                 m_HScrollRect.getRight() - 1, m_HScrollRect.getBottom());
 
   // Fill the gap with the following chars
   for (ULONG lineId = m_Y; lineId < m_Y + m_AreaMaxLines; lineId++)
@@ -411,7 +411,7 @@ ULONG DiffWindowTextArea::scrollRight(ULONG numChars)
   ScrollRasterBF(m_pRPorts->Window(),
                  -numChars * m_FontWidth_pix, // n * width
                  0, m_HScrollRect.getLeft(), m_HScrollRect.getTop(),
-                 m_HScrollRect.getRight(), m_HScrollRect.getBottom());
+                 m_HScrollRect.getRight() - 1, m_HScrollRect.getBottom());
 
   // fill the gap with the previous chars
   for (ULONG lineId = m_Y; lineId < m_Y + m_AreaMaxLines; lineId++)
