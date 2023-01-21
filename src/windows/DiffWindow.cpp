@@ -478,19 +478,16 @@ const SelectableDiffFile* DiffWindow::getSelectionDocument() const
   if(m_SelectionMode == SM_SELECTION_LEFT_FINISHED
   || m_SelectionMode == SM_SELECTION_LEFT_STARTED)
   {
-    // TODO: Get rid of this cast
-    return (const SelectableDiffFile*)&(m_pDocument->getLeftDiffFile());
+    return m_pLeftTextArea->getSelectionDocument();
   }
-  else if(m_SelectionMode == SM_SELECTION_RIGHT_FINISHED
+
+  if(m_SelectionMode == SM_SELECTION_RIGHT_FINISHED
   || m_SelectionMode == SM_SELECTION_RIGHT_STARTED)
   {
-    // TODO: Get rid of this cast
-    return (const SelectableDiffFile*)&(m_pDocument->getRightDiffFile());
+   return m_pRightTextArea->getSelectionDocument();
   }
-  else
-  {
-    return NULL;
-  }
+
+  return NULL;
 }
 
 void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)

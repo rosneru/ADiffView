@@ -24,23 +24,20 @@ void CmdCopySelection::Execute(Window* pActiveWindow)
     return;
   }
 
-  printf("a\n");
   const std::list<TextSelectionLine*>* pSelectionLines = pDiffFile->getSelectionLines();
   if(pSelectionLines == NULL)
   {
     return;
   }
-  printf("b\n");
-  printf("%lu\n", pSelectionLines->size());
-  // for(std::list<TextSelectionLine*>::const_iterator it = selectionLines.begin(); it != selectionLines.end(); it++)
-  // {
-  //   printf("xyeah\n");
-  //   // TextSelectionLine*  pLine = *it;
-  //   // TextSelectionRange* pRange = pLine->getFirstSelectedBlock();
-  //   // const char* pLineFullText = (*pDiffFile)[pLine->getLineId()]->getText();
 
-  //   // ULONG fromColumn = pRange->getFromColumn();
-  //   // const char* pLineTextStart = pLineFullText + fromColumn;
-  //   // printf("%.*s\n", pRange->getNumMarkedChars(fromColumn), pLineTextStart);
-  // }
+  for(std::list<TextSelectionLine*>::const_iterator it = pSelectionLines->begin(); it != pSelectionLines->end(); it++)
+  {
+    TextSelectionLine*  pLine = *it;
+    TextSelectionRange* pRange = pLine->getFirstSelectedBlock();
+    const char* pLineFullText = (*pDiffFile)[pLine->getLineId()]->getText();
+
+    ULONG fromColumn = pRange->getFromColumn();
+    const char* pLineTextStart = pLineFullText + fromColumn;
+    printf("%.*s\n", pRange->getNumMarkedChars(fromColumn), pLineTextStart);
+  }
 }

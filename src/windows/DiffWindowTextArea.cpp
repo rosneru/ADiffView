@@ -242,6 +242,11 @@ bool DiffWindowTextArea::isPointInSelection(unsigned long pointX,
   return m_DiffFile.isPointInSelection(m_MouseTextLine, m_MouseTextColumn);
 }
 
+const SelectableDiffFile* DiffWindowTextArea::getSelectionDocument() const
+{
+  return &m_DiffFile;
+}
+
 void DiffWindowTextArea::scrollTopToRow(ULONG rowId)
 {
   // Prevent to scroll below the last line

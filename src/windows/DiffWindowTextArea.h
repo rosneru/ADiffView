@@ -185,6 +185,10 @@ public:
    */
   bool isPointInSelection(unsigned long pointX, unsigned long pointY);
 
+  /**
+   * Returns the displayed SelectableDiffFile
+   */
+  const SelectableDiffFile* getSelectionDocument() const;
 
 private:
   SelectableDiffFile m_DiffFile;
