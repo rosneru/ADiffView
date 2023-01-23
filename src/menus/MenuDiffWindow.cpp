@@ -24,6 +24,9 @@ MenuDiffWindow::MenuDiffWindow(CommandBase* pCmdOpenFilesWindow,
                                CommandBase* pCmdTabWidth8,
                                CommandBase* pCmdTabWidthCustom,
                                const ADiffViewArgs& args)
+  :   m_pCmdCopySelection(pCmdCopySelection),
+      m_pCmdFindNext(pCmdFindNext),
+      m_pCmdFindPrev(pCmdFindPrev)
 {
   // Create the text for the custom tab width menu entry
   sprintf(m_CustomTabWidth, "Custom: %ld", args.getTabSize());
@@ -94,4 +97,19 @@ MenuDiffWindow::MenuDiffWindow(CommandBase* pCmdOpenFilesWindow,
   {
     throw "Failed to create the menu for DiffWindow.";
   }
+}
+
+CommandBase* MenuDiffWindow::getCmdCopySelection()
+{
+  return m_pCmdCopySelection;
+}
+
+CommandBase* MenuDiffWindow::getCmdFindNext()
+{
+  return m_pCmdFindNext;
+}
+
+CommandBase* MenuDiffWindow::getCmdFindPrev()
+{
+  return m_pCmdFindPrev;
 }

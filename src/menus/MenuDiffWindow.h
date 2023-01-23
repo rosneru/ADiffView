@@ -25,8 +25,15 @@ public:
                  CommandBase* pCmdTabWidthCustom,
                  const ADiffViewArgs& args);
 
+  CommandBase* getCmdCopySelection();
+  CommandBase* getCmdFindNext();
+  CommandBase* getCmdFindPrev();
+
 private:
   char m_CustomTabWidth[32];
+  CommandBase* m_pCmdCopySelection;
+  CommandBase* m_pCmdFindNext;
+  CommandBase* m_pCmdFindPrev;
 };
 
 #endif

@@ -35,6 +35,7 @@ DiffWindow::DiffWindow(ScreenBase& screen,
   : ScrollbarWindow(screen, pIdcmpMsgPort, pMenu),
     m_Pens(pens),
     m_TabSize(tabSize),
+    m_pMenuDiffWindow((MenuDiffWindow*)pMenu),
     m_pRPorts(NULL),
     m_pDocument(NULL),
     m_EmptyChar('\0'),
@@ -197,6 +198,8 @@ bool DiffWindow::open(InitialPosition initialPos)
 
   // Paint the window decoration
   paintWindowDecoration();
+
+  m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
 
   return true;
 }
@@ -769,6 +772,7 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
         m_SelectionMode = SM_NONE;
         m_pLeftTextArea->clearSelection();
         m_pLeftTextArea->renderSelectionUpdatedLines();
+        m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
       }
       else if(m_SelectionMode == SM_SELECTION_RIGHT_FINISHED
            && m_pRightTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
@@ -776,6 +780,7 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
         m_SelectionMode = SM_NONE;
         m_pRightTextArea->clearSelection();
         m_pRightTextArea->renderSelectionUpdatedLines();
+        m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
       }
       else if(m_pLeftTextArea->isPointInTextArea(pMsg->MouseX, pMsg->MouseY))
       {
@@ -805,10 +810,12 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       if(m_SelectionMode == SM_SELECTION_LEFT_STARTED)
       {
         m_SelectionMode = SM_SELECTION_LEFT_FINISHED;
+        m_pMenuDiffWindow->EnableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
       }
       else if(m_SelectionMode == SM_SELECTION_RIGHT_STARTED)
       {
         m_SelectionMode = SM_SELECTION_RIGHT_FINISHED;
+        m_pMenuDiffWindow->EnableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
       }
       else
       {

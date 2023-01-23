@@ -11,6 +11,7 @@
 #include "DiffLine.h"
 #include "DiffWindowRastports.h"
 #include "DiffWindowTextArea.h"
+#include "MenuDiffWindow.h"
 #include "OpenScreenBase.h"
 #include "ScrollbarWindow.h"
 
@@ -153,8 +154,9 @@ protected:
 
 private:
   const ADiffViewPens& m_Pens;
-
   ULONG m_TabSize;
+  MenuDiffWindow* m_pMenuDiffWindow;
+
 
   DiffWindowRastports* m_pRPorts;
   DiffDocument* m_pDocument;
