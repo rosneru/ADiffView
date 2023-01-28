@@ -48,6 +48,39 @@ TextFinder::~TextFinder()
 }
 
 
+void TextFinder::markAllResults()
+{
+  DiffWindowTextArea* pLeftTextArea = m_DiffWindow.getLeftTextArea();
+  DiffWindowTextArea* pRightTextArea = m_DiffWindow.getRightTextArea();
+  if(pLeftTextArea == NULL || pRightTextArea == NULL || m_pSearchEngine == NULL)
+  {
+    return;
+  }
+  size_t searchStringLength = m_pSearchEngine->getSearchString().length();
+
+  const std::vector<DiffFileSearchResult*> results = m_pSearchEngine->getResults();
+  std::vector<DiffFileSearchResult*>::const_iterator it;
+  for(it = results.begin(); it != results.end(); it++)
+  {
+    DiffFileSearchResult* pResult = (*it);
+    int stopCharId = pResult->getCharId() + searchStringLength - 1;
+
+    if(pResult->getLocation() == DiffFileSearchResult::LeftFile)
+    {
+      pLeftTextArea->addSelection(pResult->getLineId(),
+                                  pResult->getCharId(),
+                                  stopCharId);
+    }
+    else if(pResult->getLocation() == DiffFileSearchResult::RightFile)
+    {
+      pRightTextArea->addSelection(pResult->getLineId(),
+                                  pResult->getCharId(),
+                                  stopCharId);
+    }
+  }
+}
+
+
 bool TextFinder::displayFirstResult(bool doSignalIfNoResultFound)
 {
   if((m_pSearchEngine == NULL) && (m_pNewSearchEngine == NULL))
@@ -89,8 +122,17 @@ bool TextFinder::displayFirstResult(bool doSignalIfNoResultFound)
     return false;
   }
 
-  unmarkFormerResult();
-  markNewResult(pResult);
+  // Delete former result if there is one
+  if(m_pFormerResult != NULL)
+  {
+    delete m_pFormerResult;
+  }
+
+  // Remember this new result also as 'new former result'
+  m_pFormerResult = new DiffFileSearchResult(pResult->getLocation(),
+                                             pResult->getLineId(),
+                                             pResult->getCharId());
+
   scrollToNewResult(pResult);
 
   // Clear the window title message that may have been displayed previously
@@ -142,8 +184,17 @@ bool TextFinder::displayLastResult(bool doSignalIfNoResultFound)
     return false;
   }
 
-  unmarkFormerResult();
-  markNewResult(pResult);
+  // Delete former result if there is one
+  if(m_pFormerResult != NULL)
+  {
+    delete m_pFormerResult;
+  }
+
+  // Remember this new result also as 'new former result'
+  m_pFormerResult = new DiffFileSearchResult(pResult->getLocation(),
+                                             pResult->getLineId(),
+                                             pResult->getCharId());
+
   scrollToNewResult(pResult);
 
   // Clear the window title message that may have been displayed previously
@@ -154,7 +205,8 @@ bool TextFinder::displayLastResult(bool doSignalIfNoResultFound)
 }
 
 
-bool TextFinder::displayNextResult(bool doSignalIfNoResultFound)
+bool TextFinder::displayNextResult(bool doSignalIfNoResultFound,
+                                   bool dontSkipCurrentPage)
 {
   if((m_pSearchEngine == NULL) && (m_pNewSearchEngine == NULL))
   {
@@ -175,24 +227,13 @@ bool TextFinder::displayNextResult(bool doSignalIfNoResultFound)
   // search result of the old search engine
   applyNewSearchEngine();
 
-
-  DiffFileSearchResult* pResult = NULL;
-  if(m_pFormerResult == NULL || 
-     !pLeftTextArea->isLineVisible(m_pFormerResult->getLineId()))
+  long searchFromLine = pLeftTextArea->getY() + pLeftTextArea->getMaxVisibleLines();
+  if(dontSkipCurrentPage)
   {
-    // No former search result exists or it is currently not displayed
-    // in window. So get the next search result from current window top
-    // line id.
-    pResult = m_pSearchEngine->getNextResult(pLeftTextArea->getY());
-  }
-  else
-  {
-    // The former result is currently displayed. So getting the 
-    // next result after that former result, not from the window 
-    // top line.
-    pResult = m_pSearchEngine->getNextResult();
+    searchFromLine = pLeftTextArea->getY();
   }
 
+  DiffFileSearchResult* pResult = m_pSearchEngine->getNextResult(searchFromLine);
   if(pResult == NULL)
   {
     if(doSignalIfNoResultFound)
@@ -209,9 +250,17 @@ bool TextFinder::displayNextResult(bool doSignalIfNoResultFound)
     return false;
   }
 
+  // Delete former result if there is one
+  if(m_pFormerResult != NULL)
+  {
+    delete m_pFormerResult;
+  }
 
-  unmarkFormerResult();
-  markNewResult(pResult);
+  // Remember this new result also as 'new former result'
+  m_pFormerResult = new DiffFileSearchResult(pResult->getLocation(),
+                                             pResult->getLineId(),
+                                             pResult->getCharId());
+
   scrollToNewResult(pResult);
 
   // Clear the window title message that may have been displayed previously
@@ -243,23 +292,11 @@ bool TextFinder::displayPrevResult(bool doSignalIfNoResultFound)
   // search result of the old search engine
   applyNewSearchEngine();
 
-
   DiffFileSearchResult* pResult = NULL;
-  if(m_pFormerResult == NULL || 
-     !pLeftTextArea->isLineVisible(m_pFormerResult->getLineId()))
+  long searchFromLine = pLeftTextArea->getY();
+  if(searchFromLine >= 0)
   {
-    // No former search result exists or it is currently not displayed
-    // in window. So get the previous search result from current window
-    // bottom line id.
-    pResult = m_pSearchEngine->getPrevResult(pLeftTextArea->getY() 
-                                             + pLeftTextArea->getMaxVisibleLines());
-  }
-  else
-  {
-    // The former result is currently displayed. So getting the 
-    // previous result above that former result, not from the window 
-    // top line.
-    pResult = m_pSearchEngine->getPrevResult();
+    pResult = m_pSearchEngine->getPrevResult(searchFromLine);
   }
 
   if(pResult == NULL)
@@ -278,8 +315,17 @@ bool TextFinder::displayPrevResult(bool doSignalIfNoResultFound)
     return false;
   }
 
-  unmarkFormerResult();
-  markNewResult(pResult);
+  // Delete former result if there is one
+  if(m_pFormerResult != NULL)
+  {
+    delete m_pFormerResult;
+  }
+
+  // Remember this new result also as 'new former result'
+  m_pFormerResult = new DiffFileSearchResult(pResult->getLocation(),
+                                             pResult->getLineId(),
+                                             pResult->getCharId());
+
   scrollToNewResult(pResult);
 
   // Clear the window title message that may have been displayed previously
@@ -320,8 +366,6 @@ void TextFinder::applyNewSearchEngine()
     return;
   }
 
-  unmarkFormerResult();
-
   m_pFormerResult = NULL;
 
   // Old search engine is not needed anymore as the new one will be
@@ -333,6 +377,10 @@ void TextFinder::applyNewSearchEngine()
 
   // And is not 'the new search engine' anymore
   m_pNewSearchEngine = NULL;
+
+  m_DiffWindow.clearAndStopSelection(false);
+  markAllResults();
+  m_DiffWindow.renderSelectionChangedLines();
 }
 
 void TextFinder::signalNoResultFound()
@@ -345,52 +393,6 @@ void TextFinder::signalNoResultFound()
   m_CmdWindowTitleQuickMsg.Execute(m_DiffWindow.getIntuiWindow());
 }
 
-void TextFinder::unmarkFormerResult()
-{
-  m_DiffWindow.clearAndStopSelection();
-}
-
-void TextFinder::markNewResult(DiffFileSearchResult* pResult)
-{
-  // Clear the former search result visually
-  if(pResult == NULL)
-  {
-    return;
-  }
-
-  DiffWindowTextArea* pLeftTextArea = m_DiffWindow.getLeftTextArea();
-  DiffWindowTextArea* pRightTextArea = m_DiffWindow.getRightTextArea();
-  if( (pLeftTextArea == NULL) || (pLeftTextArea == NULL) )
-  {
-    return;
-  }
-
-  size_t searchStringLength = m_pSearchEngine->getSearchString().length();
-  int stopCharId = pResult->getCharId() + searchStringLength - 1;
-
-  if(pResult->getLocation() == DiffFileSearchResult::LeftFile)
-  {
-    pLeftTextArea->addSelection(pResult->getLineId(),
-                                pResult->getCharId(),
-                                stopCharId);
-  }
-  else if(pResult->getLocation() == DiffFileSearchResult::RightFile)
-  {
-    pRightTextArea->addSelection(pResult->getLineId(),
-                                 pResult->getCharId(),
-                                 stopCharId);
-  }
-
-  // Remember newResult as formerResult
-  if(m_pFormerResult != NULL)
-  {
-    delete m_pFormerResult;
-  }
-
-  m_pFormerResult = new DiffFileSearchResult(pResult->getLocation(),
-                                             pResult->getLineId(),
-                                             pResult->getCharId());
-}
 
 void TextFinder::scrollToNewResult(DiffFileSearchResult* pResult)
 {
@@ -468,7 +470,7 @@ DiffFileSearchEngine* TextFinder::createNewSearchEngine(const char* pSearchText,
     return NULL;
   }
 
-  // This already performes the search of all occurrences of pSearchText
+  // This already performs the search of all occurrences of pSearchText
   // in one or both files (dependent on location parameter) and can take
   // some time.
   //
@@ -524,8 +526,7 @@ void TextFinder::setSearchText(const char* pSearchText)
     }
 
     // Apply changed search text. A new search engine is created which
-    // takes all other parameters from the current search engine. from
-    // the already existing new search engine.
+    // takes all other parameters from the current search
     m_pNewSearchEngine = createNewSearchEngine(pSearchText,
                                                m_pSearchEngine->isCaseIgnored(),
                                                m_pSearchEngine->getLocation());
@@ -583,7 +584,7 @@ void TextFinder::setCaseIgnored(bool isCaseIgnored)
 
     // Apply changed isCaseIgnored parameter. A new search engine is
     // created which takes all other parameters from the current search
-    // engine. from the already existing new search engine.
+    // engine.
     m_pNewSearchEngine = createNewSearchEngine(m_pSearchEngine->getSearchString().c_str(),
                                                isCaseIgnored,
                                                m_pSearchEngine->getLocation());
@@ -640,7 +641,6 @@ void TextFinder::setLocation(SearchLocation location)
 
     // Apply changed location parameter. A new search engine is created
     // which takes all other parameters from the current search engine.
-    // from the already existing new search engine.
     m_pNewSearchEngine = createNewSearchEngine(m_pSearchEngine->getSearchString().c_str(),
                                                m_pSearchEngine->isCaseIgnored(),
                                                location);

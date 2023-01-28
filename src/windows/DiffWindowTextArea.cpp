@@ -551,15 +551,23 @@ void DiffWindowTextArea::renderIndexedLine(ULONG lineId)
 void DiffWindowTextArea::renderSelectionUpdatedLines()
 {
   // Render all lines whose selection has changed
+  ULONG bottomLine = m_Y + m_AreaMaxLines;
   const std::list<int>& updatedLines = m_DiffFile.getUpdatedLineIds();
   std::list<int>::const_iterator it;
   for(it = updatedLines.begin(); it != updatedLines.end(); it++)
   {
     ULONG lineId = *it;
-    if(lineId >= m_Y && lineId < m_Y + m_AreaMaxLines)
+    if(lineId < m_Y)
     {
-      renderIndexedLine(*it);
+      continue;
     }
+
+    if(lineId >= bottomLine)
+    {
+      break;
+    }
+    
+    renderIndexedLine(*it);
   }
 
   m_DiffFile.clearUpdatedLineIds();

@@ -145,7 +145,7 @@ SearchWindow::SearchWindow(std::vector<WindowBase*>& windowArray,
   newGadget.ng_TopEdge    = top;
   newGadget.ng_Width      = contentWidth;
   newGadget.ng_Height     = fontHeight + 5;
-  newGadget.ng_GadgetText = (UBYTE*) "_Find";
+  newGadget.ng_GadgetText = (UBYTE*) "Search _for";
   newGadget.ng_GadgetID   = GID_StrSearchText;
 
   m_pGadStrSearchText = CreateGadget(STRING_KIND,
@@ -446,14 +446,14 @@ void SearchWindow::find()
   }
 
   // Set the user-typed text to find in search command: This performs
-  // the search if pTextToFind differs from the text which (maybe) is
-  // already set in  TextFinder.
+  // the search if pTextToFind differs from the text which may already
+  // have been set in TextFinder.
   m_TextFinder.setSearchText(pTextToFind);
 
   // Jump to the next result and close the search window. 
   // (Or just close the search window if no next result exists but the 
   //  current search result still is displayed)
-  if((m_TextFinder.displayNextResult(false) == true) 
+  if((m_TextFinder.displayNextResult(false, true) == true) 
   || (m_TextFinder.isFormerResultDisplayed()))
   {
     m_CmdCloseSearchWindow.Execute(NULL);

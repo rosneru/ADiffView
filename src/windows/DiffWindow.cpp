@@ -365,12 +365,21 @@ void DiffWindow::renderDocuments(long long justThisLineId)
 }
 
 
-void DiffWindow::clearAndStopSelection()
+void DiffWindow::clearAndStopSelection(bool doRenderSelectionChangedLines)
 {
   m_pLeftTextArea->clearSelection();
   m_pRightTextArea->clearSelection();
 
   m_SelectionMode = SM_NONE;
+
+  if(doRenderSelectionChangedLines)
+  {
+    renderSelectionChangedLines();
+  }
+}
+
+void DiffWindow::renderSelectionChangedLines()
+{
   m_pLeftTextArea->renderSelectionUpdatedLines();
   m_pRightTextArea->renderSelectionUpdatedLines();
 }

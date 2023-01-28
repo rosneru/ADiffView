@@ -71,7 +71,7 @@ public:
    * Returns a list<int> of the lineIds whoese selection state was
    * changed during last dynamic selection operation.
    */
-  const std::list<int>& getUpdatedLineIds() const;
+  const std::list<int>& getUpdatedLineIds();
   
   /**
    * Returns the selection lines 

@@ -24,30 +24,41 @@ public:
                        SearchLocation location);
   virtual ~DiffFileSearchEngine();
 
+  /**
+   * Get the collection of all search results
+   */
+  const std::vector<DiffFileSearchResult*>& getResults() const;
+
+  /**
+   * Returns the number of search results
+   */
   size_t getNumResults();
-  
+
+  /**
+   * Returns the current result (that one the iterator points on)
+   */  
   DiffFileSearchResult* getCurrentResult();
 
   /**
-   * Return the previous result (relative to the current one) or NULL if
+   * Returns the previous result (relative to the current one) or NULL if
    * there is none.
    */
   DiffFileSearchResult* getPrevResult();
 
   /**
-   * Return the next result above the given line id or NULL if there is
+   * Returns the next result above the given line id or NULL if there is
    * none.
    */
   DiffFileSearchResult* getPrevResult(size_t startLineId);
   
   /**
-   * Return the next result (from the current one) or NULL if there is
+   * Returns the next result (from the current one) or NULL if there is
    * none.
    */
   DiffFileSearchResult* getNextResult();
 
   /**
-   * Return the next result after the given line id or NULL if there is
+   * Returns the next result after the given line id or NULL if there is
    * none.
    */
   DiffFileSearchResult* getNextResult(size_t startLineId);

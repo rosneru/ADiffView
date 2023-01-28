@@ -26,9 +26,6 @@ void TextSelection::startDynamicSelection(unsigned long lineId,
   // TODO Before clearing the selected lines above add all line ids from
   // there to the m_UpdatedLineIds
   m_UpdatedLineIds.push_back(lineId);
-
-  m_UpdatedLineIds.sort();
-  m_UpdatedLineIds.unique();
 }
 
 void TextSelection::updateDynamicSelection(unsigned long lineId,
@@ -200,9 +197,6 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       m_SelectionLines.push_front(new TextSelectionLine(lineId, fromColumn, toColumn));
       break;
   }
-
-  m_UpdatedLineIds.sort();
-  m_UpdatedLineIds.unique();
 }
 
 void TextSelection::addBlock(unsigned long lineId, 
@@ -218,7 +212,7 @@ void TextSelection::addBlock(unsigned long lineId,
   {
     pSelectionLine = new TextSelectionLine(lineId, fromColumn, toColumn);
     
-    // Now inserting this new TextSelectionLine sorted acending by its
+    // Now inserting this new TextSelectionLine sorted ascending by its
     // LineId(). NOTE: Iterating here is done backwards assuming that
     // addBlock() itself is mostly called with ascending line numbers
     // (e.g. as it is done in TextSearch); and so it is faster.
@@ -228,6 +222,7 @@ void TextSelection::addBlock(unsigned long lineId,
       if((*it)->getLineId() < lineId)
       {
         m_SelectionLines.insert(it.base(), pSelectionLine);
+        m_UpdatedLineIds.push_front(lineId);
         return;
       }
     }
@@ -316,8 +311,11 @@ long TextSelection::getNextSelectionStart(unsigned long lineId,
   return -1;
 }
 
-const std::list<int>& TextSelection::getUpdatedLineIds() const
+const std::list<int>& TextSelection::getUpdatedLineIds()
 {
+  m_UpdatedLineIds.sort();
+  m_UpdatedLineIds.unique();
+
   return m_UpdatedLineIds;
 }
 

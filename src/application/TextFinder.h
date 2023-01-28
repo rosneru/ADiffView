@@ -36,9 +36,12 @@ public:
 
   virtual ~TextFinder();
 
+  void markAllResults();
+
   bool displayFirstResult(bool doSignalIfNoResultFound = true);
   bool displayLastResult(bool doSignalIfNoResultFound = true);
-  bool displayNextResult(bool doSignalIfNoResultFound = true);
+  bool displayNextResult(bool doSignalIfNoResultFound = true,
+                         bool dontSkipCurrentPage = false);
   bool displayPrevResult(bool doSignalIfNoResultFound = true);
 
   bool isFormerResultDisplayed() const;
@@ -88,11 +91,19 @@ private:
 
   DiffFileSearchResult* m_pFormerResult;
 
+  /**
+   * Perform a new search (by craeting a new  search engine) if the
+   * document has changed.
+   */
   void applyDocumentChanged();
+
+  /**
+   * Apply a new search engine if one exists but remembers the search 
+   * result of the former search engine if one exists.
+   */
   void applyNewSearchEngine();
+
   void signalNoResultFound();
-  void unmarkFormerResult();
-  void markNewResult(DiffFileSearchResult* pResult);
   void scrollToNewResult(DiffFileSearchResult* pResult);
 
   DiffFileSearchEngine* createNewSearchEngine(const char* pSearchText, 

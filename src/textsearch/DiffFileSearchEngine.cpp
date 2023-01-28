@@ -26,6 +26,11 @@ DiffFileSearchEngine::~DiffFileSearchEngine()
   }
 }
 
+const std::vector<DiffFileSearchResult*>& DiffFileSearchEngine::getResults() const
+{
+  return m_Results;
+}
+
 
 size_t DiffFileSearchEngine::getNumResults()
 {

@@ -64,7 +64,12 @@ public:
    * Clears all selections and stop the dynamic selection mode if there
    * is any
    */
-  void clearAndStopSelection();
+  void clearAndStopSelection(bool doRenderSelectionChangedLines = true);
+
+  /**
+   * Re-renders all lines which selection has changed.
+   */
+  void renderSelectionChangedLines();
 
   /**
    * Scroll the window to display given line at top.
