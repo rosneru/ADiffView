@@ -364,11 +364,22 @@ void DiffWindow::renderDocuments(long long justThisLineId)
   
 }
 
-
-void DiffWindow::clearAndStopSelection(bool doRenderSelectionChangedLines)
+void DiffWindow::clearSearchResultSelection(bool doRenderSelectionChangedLines)
 {
-  m_pLeftTextArea->clearSelection();
-  m_pRightTextArea->clearSelection();
+  m_pLeftTextArea->clearSearchResultSelection();
+  m_pRightTextArea->clearSearchResultSelection();
+
+  if(doRenderSelectionChangedLines)
+  {
+    renderSelectionChangedLines();
+  }
+}
+
+
+void DiffWindow::clearAndStopDynamicSelection(bool doRenderSelectionChangedLines)
+{
+  m_pLeftTextArea->clearDynamicSelection();
+  m_pRightTextArea->clearDynamicSelection();
 
   m_SelectionMode = SM_NONE;
 
@@ -779,7 +790,7 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       && m_pLeftTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
       {
         m_SelectionMode = SM_NONE;
-        m_pLeftTextArea->clearSelection();
+        m_pLeftTextArea->clearDynamicSelection();
         m_pLeftTextArea->renderSelectionUpdatedLines();
         m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
       }
@@ -787,7 +798,7 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
            && m_pRightTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
       {
         m_SelectionMode = SM_NONE;
-        m_pRightTextArea->clearSelection();
+        m_pRightTextArea->clearDynamicSelection();
         m_pRightTextArea->renderSelectionUpdatedLines();
         m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
       }
@@ -795,17 +806,23 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       {
         m_SelectionMode = SM_SELECTION_LEFT_STARTED;
 
-        m_pRightTextArea->clearSelection();
+        m_pLeftTextArea->activateDynamicSelection();
+        m_pLeftTextArea->startDynamicSelection(pMsg->MouseX, pMsg->MouseY);
+
+        m_pRightTextArea->clearDynamicSelection();
+        m_pRightTextArea->activateDynamicSelection();
         m_pRightTextArea->renderSelectionUpdatedLines();
-        m_pLeftTextArea->startSelection(pMsg->MouseX, pMsg->MouseY);
       }
       else if(m_pRightTextArea->isPointInTextArea(pMsg->MouseX, pMsg->MouseY))
       {
         m_SelectionMode = SM_SELECTION_RIGHT_STARTED;
 
-        m_pLeftTextArea->clearSelection();
+        m_pRightTextArea->activateDynamicSelection();
+        m_pRightTextArea->startDynamicSelection(pMsg->MouseX, pMsg->MouseY);
+
+        m_pLeftTextArea->clearDynamicSelection();
+        m_pLeftTextArea->activateDynamicSelection();
         m_pLeftTextArea->renderSelectionUpdatedLines();
-        m_pRightTextArea->startSelection(pMsg->MouseX, pMsg->MouseY);
       }
       else
       {
@@ -844,12 +861,12 @@ void DiffWindow::handleMouseMove(const struct IntuiMessage* pMsg)
   {
     case DiffWindow::SM_SELECTION_LEFT_STARTED:
     {
-      scrollRequest = m_pLeftTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
+      scrollRequest = m_pLeftTextArea->updateDynamicSelection(pMsg->MouseX, pMsg->MouseY);
       break;
     }
     case DiffWindow::SM_SELECTION_RIGHT_STARTED:
     {
-      scrollRequest = m_pRightTextArea->updateSelection(pMsg->MouseX, pMsg->MouseY);
+      scrollRequest = m_pRightTextArea->updateDynamicSelection(pMsg->MouseX, pMsg->MouseY);
       break;
     }
   }

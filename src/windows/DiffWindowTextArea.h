@@ -153,12 +153,12 @@ public:
    * @param fromColumn Id of the column on which the selection starts
    * @param toColumn Id of the column on which the selection ends
    */
-  void addSelection(ULONG lineId, ULONG fromColumn, ULONG toColumn);
+  void addSearchResultSelection(ULONG lineId, ULONG fromColumn, ULONG toColumn);
 
   /**
    * Starts a dynamic selection at given mouse coordinates
    */
-  void startSelection(WORD mouseX, WORD mouseY);
+  void startDynamicSelection(WORD mouseX, WORD mouseY);
 
   /**
    * Updates the dynamic selection to given mouse coordinates and
@@ -168,12 +168,31 @@ public:
    * one of the other ScrollRequest values to inform the parent about
    * the needed scrolling.
    */
-  ScrollRequest updateSelection(WORD mouseX, WORD mouseY);
+  ScrollRequest updateDynamicSelection(WORD mouseX, WORD mouseY);
 
   /**
-   * Clears the selection in the DiffDocument attached to this TextArea
+   * Clears the dynamic selection in the SelectableDiffDocument which is
+   * attached to this TextArea
    */
-  void clearSelection();
+  void clearSearchResultSelection();
+
+  /**
+   * Clears the dynamic selection in the SelectableDiffDocument which is
+   * attached to this TextArea
+   */
+  void clearDynamicSelection();
+
+  /**
+   * Activates the dynamic selection mode in underlaying selectable diff
+   * file.
+   */
+  void activateDynamicSelection();
+
+  /**
+   * Activates the search result selection mode in underlaying
+   * selectable diff file.
+   */
+  void activateSearchResultSelection();
 
   /**
    * Returns true if the given point is inside the text area.

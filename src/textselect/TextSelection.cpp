@@ -16,7 +16,6 @@ TextSelection::~TextSelection()
 void TextSelection::startDynamicSelection(unsigned long lineId,
                                           unsigned long columnId)
 {
-  m_UpdatedLineIds.clear();
   clear();
   m_UpdateDirection = TextSelection::UD_NONE;
   m_StartLineId = lineId;
@@ -311,12 +310,23 @@ long TextSelection::getNextSelectionStart(unsigned long lineId,
   return -1;
 }
 
-const std::list<int>& TextSelection::getUpdatedLineIds()
+const std::list<long>& TextSelection::getUpdatedLineIds()
 {
   m_UpdatedLineIds.sort();
   m_UpdatedLineIds.unique();
 
   return m_UpdatedLineIds;
+}
+
+void TextSelection::addUpdatedLine(long lineId)
+{
+  m_UpdatedLineIds.push_back(lineId);
+}
+
+void TextSelection::addUpdatedLines(const std::vector<long>& linesRange)
+{
+  std::list<long>::iterator it = m_UpdatedLineIds.end();
+  m_UpdatedLineIds.insert(it, linesRange.begin(), linesRange.end());
 }
 
 const std::list<TextSelectionLine*>* TextSelection::getSelectionLines() const 

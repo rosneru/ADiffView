@@ -67,15 +67,15 @@ void TextFinder::markAllResults()
 
     if(pResult->getLocation() == DiffFileSearchResult::LeftFile)
     {
-      pLeftTextArea->addSelection(pResult->getLineId(),
-                                  pResult->getCharId(),
-                                  stopCharId);
+      pLeftTextArea->addSearchResultSelection(pResult->getLineId(),
+                                              pResult->getCharId(),
+                                              stopCharId);
     }
     else if(pResult->getLocation() == DiffFileSearchResult::RightFile)
     {
-      pRightTextArea->addSelection(pResult->getLineId(),
-                                  pResult->getCharId(),
-                                  stopCharId);
+      pRightTextArea->addSearchResultSelection(pResult->getLineId(),
+                                               pResult->getCharId(),
+                                               stopCharId);
     }
   }
 }
@@ -89,11 +89,22 @@ bool TextFinder::displayFirstResult(bool doSignalIfNoResultFound)
   }
 
   DiffWindowTextArea* pLeftTextArea = m_DiffWindow.getLeftTextArea();
-  if(pLeftTextArea == NULL)
+  DiffWindowTextArea* pRightTextArea = m_DiffWindow.getRightTextArea();
+  if(pLeftTextArea == NULL || pRightTextArea == NULL)
   {
     // No left text area available - should not be possible
     return false;
   }
+
+  // If not already in 'search result selection mode' activate it now.
+  // In this step all lines that must be re-rendered are internally
+  // collected as updatedLineIds.
+  pLeftTextArea->activateSearchResultSelection();
+  pRightTextArea->activateSearchResultSelection();
+
+  // Re-render the lines that are in updatedLineIds
+  pLeftTextArea->renderSelectionUpdatedLines();
+  pRightTextArea->renderSelectionUpdatedLines();
 
   // Perform a new search if the document has changed
   applyDocumentChanged();
@@ -150,11 +161,22 @@ bool TextFinder::displayLastResult(bool doSignalIfNoResultFound)
   }
 
   DiffWindowTextArea* pLeftTextArea = m_DiffWindow.getLeftTextArea();
-  if(pLeftTextArea == NULL)
+  DiffWindowTextArea* pRightTextArea = m_DiffWindow.getRightTextArea();
+  if(pLeftTextArea == NULL || pRightTextArea == NULL)
   {
     // No left text area available - should not be possible
     return false;
   }
+
+  // If not already in 'search result selection mode' activate it now.
+  // In this step all lines that must be re-rendered are internally
+  // collected as updatedLineIds.
+  pLeftTextArea->activateSearchResultSelection();
+  pRightTextArea->activateSearchResultSelection();
+
+  // Re-render the lines that are in updatedLineIds
+  pLeftTextArea->renderSelectionUpdatedLines();
+  pRightTextArea->renderSelectionUpdatedLines();
 
   // Perform a new search if the document has changed
   applyDocumentChanged();
@@ -214,11 +236,22 @@ bool TextFinder::displayNextResult(bool doSignalIfNoResultFound,
   }
 
   DiffWindowTextArea* pLeftTextArea = m_DiffWindow.getLeftTextArea();
-  if(pLeftTextArea == NULL)
+  DiffWindowTextArea* pRightTextArea = m_DiffWindow.getRightTextArea();
+  if(pLeftTextArea == NULL || pRightTextArea == NULL)
   {
     // No left text area available - should not be possible
     return false;
   }
+
+  // If not already in 'search result selection mode' activate it now.
+  // In this step all lines that must be re-rendered are internally
+  // collected as updatedLineIds.
+  pLeftTextArea->activateSearchResultSelection();
+  pRightTextArea->activateSearchResultSelection();
+
+  // Re-render the lines that are in updatedLineIds
+  pLeftTextArea->renderSelectionUpdatedLines();
+  pRightTextArea->renderSelectionUpdatedLines();
   
   // Perform a new search if the document has changed
   applyDocumentChanged();
@@ -279,11 +312,22 @@ bool TextFinder::displayPrevResult(bool doSignalIfNoResultFound)
   }
 
   DiffWindowTextArea* pLeftTextArea = m_DiffWindow.getLeftTextArea();
-  if(pLeftTextArea == NULL)
+  DiffWindowTextArea* pRightTextArea = m_DiffWindow.getRightTextArea();
+  if(pLeftTextArea == NULL || pRightTextArea == NULL)
   {
     // No left text area available - should not be possible
     return false;
   }
+
+  // If not already in 'search result selection mode' activate it now.
+  // In this step all lines that must be re-rendered are internally
+  // collected as updatedLineIds.
+  pLeftTextArea->activateSearchResultSelection();
+  pRightTextArea->activateSearchResultSelection();
+
+  // Re-render the lines that are in updatedLineIds
+  pLeftTextArea->renderSelectionUpdatedLines();
+  pRightTextArea->renderSelectionUpdatedLines();
   
   // Perform a new search if the document has changed
   applyDocumentChanged();
@@ -378,7 +422,7 @@ void TextFinder::applyNewSearchEngine()
   // And is not 'the new search engine' anymore
   m_pNewSearchEngine = NULL;
 
-  m_DiffWindow.clearAndStopSelection(false);
+  m_DiffWindow.clearSearchResultSelection(false);
   markAllResults();
   m_DiffWindow.renderSelectionChangedLines();
 }

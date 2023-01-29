@@ -5,9 +5,15 @@
 #include "TextSelection.h"
 
 /**
- * Adds the ability to select [0; n] blocks of text to an existing
- * DiffFile.
+ * Adds the ability text selection to an existing DiffFile.
  *
+ * Contains two TextSelection objects:
+ * 1) One to be used for search results where the matches can be added 
+ *    successively by calling \see addSearchResultSelectionBlock
+ * 2) The other one is a dynamic selection which can first started with 
+ *    \see startDynamicSelection and the updated with
+ *    \see updateDynamicSelection
+ * 
  * @author Uwe Rosner
  * @date 30/12/2020
  */
@@ -19,6 +25,10 @@ public:
   const DiffLine* operator[](unsigned long index) const;
 
   unsigned long getNumLines() const;
+
+  void addSearchResultSelectionBlock(unsigned long lineId, 
+                                     unsigned long fromColumn, 
+                                     unsigned long toColumn);
 
   /**
    * Start a dynamic selection at given line and column
@@ -35,11 +45,26 @@ public:
    */
   void updateDynamicSelection(unsigned long lineId, unsigned long columnId);
 
+
+  void clearSearchResultSelection();
+
+  void clearDynamicSelection();
+
+  /**
+   * Activates the dynamic selection mode.
+   */
+  void activateDynamicSelection();
+
+  /**
+   * Activates the search result selection mode.
+   */
+  void activateSearchResultSelection(long pageTopLineId, long pageBottomLineId);
+
   /**
    * Returns a list with the ids of the lines whose selection was
    * changed during last dynamic selection operation.
    */
-  const std::list<int>& getUpdatedLineIds();
+  const std::list<long>& getUpdatedLineIds();
 
   /**
    * Returns the selection lines 
@@ -48,12 +73,6 @@ public:
 
   void clearUpdatedLineIds();
 
-  void addSelection(unsigned long lineId, 
-                    unsigned long fromColumn, 
-                    unsigned long toColumn);
-
-  void clearSelection();
-
   bool isPointInSelection(unsigned long lineId, unsigned long columnId) const;
 
   long getNumNormalChars(unsigned long lineId, unsigned long columnId);
@@ -61,8 +80,15 @@ public:
 
 private:
   const DiffFileBase& m_DiffFile;
-  TextSelection m_Selection;
+  TextSelection m_SearchResultSelection;
+  TextSelection m_DynamicSelection;
+  TextSelection* m_pCurrentSelection;
 
+  /**
+   * Adds all lineIds of given collection to current selections
+   * UpdatedLineIds
+   */
+  void addToUpdatedLines(const std::list<TextSelectionLine*>* pLineCollection);
 };
 
 #endif

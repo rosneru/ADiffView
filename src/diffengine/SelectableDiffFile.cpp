@@ -2,7 +2,9 @@
 
 SelectableDiffFile::SelectableDiffFile(const DiffFileBase& diffFile)
   : m_DiffFile(diffFile),
-    m_Selection(diffFile.getLines())
+    m_SearchResultSelection(diffFile.getLines()),
+    m_DynamicSelection(diffFile.getLines()),
+    m_pCurrentSelection(&m_SearchResultSelection)
 {
 
 }
@@ -22,50 +24,109 @@ unsigned long SelectableDiffFile::getNumLines() const
   return m_DiffFile.getNumLines();
 }
 
+void SelectableDiffFile::addSearchResultSelectionBlock(unsigned long lineId,
+                                                  unsigned long fromColumn,
+                                                  unsigned long toColumn)
+{
+  m_SearchResultSelection.addBlock(lineId, fromColumn, toColumn);
+}
+
+
 void SelectableDiffFile::startDynamicSelection(unsigned long lineId,
                                                unsigned long columnId)
 {
-  m_Selection.startDynamicSelection(lineId, columnId);
+  m_DynamicSelection.startDynamicSelection(lineId, columnId);
 }
 
 void SelectableDiffFile::updateDynamicSelection(unsigned long lineId,
                                                 unsigned long columnId)
 {
-  m_Selection.updateDynamicSelection(lineId, columnId);
+  m_DynamicSelection.updateDynamicSelection(lineId, columnId);
 }
 
-const std::list<int>& SelectableDiffFile::getUpdatedLineIds()
+const std::list<long>& SelectableDiffFile::getUpdatedLineIds()
 {
-  return m_Selection.getUpdatedLineIds();
+  return m_pCurrentSelection->getUpdatedLineIds();
 }
 
 const std::list<TextSelectionLine*>* SelectableDiffFile::getSelectionLines() const
 {
-  return m_Selection.getSelectionLines();
+  return m_pCurrentSelection->getSelectionLines();
 }
 
 
 void SelectableDiffFile::clearUpdatedLineIds()
 {
-  m_Selection.clearUpdatedLineIds();
+  m_pCurrentSelection->clearUpdatedLineIds();
 }
 
-void SelectableDiffFile::addSelection(unsigned long lineId,
-                                      unsigned long fromColumn,
-                                      unsigned long toColumn)
+void SelectableDiffFile::clearSearchResultSelection()
 {
-  m_Selection.addBlock(lineId, fromColumn, toColumn);
+  m_SearchResultSelection.clear();
 }
 
-void SelectableDiffFile::clearSelection()
+void SelectableDiffFile::clearDynamicSelection()
 {
-  m_Selection.clear();
+  m_DynamicSelection.clear();
+}
+
+void SelectableDiffFile::activateDynamicSelection()
+{
+  if(m_pCurrentSelection == &m_DynamicSelection)
+  {
+    return;
+  }
+
+  m_pCurrentSelection = &m_DynamicSelection;
+
+  // Add the formerly selected lines to UpdatedLineIds to get them
+  // redrawn (as selection cleared) if necessary
+  addToUpdatedLines(m_SearchResultSelection.getSelectionLines());
+
+  return;
+}
+
+void SelectableDiffFile::activateSearchResultSelection(long pageTopLineId,
+                                                       long pageBottomLineId)
+{
+  if(m_pCurrentSelection == &m_SearchResultSelection)
+  {
+    return;
+  }
+
+  m_pCurrentSelection = &m_SearchResultSelection;
+
+  // Add the formerly selected lines to UpdatedLineIds to get them
+  // redrawn (as selection cleared) if necessary
+  addToUpdatedLines(m_DynamicSelection.getSelectionLines());
+
+  // Add the lineIds of the selected lines of the current page to
+  // updated lines collection
+  const std::list<TextSelectionLine*>* pSelectedLines = m_SearchResultSelection.getSelectionLines();
+  std::list<TextSelectionLine*>::const_iterator it;
+  for(it = pSelectedLines->begin(); it != pSelectedLines->end(); it++)
+  {
+    long lineId = (*it)->getLineId();
+    if(lineId < pageTopLineId)
+    {
+      continue;
+    }
+
+    if(lineId >= pageBottomLineId)
+    {
+      break;
+    }
+
+    m_SearchResultSelection.addUpdatedLine(lineId);
+  }
+
+  return;
 }
 
 bool SelectableDiffFile::isPointInSelection(unsigned long lineId,
                                             unsigned long columnId) const
 {
-  return m_Selection.isSelected(lineId, columnId);
+  return m_pCurrentSelection->isSelected(lineId, columnId);
 }
 
 long SelectableDiffFile::getNumNormalChars(unsigned long lineId, 
@@ -81,13 +142,13 @@ long SelectableDiffFile::getNumNormalChars(unsigned long lineId,
     return 0;
   }
 
-  long numMarkedChars = m_Selection.getNumMarkedChars(lineId, columnId);
+  long numMarkedChars = m_pCurrentSelection->getNumMarkedChars(lineId, columnId);
   if(numMarkedChars > 0)
   {
     return 0;
   }
 
-  long nextSelStart = m_Selection.getNextSelectionStart(lineId, columnId);
+  long nextSelStart = m_pCurrentSelection->getNextSelectionStart(lineId, columnId);
   if(nextSelStart > 0)
   {
     return nextSelStart - columnId;
@@ -100,5 +161,22 @@ long SelectableDiffFile::getNumNormalChars(unsigned long lineId,
 long SelectableDiffFile::getNumMarkedChars(unsigned long lineId, 
                                            unsigned long columnId)
 {
-  return m_Selection.getNumMarkedChars(lineId, columnId);
+  return m_pCurrentSelection->getNumMarkedChars(lineId, columnId);
+}
+
+void SelectableDiffFile::addToUpdatedLines(const std::list<TextSelectionLine*>* pLineCollection)
+{
+  if(pLineCollection == NULL)
+  {
+    return;
+  }
+
+  std::vector<long> formerSelectedLineIds;
+  std::list<TextSelectionLine*>::const_iterator it;
+  for(it = pLineCollection->begin(); it != pLineCollection->end(); it++)
+  {
+    formerSelectedLineIds.push_back((*it)->getLineId());
+  }
+  
+  m_pCurrentSelection->addUpdatedLines(formerSelectedLineIds);
 }

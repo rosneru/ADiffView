@@ -59,12 +59,12 @@ public:
    */
   void renderDocuments(long long justThisLineId = -1);
 
+  void clearSearchResultSelection(bool doRenderSelectionChangedLines = true);
 
   /**
-   * Clears all selections and stop the dynamic selection mode if there
-   * is any
+   * Stops the dynamic selection mode and clears all of its selections
    */
-  void clearAndStopSelection(bool doRenderSelectionChangedLines = true);
+  void clearAndStopDynamicSelection(bool doRenderSelectionChangedLines = true);
 
   /**
    * Re-renders all lines which selection has changed.

@@ -155,11 +155,11 @@ void DiffWindowTextArea::setTabulatorSize(ULONG tabulatorSize)
 }
 
 
-void DiffWindowTextArea::addSelection(ULONG lineId, 
+void DiffWindowTextArea::addSearchResultSelection(ULONG lineId, 
                                       ULONG fromColumn, 
                                       ULONG toColumn)
 {
-  m_DiffFile.addSelection(lineId, fromColumn, toColumn);
+  m_DiffFile.addSearchResultSelectionBlock(lineId, fromColumn, toColumn);
 }
 
 void DiffWindowTextArea::calcMouseInTextPosition(WORD mouseX, WORD mouseY)
@@ -179,7 +179,7 @@ void DiffWindowTextArea::calcMouseInTextPosition(WORD mouseX, WORD mouseY)
     }
 }
 
-void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
+void DiffWindowTextArea::startDynamicSelection(WORD mouseX, WORD mouseY)
 {
   calcMouseInTextPosition(mouseX, mouseY);
   m_DiffFile.startDynamicSelection(m_MouseTextLine, m_MouseTextColumn);
@@ -187,7 +187,8 @@ void DiffWindowTextArea::startSelection(WORD mouseX, WORD mouseY)
 }
 
 
-DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateSelection(WORD mouseX, WORD mouseY)
+DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateDynamicSelection(
+  WORD mouseX, WORD mouseY)
 {
   DiffWindowTextArea::ScrollRequest result = SR_NONE;
   calcMouseInTextPosition(mouseX, mouseY);
@@ -219,10 +220,25 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateSelection(WORD mouse
   return result;
 }
 
-
-void DiffWindowTextArea::clearSelection()
+void DiffWindowTextArea::clearSearchResultSelection()
 {
-  m_DiffFile.clearSelection();
+  m_DiffFile.clearSearchResultSelection();
+}
+
+
+void DiffWindowTextArea::clearDynamicSelection()
+{
+  m_DiffFile.clearDynamicSelection();
+}
+
+void DiffWindowTextArea::activateSearchResultSelection()
+{
+  m_DiffFile.activateSearchResultSelection(m_Y, m_Y + m_AreaMaxLines);
+}
+
+void DiffWindowTextArea::activateDynamicSelection()
+{
+  m_DiffFile.activateDynamicSelection();
 }
 
 bool DiffWindowTextArea::isPointInTextArea(unsigned long pointX,
@@ -552,8 +568,8 @@ void DiffWindowTextArea::renderSelectionUpdatedLines()
 {
   // Render all lines whose selection has changed
   ULONG bottomLine = m_Y + m_AreaMaxLines;
-  const std::list<int>& updatedLines = m_DiffFile.getUpdatedLineIds();
-  std::list<int>::const_iterator it;
+  const std::list<long>& updatedLines = m_DiffFile.getUpdatedLineIds();
+  std::list<long>::const_iterator it;
   for(it = updatedLines.begin(); it != updatedLines.end(); it++)
   {
     ULONG lineId = *it;
@@ -566,7 +582,7 @@ void DiffWindowTextArea::renderSelectionUpdatedLines()
     {
       break;
     }
-    
+
     renderIndexedLine(*it);
   }
 
