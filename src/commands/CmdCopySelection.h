@@ -2,6 +2,7 @@
 #define CMD_COPY_SELECTION_H
 
 #include "DiffWindow.h"
+#include "Clipboard.h"
 #include "CommandBase.h"
 
 /**
@@ -21,7 +22,7 @@ public:
 
 private:
   const DiffWindow& m_DiffWindow;
-
+  Clipboard m_Clipboard;
 };
 
 #endif

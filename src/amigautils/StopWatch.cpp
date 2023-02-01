@@ -12,8 +12,7 @@ struct TimerBase* TimerBase = NULL;
 
 StopWatch::StopWatch()
   : m_pMsgPort(CreateMsgPort()),
-    m_pTimeRequest((struct timerequest*) CreateIORequest(m_pMsgPort, 
-                                                         sizeof(struct timerequest))),
+    m_pTimeRequest(NULL),
     m_ClocksPerSecond(0),
     m_StartClock(),
     m_StopClock()                                                         
@@ -22,6 +21,9 @@ StopWatch::StopWatch()
   {
     throw "Failed to create MessagePort for StopWatch.";
   }
+
+  m_pTimeRequest = (struct timerequest*) CreateIORequest(m_pMsgPort, 
+                                                         sizeof(struct timerequest));
 
   if(m_pTimeRequest == NULL)
   {

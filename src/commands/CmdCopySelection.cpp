@@ -37,8 +37,10 @@ void CmdCopySelection::Execute(Window* pActiveWindow)
     TextSelectionRange* pRange = pLine->getFirstSelectedBlock();
     const char* pLineFullText = (*pDiffFile)[pLine->getLineId()]->getText();
 
+
     ULONG fromColumn = pRange->getFromColumn();
     const char* pLineTextStart = pLineFullText + fromColumn;
-    printf("%.*s\n", pRange->getNumMarkedChars(fromColumn), pLineTextStart);
+    m_Clipboard.writeFText(pLineTextStart, pRange->getNumMarkedChars(fromColumn));
+    // printf("%.*s\n", pRange->getNumMarkedChars(fromColumn), pLineTextStart);
   }
 }

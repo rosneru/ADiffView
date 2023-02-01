@@ -13,6 +13,7 @@ set(default_build_type "Release")
 
 add_executable (ADiffView_gcc
                 amigautils/AmigaFile.cpp
+                amigautils/Clipboard.cpp
                 amigautils/MemoryPool.cpp
                 amigautils/MessageBox.cpp
                 amigautils/StopWatch.cpp
