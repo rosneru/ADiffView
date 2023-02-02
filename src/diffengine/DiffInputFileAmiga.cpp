@@ -85,7 +85,7 @@ DiffInputFileAmiga::DiffInputFileAmiga(APTR pPoolHeader,
 
       // The next line is called 'replacement new'. It creates an object
       // of DiffLine on the known address pDiffLine and calls the
-      // constructor. Here this must be used because the memory pool
+      // constructor. This must be used here because the memory pool
       // doesn't work with normal 'new' operator.
       new (pDiffLine) DiffLine(pLineStart);
 

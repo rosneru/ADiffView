@@ -99,6 +99,21 @@ bool Clipboard::writeFText(const char* string, ULONG slen)
   return true;
 }
 
+bool Clipboard::prepareMultilineWrite(ULONG slen)
+{
+  return false;
+}
+
+bool Clipboard::performMultilineWrite(const char* string, ULONG slen, bool doAppendNewline)
+{
+  return false;
+}
+
+bool Clipboard::finishMultilineWrite()
+{
+  return false;
+}
+
 
 bool Clipboard::writeLong(long* pLongData)
 {

@@ -19,6 +19,10 @@ public:
 
   bool writeFText(const char* string, ULONG slen);
 
+  bool prepareMultilineWrite(ULONG slen);
+  bool performMultilineWrite(const char* string, ULONG slen, bool doAppendNewline);
+  bool finishMultilineWrite();
+
 private:
   struct MsgPort* m_pMsgPort;
   struct IOClipReq* m_pIOClipReq;
