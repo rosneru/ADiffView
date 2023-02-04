@@ -17,15 +17,16 @@ public:
   Clipboard();
   virtual ~Clipboard();
 
-  bool writeFText(const char* string, ULONG slen);
+  bool writeFText(const char* pText, ULONG textLength);
 
-  bool prepareMultilineWrite(ULONG slen);
-  bool performMultilineWrite(const char* string, ULONG slen, bool doAppendNewline);
+  bool prepareMultilineWrite(ULONG textLength);
+  bool performMultilineWrite(const char* pText, ULONG textLength, bool doAppendNewline);
   bool finishMultilineWrite();
 
 private:
   struct MsgPort* m_pMsgPort;
   struct IOClipReq* m_pIOClipReq;
+  bool m_IsOddLength;
 
   bool writeLong(long* pLongData);
 };

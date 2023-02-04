@@ -52,45 +52,46 @@ Clipboard::~Clipboard()
   DeleteMsgPort(m_pMsgPort);
 }
 
-bool Clipboard::writeFText(const char* string, ULONG slen)
+bool Clipboard::writeFText(const char* pText, ULONG textLength)
 {
-  bool isOdd = (slen & 1) == true;
-  ULONG length = isOdd ? slen + 1 : slen;
+  if(prepareMultilineWrite(textLength) == false)
+  {
+    return false;
+  }
+
+  if(performMultilineWrite(pText, textLength, false) == false)
+  {
+    return false;
+  }
+
+  if(finishMultilineWrite() == false)
+  {
+    return false;
+  }
+
+  return true;
+}
+
+bool Clipboard::prepareMultilineWrite(ULONG textLength)
+{
+  m_IsOddLength = (textLength & 1) == true;
+  ULONG totalLength = m_IsOddLength ? textLength + 1 : textLength;
 
   // Initial set up Offset, Error, and ClipId
   m_pIOClipReq->io_Offset = 0;
   m_pIOClipReq->io_Error = 0;
   m_pIOClipReq->io_ClipID = 0;
+  m_pIOClipReq->io_Command = CMD_WRITE;
 
   // Create the IFF header information
   writeLong((long*)"FORM");
-  length += 12L;                  // + "[size]FTXTCHRS"
-  writeLong((long*)&length);      // total length
+  totalLength += 12L;               // + "[size]FTXTCHRS" TODO: Check what if size exceeds 9999?? Then it must be 13?
+  writeLong((long*)&totalLength);   // length with remaining header (All after FORM)
   writeLong((long*)"FTXT");
   writeLong((long*)"CHRS");
-  writeLong((long*)&slen);        // string length
+  writeLong((long*)&textLength);
 
-  // Write string
-  m_pIOClipReq->io_Data = (STRPTR)string;
-  m_pIOClipReq->io_Length = slen;
-  m_pIOClipReq->io_Command = CMD_WRITE;
-
-  DoIO((struct IORequest*)m_pIOClipReq);
-
-  // Pad if needed
-  if(isOdd)
-  {
-    m_pIOClipReq->io_Data = (STRPTR)"";
-    m_pIOClipReq->io_Length = 1L;
-
-    DoIO((struct IORequest*)m_pIOClipReq);
-  }
-
-  // Tell the clipboard we are done writing
-  m_pIOClipReq->io_Command = CMD_UPDATE;
-  DoIO((struct IORequest*)m_pIOClipReq);
-
-  // Check if io_Error was set by any of the preceding IO requests
+  // Check if any of these `writeLong` failed.
   if(m_pIOClipReq->io_Error == TRUE)
   {
     return false;
@@ -99,19 +100,56 @@ bool Clipboard::writeFText(const char* string, ULONG slen)
   return true;
 }
 
-bool Clipboard::prepareMultilineWrite(ULONG slen)
+bool Clipboard::performMultilineWrite(const char* pText, ULONG textLength, bool doAppendNewline)
 {
-  return false;
-}
+  // Write string
+  m_pIOClipReq->io_Data = (STRPTR)pText;
+  m_pIOClipReq->io_Length = textLength;
 
-bool Clipboard::performMultilineWrite(const char* string, ULONG slen, bool doAppendNewline)
-{
-  return false;
+  DoIO((struct IORequest*)m_pIOClipReq);
+  if(m_pIOClipReq->io_Error == TRUE)
+  {
+    return false;
+  }
+
+  if(doAppendNewline)
+  {
+    m_pIOClipReq->io_Data = (STRPTR)'\n';
+    m_pIOClipReq->io_Length = 1L;
+    DoIO((struct IORequest*)m_pIOClipReq);
+    if(m_pIOClipReq->io_Error == TRUE)
+    {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 bool Clipboard::finishMultilineWrite()
 {
-  return false;
+  // Pad if needed
+  if(m_IsOddLength)
+  {
+    m_pIOClipReq->io_Data = (STRPTR)"";
+    m_pIOClipReq->io_Length = 1L;
+
+    DoIO((struct IORequest*)m_pIOClipReq);
+    if(m_pIOClipReq->io_Error == TRUE)
+    {
+      return false;
+    }
+  }
+
+  // Tell the clipboard we are done writing
+  m_pIOClipReq->io_Command = CMD_UPDATE;
+  DoIO((struct IORequest*)m_pIOClipReq);
+  if(m_pIOClipReq->io_Error == TRUE)
+  {
+    return false;
+  }
+
+  return true;
 }
 
 
@@ -123,13 +161,15 @@ bool Clipboard::writeLong(long* pLongData)
   
   DoIO((struct IORequest*)m_pIOClipReq);
 
-  if(m_pIOClipReq->io_Actual == 4)
+  if(m_pIOClipReq->io_Actual != 4)
   {
-    if(m_pIOClipReq->io_Error == FALSE)
-    {
-      return true;
-    }
+    return false;
   }
 
-  return false;
+  if(m_pIOClipReq->io_Error == TRUE)
+  {
+    return false;
+  }
+
+  return true;
 }
