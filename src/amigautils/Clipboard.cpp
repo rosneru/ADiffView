@@ -114,7 +114,7 @@ bool Clipboard::performMultilineWrite(const char* pText, ULONG textLength, bool 
 
   if(doAppendNewline)
   {
-    m_pIOClipReq->io_Data = (STRPTR)'\n';
+    m_pIOClipReq->io_Data = (STRPTR)"\n";
     m_pIOClipReq->io_Length = 1L;
     DoIO((struct IORequest*)m_pIOClipReq);
     if(m_pIOClipReq->io_Error == TRUE)

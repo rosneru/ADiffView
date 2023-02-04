@@ -49,7 +49,7 @@ void CmdCopySelection::Execute(Window* pActiveWindow)
   }
 
   // For every selection line except the last one a '\n' is appended
-  totalChars += (pSelectionLines->size() - 1);
+  // totalChars += (pSelectionLines->size() - 1);
 
   m_Clipboard.prepareMultilineWrite(totalChars);
 
