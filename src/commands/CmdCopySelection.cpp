@@ -39,6 +39,13 @@ void CmdCopySelection::Execute(Window* pActiveWindow)
   std::list<TextSelectionLine*>::const_iterator itLastItem = pSelectionLines->end();
   itLastItem--;
 
+  ULONG lastLineId = (*itLastItem)->getLineId();
+
+  // First pass: get number of total chars to write.
+  //
+  // NOTE: Fully selected lines (all but the bottom one) report one char
+  // more on getNumMarkedChars(). This is needed anyhow here for the
+  // additional line feed char that is written for those lines.)
   std::list<TextSelectionLine*>::const_iterator it;
   ULONG totalChars = 0;
   for(it = pSelectionLines->begin(); it != pSelectionLines->end(); it++)
@@ -46,32 +53,9 @@ void CmdCopySelection::Execute(Window* pActiveWindow)
     TextSelectionLine*  pLine = *it;
     TextSelectionRange* pRange = pLine->getFirstSelectedBlock();
     totalChars += pRange->getNumMarkedChars(pRange->getFromColumn());
-    
-    int lineNumChars = (*pDiffFile)[pLine->getLineId()]->getNumChars();
-    int selectedNumChars = pRange->getNumMarkedChars(pRange->getFromColumn());
-    if(lineNumChars != selectedNumChars)
-    {
-      printf("lineId %d: lineNumChars = %d, selectedNumChars = %d \n", pLine->getLineId(),
-                                                                      lineNumChars,
-                                                                      selectedNumChars);
-    }
   }
 
-  // Increase the number of total chars because for every selection line
-  // except the last one a '\n' is appended
-  totalChars += (pSelectionLines->size() - 1);
-
-  // If the last selection line is empty, decrease the number of total
-  // chars by one
-  it = pSelectionLines->end();
-  it--;
-  ULONG numCharsLastSelectionLine = (*pDiffFile)[(*it)->getLineId()]->getNumChars();
-  if(numCharsLastSelectionLine < 1)
-  {
-    totalChars--;
-  }
-
-  m_Clipboard.prepareMultilineWrite(totalChars);
+  m_Clipboard.prepareMultilineWrite(totalChars - 1);
 
   for(it = pSelectionLines->begin(); it != pSelectionLines->end(); it++)
   {
@@ -83,7 +67,13 @@ void CmdCopySelection::Execute(Window* pActiveWindow)
     ULONG fromColumn = pRange->getFromColumn();
     const char* pLineTextStart = pLineFullText + fromColumn;
     bool doWriteLineFeed = it != itLastItem;
-    m_Clipboard.performMultilineWrite(pLineTextStart, pRange->getNumMarkedChars(fromColumn), doWriteLineFeed);
+    ULONG numCharsToWrite = pRange->getNumMarkedChars(fromColumn);
+    if(it != itLastItem)
+    {
+      numCharsToWrite--;
+    }
+
+    m_Clipboard.performMultilineWrite(pLineTextStart, numCharsToWrite, doWriteLineFeed);
     // printf("[FAIL] %.*s\n", pRange->getNumMarkedChars(fromColumn), pLineTextStart);
   }
 
