@@ -1076,7 +1076,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
   {
     long column;
     unsigned long line;
-    std::list<int>::const_iterator it;
+    std::list<long>::const_iterator it;
     TextSelection selection(textLines);
     
     BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 4), 0);
@@ -1377,7 +1377,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
   {
     long column;
     unsigned long line;
-    std::list<int>::const_iterator it;
+    std::list<long>::const_iterator it;
     TextSelection selection(textLines);
     
     BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 4), 0);
@@ -2187,8 +2187,8 @@ BOOST_AUTO_TEST_CASE( test_32_SelectableDiffFile )
     BOOST_CHECK_EQUAL(diffB.getNumLines(), 2);
 
     SelectableDiffFile diffASelectable(diffA);
-    diffASelectable.addSelection(0, 7, 14);
-    diffASelectable.addSelection(0, 26, 28);
+    diffASelectable.addSearchResultSelectionBlock(0, 7, 14);
+    diffASelectable.addSearchResultSelectionBlock(0, 26, 28);
 
     BOOST_CHECK_EQUAL(diffASelectable.getNumNormalChars(0, 0), 7);
     BOOST_CHECK_EQUAL(diffASelectable.getNumMarkedChars(0, 7), 8);
@@ -3225,8 +3225,8 @@ BOOST_AUTO_TEST_CASE( testcase_DiffWindowTextArea_NonTabulator_MARKED_Text )
     size_t num = 0;
     char renderBuf[1024];
 
-    textArea.addSelection(0, 6, 16);
-    textArea.addSelection(12, 28, 33);
+    textArea.addSearchResultSelectionBlock(0, 6, 16);
+    textArea.addSearchResultSelectionBlock(12, 28, 33);
 
     num = textArea.renderLine(0, false, lineTop, 0, renderBuf);  
     BOOST_CHECK_EQUAL(num, 3);
@@ -3324,8 +3324,8 @@ BOOST_AUTO_TEST_CASE( testcase_DiffWindowTextArea_Tabulator_MARKED_Text )
     size_t num = 0;
     char renderBuf[1024];
 
-    textArea.addSelection(0, 1, 4);
-    textArea.addSelection(185, 20, 23);
+    textArea.addSearchResultSelectionBlock(0, 1, 4);
+    textArea.addSearchResultSelectionBlock(185, 20, 23);
 
     num = textArea.renderLine(0, true, lineTop, 0, renderBuf);
     BOOST_CHECK_EQUAL(num, 4);

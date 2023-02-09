@@ -141,9 +141,9 @@ public:
    * @param fromColumn Id of the column on which the selection starts
    * @param toColumn Id of the column on which the selection ends
    */
-  void addSelection(ULONG lineId, ULONG fromColumn, ULONG toColumn);
+  void addSearchResultSelectionBlock(ULONG lineId, ULONG fromColumn, ULONG toColumn);
 
-  void clearSelection();
+  void clearSearchResultSelection();
 
 
 private:

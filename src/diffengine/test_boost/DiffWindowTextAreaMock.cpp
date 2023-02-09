@@ -159,17 +159,17 @@ void DiffWindowTextAreaMock::setSize(ULONG width, ULONG height)
 }
 
 
-void DiffWindowTextAreaMock::addSelection(ULONG lineId, 
-                                          ULONG fromColumn, 
-                                          ULONG toColumn)
+void DiffWindowTextAreaMock::addSearchResultSelectionBlock(ULONG lineId, 
+                                                           ULONG fromColumn, 
+                                                           ULONG toColumn)
 {
-  m_DiffFile.addSelection(lineId, fromColumn, toColumn);
+  m_DiffFile.addSearchResultSelectionBlock(lineId, fromColumn, toColumn);
 }
 
 
-void DiffWindowTextAreaMock::clearSelection()
+void DiffWindowTextAreaMock::clearSearchResultSelection()
 {
-  m_DiffFile.clearSelection();
+  m_DiffFile.clearSearchResultSelection();
 }
 
 
