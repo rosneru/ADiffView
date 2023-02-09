@@ -102,14 +102,22 @@ bool Clipboard::prepareMultilineWrite(ULONG textLength)
 
 bool Clipboard::performMultilineWrite(const char* pText, ULONG textLength, bool doAppendNewline)
 {
-  // Write string
-  m_pIOClipReq->io_Data = (STRPTR)pText;
-  m_pIOClipReq->io_Length = textLength;
-
-  DoIO((struct IORequest*)m_pIOClipReq);
-  if(m_pIOClipReq->io_Error == TRUE)
+  if(textLength > 0)
   {
-    return false;
+    // Write string
+    m_pIOClipReq->io_Data = (STRPTR)pText;
+    m_pIOClipReq->io_Length = textLength;
+
+    DoIO((struct IORequest*)m_pIOClipReq);
+    if(m_pIOClipReq->io_Error == TRUE)
+    {
+      return false;
+    }
+
+    if(m_pIOClipReq->io_Actual != textLength)
+    {
+      return false;
+    }
   }
 
   if(doAppendNewline)
@@ -118,6 +126,11 @@ bool Clipboard::performMultilineWrite(const char* pText, ULONG textLength, bool 
     m_pIOClipReq->io_Length = 1L;
     DoIO((struct IORequest*)m_pIOClipReq);
     if(m_pIOClipReq->io_Error == TRUE)
+    {
+      return false;
+    }
+
+    if(m_pIOClipReq->io_Actual != 1)
     {
       return false;
     }
