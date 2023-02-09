@@ -1215,7 +1215,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 7);
 
     line = 3;
     column = selection.getNextSelectionStart(line, 0);
@@ -1234,12 +1234,12 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 7);
 
     line = 3;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 10);
 
     line = 4;
     column = selection.getNextSelectionStart(line, 0);
@@ -1258,12 +1258,12 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 7);
 
     line = 3;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 10);
 
     line = 4;
     column = selection.getNextSelectionStart(line, 0);
@@ -1280,7 +1280,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 7);
 
     line = 3;
     column = selection.getNextSelectionStart(line, 0);
@@ -1472,12 +1472,12 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 6);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 5);
 
     line = 3;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 10);
 
     line = 4;
     column = selection.getNextSelectionStart(line, 0);
@@ -1498,22 +1498,22 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 6);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 5);
 
     line = 3;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 10);
 
     line = 4;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 10);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 11);
 
     line = 5;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 18);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 19);
 
     line = 6;
     column = selection.getNextSelectionStart(line, 0);
@@ -1534,12 +1534,12 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 6);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 5);
 
     line = 3;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 10);
 
     line = 4;
     column = selection.getNextSelectionStart(line, 0);
@@ -1597,12 +1597,12 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 7);
 
     line = 3;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 10);
 
     line = 4;
     column = selection.getNextSelectionStart(line, 0);
@@ -1867,12 +1867,13 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
     it = selection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 7);
 
-    // Now select the non existing char 2 of line 8 (line 8 is empty)
-    selection.updateDynamicSelection(8, 2);
+    // Now select the non existing char 0 of line 8 (line 8 is empty)
+    selection.updateDynamicSelection(8, 0);
 
     BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
     it = selection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 7);
+
     it++;
     BOOST_CHECK_EQUAL(*it, 8);
 
@@ -1880,15 +1881,43 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
     line = 7;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 8); // 8 is the length of "and this"
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9); // 9 is the length of "and this" + one space at end
 
-    // Now check what's really selected
     line = 8;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 1); // 0 is the length of "" + one space at end
 
     BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
+    selection.clearUpdatedLineIds();
+
+    // Now select the non existing char 2 of line 8 (line 8 is empty)
+    selection.updateDynamicSelection(8, 2);
+
+    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
+    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(*it, 8);
+
+    // Now check what's really selected
+    line = 7;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9); // 9 is the length of "and this" + one space at end
+
+    line = 8;
+    column = selection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 1); // 0 is the length of "" + one space at end
+
+    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
+    selection.clearUpdatedLineIds();
+
+    // // Now select the char 2 of line 9 
+    // selection.updateDynamicSelection(9, 2);
+
+    // BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
+    // it = selection.getUpdatedLineIds().begin();
+    // BOOST_CHECK_EQUAL(*it, 9);
   }
   catch(const char* pError)
   {
