@@ -16,11 +16,18 @@ TextSelection::~TextSelection()
 void TextSelection::startDynamicSelection(unsigned long lineId,
                                           unsigned long columnId)
 {
+  if(lineId > (m_TextLines.size() - 1))
+  {
+    return;
+  }
+
   clear();
   m_UpdateDirection = TextSelection::UD_NONE;
   m_StartLineId = lineId;
-  m_StartColumnId = columnId;
-  m_SelectionLines.push_back(new TextSelectionLine(lineId, columnId, columnId));
+  
+  unsigned long lastColumn = m_TextLines[lineId]->getNumChars();
+  m_StartColumnId = std::min(columnId, lastColumn);
+  m_SelectionLines.push_back(new TextSelectionLine(lineId, m_StartColumnId, m_StartColumnId));
 
   // TODO Before clearing the selected lines above add all line ids from
   // there to the m_UpdatedLineIds
@@ -42,6 +49,7 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
     TextSelectionRange* pSelectedBlock = pLineToUpdate->getFirstSelectedBlock();
     if(pSelectedBlock != NULL)
     {
+      lastColumn = m_TextLines[lineId]->getNumChars();
       if(lineId == m_StartLineId)
       {
         fromColumn = std::min(columnId, m_StartColumnId);
@@ -49,6 +57,8 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
         if(pSelectedBlock->getFromColumn() != fromColumn 
         || pSelectedBlock->getToColumn() != toColumn)
         {
+          fromColumn = std::min(fromColumn, lastColumn);
+          toColumn = std::min(toColumn, lastColumn);
           pSelectedBlock->setFromColumn(fromColumn);
           pSelectedBlock->setToColumn(toColumn);
           m_UpdatedLineIds.push_back(lineId);
@@ -58,6 +68,7 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       {
         if(pSelectedBlock->getFromColumn() != columnId)
         {
+          columnId = std::min(columnId, lastColumn);
           pSelectedBlock->setFromColumn(columnId);
           m_UpdatedLineIds.push_back(lineId);
         }
@@ -66,7 +77,7 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       {
         if(pSelectedBlock->getToColumn() != columnId)
         {
-          columnId = std::min(columnId, m_TextLines[lineId]->getNumChars());
+          columnId = std::min(columnId, lastColumn);
           pSelectedBlock->setToColumn(columnId);
           m_UpdatedLineIds.push_back(lineId);
         }
@@ -87,20 +98,23 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
     case TextSelection::UD_START_UPWARD:
       clear();
 
-      // Select start line from start char to last column
-      lastColumn = m_TextLines[lineId]->getNumChars() - 1;
-      m_SelectionLines.push_back(new TextSelectionLine(lineId, columnId, lastColumn));
+      // Select new top line from start char to last column
+      lastColumn = m_TextLines[lineId]->getNumChars();
+      fromColumn = std::min(lastColumn, columnId);
+      m_SelectionLines.push_back(new TextSelectionLine(lineId, fromColumn, lastColumn));
       m_UpdatedLineIds.push_back(lineId);
 
       // Add the fully selected lines between selection start line and target lineId
       for(lineIdIns = lineId + 1; lineIdIns < m_StartLineId; lineIdIns++)
       {
-        lastColumn = m_TextLines[lineIdIns]->getNumChars() - 1;
+        lastColumn = m_TextLines[lineIdIns]->getNumChars();
         m_SelectionLines.push_back(new TextSelectionLine(lineIdIns, 0, lastColumn));
         m_UpdatedLineIds.push_back(lineIdIns);
       }
 
-      m_SelectionLines.push_back(new TextSelectionLine(m_StartLineId, 0, m_StartColumnId));
+      lastColumn = m_TextLines[m_StartColumnId]->getNumChars();
+      toColumn = std::min(lastColumn, m_StartColumnId);
+      m_SelectionLines.push_back(new TextSelectionLine(m_StartLineId, 0, toColumn));
       m_UpdatedLineIds.push_back(m_StartLineId);
       break;
     case TextSelection::UD_APPEND_UPWARD:
@@ -110,14 +124,15 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       // Add the fully selected lines from former to new top line
       for(lineIdIns = m_LowestLineId; lineIdIns > lineId; lineIdIns--)
       {
-        lastColumn = m_TextLines[lineIdIns]->getNumChars() - 1;
+        lastColumn = m_TextLines[lineIdIns]->getNumChars();
         m_SelectionLines.push_front(new TextSelectionLine(lineIdIns, 0, lastColumn));
         m_UpdatedLineIds.push_front(lineIdIns);
       }
 
       // Add the new top line
-      lastColumn = m_TextLines[lineId]->getNumChars() - 1;
-      m_SelectionLines.push_front(new TextSelectionLine(lineId, columnId, lastColumn));
+      lastColumn = m_TextLines[lineId]->getNumChars();
+      fromColumn = std::min(lastColumn, columnId);
+      m_SelectionLines.push_front(new TextSelectionLine(lineId, fromColumn, lastColumn));
       m_UpdatedLineIds.push_front(lineId);
       break;
     case TextSelection::UD_REDUCE_TOP:
@@ -129,16 +144,17 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       }
 
       // Re-add the new top line but this time only partly selected
-      lastColumn = m_TextLines[lineId]->getNumChars() - 1;
+      lastColumn = m_TextLines[lineId]->getNumChars();
       m_SelectionLines.push_front(new TextSelectionLine(lineId, columnId, lastColumn));
 
       // m_UpdatedLineIds.push_back(lineId);
-      
+
       // NOTE: The line above is commented out because there is no need
       // to add lineId to m_UpdatedLineIds. It has been done already in
       // clearFirstSelectionLine().
       break;
     case TextSelection::UD_STOP_UPWARD:
+    case TextSelection::UD_STOP_DOWNWARD:
       clear();
       fromColumn = std::min(columnId, m_StartColumnId);
       toColumn = std::max(columnId, m_StartColumnId);
@@ -191,13 +207,9 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       }
 
       // Re-add the new bottom line but this time only partly selected
-      m_SelectionLines.push_back(new TextSelectionLine(lineId, 0, columnId));
-      break;
-    case TextSelection::UD_STOP_DOWNWARD:
-      clear();
-      fromColumn = std::min(columnId, m_StartColumnId);
-      toColumn = std::max(columnId, m_StartColumnId);
-      m_SelectionLines.push_front(new TextSelectionLine(lineId, fromColumn, toColumn));
+      lastColumn = m_TextLines[lineId]->getNumChars();
+      toColumn = std::min(columnId, lastColumn);
+      m_SelectionLines.push_back(new TextSelectionLine(lineId, 0, toColumn));
       break;
   }
 }
