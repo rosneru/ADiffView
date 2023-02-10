@@ -39,8 +39,6 @@ void CmdCopySelection::Execute(Window* pActiveWindow)
   std::list<TextSelectionLine*>::const_iterator itLastItem = pSelectionLines->end();
   itLastItem--;
 
-  ULONG lastLineId = (*itLastItem)->getLineId();
-
   // First pass: get number of total chars to write.
   //
   // NOTE: Fully selected lines (all but the bottom one) report one char
@@ -53,9 +51,25 @@ void CmdCopySelection::Execute(Window* pActiveWindow)
     TextSelectionLine*  pLine = *it;
     TextSelectionRange* pRange = pLine->getFirstSelectedBlock();
     totalChars += pRange->getNumMarkedChars(pRange->getFromColumn());
+
+    // If the last selected line is an empty line reduce the totalChars
+    // by one, because nothing is to print for this line
+    if(it == itLastItem)
+    {
+      if(pRange->getFromColumn() == 0)
+      {
+        if(pRange->getNumMarkedChars(pRange->getFromColumn()) < 2)
+        {
+          if((*pDiffFile)[pLine->getLineId()]->getNumChars() == 0)
+          {
+            totalChars--;
+          }
+        }
+      }
+    }
   }
 
-  m_Clipboard.prepareMultilineWrite(totalChars - 1);
+  m_Clipboard.prepareMultilineWrite(totalChars);
 
   for(it = pSelectionLines->begin(); it != pSelectionLines->end(); it++)
   {
@@ -68,6 +82,10 @@ void CmdCopySelection::Execute(Window* pActiveWindow)
     const char* pLineTextStart = pLineFullText + fromColumn;
     bool doWriteLineFeed = it != itLastItem;
     ULONG numCharsToWrite = pRange->getNumMarkedChars(fromColumn);
+
+    // For all lines except the last one reduce the numCharsToWrite by
+    // one because the last to be written char of those lines is the \n
+    // which is written separately in performMultilineWrite() below.
     if(it != itLastItem)
     {
       numCharsToWrite--;
