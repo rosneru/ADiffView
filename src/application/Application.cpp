@@ -23,6 +23,8 @@ Application::Application(ScreenBase& screen,
   : m_Screen(screen),
     m_Args(args),
     m_Settings(settings),
+    m_pCopiedIMsg((struct IntuiMessage*)AllocVec(sizeof(struct IntuiMessage),
+                                                 MEMF_ANY|MEMF_PUBLIC|MEMF_CLEAR)),
     m_LeftFilePath(args.LeftFile()),   // copy (not reference) to member
     m_RightFilePath(args.RightFile()), // copy (not reference) to member
     m_IsCancelRequested(false),
@@ -120,6 +122,10 @@ Application::Application(ScreenBase& screen,
     m_CmdTabWidthCustom(&m_AllWindowsList, m_Args.getTabSize(), m_DiffWindow, m_DiffWorker),
     m_pAppIcon(NULL)
 {
+  if(m_pCopiedIMsg == NULL)
+  {
+    throw "Failed to allocate memory for needed structures.";
+  }
   //
   // Note: VERSTAG above has been created with bumprev and is defined
   // in included file ADiffView_rev.h. It contains the program name
@@ -204,6 +210,8 @@ Application::~Application()
   {
     (*it)->close();
   }
+
+  FreeVec(m_pCopiedIMsg);
 }
 
 
@@ -296,26 +304,25 @@ void Application::handleProgressMessages()
 
 void Application::handleIdcmpMessages()
 {
-  struct IntuiMessage msg;
   struct IntuiMessage* pReceivedMsg = NULL;
   while ((pReceivedMsg = GT_GetIMsg(m_Ports.Idcmp())) != NULL)
   {
     // Copy message to handle it later / after reply
-    CopyMem(pReceivedMsg, &msg, sizeof(struct IntuiMessage));
+    CopyMemQuick(pReceivedMsg, m_pCopiedIMsg, sizeof(struct IntuiMessage));
 
     // When we're through with a message, reply
     GT_ReplyIMsg(pReceivedMsg);
 
-    if(msg.Class == IDCMP_MENUPICK)
+    if(m_pCopiedIMsg->Class == IDCMP_MENUPICK)
     {
       //
       // Menu pick messages are handled here
       //
-      UWORD menuNumber = msg.Code;
+      UWORD menuNumber = m_pCopiedIMsg->Code;
       while(menuNumber != MENUNULL)
       {
         // Try to find the item
-        struct MenuItem* pSelectedItem = ItemAddress(msg.IDCMPWindow->MenuStrip, 
+        struct MenuItem* pSelectedItem = ItemAddress(m_pCopiedIMsg->IDCMPWindow->MenuStrip, 
                                                      menuNumber);
         if(pSelectedItem != NULL)
         {
@@ -328,7 +335,7 @@ void Application::handleIdcmpMessages()
             CommandBase* pSelectedCommand = static_cast<CommandBase*>(pUserData);
 
             // Execute this command
-            pSelectedCommand->Execute(msg.IDCMPWindow);
+            pSelectedCommand->Execute(m_pCopiedIMsg->IDCMPWindow);
           }
 
           // If the user has selected multiple menu items, handle the
@@ -347,9 +354,9 @@ void Application::handleIdcmpMessages()
       std::vector<WindowBase*>::iterator it;
       for(it = m_AllWindowsList.begin(); it != m_AllWindowsList.end(); it++)
       {
-        if(msg.IDCMPWindow == (*it)->getIntuiWindow())
+        if(m_pCopiedIMsg->IDCMPWindow == (*it)->getIntuiWindow())
         {
-          (*it)->handleIDCMP(&msg);
+          (*it)->handleIDCMP(m_pCopiedIMsg);
         }
       }
     }

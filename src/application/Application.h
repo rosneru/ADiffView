@@ -57,6 +57,8 @@ private:
   const ADiffViewArgs& m_Args;
   ADiffViewSettings& m_Settings;
 
+  struct IntuiMessage* m_pCopiedIMsg;
+
   std::string m_LeftFilePath;
   std::string m_RightFilePath;
 
