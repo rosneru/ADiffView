@@ -116,6 +116,14 @@ Storm Shell Project (Dependencies)
 ""
 1 1
 File
+1 "src/amigautils/Clipboard.cpp"
+"src/amigautils/Clipboard.cpp"
+"src/amigautils/Clipboard.h"
+Storm Shell Project (Dependencies)
+"build-stromc/Clipboard.o" "build-stromc/Clipboard.debug"
+""
+1 1
+File
 1 "src/amigautils/MemoryPool.cpp"
 "src/amigautils/MemoryPool.cpp"
 "src/amigautils/MemoryPool.h"
@@ -261,7 +269,6 @@ File
 "src/commands/CommandBase.h"
 "src/application/DiffWorkerProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
-"src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
 "build-stromc/TextFinder.o" "build-stromc/TextFinder.debug"
 ""
@@ -283,7 +290,6 @@ File
 "src/commands/CmdOpenWindow.h"
 "src/application/DiffWorkerProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
-"src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
 "build-stromc/CmdChangeTabulatorWidth.o" "build-stromc/CmdChangeTabulatorWidth.debug"
 ""
@@ -311,8 +317,6 @@ File
 "src/windows/DiffWindowRastports.h"
 "src/windows/DiffWindowTextArea.h"
 "src/windows/ScrollbarWindow.h"
-"src/windows/WindowBase.h"
-"src/commands/CommandBase.h"
 Storm Shell Project (Dependencies)
 "build-stromc/CmdCopySelection.o" "build-stromc/CmdCopySelection.debug"
 ""
@@ -370,7 +374,6 @@ File
 "src/commands/CommandBase.h"
 "src/application/DiffWorkerProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
-"src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
 "build-stromc/CmdFindNext.o" "build-stromc/CmdFindNext.debug"
 ""
@@ -396,7 +399,6 @@ File
 "src/commands/CommandBase.h"
 "src/application/DiffWorkerProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
-"src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
 "build-stromc/CmdFindPrev.o" "build-stromc/CmdFindPrev.debug"
 ""
@@ -438,14 +440,11 @@ File
 "src/textselect/TextSelectionLine.h"
 "src/textselect/TextSelectionRange.h"
 "src/windows/ScrollbarWindow.h"
-"src/windows/WindowBase.h"
 "src/commands/CmdNavigateBase.h"
-"src/commands/CommandBase.h"
 "src/commands/CmdOpenWindow.h"
 "src/application/DiffWorkerProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/commands/CmdWindowTitleQuickMsg.h"
-"src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
 "build-stromc/CmdNavigateFirstDiff.o" "build-stromc/CmdNavigateFirstDiff.debug"
 ""
@@ -463,14 +462,11 @@ File
 "src/textselect/TextSelectionLine.h"
 "src/textselect/TextSelectionRange.h"
 "src/windows/ScrollbarWindow.h"
-"src/windows/WindowBase.h"
 "src/commands/CmdNavigateBase.h"
-"src/commands/CommandBase.h"
 "src/commands/CmdOpenWindow.h"
 "src/application/DiffWorkerProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/commands/CmdWindowTitleQuickMsg.h"
-"src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
 "build-stromc/CmdNavigateLastDiff.o" "build-stromc/CmdNavigateLastDiff.debug"
 ""
@@ -486,8 +482,6 @@ File
 "src/windows/DiffWindowRastports.h"
 "src/windows/DiffWindowTextArea.h"
 "src/windows/ScrollbarWindow.h"
-"src/windows/WindowBase.h"
-"src/commands/CommandBase.h"
 "src/textselect/TextSelectionLine.h"
 "src/textselect/TextSelectionRange.h"
 "src/commands/CmdNavigateBase.h"
@@ -495,7 +489,6 @@ File
 "src/application/DiffWorkerProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/commands/CmdWindowTitleQuickMsg.h"
-"src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
 "build-stromc/CmdNavigateNextDiff.o" "build-stromc/CmdNavigateNextDiff.debug"
 ""
@@ -511,8 +504,6 @@ File
 "src/windows/DiffWindowRastports.h"
 "src/windows/DiffWindowTextArea.h"
 "src/windows/ScrollbarWindow.h"
-"src/windows/WindowBase.h"
-"src/commands/CommandBase.h"
 "src/textselect/TextSelectionLine.h"
 "src/textselect/TextSelectionRange.h"
 "src/commands/CmdNavigateBase.h"
@@ -520,7 +511,6 @@ File
 "src/application/DiffWorkerProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/commands/CmdWindowTitleQuickMsg.h"
-"src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
 "build-stromc/CmdNavigatePrevDiff.o" "build-stromc/CmdNavigatePrevDiff.debug"
 ""
@@ -822,7 +812,6 @@ File
 "src/diffengine/DiffLine.h"
 "src/diffengine/DiffOutputFileBase.h"
 "src/windows/ScrollbarWindow.h"
-"src/windows/WindowBase.h"
 "src/windows/DiffWindowRastports.h"
 "src/windows/DiffWindowTextArea.h"
 "src/textselect/TextSelectionLine.h"
@@ -899,7 +888,6 @@ File
 "src/textsearch/SearchOptions.h"
 "src/application/DiffDocument.h"
 "src/application/DiffWorker.h"
-"src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
 "build-stromc/SearchWindow.o" "build-stromc/SearchWindow.debug"
 ""
@@ -938,6 +926,13 @@ Section
 File
 2 "src/amigautils/AmigaFile.h"
 "src/amigautils/AmigaFile.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/amigautils/Clipboard.h"
+"src/amigautils/Clipboard.h"
 Storm Shell Project (Dependencies)
 "" ""
 ""
