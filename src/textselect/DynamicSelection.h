@@ -9,8 +9,8 @@
 
 
 /**
- * A text selection object suited for dynamic selection of text, e.g.
- * with the mouse
+ * A selection object for one continuous selection block that can be
+ * updated dynamically, e.g. with the mouse.
  *
  * @author Uwe Rosner
  * @date 04/01/2023
@@ -42,16 +42,6 @@ public:
   void updateDynamicSelection(unsigned long lineId, unsigned long columnId);
 
   /**
-   * Adds a selection block (range) to a line.
-   * 
-   * NOTE: Do not mix this with dynamic selection
-   */
-  void addBlock(unsigned long lineId, 
-                unsigned long fromColumn, 
-                unsigned long toColumn);
-
-
-  /**
    * Returns true if given line id and column id is part of this text
    * selection:
    */
@@ -69,48 +59,14 @@ public:
    */
   long getNextSelectionStart(unsigned long lineId, unsigned long columnId);
 
-  /**
-   * Returns a list<int> of the lineIds whoese selection state was
-   * changed during last dynamic selection operation.
-   */
-  const std::list<long>& getUpdatedLineIds();
-
-  void addUpdatedLine(long lineId);
-
-  void addUpdatedLines(const std::vector<long>& linesRange);
-
-  void clearUpdatedLineIds();
-
 private:
-  std::list<TextSelectionLine*> m_SelectionLines;
-  std::list<long> m_UpdatedLineIds;
+  long m_StartLineId;
+  long m_StartColumnId;
 
-  enum UpdateDirection
-  {
-    UD_START_UPWARD = 0,
-    UD_APPEND_UPWARD,
-    UD_REDUCE_TOP,
-    UD_STOP_UPWARD,
-    UD_START_DOWNWARD,
-    UD_APPEND_DOWNWARD,
-    UD_REDUCE_BOTTOM,
-    UD_STOP_DOWNWARD,
-    UD_NONE,
-  };
-
-  unsigned long m_StartLineId;    ///< Line where the dynamic selection started
-  unsigned long m_StartColumnId;  ///< Column where the dynamic selection started
-  unsigned long m_LowestLineId;   ///< Lowest line in dynamic selection block
-  unsigned long m_HighestLineId;  ///< Highest line in dynamic selection block
-
-  UpdateDirection m_UpdateDirection;
-
-  void clearFirstSelectionLine();
-  void clearLastSelectionLine();
-
-  UpdateDirection calcUpdateDirection(unsigned long lineId);
-
-  TextSelectionLine* findSelectionLine(unsigned long lineId);
+  long m_MinLineId;
+  long m_MinLineColumnId;
+  long m_MaxLineId;
+  long m_MaxLineColumnId;
 };
 
 #endif
