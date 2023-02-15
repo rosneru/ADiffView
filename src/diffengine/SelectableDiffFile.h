@@ -2,7 +2,9 @@
 #define SELECTABLE_DIFF_FILE_H
 
 #include "DiffFileBase.h"
-#include "TextSelection.h"
+#include "SelectionBase.h"
+#include "BlockwiseSelection.h"
+#include "DynamicSelection.h"
 
 /**
  * Adds the ability text selection to an existing DiffFile.
@@ -66,11 +68,6 @@ public:
    */
   const std::list<long>& getUpdatedLineIds();
 
-  /**
-   * Returns the selection lines 
-   */
-  const std::list<TextSelectionLine*>* getSelectionLines() const;
-
   void clearUpdatedLineIds();
 
   bool isPointInSelection(unsigned long lineId, unsigned long columnId) const;
@@ -80,9 +77,9 @@ public:
 
 private:
   const DiffFileBase& m_DiffFile;
-  TextSelection m_SearchResultSelection;
-  TextSelection m_DynamicSelection;
-  TextSelection* m_pCurrentSelection;
+  BlockwiseSelection m_SearchResultSelection;
+  DynamicSelection m_DynamicSelection;
+  SelectionBase* m_pCurrentSelection;
 
   /**
    * Adds all lineIds of given collection to current selections

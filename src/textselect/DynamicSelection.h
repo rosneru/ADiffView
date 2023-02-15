@@ -1,24 +1,30 @@
-#ifndef TEXT_SELECTION_H
-#define TEXT_SELECTION_H
+#ifndef DYNAMIC_SELECTION_H
+#define DYNAMIC_SELECTION_H
 
 #include <list>
 #include <vector>
 #include "DiffLine.h"
+#include "SelectionBase.h"
 #include "TextSelectionLine.h"
 
 
 /**
- * A collection of lines which contain selected ranges of text.
+ * A text selection object suited for dynamic selection of text, e.g.
+ * with the mouse
  *
  * @author Uwe Rosner
- * @date 22/12/2020
+ * @date 04/01/2023
  */
-class TextSelection
+class DynamicSelection : public SelectionBase
 {
 public:
-  TextSelection(const std::vector<DiffLine*>& textLines);
-  virtual ~TextSelection();
+  DynamicSelection(const std::vector<DiffLine*>& textLines);
+  virtual ~DynamicSelection();
 
+  /**
+   * Clears the selection completely.
+   */
+  void clear();
 
   /**
    * Start a dynamic selection at given line and column
@@ -44,10 +50,6 @@ public:
                 unsigned long fromColumn, 
                 unsigned long toColumn);
 
-  /**
-   * Clears the selection completely.
-   */
-  void clear();
 
   /**
    * Returns true if given line id and column id is part of this text
@@ -76,16 +78,10 @@ public:
   void addUpdatedLine(long lineId);
 
   void addUpdatedLines(const std::vector<long>& linesRange);
-  
-  /**
-   * Returns the selection lines 
-   */
-  const std::list<TextSelectionLine*>* getSelectionLines() const;
 
   void clearUpdatedLineIds();
 
 private:
-  const std::vector<DiffLine*>& m_TextLines;
   std::list<TextSelectionLine*> m_SelectionLines;
   std::list<long> m_UpdatedLineIds;
 

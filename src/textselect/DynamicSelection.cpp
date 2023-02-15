@@ -1,20 +1,25 @@
 #include <algorithm>
 #include <stddef.h>
-#include "TextSelection.h"
+#include "DynamicSelection.h"
 
-TextSelection::TextSelection(const std::vector<DiffLine*>& textLines)
-  : m_TextLines(textLines),
+DynamicSelection::DynamicSelection(const std::vector<DiffLine*>& textLines)
+  : SelectionBase(textLines),
     m_UpdateDirection(UD_NONE)
 {
 }
 
-TextSelection::~TextSelection()
+DynamicSelection::~DynamicSelection()
 {
   clear();
 }
 
-void TextSelection::startDynamicSelection(unsigned long lineId,
-                                          unsigned long columnId)
+void DynamicSelection::clear()
+{
+  // TODO
+}
+
+void DynamicSelection::startDynamicSelection(unsigned long lineId,
+                                             unsigned long columnId)
 {
   if(lineId > (m_TextLines.size() - 1))
   {
@@ -22,7 +27,7 @@ void TextSelection::startDynamicSelection(unsigned long lineId,
   }
 
   clear();
-  m_UpdateDirection = TextSelection::UD_NONE;
+  m_UpdateDirection = DynamicSelection::UD_NONE;
   m_StartLineId = lineId;
   
   unsigned long lastColumn = m_TextLines[lineId]->getNumChars();
@@ -34,7 +39,7 @@ void TextSelection::startDynamicSelection(unsigned long lineId,
   m_UpdatedLineIds.push_back(lineId);
 }
 
-void TextSelection::updateDynamicSelection(unsigned long lineId,
+void DynamicSelection::updateDynamicSelection(unsigned long lineId,
                                            unsigned long columnId)
 {
   UpdateDirection newUpdateDirection;
@@ -86,16 +91,16 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
   }
 
   newUpdateDirection = calcUpdateDirection(lineId);
-  if(newUpdateDirection != TextSelection::UD_NONE)
+  if(newUpdateDirection != DynamicSelection::UD_NONE)
   {
     m_UpdateDirection = newUpdateDirection;
   }
 
   switch(newUpdateDirection)
   {
-    case TextSelection::UD_NONE:
+    case DynamicSelection::UD_NONE:
       break;
-    case TextSelection::UD_START_UPWARD:
+    case DynamicSelection::UD_START_UPWARD:
       clear();
 
       // Select new top line from start char to last column
@@ -117,7 +122,7 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       m_SelectionLines.push_back(new TextSelectionLine(m_StartLineId, 0, toColumn));
       m_UpdatedLineIds.push_back(m_StartLineId);
       break;
-    case TextSelection::UD_APPEND_UPWARD:
+    case DynamicSelection::UD_APPEND_UPWARD:
       // Remove the former, only partly selected top line
       clearFirstSelectionLine();
 
@@ -135,7 +140,7 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       m_SelectionLines.push_front(new TextSelectionLine(lineId, fromColumn, lastColumn));
       m_UpdatedLineIds.push_front(lineId);
       break;
-    case TextSelection::UD_REDUCE_TOP:
+    case DynamicSelection::UD_REDUCE_TOP:
       // Remove reduced top lines including the still fully selected new
       // top line
       for(unsigned int i = m_LowestLineId; i <= lineId; i++)
@@ -153,14 +158,14 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       // to add lineId to m_UpdatedLineIds. It has been done already in
       // clearFirstSelectionLine().
       break;
-    case TextSelection::UD_STOP_UPWARD:
-    case TextSelection::UD_STOP_DOWNWARD:
+    case DynamicSelection::UD_STOP_UPWARD:
+    case DynamicSelection::UD_STOP_DOWNWARD:
       clear();
       fromColumn = std::min(columnId, m_StartColumnId);
       toColumn = std::max(columnId, m_StartColumnId);
       m_SelectionLines.push_front(new TextSelectionLine(lineId, fromColumn, toColumn));
       break;
-    case TextSelection::UD_START_DOWNWARD:
+    case DynamicSelection::UD_START_DOWNWARD:
       clear();
 
       // Select start line from column 0 to start char
@@ -180,7 +185,7 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       m_SelectionLines.push_back(new TextSelectionLine(lineId, 0, toColumn));
       m_UpdatedLineIds.push_back(lineId);
       break;
-    case TextSelection::UD_APPEND_DOWNWARD:
+    case DynamicSelection::UD_APPEND_DOWNWARD:
       // Remove the former bottom line
       clearLastSelectionLine();
 
@@ -198,7 +203,7 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
       m_SelectionLines.push_back(new TextSelectionLine(lineId, 0, toColumn));
       m_UpdatedLineIds.push_back(lineId);
       break;
-    case TextSelection::UD_REDUCE_BOTTOM:
+    case DynamicSelection::UD_REDUCE_BOTTOM:
       // Remove reduced bottom lines including the still fully selected
       // new bottom line
       for(unsigned int i = m_HighestLineId; i >= lineId; i--)
@@ -214,7 +219,7 @@ void TextSelection::updateDynamicSelection(unsigned long lineId,
   }
 }
 
-void TextSelection::addBlock(unsigned long lineId, 
+void DynamicSelection::addBlock(unsigned long lineId, 
                              unsigned long fromColumn, 
                              unsigned long toColumn)
 {
@@ -247,20 +252,7 @@ void TextSelection::addBlock(unsigned long lineId,
   }
 }
 
-
-void TextSelection::clear()
-{
-  std::list<TextSelectionLine*>::iterator it;
-  for(it = m_SelectionLines.begin(); it != m_SelectionLines.end(); it++)
-  {
-    m_UpdatedLineIds.push_back((*it)->getLineId());
-    delete *it;
-  }
-
-  m_SelectionLines.clear();
-}
-
-bool TextSelection::isSelected(unsigned long lineId, unsigned long columnId) const
+bool DynamicSelection::isSelected(unsigned long lineId, unsigned long columnId) const
 {
   std::list<TextSelectionLine*>::const_iterator it;
   for(it = m_SelectionLines.begin(); it != m_SelectionLines.end(); it++)
@@ -279,7 +271,7 @@ bool TextSelection::isSelected(unsigned long lineId, unsigned long columnId) con
   return false;
 }
 
-long TextSelection::getNumMarkedChars(unsigned long lineId, 
+long DynamicSelection::getNumMarkedChars(unsigned long lineId, 
                                       unsigned long columnId)
 {
   std::list<TextSelectionLine*>::iterator it;
@@ -305,7 +297,7 @@ long TextSelection::getNumMarkedChars(unsigned long lineId,
 }
 
 
-long TextSelection::getNextSelectionStart(unsigned long lineId, 
+long DynamicSelection::getNextSelectionStart(unsigned long lineId, 
                                           unsigned long columnId)
 {
   std::list<TextSelectionLine*>::iterator it;
@@ -326,7 +318,7 @@ long TextSelection::getNextSelectionStart(unsigned long lineId,
   return -1;
 }
 
-const std::list<long>& TextSelection::getUpdatedLineIds()
+const std::list<long>& DynamicSelection::getUpdatedLineIds()
 {
   m_UpdatedLineIds.sort();
   m_UpdatedLineIds.unique();
@@ -334,28 +326,23 @@ const std::list<long>& TextSelection::getUpdatedLineIds()
   return m_UpdatedLineIds;
 }
 
-void TextSelection::addUpdatedLine(long lineId)
+void DynamicSelection::addUpdatedLine(long lineId)
 {
   m_UpdatedLineIds.push_back(lineId);
 }
 
-void TextSelection::addUpdatedLines(const std::vector<long>& linesRange)
+void DynamicSelection::addUpdatedLines(const std::vector<long>& linesRange)
 {
   std::list<long>::iterator it = m_UpdatedLineIds.end();
   m_UpdatedLineIds.insert(it, linesRange.begin(), linesRange.end());
 }
 
-const std::list<TextSelectionLine*>* TextSelection::getSelectionLines() const 
-{
-  return &m_SelectionLines;
-}
-
-void TextSelection::clearUpdatedLineIds()
+void DynamicSelection::clearUpdatedLineIds()
 {
   m_UpdatedLineIds.clear();
 }
 
-void TextSelection::clearFirstSelectionLine()
+void DynamicSelection::clearFirstSelectionLine()
 {
   // Remove first TextSelectionLine
   std::list<TextSelectionLine*>::iterator it = m_SelectionLines.begin();
@@ -366,7 +353,7 @@ void TextSelection::clearFirstSelectionLine()
   m_SelectionLines.pop_front();
 }
 
-void TextSelection::clearLastSelectionLine()
+void DynamicSelection::clearLastSelectionLine()
 {
   // Remove last TextSelectionLine
   std::list<TextSelectionLine*>::iterator it = m_SelectionLines.end();
@@ -378,7 +365,7 @@ void TextSelection::clearLastSelectionLine()
   m_SelectionLines.pop_back();
 }
 
-TextSelection::UpdateDirection TextSelection::calcUpdateDirection(
+DynamicSelection::UpdateDirection DynamicSelection::calcUpdateDirection(
   unsigned long lineId)
 {
   unsigned long numLinesSelected = m_SelectionLines.size();
@@ -389,11 +376,11 @@ TextSelection::UpdateDirection TextSelection::calcUpdateDirection(
   {
     if(m_StartLineId > lineId)
     {
-      return TextSelection::UD_START_UPWARD;
+      return DynamicSelection::UD_START_UPWARD;
     }
     else if(m_StartLineId < lineId)
     {
-      return TextSelection::UD_START_DOWNWARD;
+      return DynamicSelection::UD_START_DOWNWARD;
     }
   }
   else if(numLinesSelected > 1)
@@ -402,62 +389,62 @@ TextSelection::UpdateDirection TextSelection::calcUpdateDirection(
     {
       if(m_HighestLineId > m_StartLineId)
       {
-        return TextSelection::UD_START_UPWARD;
+        return DynamicSelection::UD_START_UPWARD;
       }
       else
       {
-        return TextSelection::UD_APPEND_UPWARD;
+        return DynamicSelection::UD_APPEND_UPWARD;
       }
     }
     else if(lineId > m_HighestLineId)
     {
       if(m_LowestLineId < m_StartLineId)
       {
-        return TextSelection::UD_START_DOWNWARD;
+        return DynamicSelection::UD_START_DOWNWARD;
       }
       else
       {
-        return TextSelection::UD_APPEND_DOWNWARD;
+        return DynamicSelection::UD_APPEND_DOWNWARD;
       }
     }
     else if(lineId < m_StartLineId)
     {
-      if(m_UpdateDirection == TextSelection::UD_START_UPWARD ||
-         m_UpdateDirection == TextSelection::UD_APPEND_UPWARD)
+      if(m_UpdateDirection == DynamicSelection::UD_START_UPWARD ||
+         m_UpdateDirection == DynamicSelection::UD_APPEND_UPWARD)
       {
         if(lineId == m_LowestLineId)
         {
-          return TextSelection::UD_NONE;
+          return DynamicSelection::UD_NONE;
         }
       }
-      return TextSelection::UD_REDUCE_TOP;
+      return DynamicSelection::UD_REDUCE_TOP;
     }
     else if(lineId > m_StartLineId)
     {
-      if(m_UpdateDirection == TextSelection::UD_START_DOWNWARD ||
-         m_UpdateDirection == TextSelection::UD_APPEND_DOWNWARD)
+      if(m_UpdateDirection == DynamicSelection::UD_START_DOWNWARD ||
+         m_UpdateDirection == DynamicSelection::UD_APPEND_DOWNWARD)
       {
         if(lineId == m_HighestLineId)
         {
-          return TextSelection::UD_NONE;
+          return DynamicSelection::UD_NONE;
         }
       }
-      return TextSelection::UD_REDUCE_BOTTOM;
+      return DynamicSelection::UD_REDUCE_BOTTOM;
     }
     else if(lineId == m_HighestLineId)
     {
-      return TextSelection::UD_STOP_UPWARD;
+      return DynamicSelection::UD_STOP_UPWARD;
     }
     else if(lineId == m_LowestLineId)
     {
-      return TextSelection::UD_STOP_DOWNWARD;
+      return DynamicSelection::UD_STOP_DOWNWARD;
     }
   }
 
-  return TextSelection::UD_NONE;
+  return DynamicSelection::UD_NONE;
 }
 
-TextSelectionLine* TextSelection::findSelectionLine(unsigned long lineId)
+TextSelectionLine* DynamicSelection::findSelectionLine(unsigned long lineId)
 {
   std::list<TextSelectionLine*>::iterator it;
   for(it = m_SelectionLines.begin(); it != m_SelectionLines.end(); it++)

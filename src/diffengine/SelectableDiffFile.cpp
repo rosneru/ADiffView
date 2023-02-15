@@ -49,12 +49,6 @@ const std::list<long>& SelectableDiffFile::getUpdatedLineIds()
   return m_pCurrentSelection->getUpdatedLineIds();
 }
 
-const std::list<TextSelectionLine*>* SelectableDiffFile::getSelectionLines() const
-{
-  return m_pCurrentSelection->getSelectionLines();
-}
-
-
 void SelectableDiffFile::clearUpdatedLineIds()
 {
   m_pCurrentSelection->clearUpdatedLineIds();
@@ -79,9 +73,10 @@ void SelectableDiffFile::activateDynamicSelection()
 
   m_pCurrentSelection = &m_DynamicSelection;
 
-  // Add the formerly selected lines to UpdatedLineIds to get them
-  // redrawn (as selection cleared) if necessary
-  addToUpdatedLines(m_SearchResultSelection.getSelectionLines());
+  // TODO rethink , reactivate
+  // // Add the formerly selected lines to UpdatedLineIds to get them
+  // // redrawn (as selection cleared) if necessary
+  // addToUpdatedLines(m_SearchResultSelection.getSelectionLines());
 
   return;
 }
@@ -96,29 +91,31 @@ void SelectableDiffFile::activateSearchResultSelection(long pageTopLineId,
 
   m_pCurrentSelection = &m_SearchResultSelection;
 
-  // Add the formerly selected lines to UpdatedLineIds to get them
-  // redrawn (as selection cleared) if necessary
-  addToUpdatedLines(m_DynamicSelection.getSelectionLines());
+  // TODO rethink , reactivate
+  // // Add the formerly selected lines to UpdatedLineIds to get them
+  // // redrawn (as selection cleared) if necessary
+  // addToUpdatedLines(m_DynamicSelection.getSelectionLines());
 
-  // Add the lineIds of the selected lines of the current page to
-  // updated lines collection
-  const std::list<TextSelectionLine*>* pSelectedLines = m_SearchResultSelection.getSelectionLines();
-  std::list<TextSelectionLine*>::const_iterator it;
-  for(it = pSelectedLines->begin(); it != pSelectedLines->end(); it++)
-  {
-    long lineId = (*it)->getLineId();
-    if(lineId < pageTopLineId)
-    {
-      continue;
-    }
 
-    if(lineId >= pageBottomLineId)
-    {
-      break;
-    }
+  // // Add the lineIds of the selected lines of the current page to
+  // // updated lines collection
+  // const std::list<TextSelectionLine*>* pSelectedLines = m_SearchResultSelection.getSelectionLines();
+  // std::list<TextSelectionLine*>::const_iterator it;
+  // for(it = pSelectedLines->begin(); it != pSelectedLines->end(); it++)
+  // {
+  //   long lineId = (*it)->getLineId();
+  //   if(lineId < pageTopLineId)
+  //   {
+  //     continue;
+  //   }
 
-    m_SearchResultSelection.addUpdatedLine(lineId);
-  }
+  //   if(lineId >= pageBottomLineId)
+  //   {
+  //     break;
+  //   }
+
+  //   m_SearchResultSelection.addUpdatedLine(lineId);
+  // }
 
   return;
 }

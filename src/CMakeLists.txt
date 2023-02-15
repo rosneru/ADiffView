@@ -61,7 +61,9 @@ add_executable (ADiffView_gcc
                 screen/OpenScreenBase.cpp
                 textsearch/DiffFileSearchEngine.cpp
                 textsearch/DiffFileSearchResult.cpp
-                textselect/TextSelection.cpp
+                textselect/BlockwiseSelection.cpp
+                textselect/DynamicSelection.cpp
+                textselect/SelectionBase.cpp
                 textselect/TextSelectionRange.cpp
                 textselect/TextSelectionLine.cpp
                 windows/DiffWindow.cpp
