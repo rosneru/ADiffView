@@ -260,3 +260,15 @@ long DynamicSelection::getNextSelectionStart(unsigned long lineId,
 
   return 0;
 }
+
+
+
+long DynamicSelection::getMinLineId()
+{
+  return m_MinLineId;
+}
+
+long DynamicSelection::getMaxLineId()
+{
+  return m_MaxLineId;
+}

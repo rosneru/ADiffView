@@ -51,6 +51,8 @@ public:
    */
   long getNextSelectionStart(unsigned long lineId, unsigned long columnId);
 
+  const std::list<TextSelectionLine*>* getSelectionLines() const;
+
 private:
   std::list<TextSelectionLine*> m_SelectionLines;
 

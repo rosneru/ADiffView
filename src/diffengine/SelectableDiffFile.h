@@ -80,12 +80,6 @@ private:
   BlockwiseSelection m_SearchResultSelection;
   DynamicSelection m_DynamicSelection;
   SelectionBase* m_pCurrentSelection;
-
-  /**
-   * Adds all lineIds of given collection to current selections
-   * UpdatedLineIds
-   */
-  void addToUpdatedLines(const std::list<TextSelectionLine*>* pLineCollection);
 };
 
 #endif

@@ -73,6 +73,7 @@ void SelectableDiffFile::activateDynamicSelection()
 
   m_pCurrentSelection = &m_DynamicSelection;
 
+
   // TODO rethink , reactivate
   // // Add the formerly selected lines to UpdatedLineIds to get them
   // // redrawn (as selection cleared) if necessary
@@ -91,31 +92,39 @@ void SelectableDiffFile::activateSearchResultSelection(long pageTopLineId,
 
   m_pCurrentSelection = &m_SearchResultSelection;
 
-  // TODO rethink , reactivate
-  // // Add the formerly selected lines to UpdatedLineIds to get them
-  // // redrawn (as selection cleared) if necessary
-  // addToUpdatedLines(m_DynamicSelection.getSelectionLines());
+  // Add the formerly selected lines to UpdatedLineIds to get them
+  // redrawn (as selection cleared) if necessary
+  std::vector<long> formerSelectedLineIds;
+  for(long i = pageTopLineId; i <= pageBottomLineId; i++)
+  {
+    if(i >= m_DynamicSelection.getMinLineId() && i <= m_DynamicSelection.getMaxLineId())
+    {
+      formerSelectedLineIds.push_back(i);
+    }
+  }
+
+  m_SearchResultSelection.addUpdatedLines(formerSelectedLineIds);
 
 
-  // // Add the lineIds of the selected lines of the current page to
-  // // updated lines collection
-  // const std::list<TextSelectionLine*>* pSelectedLines = m_SearchResultSelection.getSelectionLines();
-  // std::list<TextSelectionLine*>::const_iterator it;
-  // for(it = pSelectedLines->begin(); it != pSelectedLines->end(); it++)
-  // {
-  //   long lineId = (*it)->getLineId();
-  //   if(lineId < pageTopLineId)
-  //   {
-  //     continue;
-  //   }
+  // Add the lineIds of the selected lines of the current page to
+  // updated lines collection
+  const std::list<TextSelectionLine*>* pSelectedLines = m_SearchResultSelection.getSelectionLines();
+  std::list<TextSelectionLine*>::const_iterator it;
+  for(it = pSelectedLines->begin(); it != pSelectedLines->end(); it++)
+  {
+    long lineId = (*it)->getLineId();
+    if(lineId < pageTopLineId)
+    {
+      continue;
+    }
 
-  //   if(lineId >= pageBottomLineId)
-  //   {
-  //     break;
-  //   }
+    if(lineId >= pageBottomLineId)
+    {
+      break;
+    }
 
-  //   m_SearchResultSelection.addUpdatedLine(lineId);
-  // }
+    m_SearchResultSelection.addUpdatedLine(lineId);
+  }
 
   return;
 }
@@ -159,21 +168,4 @@ long SelectableDiffFile::getNumMarkedChars(unsigned long lineId,
                                            unsigned long columnId)
 {
   return m_pCurrentSelection->getNumMarkedChars(lineId, columnId);
-}
-
-void SelectableDiffFile::addToUpdatedLines(const std::list<TextSelectionLine*>* pLineCollection)
-{
-  if(pLineCollection == NULL)
-  {
-    return;
-  }
-
-  std::vector<long> formerSelectedLineIds;
-  std::list<TextSelectionLine*>::const_iterator it;
-  for(it = pLineCollection->begin(); it != pLineCollection->end(); it++)
-  {
-    formerSelectedLineIds.push_back((*it)->getLineId());
-  }
-  
-  m_pCurrentSelection->addUpdatedLines(formerSelectedLineIds);
 }

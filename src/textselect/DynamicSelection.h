@@ -59,6 +59,9 @@ public:
    */
   long getNextSelectionStart(unsigned long lineId, unsigned long columnId);
 
+  long getMinLineId();
+  long getMaxLineId();
+
 private:
   long m_StartLineId;
   long m_StartColumnId;

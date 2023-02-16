@@ -124,6 +124,11 @@ long BlockwiseSelection::getNextSelectionStart(unsigned long lineId,
   return -1;
 }
 
+const std::list<TextSelectionLine*>* BlockwiseSelection::getSelectionLines() const
+{
+  return &m_SelectionLines;
+}
+
 TextSelectionLine* BlockwiseSelection::findSelectionLine(unsigned long lineId)
 {
   std::list<TextSelectionLine*>::iterator it;
