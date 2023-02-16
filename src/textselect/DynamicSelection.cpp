@@ -10,8 +10,6 @@ DynamicSelection::DynamicSelection(const std::vector<DiffLine*>& textLines)
     m_MinLineColumnId(-1),
     m_MaxLineId(-1),
     m_MaxLineColumnId(-1)
-
-
 {
 }
 
@@ -64,6 +62,12 @@ void DynamicSelection::startDynamicSelection(unsigned long lineId,
 void DynamicSelection::updateDynamicSelection(unsigned long lineId,
                                               unsigned long columnId)
 {
+  long maxAllowedColumnId = m_TextLines[lineId]->getNumChars();
+  if(columnId > maxAllowedColumnId)
+  {
+    columnId = maxAllowedColumnId;
+  }
+
   if(lineId < m_MinLineId                                       // Extend selection upward
   || (m_MinLineId < m_StartLineId && lineId <= m_StartLineId))  // Reduce upward selection
   {
@@ -100,11 +104,12 @@ void DynamicSelection::updateDynamicSelection(unsigned long lineId,
 
   if(m_MinLineId == m_MaxLineId)
   {
-    long fromColumnId = std::min(m_MinLineColumnId, m_StartColumnId);
-    long toColumnId = std::max(m_MinLineColumnId, m_StartColumnId);
-    fromColumnId = std::min(m_MaxLineColumnId, m_StartColumnId);
-    toColumnId = std::max(m_MaxLineColumnId, m_StartColumnId);
-    if(columnId < fromColumnId || columnId > toColumnId)
+    // long fromColumnId = std::min(m_MinLineColumnId, m_StartColumnId);
+    // long toColumnId = std::max(m_MinLineColumnId, m_StartColumnId);
+    // fromColumnId = std::min(m_MaxLineColumnId, m_StartColumnId);
+    // toColumnId = std::max(m_MaxLineColumnId, m_StartColumnId);
+    // // if(columnId < fromColumnId || columnId > toColumnId)
+    if(columnId != m_MinLineColumnId)
     {
       m_MinLineColumnId = columnId;
       m_MaxLineColumnId = columnId;
@@ -168,7 +173,8 @@ long DynamicSelection::getNumMarkedChars(unsigned long lineId,
       return 0;
     }
 
-    return m_MaxLineColumnId - columnId + 1;
+    long highestSelectedCharId = std::max(m_MaxLineColumnId, m_StartColumnId);
+    return highestSelectedCharId - columnId + 1;
   }
 
   if(lineId == m_MinLineId)
