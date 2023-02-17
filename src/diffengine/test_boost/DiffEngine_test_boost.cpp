@@ -1911,9 +1911,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
     // Now select the non existing char 2 of line 8 (line 8 is empty)
     selection.updateDynamicSelection(8, 2);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
-    BOOST_CHECK_EQUAL(*it, 8);
+    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
 
     // Now check what's really selected
     line = 7;
@@ -1925,8 +1923,6 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
     BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 1); // 1 is the length of "" + one space at end
-
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
 
     // Again, remember the last three lines:
     //     DiffLine* pLine7 = new DiffLine("and this");
@@ -1970,9 +1966,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
     selection.updateDynamicSelection(8, 2);
     selection.updateDynamicSelection(8, 2);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
-    BOOST_CHECK_EQUAL(*it, 8);
+    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
 
     // Now check what's really selected
     line = 8;
@@ -2162,6 +2156,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionMultiCall )
 
     // ...and call the update multiple times
     selection.updateDynamicSelection(3, 5);
+    selection.updateDynamicSelection(3, 5);
 
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
@@ -2183,6 +2178,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionMultiCall )
 
     // Start a new selection at line 4, column 5
     selection.startDynamicSelection(4, 5);
+    selection.clearUpdatedLineIds();
 
     line = 3;
     column = selection.getNextSelectionStart(line, 0);
@@ -2196,6 +2192,13 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionMultiCall )
     line = 5;
     column = selection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
+
+    // 'Update' the selection multiple times to the start position line 4, column 5
+    selection.clearUpdatedLineIds();
+    selection.updateDynamicSelection(4, 5);
+    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
+    selection.updateDynamicSelection(4, 5);
+    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
 
     // Update the selection one top...
     selection.updateDynamicSelection(3, 5);
@@ -2219,7 +2222,14 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionMultiCall )
     BOOST_CHECK_EQUAL(column, -1);
 
     // Update the selection by one to right ...
+    selection.clearUpdatedLineIds();
     selection.updateDynamicSelection(3, 6);
+    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
+
+    // The same position again should cause no update
+    selection.clearUpdatedLineIds();
+    selection.updateDynamicSelection(3, 6);
+    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
 
     line = 3;
     column = selection.getNextSelectionStart(line, 0);
@@ -2227,7 +2237,14 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionMultiCall )
     BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
 
     // And back one to the left...
+    selection.clearUpdatedLineIds();
     selection.updateDynamicSelection(3, 5);
+    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
+
+    // The same position again should cause no update
+    selection.clearUpdatedLineIds();
+    selection.updateDynamicSelection(3, 5);
+    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
 
     line = 3;
     column = selection.getNextSelectionStart(line, 0);

@@ -69,7 +69,8 @@ void DynamicSelection::updateDynamicSelection(unsigned long lineId,
   }
 
   if(lineId < m_MinLineId                                       // Extend selection upward
-  || (m_MinLineId < m_StartLineId && lineId <= m_StartLineId))  // Reduce upward selection
+  || (m_MinLineId < m_StartLineId && lineId <= m_StartLineId)   // Reduce upward selection
+  && m_MinLineId != lineId)                                     // LineId  not changed
   {
     long fromLineId = std::min((long)lineId, m_MinLineId);
     long toLineId = std::max((long)lineId, m_MinLineId);
@@ -86,7 +87,8 @@ void DynamicSelection::updateDynamicSelection(unsigned long lineId,
   }
 
   if(lineId > m_MaxLineId                                       // Extend selection downward
-  || (m_MaxLineId > m_StartLineId && lineId >= m_StartLineId))  // Reduce downward selection
+  || (m_MaxLineId > m_StartLineId && lineId >= m_StartLineId)   // Reduce downward selection
+  && m_MaxLineId != lineId)                                     // LineId  not changed
   {
     long fromLineId = std::min((long)lineId, m_MaxLineId);
     long toLineId = std::max((long)lineId, m_MaxLineId);
