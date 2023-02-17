@@ -149,8 +149,34 @@ void DynamicSelection::updateDynamicSelection(unsigned long lineId,
 
 bool DynamicSelection::isSelected(unsigned long lineId, unsigned long columnId) const
 {
+  if(lineId == m_MinLineId 
+  && m_MinLineId == m_MaxLineId)
+  {
+    long from = std::min(m_MinLineColumnId, m_StartColumnId);
+    long to = std::max(m_MinLineColumnId, m_StartColumnId);
+    if(columnId >= from && columnId <= to)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
 
-  // TODO
+  if(lineId == m_MinLineId
+  && columnId > m_MaxLineColumnId
+  && columnId <= m_TextLines[lineId]->getNumChars())
+  {
+    return true;
+  }
+
+  if(lineId == m_MaxLineId
+  && columnId <= m_MaxLineColumnId)
+  {
+    return true;
+  }
+
   return false;
 }
 
