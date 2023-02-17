@@ -64,7 +64,8 @@ void SelectableDiffFile::clearDynamicSelection()
   m_DynamicSelection.clear();
 }
 
-void SelectableDiffFile::activateDynamicSelection()
+void SelectableDiffFile::activateDynamicSelection(long pageTopLineId,
+                                                  long pageBottomLineId)
 {
   if(m_pCurrentSelection == &m_DynamicSelection)
   {
@@ -73,11 +74,32 @@ void SelectableDiffFile::activateDynamicSelection()
 
   m_pCurrentSelection = &m_DynamicSelection;
 
+  // Add the formerly selected lines to UpdatedLineIds to get them
+  // redrawn if necessary, e.g. when selection is cleared.
+  // For the algorithm see file
+  //   "(WDB) (DEV) (ALGORITHM) (AMIGA) ADiffView - Text selection updated lines.xlsx"
+  if(m_SearchResultSelection.getSelectionLines()->size() < 1)
+  {
+    return;
+  }
 
-  // TODO rethink , reactivate
-  // // Add the formerly selected lines to UpdatedLineIds to get them
-  // // redrawn (as selection cleared) if necessary
-  // addToUpdatedLines(m_SearchResultSelection.getSelectionLines());
+  long lowestSelectedLineId = m_SearchResultSelection.getSelectionLines()->front()->getLineId();
+  long highestSelectedLineId = m_SearchResultSelection.getSelectionLines()->back()->getLineId();
+  long from = std::max(lowestSelectedLineId, pageTopLineId);
+  long to = std::min(highestSelectedLineId, pageBottomLineId);
+  if(from <= to)
+  {
+    std::vector<long> formerSelectedLineIds;
+    for(long i = from; i <= to; i++)
+    {
+      if(m_SearchResultSelection.isLineSelected(i))
+      {
+        formerSelectedLineIds.push_back(i);
+      }
+    }
+
+    m_DynamicSelection.addUpdatedLines(formerSelectedLineIds);
+  }
 
   return;
 }
@@ -93,18 +115,21 @@ void SelectableDiffFile::activateSearchResultSelection(long pageTopLineId,
   m_pCurrentSelection = &m_SearchResultSelection;
 
   // Add the formerly selected lines to UpdatedLineIds to get them
-  // redrawn (as selection cleared) if necessary
-  std::vector<long> formerSelectedLineIds;
-  for(long i = pageTopLineId; i <= pageBottomLineId; i++)
+  // redrawn if necessary, e.g. when selection is cleared.
+  // For the algorithm see file
+  //   "(WDB) (DEV) (ALGORITHM) (AMIGA) ADiffView - Text selection updated lines.xlsx"
+  long from = std::max(m_DynamicSelection.getMinLineId(), pageTopLineId);
+  long to = std::min(m_DynamicSelection.getMaxLineId(), pageBottomLineId);
+  if(from <= to)
   {
-    if(i >= m_DynamicSelection.getMinLineId() && i <= m_DynamicSelection.getMaxLineId())
+    std::vector<long> formerSelectedLineIds;
+    for(long i = from; i <= to; i++)
     {
       formerSelectedLineIds.push_back(i);
     }
+
+    m_SearchResultSelection.addUpdatedLines(formerSelectedLineIds);
   }
-
-  m_SearchResultSelection.addUpdatedLines(formerSelectedLineIds);
-
 
   // Add the lineIds of the selected lines of the current page to
   // updated lines collection

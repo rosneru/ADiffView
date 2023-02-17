@@ -238,7 +238,7 @@ void DiffWindowTextArea::activateSearchResultSelection()
 
 void DiffWindowTextArea::activateDynamicSelection()
 {
-  m_DiffFile.activateDynamicSelection();
+  m_DiffFile.activateDynamicSelection(m_Y, m_Y + m_AreaMaxLines);
 }
 
 bool DiffWindowTextArea::isPointInTextArea(unsigned long pointX,

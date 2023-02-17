@@ -38,6 +38,11 @@ public:
    * selection:
    */
   bool isSelected(unsigned long lineId, unsigned long columnId) const;
+  
+  /**
+   * Returns true if given line contains a selection
+   */
+  bool isLineSelected(unsigned long lineId) const;
 
   /**
    * Returns the number of selected characters from given column on

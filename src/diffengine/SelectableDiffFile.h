@@ -55,7 +55,7 @@ public:
   /**
    * Activates the dynamic selection mode.
    */
-  void activateDynamicSelection();
+  void activateDynamicSelection(long pageTopLineId, long pageBottomLineId);
 
   /**
    * Activates the search result selection mode.
