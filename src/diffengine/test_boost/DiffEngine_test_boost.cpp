@@ -1086,6 +1086,8 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     
     // 1) Start a selection
     selection.startDynamicSelection(2, 4);
+    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 0), 0);
+
     BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 4), 1);
     BOOST_CHECK_EQUAL(selection.getNextSelectionStart(2, 0), 4);
 
