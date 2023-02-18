@@ -2354,6 +2354,13 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionIsSelected )
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(1, 1), false);
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(1, 0), false);
 
+    dynamicSelection.updateDynamicSelection(5, 1);
+    BOOST_CHECK_EQUAL(dynamicSelection.isSelected(2, 1), false);
+    BOOST_CHECK_EQUAL(dynamicSelection.isSelected(3, 1), true);
+    BOOST_CHECK_EQUAL(dynamicSelection.isSelected(4, 1), true);
+    BOOST_CHECK_EQUAL(dynamicSelection.isSelected(5, 1), true);
+    BOOST_CHECK_EQUAL(dynamicSelection.isSelected(6, 1), false);
+
     BlockwiseSelection selection(textLines);
     BOOST_CHECK_EQUAL(selection.isSelected(2, 4), false);
     selection.addBlock(2, 2, 4);
