@@ -786,48 +786,55 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
         return;
       }
 
-      if(m_SelectionMode == SM_SELECTION_LEFT_FINISHED
-      && m_pLeftTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
+      if(m_pLeftTextArea->isPointInTextArea(pMsg->MouseX, pMsg->MouseY))
       {
-        m_SelectionMode = SM_NONE;
-        m_pLeftTextArea->clearDynamicSelection();
-        m_pLeftTextArea->renderSelectionUpdatedLines();
-        m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
-      }
-      else if(m_SelectionMode == SM_SELECTION_RIGHT_FINISHED
-           && m_pRightTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
-      {
-        m_SelectionMode = SM_NONE;
-        m_pRightTextArea->clearDynamicSelection();
-        m_pRightTextArea->renderSelectionUpdatedLines();
-        m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
-      }
-      else if(m_pLeftTextArea->isPointInTextArea(pMsg->MouseX, pMsg->MouseY))
-      {
-        m_SelectionMode = SM_SELECTION_LEFT_STARTED;
+        if(m_SelectionMode == SM_SELECTION_LEFT_FINISHED
+        && m_pLeftTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
+        {
+          m_SelectionMode = SM_NONE;
+          m_pLeftTextArea->clearDynamicSelection();
+          m_pLeftTextArea->renderSelectionUpdatedLines();
+          m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
+        }
+        else
+        {
+          m_SelectionMode = SM_SELECTION_LEFT_STARTED;
 
-        m_pLeftTextArea->activateDynamicSelection();
-        m_pLeftTextArea->startDynamicSelection(pMsg->MouseX, pMsg->MouseY);
+          m_pLeftTextArea->activateDynamicSelection();
+          m_pLeftTextArea->startDynamicSelection(pMsg->MouseX, pMsg->MouseY);
 
-        m_pRightTextArea->clearDynamicSelection();
-        m_pRightTextArea->activateDynamicSelection();
-        m_pRightTextArea->renderSelectionUpdatedLines();
+          m_pRightTextArea->clearDynamicSelection();
+          m_pRightTextArea->activateDynamicSelection();
+          m_pRightTextArea->renderSelectionUpdatedLines();
+        }
       }
       else if(m_pRightTextArea->isPointInTextArea(pMsg->MouseX, pMsg->MouseY))
       {
-        m_SelectionMode = SM_SELECTION_RIGHT_STARTED;
+        if(m_SelectionMode == SM_SELECTION_RIGHT_FINISHED
+        && m_pRightTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
+        {
+          m_SelectionMode = SM_NONE;
+          m_pRightTextArea->clearDynamicSelection();
+          m_pRightTextArea->renderSelectionUpdatedLines();
+          m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
+        }
+        else
+        {
+          m_SelectionMode = SM_SELECTION_RIGHT_STARTED;
 
-        m_pRightTextArea->activateDynamicSelection();
-        m_pRightTextArea->startDynamicSelection(pMsg->MouseX, pMsg->MouseY);
+          m_pRightTextArea->activateDynamicSelection();
+          m_pRightTextArea->startDynamicSelection(pMsg->MouseX, pMsg->MouseY);
 
-        m_pLeftTextArea->clearDynamicSelection();
-        m_pLeftTextArea->activateDynamicSelection();
-        m_pLeftTextArea->renderSelectionUpdatedLines();
+          m_pLeftTextArea->clearDynamicSelection();
+          m_pLeftTextArea->activateDynamicSelection();
+          m_pLeftTextArea->renderSelectionUpdatedLines();
+        }
       }
       else
       {
         m_SelectionMode = SM_NONE;
       }
+
       break;
     }
 
