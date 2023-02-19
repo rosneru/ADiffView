@@ -18,82 +18,56 @@ CmdCopySelection::~CmdCopySelection()
 
 void CmdCopySelection::Execute(Window* pActiveWindow)
 {
-  // const SelectableDiffFile* pDiffFile = m_DiffWindow.getSelectionDocument();
-  // if(pDiffFile == NULL)
-  // {
-  //   return;
-  // }
+  const SelectableDiffFile* pDiffFile = m_DiffWindow.getSelectionDocument();
+  if(pDiffFile == NULL)
+  {
+    return;
+  }
 
-  // const std::list<TextSelectionLine*>* pSelectionLines = pDiffFile->getSelectionLines();
-  // if(pSelectionLines == NULL)
-  // {
-  //   return;
-  // }
+  const DynamicSelection& selection = pDiffFile->getDynamicSelection();
+  long totalChars = selection.getNumTotalSelectedChars();
+  if(totalChars == 0)
+  {
+    return;
+  }
 
-  // if(pSelectionLines->size() < 1)
-  // {
-  //   // At least one line must be selected
-  //   return;
-  // }
+  long numSelectedLines = selection.getMaxLineId() - selection.getMinLineId() + 1;
 
-  // std::list<TextSelectionLine*>::const_iterator itLastItem = pSelectionLines->end();
-  // itLastItem--;
+  // Increase total chars by the number of selected lines -1 because all
+  // but the last line get a newline attached (Newlines are not part of
+  // the textLines collection)
+  totalChars += (numSelectedLines - 1);
 
-  // // First pass: get number of total chars to write.
-  // //
-  // // NOTE: Fully selected lines (all but the bottom one) report one char
-  // // more on getNumMarkedChars(). This is needed anyhow here for the
-  // // additional line feed char that is written for those lines.)
-  // std::list<TextSelectionLine*>::const_iterator it;
-  // ULONG totalChars = 0;
-  // for(it = pSelectionLines->begin(); it != pSelectionLines->end(); it++)
-  // {
-  //   TextSelectionLine*  pLine = *it;
-  //   TextSelectionRange* pRange = pLine->getFirstSelectedBlock();
-  //   totalChars += pRange->getNumMarkedChars(pRange->getFromColumn());
+  m_Clipboard.prepareMultilineWrite(totalChars);
 
-  //   // If the last selected line is an empty line reduce the totalChars
-  //   // by one, because nothing is to print for this line
-  //   if(it == itLastItem)
-  //   {
-  //     if(pRange->getFromColumn() == 0)
-  //     {
-  //       if(pRange->getNumMarkedChars(pRange->getFromColumn()) < 2)
-  //       {
-  //         if((*pDiffFile)[pLine->getLineId()]->getNumChars() == 0)
-  //         {
-  //           totalChars--;
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+  long fromLineId = selection.getMinLineId();
+  long toLineId = selection.getMaxLineId();
+  for(long i = fromLineId; i <= toLineId; i++)
+  {
+    const char* pLineTextStart = NULL;
+    long numCharsToWrite  = 0;
+    bool doWriteLineFeed = true;
 
-  // m_Clipboard.prepareMultilineWrite(totalChars);
+    if(i == fromLineId)
+    {
+      long startColumn = selection.getNextSelectionStart(i, 0);
+      numCharsToWrite = (*pDiffFile)[i]->getNumChars() - startColumn;
+      pLineTextStart = (*pDiffFile)[i]->getText() + startColumn;
+    }
+    else if (i == toLineId)
+    {
+      numCharsToWrite = selection.getNumMarkedChars(i, 0);
+      pLineTextStart = (*pDiffFile)[i]->getText();
+      doWriteLineFeed = false;
+    }
+    else
+    {
+      numCharsToWrite = (*pDiffFile)[i]->getNumChars();
+      pLineTextStart = (*pDiffFile)[i]->getText();
+    }
 
-  // for(it = pSelectionLines->begin(); it != pSelectionLines->end(); it++)
-  // {
-  //   TextSelectionLine*  pLine = *it;
-  //   TextSelectionRange* pRange = pLine->getFirstSelectedBlock();
-  //   const char* pLineFullText = (*pDiffFile)[pLine->getLineId()]->getText();
+    m_Clipboard.performMultilineWrite(pLineTextStart, numCharsToWrite, doWriteLineFeed);
+  }
 
-
-  //   ULONG fromColumn = pRange->getFromColumn();
-  //   const char* pLineTextStart = pLineFullText + fromColumn;
-  //   bool doWriteLineFeed = it != itLastItem;
-  //   ULONG numCharsToWrite = pRange->getNumMarkedChars(fromColumn);
-
-  //   // For all lines except the last one reduce the numCharsToWrite by
-  //   // one because the last to be written char of those lines is the \n
-  //   // which is written separately in performMultilineWrite() below.
-  //   if(it != itLastItem)
-  //   {
-  //     numCharsToWrite--;
-  //   }
-
-  //   m_Clipboard.performMultilineWrite(pLineTextStart, numCharsToWrite, doWriteLineFeed);
-  //   // printf("[FAIL] %.*s\n", pRange->getNumMarkedChars(fromColumn), pLineTextStart);
-  // }
-
-  // m_Clipboard.finishMultilineWrite();
+  m_Clipboard.finishMultilineWrite();
 }

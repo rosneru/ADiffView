@@ -75,7 +75,7 @@ public:
   long getNumNormalChars(unsigned long lineId, unsigned long columnId);
   long getNumMarkedChars(unsigned long lineId, unsigned long columnId);
 
-  const DynamicSelection& getDynamicSelection();
+  const DynamicSelection& getDynamicSelection() const;
 
 private:
   const DiffFileBase& m_DiffFile;
