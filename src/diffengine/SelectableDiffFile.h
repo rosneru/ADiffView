@@ -75,6 +75,8 @@ public:
   long getNumNormalChars(unsigned long lineId, unsigned long columnId);
   long getNumMarkedChars(unsigned long lineId, unsigned long columnId);
 
+  const DynamicSelection& getDynamicSelection();
+
 private:
   const DiffFileBase& m_DiffFile;
   BlockwiseSelection m_SearchResultSelection;

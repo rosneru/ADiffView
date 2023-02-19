@@ -219,7 +219,7 @@ long DynamicSelection::getNumMarkedChars(unsigned long lineId,
       return 0;
     }
 
-    return toColumn - columnId + 1;
+    return toColumn - columnId;
   }
 
   if(lineId == m_MinLineId)
@@ -229,7 +229,7 @@ long DynamicSelection::getNumMarkedChars(unsigned long lineId,
       return 0;
     }
 
-    return m_TextLines[lineId]->getNumChars() - columnId + 1;
+    return m_TextLines[lineId]->getNumChars() - columnId;
   }
 
   if(lineId == m_MaxLineId)
@@ -239,7 +239,7 @@ long DynamicSelection::getNumMarkedChars(unsigned long lineId,
       return 0;
     }
 
-    return m_MaxLineColumnId - columnId + 1;
+    return m_MaxLineColumnId - columnId;
   }
 
   // For the lines in the middle (no start or end line) return the 
@@ -251,7 +251,7 @@ long DynamicSelection::getNumMarkedChars(unsigned long lineId,
     return -1;
   }
 
-  return lineTextLength - columnId + 1;
+  return lineTextLength - columnId;
 }
 
 
@@ -317,3 +317,8 @@ long DynamicSelection::getMaxLineId()
 {
   return m_MaxLineId;
 }
+
+// long DynamicSelection::getTotalSelectedCharsCount()
+// {
+//   return 0;
+// }

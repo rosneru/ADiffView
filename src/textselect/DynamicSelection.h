@@ -61,6 +61,7 @@ public:
 
   long getMinLineId();
   long getMaxLineId();
+  // long getTotalSelectedCharsCount();
 
 private:
   long m_StartLineId;

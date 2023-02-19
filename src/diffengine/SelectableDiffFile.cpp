@@ -194,3 +194,8 @@ long SelectableDiffFile::getNumMarkedChars(unsigned long lineId,
 {
   return m_pCurrentSelection->getNumMarkedChars(lineId, columnId);
 }
+
+const DynamicSelection& SelectableDiffFile::getDynamicSelection()
+{
+  return m_DynamicSelection;
+}
