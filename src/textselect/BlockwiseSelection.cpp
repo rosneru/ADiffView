@@ -97,9 +97,9 @@ bool BlockwiseSelection::isLineSelected(unsigned long lineId) const
 }
 
 long BlockwiseSelection::getNumMarkedChars(unsigned long lineId, 
-                                           unsigned long columnId)
+                                           unsigned long columnId) const
 {
-  std::list<TextSelectionLine*>::iterator it;
+  std::list<TextSelectionLine*>::const_iterator it;
   for(it = m_SelectionLines.begin(); it != m_SelectionLines.end(); it++)
   {
     if((*it)->getLineId() > lineId)
@@ -123,9 +123,9 @@ long BlockwiseSelection::getNumMarkedChars(unsigned long lineId,
 
 
 long BlockwiseSelection::getNextSelectionStart(unsigned long lineId, 
-                                               unsigned long columnId)
+                                               unsigned long columnId) const
 {
-  std::list<TextSelectionLine*>::iterator it;
+  std::list<TextSelectionLine*>::const_iterator it;
   for(it = m_SelectionLines.begin(); it != m_SelectionLines.end(); it++)
   {
     if((*it)->getLineId() > lineId)

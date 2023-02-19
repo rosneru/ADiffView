@@ -1086,6 +1086,8 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     
     // 1) Start a selection
     selection.startDynamicSelection(2, 4);
+    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 0);
+
     BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 0), 0);
 
     BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 4), 0);
@@ -1097,6 +1099,8 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
 
     // 2) Update selection to the right
     selection.updateDynamicSelection(2, 5);
+    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 1);
+
     column = selection.getNextSelectionStart(2, 0);
     BOOST_CHECK_EQUAL(column, 4);
     BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, column), 1);
@@ -1107,6 +1111,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
 
     // 3) Then update selection to above
     selection.updateDynamicSelection(1, 5);
+    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 14);
 
     // Test line 1 (Updated selection upward to this);
     line = 1;
@@ -1129,6 +1134,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     // 4) Update selection to above a 2nd time
     selection.clearUpdatedLineIds();
     selection.updateDynamicSelection(0, 5);
+    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 28);
 
     line = 0;
     column = selection.getNextSelectionStart(line, 0);
@@ -1154,6 +1160,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     // 5) Update selection 3 columns to the left
     selection.clearUpdatedLineIds();
     selection.updateDynamicSelection(0, 2);
+    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 31);
 
     line = 0;
     column = selection.getNextSelectionStart(line, 0);
@@ -1177,6 +1184,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     // 6) Update selection to one line below
     selection.clearUpdatedLineIds();
     selection.updateDynamicSelection(1, 2);
+    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 17);
 
     line = 0;
     column = selection.getNextSelectionStart(line, 0);
@@ -1201,6 +1209,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     // 7) Update selection to another line below (the start line again);
     selection.clearUpdatedLineIds();
     selection.updateDynamicSelection(2, 2);
+    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 2);
 
     line = 1;
     column = selection.getNextSelectionStart(line, 0);
@@ -1220,6 +1229,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     // 8) Update selection to the line below
     selection.clearUpdatedLineIds();
     selection.updateDynamicSelection(3, 2);
+    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 8);
 
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
@@ -1240,6 +1250,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     // 9) Update selection to the line below
     selection.clearUpdatedLineIds();
     selection.updateDynamicSelection(4, 2);
+    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 17);
 
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
@@ -1265,6 +1276,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     // 10) Update selection 5 columns to the right
     selection.clearUpdatedLineIds();
     selection.updateDynamicSelection(4, 7);
+    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 22);
 
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
@@ -1288,6 +1300,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     // 11) Update selection to the line above
     selection.clearUpdatedLineIds();
     selection.updateDynamicSelection(3, 7);
+    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 13);
 
     line = 2;
     column = selection.getNextSelectionStart(line, 0);
@@ -1313,6 +1326,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     selection.clearUpdatedLineIds();
     selection.updateDynamicSelection(2, 7);
     selection.updateDynamicSelection(2, 7);
+    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 3);
 
     line = 2;
     column = selection.getNextSelectionStart(line, 0);

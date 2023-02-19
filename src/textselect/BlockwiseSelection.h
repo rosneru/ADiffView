@@ -48,13 +48,13 @@ public:
    * Returns the number of selected characters from given column on
    * given line.
    */
-  long getNumMarkedChars(unsigned long lineId, unsigned long columnId);
+  long getNumMarkedChars(unsigned long lineId, unsigned long columnId) const ;
 
   /**
    * Returns the columnId of the next selection start after given column
    * on given line. If there is no next selection start -1 is returned.
    */
-  long getNextSelectionStart(unsigned long lineId, unsigned long columnId);
+  long getNextSelectionStart(unsigned long lineId, unsigned long columnId) const;
 
   const std::list<TextSelectionLine*>* getSelectionLines() const;
 

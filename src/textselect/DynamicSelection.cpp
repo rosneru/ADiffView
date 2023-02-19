@@ -203,7 +203,7 @@ bool DynamicSelection::isSelected(unsigned long lineId, unsigned long columnId) 
 }
 
 long DynamicSelection::getNumMarkedChars(unsigned long lineId, 
-                                         unsigned long columnId)
+                                         unsigned long columnId) const
 {
   if(lineId < m_MinLineId || lineId > m_MaxLineId)
   {
@@ -256,7 +256,7 @@ long DynamicSelection::getNumMarkedChars(unsigned long lineId,
 
 
 long DynamicSelection::getNextSelectionStart(unsigned long lineId, 
-                                             unsigned long columnId)
+                                             unsigned long columnId) const
 {
   if(lineId < m_MinLineId || lineId > m_MaxLineId)
   {
@@ -308,17 +308,31 @@ long DynamicSelection::getNextSelectionStart(unsigned long lineId,
 
 
 
-long DynamicSelection::getMinLineId()
+long DynamicSelection::getMinLineId() const
 {
   return m_MinLineId;
 }
 
-long DynamicSelection::getMaxLineId()
+long DynamicSelection::getMaxLineId() const
 {
   return m_MaxLineId;
 }
 
-// long DynamicSelection::getTotalSelectedCharsCount()
-// {
-//   return 0;
-// }
+long DynamicSelection::getNumTotalSelectedChars() const
+{
+  long totalSelectedChars = 0;
+  for(long i = m_MinLineId; i <= m_MaxLineId; i++)
+  {
+    if(i == m_MinLineId || i == m_MaxLineId)
+    {
+      long lineSelectionStartColumn = getNextSelectionStart(i, 0);
+      totalSelectedChars += getNumMarkedChars(i, lineSelectionStartColumn);
+    }
+    else
+    {
+      totalSelectedChars += m_TextLines[i]->getNumChars();
+    }
+  }
+
+  return totalSelectedChars;
+}
