@@ -184,13 +184,14 @@ public:
 
   /**
    * Activates the dynamic selection mode in underlaying selectable diff
-   * file.
+   * file. That means the 'SearchResultSelection' is disabled.
    */
   void activateDynamicSelection();
 
   /**
    * Activates the search result selection mode in underlaying
-   * selectable diff file.
+   * selectable diff file. That means the 'DynamicSelection' is
+   * disabled.
    */
   void activateSearchResultSelection();
 
