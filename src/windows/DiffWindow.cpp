@@ -862,20 +862,18 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
 
 void DiffWindow::handleMouseMove(const struct IntuiMessage* pMsg)
 {
-  DiffWindowTextArea::ScrollRequest scrollRequest = DiffWindowTextArea::SR_NONE;
-
-  switch(m_SelectionMode)
+  DiffWindowTextArea::ScrollRequest scrollRequest;
+  if(m_SelectionMode == SM_SELECTION_LEFT_STARTED)
   {
-    case DiffWindow::SM_SELECTION_LEFT_STARTED:
-    {
-      scrollRequest = m_pLeftTextArea->updateDynamicSelection(pMsg->MouseX, pMsg->MouseY);
-      break;
-    }
-    case DiffWindow::SM_SELECTION_RIGHT_STARTED:
-    {
-      scrollRequest = m_pRightTextArea->updateDynamicSelection(pMsg->MouseX, pMsg->MouseY);
-      break;
-    }
+    scrollRequest = m_pLeftTextArea->updateDynamicSelection(pMsg->MouseX, pMsg->MouseY);
+  }
+  else if(m_SelectionMode == DiffWindow::SM_SELECTION_RIGHT_STARTED)
+  {
+    scrollRequest = m_pRightTextArea->updateDynamicSelection(pMsg->MouseX, pMsg->MouseY);
+  }
+  else
+  {
+    scrollRequest = DiffWindowTextArea::SR_NONE;
   }
 
   switch(scrollRequest)

@@ -28,19 +28,19 @@ public:
    * Returns true if given line id and column id is part of this text
    * selection:
    */
-  virtual bool isSelected(unsigned long lineId, unsigned long columnId) const = 0;
+  virtual bool isSelected(long lineId, long columnId) const = 0;
 
   /**
    * Returns the number of selected characters from given column on
    * given line.
    */
-  virtual long getNumMarkedChars(unsigned long lineId, unsigned long columnId) const = 0;
+  virtual long getNumMarkedChars(long lineId, long columnId) const = 0;
 
   /**
    * Returns the columnId of the next selection start after given column
    * on given line. If there is no next selection start -1 is returned.
    */
-  virtual long getNextSelectionStart(unsigned long lineId, unsigned long columnId) const = 0;
+  virtual long getNextSelectionStart(long lineId, long columnId) const = 0;
 
   const std::list<long>& getUpdatedLineIds();
   void addUpdatedLine(long lineId);

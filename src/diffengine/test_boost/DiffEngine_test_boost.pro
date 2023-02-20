@@ -32,9 +32,9 @@ SOURCES += \
     ../../textsearch/DiffFileSearchEngine.cpp \
     ../../textsearch/DiffFileSearchEngineSteadily.cpp \
     ../../textsearch/DiffFileSearchResult.cpp \
-    ../../textselect/BlockwiseSelection.cpp \
     ../../textselect/DynamicSelection.cpp \
     ../../textselect/SelectionBase.cpp \
+    ../../textselect/StaticSelection.cpp \
     ../../textselect/TextSelectionRange.cpp \
     ../../textselect/TextSelectionLine.cpp \
 

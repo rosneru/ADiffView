@@ -13,36 +13,34 @@
 class TextSelectionLine
 {
 public:
-  TextSelectionLine(unsigned long lineId,
-                    unsigned long fromColumn, 
-                    unsigned long toColumn);
+  TextSelectionLine(long lineId, long fromColumn, long toColumn);
 
   virtual ~TextSelectionLine();
 
-  void addBlock(unsigned long fromColumn, unsigned long toColumn);
+  void addBlock(long fromColumn, long toColumn);
 
   /**
    * Returns true if given line id and column id is part of this text
    * selection:
    */
-  bool isSelected(unsigned long columnId) const;
+  bool isSelected(long columnId) const;
 
   TextSelectionRange* getFirstSelectedBlock();
   
-  unsigned long getLineId() const;
+  long getLineId() const;
 
-  long getNumMarkedChars(unsigned long columnId);
+  long getNumMarkedChars(long columnId);
 
   /**
    * Returns the columnId of the next selection start after given
    * column. If there is no next selection start -1 is returned.
    */
-  long getNextSelectionStart(unsigned long columnId);
+  long getNextSelectionStart(long columnId);
 
 
 private:
   std::vector<TextSelectionRange*> m_SelectedBlocks;
-  unsigned long m_LineId;
+  long m_LineId;
 };
 
 

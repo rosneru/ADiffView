@@ -27,7 +27,7 @@
 #include "ProgressReporter.h"
 
 #include "SelectableDiffFile.h"
-#include "BlockwiseSelection.h"
+#include "StaticSelection.h"
 #include "DynamicSelection.h"
 #include "SelectionBase.h"
 #include "TextSelectionLine.h"
@@ -971,7 +971,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionBasic )
   textLines.push_back(pLine1);
   try
   {
-    BlockwiseSelection selection(textLines);
+    StaticSelection selection(textLines);
     
     selection.addBlock(1, 4, 14);
     selection.addBlock(2, 0, 9);
@@ -1046,8 +1046,8 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionBasic )
 /**
  * test_TextSelectionDynamic
  *
- * Test the methods TextSelection::startDynamicSelection(..) and
- * TextSelection::updateDynamicSelection(..)
+ * Test the methods TextSelection::startSelection(..) and
+ * TextSelection::updateSelection(..)
  *
  * See Excel sheet
  *   'text_selection_algorithm.xlsx' in other repository Python-Library,
@@ -1079,270 +1079,270 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
     long column;
     unsigned long line;
     std::list<long>::const_iterator it;
-    DynamicSelection selection(textLines);
+    DynamicSelection dynamicSelection(textLines);
     
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 4), 0);
-    BOOST_CHECK_EQUAL(selection.getNextSelectionStart(2, 0), -1);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(2, 4), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNextSelectionStart(2, 0), -1);
     
-    // 1) Start a selection
-    selection.startDynamicSelection(2, 4);
-    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 0);
+    // 1) Start a dynamicSelection
+    dynamicSelection.startSelection(2, 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumTotalSelectedChars(), 0);
 
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 0), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(2, 0), 0);
 
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 4), 0);
-    BOOST_CHECK_EQUAL(selection.getNextSelectionStart(2, 0), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(2, 4), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNextSelectionStart(2, 0), 4);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 2);
 
-    // 2) Update selection to the right
-    selection.updateDynamicSelection(2, 5);
-    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 1);
+    // 2) Update dynamicSelection to the right
+    dynamicSelection.updateSelection(2, 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumTotalSelectedChars(), 1);
 
-    column = selection.getNextSelectionStart(2, 0);
+    column = dynamicSelection.getNextSelectionStart(2, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, column), 1);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(2, column), 1);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 2);
 
-    // 3) Then update selection to above
-    selection.updateDynamicSelection(1, 5);
-    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 14);
+    // 3) Then update dynamicSelection to above
+    dynamicSelection.updateSelection(1, 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumTotalSelectedChars(), 14);
 
-    // Test line 1 (Updated selection upward to this);
+    // Test line 1 (Updated dynamicSelection upward to this);
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 5);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 10);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 10);
 
     // Test line 2 (Selection start);
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 1);
     it++;
     BOOST_CHECK_EQUAL(*it, 2);
 
-    // 4) Update selection to above a 2nd time
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(0, 5);
-    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 28);
+    // 4) Update dynamicSelection to above a 2nd time
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(0, 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumTotalSelectedChars(), 28);
 
     line = 0;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 5);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 9);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 15);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 15);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 0);
     it++;
     BOOST_CHECK_EQUAL(*it, 1);
 
-    // 5) Update selection 3 columns to the left
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(0, 2);
-    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 31);
+    // 5) Update dynamicSelection 3 columns to the left
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(0, 2);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumTotalSelectedChars(), 31);
 
     line = 0;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 2);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 12);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 12);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 15);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 15);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 0);
 
-    // 6) Update selection to one line below
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(1, 2);
-    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 17);
+    // 6) Update dynamicSelection to one line below
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(1, 2);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumTotalSelectedChars(), 17);
 
     line = 0;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 2);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 13);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 13);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 0);
     it++;
     BOOST_CHECK_EQUAL(*it, 1);
 
-    // 7) Update selection to another line below (the start line again);
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(2, 2);
-    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 2);
+    // 7) Update dynamicSelection to another line below (the start line again);
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(2, 2);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumTotalSelectedChars(), 2);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 2);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 2);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 2);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 1);
     it++;
     BOOST_CHECK_EQUAL(*it, 2);
 
-    // 8) Update selection to the line below
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(3, 2);
-    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 8);
+    // 8) Update dynamicSelection to the line below
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(3, 2);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumTotalSelectedChars(), 8);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 6);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 2);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 2);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 2);
     it++;
     BOOST_CHECK_EQUAL(*it, 3);
 
-    // 9) Update selection to the line below
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(4, 2);
-    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 17);
+    // 9) Update dynamicSelection to the line below
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(4, 2);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumTotalSelectedChars(), 17);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 6);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 9);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 2);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 2);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 3);
     it++;
     BOOST_CHECK_EQUAL(*it, 4);
 
-    // 10) Update selection 5 columns to the right
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(4, 7);
-    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 22);
+    // 10) Update dynamicSelection 5 columns to the right
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(4, 7);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumTotalSelectedChars(), 22);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 6);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 9);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 7);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 7);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 4);
 
-    // 11) Update selection to the line above
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(3, 7);
-    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 13);
+    // 11) Update dynamicSelection to the line above
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(3, 7);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumTotalSelectedChars(), 13);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 6);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 7);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 7);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 3);
     it++;
     BOOST_CHECK_EQUAL(*it, 4);
 
-    // 12) Update selection to the line above (Starting line again);
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(2, 7);
-    selection.updateDynamicSelection(2, 7);
-    BOOST_CHECK_EQUAL(selection.getNumTotalSelectedChars(), 3);
+    // 12) Update dynamicSelection to the line above (Starting line again);
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(2, 7);
+    dynamicSelection.updateSelection(2, 7);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumTotalSelectedChars(), 3);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 3);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 3);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 2);
     it++;
     BOOST_CHECK_EQUAL(*it, 3);
@@ -1373,8 +1373,8 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionDynamic )
 /**
  * test_TextSelectionExtended
  *
- * Test the methods TextSelection::startDynamicSelection(..) and
- * TextSelection::updateDynamicSelection(..)
+ * Test the methods TextSelection::startSelection(..) and
+ * TextSelection::updateSelection(..)
  *
  * See Excel sheet
  *   'text_selection_algorithm.xlsx' in other repository Python-Library,
@@ -1406,268 +1406,268 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
     long column;
     unsigned long line;
     std::list<long>::const_iterator it;
-    DynamicSelection selection(textLines);
+    DynamicSelection dynamicSelection(textLines);
     
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 4), 0);
-    BOOST_CHECK_EQUAL(selection.getNextSelectionStart(2, 0), -1);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(2, 4), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNextSelectionStart(2, 0), -1);
     
-    // 13) New test: Start a new selection on lineId=4
-    selection.startDynamicSelection(4, 3);
+    // 13) New test: Start a new dynamicSelection on lineId=4
+    dynamicSelection.startSelection(4, 3);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 3);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0);
 
-    // 14) Update the selection for *two* lines to top
-    selection.updateDynamicSelection(2, 3);
+    // 14) Update the dynamicSelection for *two* lines to top
+    dynamicSelection.updateSelection(2, 3);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 3);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 7);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 7);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 9);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 3);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 3);
 
     // Updating another 2 lines to top and then two lines to bottom and it
     // should look the same
 
-    selection.updateDynamicSelection(0, 3);
-    selection.updateDynamicSelection(2, 3);
+    dynamicSelection.updateSelection(0, 3);
+    dynamicSelection.updateSelection(2, 3);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 3);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 7);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 7);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 9);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 3);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 3);
 
     // Updating another 2 lines to bottom is the start potion again
-    selection.updateDynamicSelection(4, 3);
+    dynamicSelection.updateSelection(4, 3);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 3);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0);
 
     // 15) From the new start position (2, 6) ...
-    selection.startDynamicSelection(2, 6);
+    dynamicSelection.startSelection(2, 6);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 6);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     // ...select 2 lines to the bottom
-    selection.updateDynamicSelection(4, 6);
+    dynamicSelection.updateSelection(4, 6);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 6);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 9);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 6);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     // 16) And another 2 lines  to the bottom
-    selection.updateDynamicSelection(6, 6);
+    dynamicSelection.updateSelection(6, 6);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 6);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 9);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 10);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 10);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 18);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 18);
 
     line = 6;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 6);
 
     line = 7;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     // Now two lines upward and it should be the same state as in 15)
-    selection.updateDynamicSelection(4, 6);
+    dynamicSelection.updateSelection(4, 6);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 6);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 9);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 6);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     // 17) From the new start position (2, 4) ...
-    selection.startDynamicSelection(2, 4);
+    dynamicSelection.startSelection(2, 4);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     // ... select 1 line to the top and 3 columns to the right
-    selection.updateDynamicSelection(1, 7);
+    dynamicSelection.updateSelection(1, 7);
 
     line = 0;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 7);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 8);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 8);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     // 18) Then select 3 lines to the bottom
-    selection.updateDynamicSelection(4, 7);
+    dynamicSelection.updateSelection(4, 7);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 6);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 9);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 9);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 7);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 7);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     // 19) Then select 5 lines to the top
-    selection.updateDynamicSelection(0, 7);
+    dynamicSelection.updateSelection(0, 7);
 
     line = 0;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 7);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 7);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 7);
 
     line = 1;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 15);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 15);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
-    // Start a new selection
-    selection.startDynamicSelection(4, 6);
+    // Start a new dynamicSelection
+    dynamicSelection.startSelection(4, 6);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 7);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 7);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 0);
     it++;
     BOOST_CHECK_EQUAL(*it, 1);
@@ -1682,22 +1682,22 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
     it++;
     BOOST_CHECK_EQUAL(*it, 6);
 
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(4, 7);
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(4, 7);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 4);
 
-    selection.updateDynamicSelection(4, 2);
+    dynamicSelection.updateSelection(4, 2);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 4);
 
-    selection.updateDynamicSelection(1, 2);
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 4);
-    it = selection.getUpdatedLineIds().begin();
+    dynamicSelection.updateSelection(1, 2);
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 4);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 1);
     it++;
     BOOST_CHECK_EQUAL(*it, 2);
@@ -1706,10 +1706,10 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
     it++;
     BOOST_CHECK_EQUAL(*it, 4);
 
-    selection.startDynamicSelection(5, 5);
+    dynamicSelection.startSelection(5, 5);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 5);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 5);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 1);
     it++;
     BOOST_CHECK_EQUAL(*it, 2);
@@ -1748,7 +1748,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
  * test_TextSelectionInLine
  *
  * Testing the text selection in ADiffView unveiled problems when
- * selection in the same line is reduced. This is tested here to be
+ * dynamicSelection in the same line is reduced. This is tested here to be
  * fixed.
  */
 BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
@@ -1781,130 +1781,130 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
     long column;
     unsigned long line;
     std::list<long>::const_iterator it;
-    DynamicSelection selection(textLines);
+    DynamicSelection dynamicSelection(textLines);
     
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 4), 0);
-    BOOST_CHECK_EQUAL(selection.getNextSelectionStart(2, 0), -1);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(2, 4), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNextSelectionStart(2, 0), -1);
     
-    // Start a new selection
-    selection.startDynamicSelection(6, 7);
+    // Start a new dynamicSelection
+    dynamicSelection.startSelection(6, 7);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 6;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 7);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0);
 
     line = 7;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
-    // Update the selection 6 chars to the right
-    selection.updateDynamicSelection(6, 13);
+    // Update the dynamicSelection 6 chars to the right
+    dynamicSelection.updateSelection(6, 13);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 6;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 7);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 6);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 6);
 
     line = 7;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
-    // Update the selection 4 chars to the left
-    selection.updateDynamicSelection(6, 9);
+    // Update the dynamicSelection 4 chars to the left
+    dynamicSelection.updateSelection(6, 9);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 6;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 7);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 2);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 2);
 
     line = 7;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
-    // Update the selection another 2 chars to the left; should be like
+    // Update the dynamicSelection another 2 chars to the left; should be like
     // the start position again
-    selection.updateDynamicSelection(6, 7);
+    dynamicSelection.updateSelection(6, 7);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 6;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 7);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0);
 
     line = 7;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
-    // Update the selection another 4 chars to the left;
-    selection.updateDynamicSelection(6, 3);
+    // Update the dynamicSelection another 4 chars to the left;
+    dynamicSelection.updateSelection(6, 3);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 6;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 3);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
     line = 7;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
-    // Finally update the selection another 5 chars to the right;
-    selection.updateDynamicSelection(6, 8);
+    // Finally update the dynamicSelection another 5 chars to the right;
+    dynamicSelection.updateSelection(6, 8);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 6;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 7);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 1);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 1);
 
     line = 7;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
-    // Clear the selection
-    selection.clear();
-    selection.clearUpdatedLineIds();
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
+    // Clear the dynamicSelection
+    dynamicSelection.clear();
+    dynamicSelection.clearUpdatedLineIds();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0);
 
     // Remember the last three lines:
     //     DiffLine* pLine7 = new DiffLine("and this");
     //     DiffLine* pLine8 = new DiffLine("");
     //     DiffLine* pLine9 = new DiffLine("blank line above");
 
-    // Start a selection at the first char of line 7
-    selection.startDynamicSelection(7, 0);
+    // Start a dynamicSelection at the first char of line 7
+    dynamicSelection.startSelection(7, 0);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 7);
 
     // Now select the non existing char 0 of line 8 (line 8 is empty)
-    selection.updateDynamicSelection(8, 0);
+    dynamicSelection.updateSelection(8, 0);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 7);
 
     it++;
@@ -1912,53 +1912,53 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
 
     // Now check what's really selected
     line = 7;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 8);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 8);
 
     line = 8;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
-    selection.clearUpdatedLineIds();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    dynamicSelection.clearUpdatedLineIds();
 
     // Now select the non existing char 2 of line 8 (line 8 is empty)
-    selection.updateDynamicSelection(8, 2);
+    dynamicSelection.updateSelection(8, 2);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0);
 
     // Now check what's really selected
     line = 7;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 8);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 8);
 
     line = 8;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
 
     // Again, remember the last three lines:
     //     DiffLine* pLine7 = new DiffLine("and this");
     //     DiffLine* pLine8 = new DiffLine("");
     //     DiffLine* pLine9 = new DiffLine("blank line above");
 
-    // Start a selection at the first char 0 of line 9
-    selection.clear();
-    selection.clearUpdatedLineIds();
-    selection.startDynamicSelection(9, 0);
+    // Start a dynamicSelection at the first char 0 of line 9
+    dynamicSelection.clear();
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.startSelection(9, 0);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 9);
 
     // Now select the non existing char 0 of line 8 (line 8 is empty)
-    selection.updateDynamicSelection(8, 0);
+    dynamicSelection.updateSelection(8, 0);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 8);
 
     it++;
@@ -1966,109 +1966,109 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
 
     // Now check what's really selected
     line = 8;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
 
     line = 9;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 2);
-    selection.clearUpdatedLineIds();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    dynamicSelection.clearUpdatedLineIds();
 
     // Now select the non existing char 2 of line 8 (line 8 is empty)
-    selection.updateDynamicSelection(8, 2);
-    selection.updateDynamicSelection(8, 2);
+    dynamicSelection.updateSelection(8, 2);
+    dynamicSelection.updateSelection(8, 2);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0);
 
     // Now check what's really selected
     line = 8;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
 
     line = 9;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0);
 
     // Finally, again with these lines:
     //     DiffLine* pLine7 = new DiffLine("and this");
     //     DiffLine* pLine8 = new DiffLine("");
     //     DiffLine* pLine9 = new DiffLine("blank line above");
 
-    // Start a selection at the non existing char 2 of line 8
-    selection.clear();
-    selection.clearUpdatedLineIds();
-    selection.startDynamicSelection(8, 2);
+    // Start a dynamicSelection at the non existing char 2 of line 8
+    dynamicSelection.clear();
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.startSelection(8, 2);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 8);
 
     // Now check what's really selected
     line = 8;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
 
-    // Update the selection 3 chars to the right (non existing char 3 of line 8)
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(8, 3);
+    // Update the dynamicSelection 3 chars to the right (non existing char 3 of line 8)
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(8, 3);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0); // Nothing changed
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0); // Nothing changed
 
     // Now check what's really selected
     line = 8;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0); // 0 is the length of ""
 
-    // Start a selection at the char 4 of line 7
-    selection.clear();
-    selection.clearUpdatedLineIds();
-    selection.startDynamicSelection(7, 4);
+    // Start a dynamicSelection at the char 4 of line 7
+    dynamicSelection.clear();
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.startSelection(7, 4);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 7);
 
     // Now check what's really selected
     line = 7;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0);
 
     // Update 2 chars to the right
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(7, 6);
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(7, 6);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 7);
 
     // Now check what's really selected
     line = 7;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 2);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 2);
 
     // Update 20 chars to the right
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(7, 26);
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(7, 26);
 
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
-    it = selection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
+    it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 7);
 
     // Now check what's really selected
     line = 7;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4); // the limit to line length worked
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4); // the limit to line length worked
   }
   catch(const char* pError)
   {
@@ -2097,9 +2097,9 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionInLine )
  * test_TextSelectionMultiCall
  *
  * Testing the text selection in ADiffView unveiled problems when e.g.
- * selection started upward and changed downward below the starting
+ * dynamicSelection started upward and changed downward below the starting
  * line. Now while the selecting mouse button still was pressed
- * updateDynamicSelection() was called multiple times with equal
+ * updateSelection() was called multiple times with equal
  * parameters and unveiled strange effects.
  */
 BOOST_AUTO_TEST_CASE( test_TextSelectionMultiCall )
@@ -2128,158 +2128,158 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionMultiCall )
     long column;
     unsigned long line;
     std::list<int>::const_iterator it;
-    DynamicSelection selection(textLines);
+    DynamicSelection dynamicSelection(textLines);
     
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(2, 4), 0);
-    BOOST_CHECK_EQUAL(selection.getNextSelectionStart(2, 0), -1);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(2, 4), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNextSelectionStart(2, 0), -1);
     
-    // Start a new selection at line 4, column 5
-    selection.startDynamicSelection(4, 5);
+    // Start a new dynamicSelection at line 4, column 5
+    dynamicSelection.startSelection(4, 5);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 5);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
-    // Update the selection one top...
-    selection.updateDynamicSelection(3, 5);
+    // Update the dynamicSelection one top...
+    dynamicSelection.updateSelection(3, 5);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 5);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 5);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     // ...and call the update multiple times
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(3, 5);
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(3, 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0);
 
-    selection.updateDynamicSelection(3, 5);
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
-
-    line = 2;
-    column = selection.getNextSelectionStart(line, 0);
-    BOOST_CHECK_EQUAL(column, -1);
-
-    line = 3;
-    column = selection.getNextSelectionStart(line, 0);
-    BOOST_CHECK_EQUAL(column, 5);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
-
-    line = 4;
-    column = selection.getNextSelectionStart(line, 0);
-    BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 5);
-
-    line = 5;
-    column = selection.getNextSelectionStart(line, 0);
-    BOOST_CHECK_EQUAL(column, -1);
-
-    // Start a new selection at line 4, column 5
-    selection.startDynamicSelection(4, 5);
-    selection.clearUpdatedLineIds();
-
-    line = 3;
-    column = selection.getNextSelectionStart(line, 0);
-    BOOST_CHECK_EQUAL(column, -1);
-
-    line = 4;
-    column = selection.getNextSelectionStart(line, 0);
-    BOOST_CHECK_EQUAL(column, 5);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 0);
-
-    line = 5;
-    column = selection.getNextSelectionStart(line, 0);
-    BOOST_CHECK_EQUAL(column, -1);
-
-    // 'Update' the selection multiple times to the start position line 4, column 5
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(4, 5);
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
-    selection.updateDynamicSelection(4, 5);
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
-
-    // Update the selection one top...
-    selection.updateDynamicSelection(3, 5);
+    dynamicSelection.updateSelection(3, 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0);
 
     line = 2;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 5);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
     line = 4;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 5);
 
     line = 5;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, -1);
 
-    // Update the selection by one to right ...
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(3, 6);
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
+    // Start a new dynamicSelection at line 4, column 5
+    dynamicSelection.startSelection(4, 5);
+    dynamicSelection.clearUpdatedLineIds();
+
+    line = 3;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 4;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 0);
+
+    line = 5;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    // 'Update' the dynamicSelection multiple times to the start position line 4, column 5
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(4, 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0);
+    dynamicSelection.updateSelection(4, 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0);
+
+    // Update the dynamicSelection one top...
+    dynamicSelection.updateSelection(3, 5);
+
+    line = 2;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 3;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
+
+    line = 4;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 5);
+
+    line = 5;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    // Update the dynamicSelection by one to right ...
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(3, 6);
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
 
     // The same position again should cause no update
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(3, 6);
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(3, 6);
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 6);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 3);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 3);
 
     // And back one to the left...
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(3, 5);
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 1);
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(3, 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 1);
 
     // The same position again should cause no update
-    selection.clearUpdatedLineIds();
-    selection.updateDynamicSelection(3, 5);
-    BOOST_CHECK_EQUAL(selection.getUpdatedLineIds().size(), 0);
+    dynamicSelection.clearUpdatedLineIds();
+    dynamicSelection.updateSelection(3, 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 5);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 4);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 4);
 
     
     // And again one to the left...
-    selection.updateDynamicSelection(3, 4);
-    selection.updateDynamicSelection(3, 4);
+    dynamicSelection.updateSelection(3, 4);
+    dynamicSelection.updateSelection(3, 4);
 
     line = 3;
-    column = selection.getNextSelectionStart(line, 0);
+    column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 4);
-    BOOST_CHECK_EQUAL(selection.getNumMarkedChars(line, column), 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 5);
   }
   catch(const char* pError)
   {
@@ -2338,15 +2338,15 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionIsSelected )
     DynamicSelection dynamicSelection(textLines);
     
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(2, 4), false);
-    dynamicSelection.startDynamicSelection(2, 4);
+    dynamicSelection.startSelection(2, 4);
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(2, 4), true);
     
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(2, 8), false);
-    dynamicSelection.updateDynamicSelection(2, 9);
+    dynamicSelection.updateSelection(2, 9);
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(2, 8), true);
 
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(2, 1), false);
-    dynamicSelection.updateDynamicSelection(1, 5);
+    dynamicSelection.updateSelection(1, 5);
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(2, 8), false);
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(2, 7), false);
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(2, 6), false);
@@ -2374,14 +2374,14 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionIsSelected )
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(1, 1), false);
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(1, 0), false);
 
-    dynamicSelection.updateDynamicSelection(5, 1);
+    dynamicSelection.updateSelection(5, 1);
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(2, 1), false);
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(3, 1), true);
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(4, 1), true);
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(5, 1), true);
     BOOST_CHECK_EQUAL(dynamicSelection.isSelected(6, 1), false);
 
-    BlockwiseSelection selection(textLines);
+    StaticSelection selection(textLines);
     BOOST_CHECK_EQUAL(selection.isSelected(2, 4), false);
     selection.addBlock(2, 2, 4);
     BOOST_CHECK_EQUAL(selection.isSelected(2, 4), true);

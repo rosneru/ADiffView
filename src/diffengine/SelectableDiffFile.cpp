@@ -35,13 +35,13 @@ void SelectableDiffFile::addSearchResultSelectionBlock(unsigned long lineId,
 void SelectableDiffFile::startDynamicSelection(unsigned long lineId,
                                                unsigned long columnId)
 {
-  m_DynamicSelection.startDynamicSelection(lineId, columnId);
+  m_DynamicSelection.startSelection(lineId, columnId);
 }
 
 void SelectableDiffFile::updateDynamicSelection(unsigned long lineId,
                                                 unsigned long columnId)
 {
-  m_DynamicSelection.updateDynamicSelection(lineId, columnId);
+  m_DynamicSelection.updateSelection(lineId, columnId);
 }
 
 const std::list<long>& SelectableDiffFile::getUpdatedLineIds()

@@ -10,7 +10,7 @@
 
 /**
  * A selection object for one continuous selection block that can be
- * updated dynamically, e.g. with the mouse.
+ * updated dynamically, for example when selecting text with the mouse.
  *
  * @author Uwe Rosner
  * @date 04/01/2023
@@ -27,40 +27,48 @@ public:
   void clear();
 
   /**
-   * Start a dynamic selection at given line and column
+   * Start a selection at given line and column
    */
-  void startDynamicSelection(unsigned long lineId, unsigned long columnId);
+  void startSelection(long lineId, long columnId);
 
   /**
-   * Update a dynamic selection to given line and column.
-   *
-   * NOTE: If the new lineId is more than one line above or below the
-   * current 'selection target point' it is limited one line distance.
-   * So, in some cases this method must be called multiple times with
-   * the same lineId to reach the requested lineId.
+   * Update the selection to given line and column.
    */
-  void updateDynamicSelection(unsigned long lineId, unsigned long columnId);
+  void updateSelection(long lineId, long columnId);
 
   /**
    * Returns true if given line id and column id is part of this text
    * selection:
    */
-  bool isSelected(unsigned long lineId, unsigned long columnId) const;
+  bool isSelected(long lineId, long columnId) const;
 
   /**
    * Returns the number of selected characters from given column on
    * given line.
    */
-  long getNumMarkedChars(unsigned long lineId, unsigned long columnId) const;
+  long getNumMarkedChars(long lineId, long columnId) const;
 
   /**
    * Returns the columnId of the next selection start after given column
    * on given line. If there is no next selection start -1 is returned.
    */
-  long getNextSelectionStart(unsigned long lineId, unsigned long columnId) const;
+  long getNextSelectionStart(long lineId, long columnId) const;
 
+  /**
+   * Returns the id of the lowest selected line
+   */
   long getMinLineId() const;
+
+  /**
+   * Returns the id of the highest selected line
+   */
   long getMaxLineId() const;
+
+  /**
+   * Returns the total number of selected chars in this selection block
+   * taking into account the actual text lines and their lengths given
+   * in the constructor.
+   */
   long getNumTotalSelectedChars() const;
 
 private:

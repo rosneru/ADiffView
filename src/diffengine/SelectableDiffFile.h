@@ -3,7 +3,7 @@
 
 #include "DiffFileBase.h"
 #include "SelectionBase.h"
-#include "BlockwiseSelection.h"
+#include "StaticSelection.h"
 #include "DynamicSelection.h"
 
 /**
@@ -79,7 +79,7 @@ public:
 
 private:
   const DiffFileBase& m_DiffFile;
-  BlockwiseSelection m_SearchResultSelection;
+  StaticSelection m_SearchResultSelection;
   DynamicSelection m_DynamicSelection;
   SelectionBase* m_pCurrentSelection;
 };

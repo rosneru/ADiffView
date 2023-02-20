@@ -1,20 +1,18 @@
 #include <algorithm>
 #include <stddef.h>
-#include "BlockwiseSelection.h"
+#include "StaticSelection.h"
 
-BlockwiseSelection::BlockwiseSelection(const std::vector<DiffLine*>& textLines)
+StaticSelection::StaticSelection(const std::vector<DiffLine*>& textLines)
   : SelectionBase(textLines)
 {
 }
 
-BlockwiseSelection::~BlockwiseSelection()
+StaticSelection::~StaticSelection()
 {
   clear();
 }
 
-void BlockwiseSelection::addBlock(unsigned long lineId, 
-                                  unsigned long fromColumn, 
-                                  unsigned long toColumn)
+void StaticSelection::addBlock(long lineId, long fromColumn, long toColumn)
 {
   TextSelectionLine* pSelectionLine = findSelectionLine(lineId);
   if(pSelectionLine != NULL)
@@ -46,7 +44,7 @@ void BlockwiseSelection::addBlock(unsigned long lineId,
 }
 
 
-void BlockwiseSelection::clear()
+void StaticSelection::clear()
 {
   std::list<TextSelectionLine*>::iterator it;
   for(it = m_SelectionLines.begin(); it != m_SelectionLines.end(); it++)
@@ -58,7 +56,7 @@ void BlockwiseSelection::clear()
   m_SelectionLines.clear();
 }
 
-bool BlockwiseSelection::isSelected(unsigned long lineId, unsigned long columnId) const
+bool StaticSelection::isSelected(long lineId, long columnId) const
 {
   std::list<TextSelectionLine*>::const_iterator it;
   for(it = m_SelectionLines.begin(); it != m_SelectionLines.end(); it++)
@@ -77,7 +75,7 @@ bool BlockwiseSelection::isSelected(unsigned long lineId, unsigned long columnId
   return false;
 }
 
-bool BlockwiseSelection::isLineSelected(unsigned long lineId) const
+bool StaticSelection::isLineSelected(long lineId) const
 {
   std::list<TextSelectionLine*>::const_iterator it;
   for(it = m_SelectionLines.begin(); it != m_SelectionLines.end(); it++)
@@ -96,8 +94,7 @@ bool BlockwiseSelection::isLineSelected(unsigned long lineId) const
   return false;
 }
 
-long BlockwiseSelection::getNumMarkedChars(unsigned long lineId, 
-                                           unsigned long columnId) const
+long StaticSelection::getNumMarkedChars(long lineId, long columnId) const
 {
   std::list<TextSelectionLine*>::const_iterator it;
   for(it = m_SelectionLines.begin(); it != m_SelectionLines.end(); it++)
@@ -122,8 +119,7 @@ long BlockwiseSelection::getNumMarkedChars(unsigned long lineId,
 }
 
 
-long BlockwiseSelection::getNextSelectionStart(unsigned long lineId, 
-                                               unsigned long columnId) const
+long StaticSelection::getNextSelectionStart(long lineId, long columnId) const
 {
   std::list<TextSelectionLine*>::const_iterator it;
   for(it = m_SelectionLines.begin(); it != m_SelectionLines.end(); it++)
@@ -143,12 +139,12 @@ long BlockwiseSelection::getNextSelectionStart(unsigned long lineId,
   return -1;
 }
 
-const std::list<TextSelectionLine*>* BlockwiseSelection::getSelectionLines() const
+const std::list<TextSelectionLine*>* StaticSelection::getSelectionLines() const
 {
   return &m_SelectionLines;
 }
 
-TextSelectionLine* BlockwiseSelection::findSelectionLine(unsigned long lineId)
+TextSelectionLine* StaticSelection::findSelectionLine(long lineId)
 {
   std::list<TextSelectionLine*>::iterator it;
   for(it = m_SelectionLines.begin(); it != m_SelectionLines.end(); it++)

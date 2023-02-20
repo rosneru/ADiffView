@@ -1,34 +1,33 @@
 #include "TextSelectionRange.h"
 
-TextSelectionRange::TextSelectionRange(unsigned long fromColumn,
-                                       unsigned long toColumn)
+TextSelectionRange::TextSelectionRange(long fromColumn, long toColumn)
   : m_FromColumn(fromColumn),
     m_ToColumn(toColumn)
 {
 
 }
 
-unsigned long TextSelectionRange::getFromColumn() const
+long TextSelectionRange::getFromColumn() const
 {
   return m_FromColumn;
 }
 
-unsigned long TextSelectionRange::getToColumn() const
+long TextSelectionRange::getToColumn() const
 {
   return m_ToColumn;
 }
 
-void TextSelectionRange::setFromColumn(unsigned long fromColumn)
+void TextSelectionRange::setFromColumn(long fromColumn)
 {
   m_FromColumn = fromColumn;
 }
 
-void TextSelectionRange::setToColumn(unsigned long toColumn)
+void TextSelectionRange::setToColumn(long toColumn)
 {
   m_ToColumn = toColumn;
 }
 
-long TextSelectionRange::getNumMarkedChars(unsigned long columnId)
+long TextSelectionRange::getNumMarkedChars(long columnId)
 {
   if(columnId < m_FromColumn)
   {

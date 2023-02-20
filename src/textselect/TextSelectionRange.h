@@ -10,20 +10,19 @@
 class TextSelectionRange
 {
 public:
-  TextSelectionRange(unsigned long fromColumn, 
-                     unsigned long toColumn);
+  TextSelectionRange(long fromColumn, long toColumn);
 
-  unsigned long getFromColumn() const;
-  unsigned long getToColumn() const;
+  long getFromColumn() const;
+  long getToColumn() const;
 
-  void setFromColumn(unsigned long fromColumn);
-  void setToColumn(unsigned long toColumn);
+  void setFromColumn(long fromColumn);
+  void setToColumn(long toColumn);
 
-  long getNumMarkedChars(unsigned long columnId);
+  long getNumMarkedChars(long columnId);
 
 private:
-  unsigned long m_FromColumn;
-  unsigned long m_ToColumn;
+  long m_FromColumn;
+  long m_ToColumn;
 };
 
 #endif

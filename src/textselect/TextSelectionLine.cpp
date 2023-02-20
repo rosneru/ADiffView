@@ -2,9 +2,7 @@
 
 #include "TextSelectionLine.h"
 
-TextSelectionLine::TextSelectionLine(unsigned long lineId, 
-                                     unsigned long fromColumn, 
-                                     unsigned long toColumn)
+TextSelectionLine::TextSelectionLine(long lineId, long fromColumn, long toColumn)
   : m_LineId(lineId)
 {
   addBlock(fromColumn, toColumn);
@@ -19,8 +17,7 @@ TextSelectionLine::~TextSelectionLine()
   }
 }
 
-void TextSelectionLine::addBlock(unsigned long fromColumn, 
-                                 unsigned long toColumn)
+void TextSelectionLine::addBlock(long fromColumn, long toColumn)
 {
   TextSelectionRange* pBlock = new TextSelectionRange(fromColumn, toColumn);
   m_SelectedBlocks.push_back(pBlock);
@@ -30,7 +27,7 @@ void TextSelectionLine::addBlock(unsigned long fromColumn,
   // TODO ensure that m_SelectedBlocks is sorted by fromColumn
 }
 
-bool TextSelectionLine::isSelected(unsigned long columnId) const
+bool TextSelectionLine::isSelected(long columnId) const
 {
   std::vector<TextSelectionRange*>::const_iterator it;
   for(it = m_SelectedBlocks.begin(); it != m_SelectedBlocks.end(); it++)
@@ -54,12 +51,12 @@ TextSelectionRange* TextSelectionLine::getFirstSelectedBlock()
   return m_SelectedBlocks[0];
 }
 
-unsigned long TextSelectionLine::getLineId() const
+long TextSelectionLine::getLineId() const
 {
   return m_LineId;
 }
 
-long TextSelectionLine::getNumMarkedChars(unsigned long columnId)
+long TextSelectionLine::getNumMarkedChars(long columnId)
 {
   std::vector<TextSelectionRange*>::iterator it;
   for(it = m_SelectedBlocks.begin(); it != m_SelectedBlocks.end(); it++)
@@ -74,12 +71,12 @@ long TextSelectionLine::getNumMarkedChars(unsigned long columnId)
   return 0;
 }
 
-long TextSelectionLine::getNextSelectionStart(unsigned long columnId)
+long TextSelectionLine::getNextSelectionStart(long columnId)
 {
   std::vector<TextSelectionRange*>::iterator it;
   for(it = m_SelectedBlocks.begin(); it != m_SelectedBlocks.end(); it++)
   {
-    unsigned long fromColumn = (*it)->getFromColumn();
+    long fromColumn = (*it)->getFromColumn();
     if(fromColumn >= columnId)
     {
       return fromColumn;

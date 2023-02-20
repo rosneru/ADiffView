@@ -35,10 +35,9 @@ void DynamicSelection::clear()
   m_MaxLineColumnId = -1;
 }
 
-void DynamicSelection::startDynamicSelection(unsigned long lineId,
-                                             unsigned long columnId)
+void DynamicSelection::startSelection(long lineId,long columnId)
 {
-  if(lineId > (m_TextLines.size() - 1))
+  if(lineId > ((long)m_TextLines.size() - 1))
   {
     return;
   }
@@ -49,7 +48,7 @@ void DynamicSelection::startDynamicSelection(unsigned long lineId,
   m_MinLineId = lineId;
   m_MaxLineId = lineId;
   
-  unsigned long lastColumn = m_TextLines[lineId]->getNumChars();
+  long lastColumn = m_TextLines[lineId]->getNumChars();
   m_StartColumnId = std::min(columnId, lastColumn);
   m_MinLineColumnId = m_StartColumnId;
   m_MaxLineColumnId = m_StartColumnId;
@@ -59,8 +58,7 @@ void DynamicSelection::startDynamicSelection(unsigned long lineId,
   m_UpdatedLineIds.push_back(lineId);
 }
 
-void DynamicSelection::updateDynamicSelection(unsigned long lineId,
-                                              unsigned long columnId)
+void DynamicSelection::updateSelection(long lineId, long columnId)
 {
   long maxAllowedColumnId = m_TextLines[lineId]->getNumChars();
   if(columnId > maxAllowedColumnId)
@@ -68,9 +66,9 @@ void DynamicSelection::updateDynamicSelection(unsigned long lineId,
     columnId = maxAllowedColumnId;
   }
 
-  if(lineId < m_MinLineId                                       // Extend selection upward
-  || (m_MinLineId < m_StartLineId && lineId <= m_StartLineId)   // Reduce upward selection
-  && m_MinLineId != lineId)                                     // LineId  not changed
+  if((lineId < m_MinLineId) ||                                    // Extend selection upward
+     (m_MinLineId < m_StartLineId && lineId <= m_StartLineId &&   // Reduce upward selection
+      m_MinLineId != lineId))                                     // LineId  not changed
   {
     long fromLineId = std::min((long)lineId, m_MinLineId);
     long toLineId = std::max((long)lineId, m_MinLineId);
@@ -86,9 +84,9 @@ void DynamicSelection::updateDynamicSelection(unsigned long lineId,
     return;
   }
 
-  if(lineId > m_MaxLineId                                       // Extend selection downward
-  || (m_MaxLineId > m_StartLineId && lineId >= m_StartLineId)   // Reduce downward selection
-  && m_MaxLineId != lineId)                                     // LineId  not changed
+  if((lineId > m_MaxLineId) ||                                    // Extend selection downward
+     (m_MaxLineId > m_StartLineId && lineId >= m_StartLineId &&   // Reduce downward selection
+      m_MaxLineId != lineId))                                     // LineId  not changed
   {
     long fromLineId = std::min((long)lineId, m_MaxLineId);
     long toLineId = std::max((long)lineId, m_MaxLineId);
@@ -147,7 +145,7 @@ void DynamicSelection::updateDynamicSelection(unsigned long lineId,
 
 }
 
-bool DynamicSelection::isSelected(unsigned long lineId, unsigned long columnId) const
+bool DynamicSelection::isSelected(long lineId, long columnId) const
 {
   if(lineId < m_MinLineId || lineId > m_MaxLineId)
   {
@@ -171,7 +169,7 @@ bool DynamicSelection::isSelected(unsigned long lineId, unsigned long columnId) 
     }
 
     if(columnId > m_MaxLineColumnId
-    && columnId <= m_TextLines[lineId]->getNumChars())
+    && columnId <= (long)m_TextLines[lineId]->getNumChars())
     {
       return true;
     }
@@ -194,7 +192,7 @@ bool DynamicSelection::isSelected(unsigned long lineId, unsigned long columnId) 
     }
   }
 
-  if(columnId <= m_TextLines[lineId]->getNumChars())
+  if(columnId <= (long)m_TextLines[lineId]->getNumChars())
   {
     return true;
   }
@@ -202,8 +200,7 @@ bool DynamicSelection::isSelected(unsigned long lineId, unsigned long columnId) 
   return false;
 }
 
-long DynamicSelection::getNumMarkedChars(unsigned long lineId, 
-                                         unsigned long columnId) const
+long DynamicSelection::getNumMarkedChars(long lineId, long columnId) const
 {
   if(lineId < m_MinLineId || lineId > m_MaxLineId)
   {
@@ -244,7 +241,7 @@ long DynamicSelection::getNumMarkedChars(unsigned long lineId,
 
   // For the lines in the middle (no start or end line) return the 
   // number of selected characters from the requested column
-  unsigned long lineTextLength = m_TextLines[lineId]->getNumChars();
+  long lineTextLength = (long)m_TextLines[lineId]->getNumChars();
   if(columnId > lineTextLength)
   {
     // Requested column exceeds line length
@@ -255,8 +252,7 @@ long DynamicSelection::getNumMarkedChars(unsigned long lineId,
 }
 
 
-long DynamicSelection::getNextSelectionStart(unsigned long lineId, 
-                                             unsigned long columnId) const
+long DynamicSelection::getNextSelectionStart(long lineId, long columnId) const
 {
   if(lineId < m_MinLineId || lineId > m_MaxLineId)
   {
