@@ -25,10 +25,10 @@ class SearchWindow : public WindowBase
 {
 public:
   SearchWindow(std::vector<WindowBase*>& windowArray,
-              ScreenBase& screen,
-              struct MsgPort* pIdcmpMsgPort,
-              TextFinder& TextFinder,
-              CommandBase& cmdCloseSearchWindow);
+               ScreenBase& screen,
+               struct MsgPort* pIdcmpMsgPort,
+               TextFinder& TextFinder,
+               CommandBase& cmdCloseSearchWindow);
 
   virtual ~SearchWindow();
 

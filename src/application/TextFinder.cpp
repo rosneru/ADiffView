@@ -106,6 +106,8 @@ bool TextFinder::displayFirstResult(bool doSignalIfNoResultFound)
   pLeftTextArea->renderSelectionUpdatedLines();
   pRightTextArea->renderSelectionUpdatedLines();
 
+  m_DiffWindow.disableMenuItemCopy();
+
   // Perform a new search if the document has changed
   applyDocumentChanged();
 
@@ -177,6 +179,8 @@ bool TextFinder::displayLastResult(bool doSignalIfNoResultFound)
   // Re-render the lines that are in updatedLineIds
   pLeftTextArea->renderSelectionUpdatedLines();
   pRightTextArea->renderSelectionUpdatedLines();
+
+  m_DiffWindow.disableMenuItemCopy();
 
   // Perform a new search if the document has changed
   applyDocumentChanged();
@@ -252,6 +256,8 @@ bool TextFinder::displayNextResult(bool doSignalIfNoResultFound,
   // Re-render the lines that are in updatedLineIds
   pLeftTextArea->renderSelectionUpdatedLines();
   pRightTextArea->renderSelectionUpdatedLines();
+
+  m_DiffWindow.disableMenuItemCopy();
   
   // Perform a new search if the document has changed
   applyDocumentChanged();
@@ -328,6 +334,8 @@ bool TextFinder::displayPrevResult(bool doSignalIfNoResultFound)
   // Re-render the lines that are in updatedLineIds
   pLeftTextArea->renderSelectionUpdatedLines();
   pRightTextArea->renderSelectionUpdatedLines();
+
+  m_DiffWindow.disableMenuItemCopy();
   
   // Perform a new search if the document has changed
   applyDocumentChanged();

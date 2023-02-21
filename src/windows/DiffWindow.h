@@ -111,6 +111,8 @@ public:
    */
   const SelectableDiffFile* getSelectionDocument() const;
 
+  void disableMenuItemCopy();
+
 
   /**
    * @extends method of base class ScrollbarWindow.

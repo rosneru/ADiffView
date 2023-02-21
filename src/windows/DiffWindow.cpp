@@ -513,6 +513,11 @@ const SelectableDiffFile* DiffWindow::getSelectionDocument() const
   return NULL;
 }
 
+void DiffWindow::disableMenuItemCopy()
+{
+  m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
+}
+
 void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
 {
   ScrollbarWindow::handleIDCMP(pMsg);

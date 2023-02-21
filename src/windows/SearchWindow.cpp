@@ -34,10 +34,10 @@ const char* g_GadCycLocationLabels [5] = {"Both files", "Left file", "Right file
 
 
 SearchWindow::SearchWindow(std::vector<WindowBase*>& windowArray,
-                         ScreenBase& screen,
-                         struct MsgPort* pIdcmpMsgPort,
-                         TextFinder& TextFinder,
-                         CommandBase& cmdCloseSearchWindow)
+                           ScreenBase& screen,
+                           struct MsgPort* pIdcmpMsgPort,
+                           TextFinder& TextFinder,
+                           CommandBase& cmdCloseSearchWindow)
   : WindowBase(screen, pIdcmpMsgPort, NULL),
     m_TextFinder(TextFinder),
     m_CmdCloseSearchWindow(cmdCloseSearchWindow),
