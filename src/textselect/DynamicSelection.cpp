@@ -209,8 +209,8 @@ long DynamicSelection::getNumMarkedChars(long lineId, long columnId) const
   
   if(m_MinLineId == m_MaxLineId)  // Requested line is the only, singular selected line
   {
-    long fromColumn = std::min(m_MinLineColumnId, m_StartColumnId);
-    long toColumn = std::max(m_MaxLineColumnId, m_StartColumnId);
+    long fromColumn = std::min(std::min(m_MinLineColumnId, m_MaxLineColumnId), m_StartColumnId);
+    long toColumn = std::max(std::max(m_MinLineColumnId, m_MaxLineColumnId), m_StartColumnId);
     if(columnId < fromColumn || columnId > toColumn)
     {
       return 0;
