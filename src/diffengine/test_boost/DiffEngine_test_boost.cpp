@@ -1706,9 +1706,10 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
     it++;
     BOOST_CHECK_EQUAL(*it, 4);
 
-    dynamicSelection.startSelection(5, 5);
+    // 20) Bug detected: Start a new selection
+    dynamicSelection.startSelection(4, 3);
 
-    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 5);
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 4);
     it = dynamicSelection.getUpdatedLineIds().begin();
     BOOST_CHECK_EQUAL(*it, 1);
     it++;
@@ -1717,8 +1718,51 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
     BOOST_CHECK_EQUAL(*it, 3);
     it++;
     BOOST_CHECK_EQUAL(*it, 4);
+
+    dynamicSelection.clearUpdatedLineIds();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0);
+    
+    // Update the selection 2 to the left, one to the top and five to the right
+    dynamicSelection.updateSelection(4, 1);
+    dynamicSelection.updateSelection(3, 1);
+    dynamicSelection.updateSelection(3, 6);
+
+    line = 3;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 6);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 3);
+
+    line = 4;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 3);
+
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    it = dynamicSelection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(*it, 3);
     it++;
-    BOOST_CHECK_EQUAL(*it, 5);
+    BOOST_CHECK_EQUAL(*it, 4);
+
+    dynamicSelection.clearUpdatedLineIds();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0);
+
+    // Update the selection 1 to the bottom
+    dynamicSelection.updateSelection(4, 6);
+
+    line = 3;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 4;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 3);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 3);
+
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 2);
+    it = dynamicSelection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(*it, 3);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 4);
   }
   catch(const char* pError)
   {
