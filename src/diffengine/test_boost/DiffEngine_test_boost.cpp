@@ -1763,6 +1763,82 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
     BOOST_CHECK_EQUAL(*it, 3);
     it++;
     BOOST_CHECK_EQUAL(*it, 4);
+
+    // 21) Trying to find another bug
+    dynamicSelection.startSelection(4, 3);
+    dynamicSelection.clearUpdatedLineIds();
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 0);
+
+    // Update the selection to (1, 7)
+    dynamicSelection.updateSelection(1, 7);
+
+    line = 1;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 7);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 8);
+
+    line = 2;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 10);
+
+    line = 3;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 9);
+
+    line = 4;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 3);
+
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 4);
+    it = dynamicSelection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(*it, 1);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 2);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 3);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 4);
+    dynamicSelection.clearUpdatedLineIds();
+
+    // Update the selection to (1, 7)
+    dynamicSelection.updateSelection(6, 7);
+
+    line = 3;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
+
+    line = 4;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 3);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 7);
+
+    line = 5;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 18);
+
+    line = 6;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 7);
+
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 6);
+    it = dynamicSelection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(*it, 1);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 2);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 3);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 4);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 5);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 6);
+    dynamicSelection.clearUpdatedLineIds();
   }
   catch(const char* pError)
   {
