@@ -848,31 +848,34 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       if(m_SelectionMode == SM_SELECTION_LEFT_STARTED)
       {
         m_SelectionMode = SM_SELECTION_LEFT_FINISHED;
-        long numMarkedChars = 
-          m_pLeftTextArea->getSelectionDocument()->getDynamicSelection()
-            .getNumTotalSelectedChars();
+        long numMarkedChars = m_pLeftTextArea->
+                              getSelectionDocument()->
+                              getDynamicSelection().getNumTotalSelectedChars();
 
-          // printf("num = %ld\n", numMarkedChars);
-          if(numMarkedChars > 0)
-          {
-            m_pMenuDiffWindow->EnableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
-          }
-          else
-          {
-            m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
-          }
+        if(numMarkedChars > 0)
+        {
+          m_pMenuDiffWindow->EnableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
+        }
+        else
+        {
+          m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
+        }
       }
       else if(m_SelectionMode == SM_SELECTION_RIGHT_STARTED)
       {
         m_SelectionMode = SM_SELECTION_RIGHT_FINISHED;
 
-        long numMarkedChars = 
-          m_pLeftTextArea->getSelectionDocument()->getDynamicSelection()
-            .getNumTotalSelectedChars();
+        long numMarkedChars = m_pRightTextArea->
+                              getSelectionDocument()->
+                              getDynamicSelection().getNumTotalSelectedChars();
 
         if(numMarkedChars > 0)
         {
           m_pMenuDiffWindow->EnableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
+        }
+        else
+        {
+          m_pMenuDiffWindow->DisableMenuItem(m_pWindow, m_pMenuDiffWindow->getCmdCopySelection());
         }
       }
       else
