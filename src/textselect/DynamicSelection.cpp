@@ -72,6 +72,14 @@ void DynamicSelection::updateSelection(long lineId, long columnId)
   {
     long fromLineId = std::min((long)lineId, m_MinLineId);
     long toLineId = std::max((long)lineId, m_MinLineId);
+    if(m_MaxLineId > m_StartLineId)
+    {
+      // Direction change: DOWNWARD selection changed to UPWARD
+      // (All lines to m_MaxLineId that formerly were selected must 
+      //  be updated)
+      toLineId = m_MaxLineId;
+    }
+
     for(long i = fromLineId; i <= toLineId; i++)
     {
       m_UpdatedLineIds.push_front(i);
@@ -89,6 +97,14 @@ void DynamicSelection::updateSelection(long lineId, long columnId)
       m_MaxLineId != lineId))                                     // LineId  not changed
   {
     long fromLineId = std::min((long)lineId, m_MaxLineId);
+    if(m_MinLineId < m_StartLineId)
+    {
+      // Direction change: UPWARD selection changed to DOWNWARD
+      // (All lines from m_MinLineId that formerly were selected must 
+      //  be updated)
+      fromLineId = m_MinLineId;
+    }
+
     long toLineId = std::max((long)lineId, m_MaxLineId);
     for(long i = fromLineId; i <= toLineId; i++)
     {

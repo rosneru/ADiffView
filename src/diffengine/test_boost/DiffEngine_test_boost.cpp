@@ -1803,7 +1803,7 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
     BOOST_CHECK_EQUAL(*it, 4);
     dynamicSelection.clearUpdatedLineIds();
 
-    // Update the selection to (1, 7)
+    // Update the selection to (6, 7)
     dynamicSelection.updateSelection(6, 7);
 
     line = 3;
@@ -1824,6 +1824,48 @@ BOOST_AUTO_TEST_CASE( test_TextSelectionExtended )
     column = dynamicSelection.getNextSelectionStart(line, 0);
     BOOST_CHECK_EQUAL(column, 0);
     BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 7);
+
+    BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 6);
+    it = dynamicSelection.getUpdatedLineIds().begin();
+    BOOST_CHECK_EQUAL(*it, 1);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 2);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 3);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 4);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 5);
+    it++;
+    BOOST_CHECK_EQUAL(*it, 6);
+    dynamicSelection.clearUpdatedLineIds();
+
+    // Update the selection back to (1, 7)
+    dynamicSelection.updateSelection(1, 7);
+
+    line = 1;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 7);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 8);
+
+    line = 2;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 10);
+
+    line = 3;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 9);
+
+    line = 4;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, 0);
+    BOOST_CHECK_EQUAL(dynamicSelection.getNumMarkedChars(line, column), 3);
+
+    line = 5;
+    column = dynamicSelection.getNextSelectionStart(line, 0);
+    BOOST_CHECK_EQUAL(column, -1);
 
     BOOST_CHECK_EQUAL(dynamicSelection.getUpdatedLineIds().size(), 6);
     it = dynamicSelection.getUpdatedLineIds().begin();
