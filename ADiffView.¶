@@ -777,23 +777,8 @@ Storm Shell Project (Dependencies)
 ""
 1 1
 File
-1 "src/textselect/BlockwiseSelection.cpp"
-"src/textselect/BlockwiseSelection.cpp"
-"src/textselect/BlockwiseSelection.h"
-"src/textselect/SelectionBase.h"
-"src/textselect/TextSelectionLine.h"
-"src/textselect/TextSelectionRange.h"
-Storm Shell Project (Dependencies)
-"build-stromc/BlockwiseSelection.o" "build-stromc/BlockwiseSelection.debug"
-""
-1 1
-File
 1 "src/textselect/DynamicSelection.cpp"
 "src/textselect/DynamicSelection.cpp"
-"src/textselect/DynamicSelection.h"
-"src/textselect/SelectionBase.h"
-"src/textselect/TextSelectionLine.h"
-"src/textselect/TextSelectionRange.h"
 Storm Shell Project (Dependencies)
 "build-stromc/DynamicSelection.o" "build-stromc/DynamicSelection.debug"
 ""
@@ -806,6 +791,17 @@ File
 "src/textselect/TextSelectionRange.h"
 Storm Shell Project (Dependencies)
 "build-stromc/SelectionBase.o" "build-stromc/SelectionBase.debug"
+""
+1 1
+File
+1 "src/textselect/StaticSelection.cpp"
+"src/textselect/StaticSelection.cpp"
+"src/textselect/StaticSelection.h"
+"src/textselect/SelectionBase.h"
+"src/textselect/TextSelectionLine.h"
+"src/textselect/TextSelectionRange.h"
+Storm Shell Project (Dependencies)
+"build-stromc/StaticSelection.o" "build-stromc/StaticSelection.debug"
 ""
 1 1
 File
@@ -1317,13 +1313,6 @@ Storm Shell Project (Dependencies)
 ""
 0 0
 File
-2 "src/textselect/BlockwiseSelection.h"
-"src/textselect/BlockwiseSelection.h"
-Storm Shell Project (Dependencies)
-"" ""
-""
-0 0
-File
 2 "src/textselect/DynamicSelection.h"
 "src/textselect/DynamicSelection.h"
 Storm Shell Project (Dependencies)
@@ -1333,6 +1322,13 @@ Storm Shell Project (Dependencies)
 File
 2 "src/textselect/SelectionBase.h"
 "src/textselect/SelectionBase.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "src/textselect/StaticSelection.h"
+"src/textselect/StaticSelection.h"
 Storm Shell Project (Dependencies)
 "" ""
 ""
