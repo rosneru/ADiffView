@@ -2,14 +2,12 @@
 
 ## About
 
-ADiffView is a file compare tool for AmigaOS3.0+. It compares two ASCII
-text files and graphically displays the differences.
+ADiffView is a file comparison tool for AmigaOS3.0+. It compares two
+ASCII text files and displays the differences graphically.
 
-The diff engine uses my own implementation of Eugene Myers' diff
-algorithm. In addition, the algorithm has been optimized for
-non-recursive processing, as described on [Matthias Hertel's
-website](www.mathertel.de). See the file LICENSE-3RD-PARTY for more
-information.
+The diff engine uses Eugene Myers' diff algorithm and also uses some
+third-party code in its implementation. See the LICENSE-3RD-PARTY file
+for more information.
 
 ## Development environment
 
