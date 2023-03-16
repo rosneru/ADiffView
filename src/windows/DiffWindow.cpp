@@ -794,13 +794,17 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       bool doUpdateSelection = pMsg->Qualifier & 
                                (IEQUALIFIER_LSHIFT | IEQUALIFIER_RSHIFT);
 
-      ULONG xTransf =  pMsg->MouseX - m_pWindow->WScreen->WBorLeft;
-      ULONG yTransf = pMsg->MouseY - m_pWindow->WScreen->WBorLeft - m_pWindow->WScreen->BarHeight + 1;
+      // Calculate mouseX and mouseY relative to the top left corner of
+      // *inside* the DiffWindow (without the borders)
+      ULONG mouseXRel =  pMsg->MouseX - m_pWindow->WScreen->WBorLeft;
+      ULONG mouseYRel = pMsg->MouseY - m_pWindow->WScreen->WBorTop
+                                     - m_pWindow->WScreen->BarHeight
+                                     + 1;
 
-      if(m_pLeftTextArea->isPointInTextArea(xTransf, yTransf))
+      if(m_pLeftTextArea->isPointInTextArea(mouseXRel, mouseYRel))
       {
         if(m_SelectionMode == SM_SELECTION_LEFT_FINISHED
-        && m_pLeftTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
+        && m_pLeftTextArea->isPointInSelection(mouseXRel, mouseYRel))
         {
           m_SelectionMode = SM_NONE;
           m_pLeftTextArea->clearDynamicSelection();
@@ -809,7 +813,7 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
         }
         else if((m_SelectionMode == SM_SELECTION_LEFT_FINISHED) && doUpdateSelection)
         {
-          m_pLeftTextArea->updateDynamicSelection(pMsg->MouseX, pMsg->MouseY);
+          m_pLeftTextArea->updateDynamicSelection(mouseXRel, mouseYRel);
           m_SelectionMode = SM_SELECTION_LEFT_STARTED;
         }
         else
@@ -817,17 +821,17 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
           m_SelectionMode = SM_SELECTION_LEFT_STARTED;
 
           m_pLeftTextArea->activateDynamicSelection();
-          m_pLeftTextArea->startDynamicSelection(pMsg->MouseX, pMsg->MouseY);
+          m_pLeftTextArea->startDynamicSelection(mouseXRel, mouseYRel);
 
           m_pRightTextArea->clearDynamicSelection();
           m_pRightTextArea->activateDynamicSelection();
           m_pRightTextArea->renderSelectionUpdatedLines();
         }
       }
-      else if(m_pRightTextArea->isPointInTextArea(xTransf, yTransf))
+      else if(m_pRightTextArea->isPointInTextArea(mouseXRel, mouseYRel))
       {
         if(m_SelectionMode == SM_SELECTION_RIGHT_FINISHED
-        && m_pRightTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
+        && m_pRightTextArea->isPointInSelection(mouseXRel, mouseYRel))
         {
           m_SelectionMode = SM_NONE;
           m_pRightTextArea->clearDynamicSelection();
@@ -836,7 +840,7 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
         }
         else if((m_SelectionMode == SM_SELECTION_RIGHT_FINISHED) && doUpdateSelection)
         {
-          m_pRightTextArea->updateDynamicSelection(pMsg->MouseX, pMsg->MouseY);
+          m_pRightTextArea->updateDynamicSelection(mouseXRel, mouseYRel);
           m_SelectionMode = SM_SELECTION_RIGHT_STARTED;
         }
         else
@@ -907,13 +911,21 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
 void DiffWindow::handleMouseMove(const struct IntuiMessage* pMsg)
 {
   DiffWindowTextArea::ScrollRequest scrollRequest;
+
+  // Calculate mouseX and mouseY relative to the top left corner of
+  // *inside* the DiffWindow (without the borders)
+  ULONG mouseXRel =  pMsg->MouseX - m_pWindow->WScreen->WBorLeft;
+  ULONG mouseYRel = pMsg->MouseY - m_pWindow->WScreen->WBorTop
+                                 - m_pWindow->WScreen->BarHeight
+                                 + 1;
+
   if(m_SelectionMode == SM_SELECTION_LEFT_STARTED)
   {
-    scrollRequest = m_pLeftTextArea->updateDynamicSelection(pMsg->MouseX, pMsg->MouseY);
+    scrollRequest = m_pLeftTextArea->updateDynamicSelection(mouseXRel, mouseYRel);
   }
   else if(m_SelectionMode == DiffWindow::SM_SELECTION_RIGHT_STARTED)
   {
-    scrollRequest = m_pRightTextArea->updateDynamicSelection(pMsg->MouseX, pMsg->MouseY);
+    scrollRequest = m_pRightTextArea->updateDynamicSelection(mouseXRel, mouseYRel);
   }
   else
   {

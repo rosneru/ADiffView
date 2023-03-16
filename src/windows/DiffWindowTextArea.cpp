@@ -25,8 +25,6 @@ DiffWindowTextArea::DiffWindowTextArea(const DiffOutputFileBase& diffFile,
     m_TabSize(tabSize),
     m_WBorLeft(WBorLeft),
     m_WBorTop(WBorTop),
-    m_DeltaLeft(0),
-    m_DeltaTop(0),
     m_pLineOfSpaces(NULL),
     m_FontWidth_pix(pTextFont->tf_XSize),
     m_FontHeight_pix(pTextFont->tf_YSize),
@@ -143,9 +141,6 @@ void DiffWindowTextArea::setSize(ULONG width, ULONG height)
 
   m_VScrollRect.set(getLeft() + 2, getTop() + 1, getLeft() + maxTextWidth_pix + 2,
                     getTop() + getHeight() - 3);
-
-  m_DeltaTop = m_WBorTop + 1 + m_HScrollRect.getTop();
-  m_DeltaLeft = m_WBorLeft + m_HScrollRect.getLeft();
 }
 
 
@@ -164,18 +159,22 @@ void DiffWindowTextArea::addSearchResultSelection(ULONG lineId,
 
 void DiffWindowTextArea::calcMouseInTextPosition(WORD mouseX, WORD mouseY)
 {
-    m_MouseTextColumn = (mouseX - m_DeltaLeft) / m_FontWidth_pix;
+    m_MouseTextColumn = ((long)mouseX - (long)m_HScrollRect.getLeft()) / m_FontWidth_pix;
     m_MouseTextColumn += m_X;
     if(m_MouseTextColumn < 0)
     {
       m_MouseTextColumn = 0;
     }
 
-    m_MouseTextLine = (mouseY - m_DeltaTop) / m_FontHeight_pix;
-    m_MouseTextLine += m_Y;
-    if(m_MouseTextLine > 0)
+    m_MouseTextLine = ((long)mouseY - (long)m_HScrollRect.getTop()) / m_FontHeight_pix;
+    if(m_MouseTextLine < 0)
     {
-      m_MouseTextLine--;
+      m_MouseTextLine = 0;
+    }
+    m_MouseTextLine += m_Y;
+    if(m_MouseTextLine < 0)
+    {
+      m_MouseTextLine = 0;
     }
 }
 
@@ -200,7 +199,7 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateDynamicSelection(
   {
     result = SR_UP;
   }
-  else if((ULONG)m_MouseTextLine < m_Y)
+  else if(((ULONG)m_MouseTextLine <= m_Y) && m_Y > 0)
   {
     result = SR_DOWN;
   }

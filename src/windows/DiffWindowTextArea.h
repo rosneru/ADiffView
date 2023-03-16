@@ -221,9 +221,6 @@ private:
   ULONG m_WBorLeft;
   ULONG m_WBorTop;
 
-  int m_DeltaLeft;
-  int m_DeltaTop;
-
   char* m_pLineOfSpaces;    ///> A text containing m_AreaMaxChars spaces, initialized in setSize()
 
   UWORD m_FontWidth_pix;    ///> Width of the rastport text font
