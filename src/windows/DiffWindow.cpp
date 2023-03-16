@@ -794,7 +794,10 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       bool doUpdateSelection = pMsg->Qualifier & 
                                (IEQUALIFIER_LSHIFT | IEQUALIFIER_RSHIFT);
 
-      if(m_pLeftTextArea->isPointInTextArea(pMsg->MouseX, pMsg->MouseY))
+      ULONG xTransf =  pMsg->MouseX - m_pWindow->WScreen->WBorLeft;
+      ULONG yTransf = pMsg->MouseY - m_pWindow->WScreen->WBorLeft - m_pWindow->WScreen->BarHeight + 1;
+
+      if(m_pLeftTextArea->isPointInTextArea(xTransf, yTransf))
       {
         if(m_SelectionMode == SM_SELECTION_LEFT_FINISHED
         && m_pLeftTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
@@ -821,7 +824,7 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
           m_pRightTextArea->renderSelectionUpdatedLines();
         }
       }
-      else if(m_pRightTextArea->isPointInTextArea(pMsg->MouseX, pMsg->MouseY))
+      else if(m_pRightTextArea->isPointInTextArea(xTransf, yTransf))
       {
         if(m_SelectionMode == SM_SELECTION_RIGHT_FINISHED
         && m_pRightTextArea->isPointInSelection(pMsg->MouseX, pMsg->MouseY))
