@@ -12,6 +12,8 @@ public:
                  CommandBase* pCmdAboutRequester,
                  CommandBase* pCmdQuit,
                  CommandBase* pCmdCopySelection,
+                 CommandBase* pCmdEditLeftFile,
+                 CommandBase* pCmdEditRightFile,
                  CommandBase* pCmdNavigateFirstDiff,
                  CommandBase* pCmdNavigatePrevDiff,
                  CommandBase* pCmdNavigateNextDiff,

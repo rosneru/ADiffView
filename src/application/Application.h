@@ -23,8 +23,9 @@
 #include "OpenJoinedPublicScreen.h"
 #include "CmdChangeTabulatorWidth.h"
 #include "CmdCloseWindow.h"
+#include "CmdCompare.h"
 #include "CmdCopySelection.h"
-#include "CmdDiff.h"
+#include "CmdEditFile.h"
 #include "CmdFindPrev.h"
 #include "CmdFindNext.h"
 #include "CmdNavigateFirstDiff.h"
@@ -78,7 +79,7 @@ private:
   ProgressWindow m_ProgressWindow;
   SearchWindow m_SearchWindow;
   TextFinder m_TextFinder;
-  CmdDiff m_CmdDiff;
+  CmdCompare m_CmdDiff;
   CmdFindPrev m_CmdFindPrev;
   CmdFindNext m_CmdFindNext;
   CmdNavigateFirstDiff m_CmdNavigateFirstDiff;
@@ -87,6 +88,8 @@ private:
   CmdNavigateLastDiff m_CmdNavigateLastDiff;
   CmdQuit m_CmdQuit;
   CmdCopySelection m_CmdCopySelection;
+  CmdEditFile m_CmdEditLeftFile;
+  CmdEditFile m_CmdEditRightFile;
   CmdOpenWindow m_CmdOpenFilesWindow;
   CmdCloseWindow m_CmdCloseFilesWindow;
   CmdOpenWindow m_CmdOpenSearchWindow;

@@ -49,7 +49,7 @@ public:
    * @returns
    * When successful: true; false else.
    */
-  bool Diff();
+  bool compare();
 
   DiffDocument* getDiffDocument();
 

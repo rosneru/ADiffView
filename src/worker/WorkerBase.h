@@ -23,7 +23,7 @@ public:
   /**
    * Creates and starts the background process.
    */
-  bool Run();
+  bool run();
 
 protected:
   WorkerStartupMsg* m_pStartupMsg;

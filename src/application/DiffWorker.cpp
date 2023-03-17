@@ -41,7 +41,7 @@ DiffWorker::~DiffWorker()
 }
 
 
-bool DiffWorker::Diff()
+bool DiffWorker::compare()
 {
   m_IsCancelRequested = false;
   m_IsExitAllowed = false;
@@ -188,7 +188,7 @@ bool DiffWorker::Diff()
 
 void DiffWorker::doWork()
 {
-  Diff();
+  compare();
 }
 
 DiffDocument* DiffWorker::getDiffDocument()

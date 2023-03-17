@@ -28,8 +28,9 @@ add_executable (ADiffView_gcc
                 application/TextFinder.cpp
                 commands/CmdChangeTabulatorWidth.cpp
                 commands/CmdCloseWindow.cpp
+                commands/CmdCompare.cpp
                 commands/CmdCopySelection.cpp
-                commands/CmdDiff.cpp
+                commands/CmdEditFile.cpp
                 commands/CmdFindNext.cpp
                 commands/CmdFindPrev.cpp
                 commands/CmdFileRequester.cpp

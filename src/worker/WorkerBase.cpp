@@ -31,7 +31,7 @@ WorkerBase::~WorkerBase()
 }
 
 
-bool WorkerBase::Run()
+bool WorkerBase::run()
 {
   if (m_pStartupMsg != NULL)
   {
