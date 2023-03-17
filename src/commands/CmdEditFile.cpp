@@ -1,3 +1,9 @@
+#ifdef __clang__
+  #include <clib/dos_protos.h>
+#else
+  #include <proto/dos.h>
+#endif
+
 #include "CmdEditFile.h"
 
 
@@ -17,5 +23,9 @@ CmdEditFile::~CmdEditFile()
 
 void CmdEditFile::Execute(struct Window* pActiveWindow)
 {
+    std::string systemCall = m_PathToEditor;
+    systemCall += " ";
+    systemCall += m_PathToFile;
 
+    SystemTagList(systemCall.c_str(), TAG_DONE);
 }
