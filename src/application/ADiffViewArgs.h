@@ -41,12 +41,6 @@ public:
   DiskObject* getDiscObject() const;
 
   /**
-   * Name of the public screen to run ADiffView on
-   * If empty a own screen will be opened (Workbench clone, 8 colors)
-   */
-  const std::string& PubScreenName() const;
-
-  /**
    * Path to left file
    */
   const std::string& LeftFile() const;
@@ -55,6 +49,18 @@ public:
    * Path to right file
    */
   const std::string& RightFile() const;
+
+  /**
+   * Name of the public screen to run ADiffView on
+   * If empty a own screen will be opened (Workbench clone, 8 colors)
+   */
+  const std::string& PubScreenName() const;
+
+  /**
+   * Path to a text editor
+   */
+  const std::string& EditorPath() const;
+
 
   /**
    * If true, the diff will be performed immediately without waiting
@@ -110,6 +116,7 @@ private:
   std::string m_PubScreenName;
   std::string m_LeftFilePath;
   std::string m_RightFilePath;
+  std::string m_EditorPath;
   bool m_bDontAsk;
   bool m_bNoAppIcon;
   bool m_bShowLineNumbers;

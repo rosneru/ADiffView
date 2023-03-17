@@ -63,12 +63,6 @@ DiskObject* ADiffViewArgs::getDiscObject() const
 }
 
 
-const std::string& ADiffViewArgs::PubScreenName() const
-{
-  return m_PubScreenName;
-}
-
-
 const std::string& ADiffViewArgs::LeftFile() const
 {
   return m_LeftFilePath;
@@ -80,6 +74,17 @@ const std::string& ADiffViewArgs::RightFile() const
   return m_RightFilePath;
 }
 
+
+const std::string& ADiffViewArgs::PubScreenName() const
+{
+  return m_PubScreenName;
+}
+
+
+const std::string& ADiffViewArgs::EditorPath() const
+{
+  return m_EditorPath;
+}
 
 bool ADiffViewArgs::isDontAsk() const
 {
@@ -148,6 +153,13 @@ void ADiffViewArgs::readWorkbenchArgs()
           {
             m_PubScreenName = pValue;
           }
+
+          pValue = toolTypeValue(ppTooltypeArray, "EDITOR");
+          if(pValue != NULL)
+          {
+            m_EditorPath = pValue;
+          }
+
 
           if(toolTypeValue(ppTooltypeArray, "DONOTASK") != NULL)
           {
@@ -219,8 +231,8 @@ void ADiffViewArgs::readWorkbenchArgs()
 void ADiffViewArgs::readCommandLineArgs()
 {
     // Reading the command line arguments
-    const char argTempl[] = "FILES/M,PUBSCREEN/K,DONOTASK/S,NOAPPICON/S,NOLINENUMBERS/S,IGNORETRAILINGSPACES/S,COUNTBYLINES/S,TABSIZE/K/N";
-    LONG args[] = {0, 0, 0, 0, 0, 0, 0, 0};
+    const char argTempl[] = "FILES/M,PUBSCREEN/K,EDITOR/K,DONOTASK/S,NOAPPICON/S,NOLINENUMBERS/S,IGNORETRAILINGSPACES/S,COUNTBYLINES/S,TABSIZE/K/N";
+    LONG args[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     struct RDArgs* pReadArgs = ReadArgs(argTempl, args, NULL);
     if(pReadArgs == NULL)
@@ -254,32 +266,37 @@ void ADiffViewArgs::readCommandLineArgs()
 
     if(args[2] != 0)
     {
-      m_bDontAsk = true;
+      m_EditorPath = (const char*) args[2];
     }
 
     if(args[3] != 0)
     {
-      m_bNoAppIcon = true;
+      m_bDontAsk = true;
     }
 
     if(args[4] != 0)
     {
-      m_bShowLineNumbers = false;
+      m_bNoAppIcon = true;
     }
 
     if(args[5] != 0)
     {
-      m_bIgnoreTrailingSpaces = true;
+      m_bShowLineNumbers = false;
     }
 
     if(args[6] != 0)
     {
-      m_bCountByLines = true;
+      m_bIgnoreTrailingSpaces = true;
     }
 
     if(args[7] != 0)
     {
-      LONG parsedTabSize = *((LONG*)args[5]);
+      m_bCountByLines = true;
+    }
+
+    if(args[8] != 0)
+    {
+      LONG parsedTabSize = *((LONG*)args[8]);
       if(parsedTabSize > 0)
       {
         m_TabSize = parsedTabSize;
