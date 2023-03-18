@@ -23,6 +23,7 @@ ADiffViewArgs::ADiffViewArgs(int argc, char **argv)
   : m_ArgC(argc),
     m_pArgV(argv),
     m_pDiskObject(NULL),
+    m_EditorPath("Ed"),
     m_bDontAsk(false),
     m_bNoAppIcon(false),
     m_bShowLineNumbers(true),
