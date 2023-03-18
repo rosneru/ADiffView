@@ -171,12 +171,12 @@ void CmdFileRequester::intuiHook(struct Hook* pHook,
   {
     // One of the windows has been resized
     case IDCMP_NEWSIZE:
-      for(size_t i = 0; i < m_pAllWindowsArray->size(); i++)
+      for(size_t i = 0; i < m_pAllWindowsVector->size(); i++)
       {
-        if((*m_pAllWindowsArray)[i]->getIntuiWindow() == pMsg->IDCMPWindow)
+        if((*m_pAllWindowsVector)[i]->getIntuiWindow() == pMsg->IDCMPWindow)
         {
           // Re-paint the resized window
-          (*m_pAllWindowsArray)[i]->performResize();
+          (*m_pAllWindowsVector)[i]->performResize();
           break;
         }
       }

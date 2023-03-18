@@ -84,7 +84,7 @@ struct Menu* MenuBase::IntuiMenu()
 
 
 void MenuBase::DisableMenuItem(struct Window* pWindow,
-                            APTR pUserDatMenuBaseItemToDisable)
+                               APTR pUserDatMenuBaseItemToDisable)
 {
   if(pUserDatMenuBaseItemToDisable == NULL)
   {
@@ -103,7 +103,7 @@ void MenuBase::DisableMenuItem(struct Window* pWindow,
 
 
 void MenuBase::EnableMenuItem(struct Window* pWindow,
-                           APTR pUserDatMenuBaseItemToEnable)
+                              APTR pUserDatMenuBaseItemToEnable)
 {
   if((pWindow == NULL) || (pUserDatMenuBaseItemToEnable == NULL))
   {
