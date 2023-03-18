@@ -43,23 +43,23 @@ public:
   /**
    * Path to left file
    */
-  const std::string& LeftFile() const;
+  const std::string& getLeftFile() const;
 
   /**
    * Path to right file
    */
-  const std::string& RightFile() const;
+  const std::string& getRightFile() const;
 
   /**
    * Name of the public screen to run ADiffView on
    * If empty a own screen will be opened (Workbench clone, 8 colors)
    */
-  const std::string& PubScreenName() const;
+  const std::string& getPubScreenName() const;
 
   /**
    * Path to a text editor
    */
-  const std::string& EditorPath() const;
+  const std::string& getEditorPath() const;
 
 
   /**

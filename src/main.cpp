@@ -83,10 +83,10 @@ int main(int argc, char **argv)
     ADiffViewSettings settings;
 
     // Create (and open) the screen depending on args
-    if(args.PubScreenName().length() > 0)
+    if(args.getPubScreenName().length() > 0)
     {
       // Use a given public screen
-      pScreenBase = new OpenJoinedPublicScreen(settings, args.PubScreenName().c_str());
+      pScreenBase = new OpenJoinedPublicScreen(settings, args.getPubScreenName().c_str());
     }
     else
     {

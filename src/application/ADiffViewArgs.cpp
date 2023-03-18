@@ -64,25 +64,25 @@ DiskObject* ADiffViewArgs::getDiscObject() const
 }
 
 
-const std::string& ADiffViewArgs::LeftFile() const
+const std::string& ADiffViewArgs::getLeftFile() const
 {
   return m_LeftFilePath;
 }
 
 
-const std::string& ADiffViewArgs::RightFile() const
+const std::string& ADiffViewArgs::getRightFile() const
 {
   return m_RightFilePath;
 }
 
 
-const std::string& ADiffViewArgs::PubScreenName() const
+const std::string& ADiffViewArgs::getPubScreenName() const
 {
   return m_PubScreenName;
 }
 
 
-const std::string& ADiffViewArgs::EditorPath() const
+const std::string& ADiffViewArgs::getEditorPath() const
 {
   return m_EditorPath;
 }
