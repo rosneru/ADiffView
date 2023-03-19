@@ -12,12 +12,20 @@
 
 AmigaFile::AmigaFile(const char* pFileName, ULONG accessMode)
   : MAX_LINE_LENGTH(1024), // TODO A better solution needed?
-    m_pLineBuf(NULL),
-    m_FileDescriptor(0)
+    m_pLineBuf((STRPTR) AllocVec(MAX_LINE_LENGTH, MEMF_ANY|MEMF_CLEAR)),
+    m_FileDescriptor(0),
+    m_pFib((struct FileInfoBlock*) AllocVec((sizeof(struct FileInfoBlock)), MEMF_ANY|MEMF_CLEAR))
 {
-  m_pLineBuf = (STRPTR) AllocVec(MAX_LINE_LENGTH, 0L);
+  BPTR pLock = Lock(pPath, ACCESS_READ);
+  if(pLock != 0)
+  {
+    freeDirContent(pFibNodesList);
+    return NULL;
+  }
 
-  // Opening the file
+
+
+  m_pLineBuf = ;
   m_FileDescriptor = Open(pFileName, accessMode);
   if(m_FileDescriptor == 0)
   {
@@ -42,7 +50,7 @@ AmigaFile::~AmigaFile()
 }
 
 
-ULONG AmigaFile::CountLines()
+ULONG AmigaFile::countLines()
 {
   ULONG numLines = 0;
   size_t readBufSize = MAX_LINE_LENGTH - 1; // -1 => Workaround for a
@@ -64,7 +72,7 @@ ULONG AmigaFile::CountLines()
 }
 
 
-char* AmigaFile::ReadLine()
+char* AmigaFile::readLine()
 {
   ULONG readBufSize = MAX_LINE_LENGTH - 1; // -1 => Workaround for a OS v36 failure
 
@@ -87,7 +95,7 @@ char* AmigaFile::ReadLine()
 }
 
 
-ULONG AmigaFile::ByteSize()
+ULONG AmigaFile::getByteSize()
 {
   Seek(m_FileDescriptor, 0, OFFSET_END);
   ULONG size = Seek(m_FileDescriptor, 0, OFFSET_BEGINING);
@@ -96,7 +104,7 @@ ULONG AmigaFile::ByteSize()
 }
 
 
-bool AmigaFile::ReadFile(void* pBuffer, size_t bufferSize)
+bool AmigaFile::readFile(void* pBuffer, size_t bufferSize)
 {
   LONG bytesRead = Read(m_FileDescriptor, pBuffer, bufferSize);
   return bytesRead == static_cast<LONG>(bufferSize);

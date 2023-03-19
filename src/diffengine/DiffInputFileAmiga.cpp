@@ -32,14 +32,14 @@ DiffInputFileAmiga::DiffInputFileAmiga(APTR pPoolHeader,
   AmigaFile m_File(pFileName, MODE_OLDFILE);
 
   // Get file size and read whole file
-  m_FileBytes = m_File.ByteSize();
+  m_FileBytes = m_File.getByteSize();
   m_pFileBuffer = static_cast<char*>(AllocPooled(pPoolHeader, m_FileBytes + 1));
   if(m_pFileBuffer == NULL)
   {
     throw "Failed to allocate memory for file buffer.";
   }
 
-  if(m_File.ReadFile(m_pFileBuffer, m_FileBytes) == false)
+  if(m_File.readFile(m_pFileBuffer, m_FileBytes) == false)
   {
     throw "Failed to read file.";
   }

@@ -1,12 +1,13 @@
 #ifndef AMIGA_FILE_H
 #define AMIGA_FILE_H
 
+#include <dos/dos.h>
 #include <exec/types.h>
 #include <libraries/dos.h>
 
 /**
  * Represents an open file. On creation an exception is thrown if the
- * file can't beopened.
+ * file can't be opened.
  *
  * @author Uwe Rosner
  * @date 18/10/2018
@@ -36,7 +37,7 @@ public:
    * isn't opened or that the number of lines = 0. Check the Open()
    * result to be sure.
    */
-  ULONG CountLines();
+  ULONG countLines();
 
 
   /**
@@ -46,8 +47,12 @@ public:
    * NOTE: On each call the internal buffer is overwritten. You must
    *       take care and preserve the read line if necessary.
    */
-  char* ReadLine();
+  char* readLine();
 
+  /**
+   * Reads the whole file into the given buffer.
+   */
+  bool readFile(void* pBuffer, size_t bufferSize);
 
   /**
    * Gets the file size in bytes.
@@ -60,14 +65,12 @@ public:
    * opened or that the file size = 0. Check the Open() result to be
    * sure.
    */
-  ULONG ByteSize();
-
+  ULONG getByteSize();
 
   /**
-   * Reads the whole file into the given buffer.
+   * Returns the DateStamp of the file
    */
-  bool ReadFile(void* pBuffer, size_t bufferSize);
-
+  struct DateStamp* getDate();
 
 
 
@@ -75,6 +78,7 @@ private:
   const ULONG MAX_LINE_LENGTH;
   STRPTR m_pLineBuf;
   BPTR m_FileDescriptor;
+  struct FileInfoBlock* m_pFib;
 };
 
 #endif
