@@ -23,22 +23,11 @@ public:
    *        MODE_OLDFILE. DMODE_OLDFILE.
    */
   AmigaFile(const char* pFileName, ULONG accessMode = MODE_OLDFILE);
-  virtual ~AmigaFile();
-
+  
   /**
-   * Counts the number of lines in file. The file has to be opened
-   * before calling this method.
-   *
-   * NOTE After this call the file reading pointer will be reset to
-   *      the start of the file.
-   *
-   * @returns
-   * Number of lines in file. A value of '0' can mean that the file
-   * isn't opened or that the number of lines = 0. Check the Open()
-   * result to be sure.
+   * Destroys the file object.
    */
-  ULONG countLines();
-
+  virtual ~AmigaFile();
 
   /**
    * Reads the next line of the file into an internal line buffer and
@@ -55,6 +44,20 @@ public:
   bool readFile(void* pBuffer, size_t bufferSize);
 
   /**
+   * Counts the number of lines in file. The file has to be opened
+   * before calling this method.
+   *
+   * NOTE After this call the file reading pointer will be reset to
+   *      the start of the file.
+   *
+   * @returns
+   * Number of lines in file. A value of '0' can mean that the file
+   * isn't opened or that the number of lines = 0. Check the Open()
+   * result to be sure.
+   */
+  ULONG countLines();
+
+  /**
    * Gets the file size in bytes.
    *
    * NOTE: Changes the file handle position! After this operation the
@@ -65,20 +68,20 @@ public:
    * opened or that the file size = 0. Check the Open() result to be
    * sure.
    */
-  ULONG getByteSize();
+  ULONG getByteSize() const;
 
   /**
    * Returns the DateStamp of the file
    */
-  struct DateStamp* getDate();
-
-
+  const struct DateStamp * getDate() const;
 
 private:
   const ULONG MAX_LINE_LENGTH;
   STRPTR m_pLineBuf;
   BPTR m_FileDescriptor;
   struct FileInfoBlock* m_pFib;
+
+  void cleanup();
 };
 
 #endif

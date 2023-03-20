@@ -14,21 +14,38 @@ AmigaFile::AmigaFile(const char* pFileName, ULONG accessMode)
   : MAX_LINE_LENGTH(1024), // TODO A better solution needed?
     m_pLineBuf((STRPTR) AllocVec(MAX_LINE_LENGTH, MEMF_ANY|MEMF_CLEAR)),
     m_FileDescriptor(0),
-    m_pFib((struct FileInfoBlock*) AllocVec((sizeof(struct FileInfoBlock)), MEMF_ANY|MEMF_CLEAR))
+    m_pFib((struct FileInfoBlock*) AllocVec((sizeof(struct FileInfoBlock)), 
+                                            MEMF_ANY|MEMF_CLEAR))
 {
-  BPTR pLock = Lock(pPath, ACCESS_READ);
-  if(pLock != 0)
+  if(m_pLineBuf == NULL)
   {
-    freeDirContent(pFibNodesList);
-    return NULL;
+    cleanup();
+    throw "Failed to alloc line buffer memory in AmigaFile class.";
   }
 
+  if(m_pFib == NULL)
+  {
+    cleanup();
+    throw "Failed to fib memory in AmigaFile class.";
+  }
 
+  BPTR pLock = Lock(pFileName, ACCESS_READ);
+  if(pLock != 0)
+  {
+    if(Examine(pLock, m_pFib) == DOSFALSE)
+    {
+      UnLock(pLock);
+      cleanup();
+      throw "Failed to examine in AmigaFile class.";
+    }
+  }
 
-  m_pLineBuf = ;
+  UnLock(pLock);
+
   m_FileDescriptor = Open(pFileName, accessMode);
   if(m_FileDescriptor == 0)
   {
+    cleanup();
     throw "Failed to open file.";
   }
 }
@@ -36,41 +53,27 @@ AmigaFile::AmigaFile(const char* pFileName, ULONG accessMode)
 
 AmigaFile::~AmigaFile()
 {
-  if(m_pLineBuf != NULL)
-  {
-    FreeVec(m_pLineBuf);
-    m_pLineBuf = NULL;
-  }
+  cleanup();
+}
 
+void AmigaFile::cleanup()
+{
   if(m_FileDescriptor != 0)
   {
     Close(m_FileDescriptor);
     m_FileDescriptor = 0;
   }
-}
 
-
-ULONG AmigaFile::countLines()
-{
-  ULONG numLines = 0;
-  size_t readBufSize = MAX_LINE_LENGTH - 1; // -1 => Workaround for a
-                                            // bug in AmigaOS v36/37
-
-  // Rewind reading pointer to start of file
-  Seek(m_FileDescriptor, 0, OFFSET_BEGINNING);
-
-  // Reading all lines and increment counter
-  while(FGets(m_FileDescriptor, m_pLineBuf, readBufSize) != NULL)
+  if(m_pFib != NULL)
   {
-    numLines++;
+    FreeVec(m_pFib);
   }
 
-  // Rewind reading pointer to start of file again
-  Seek(m_FileDescriptor, 0, OFFSET_BEGINNING);
-
-  return numLines;
+  if(m_pLineBuf != NULL)
+  {
+    FreeVec(m_pLineBuf);
+  }
 }
-
 
 char* AmigaFile::readLine()
 {
@@ -94,18 +97,40 @@ char* AmigaFile::readLine()
   return m_pLineBuf;
 }
 
-
-ULONG AmigaFile::getByteSize()
-{
-  Seek(m_FileDescriptor, 0, OFFSET_END);
-  ULONG size = Seek(m_FileDescriptor, 0, OFFSET_BEGINING);
-
-  return size;
-}
-
-
 bool AmigaFile::readFile(void* pBuffer, size_t bufferSize)
 {
   LONG bytesRead = Read(m_FileDescriptor, pBuffer, bufferSize);
   return bytesRead == static_cast<LONG>(bufferSize);
+}
+#include <stdio.h>
+ULONG AmigaFile::countLines()
+{
+  ULONG numLines = 0;
+  size_t readBufSize = MAX_LINE_LENGTH - 1; // -1 => Workaround for a
+                                            // bug in AmigaOS v36/37
+
+  // Rewind reading pointer to start of file
+  Seek(m_FileDescriptor, 0, OFFSET_BEGINNING);
+
+  // Reading all lines and increment counter
+  while(FGets(m_FileDescriptor, m_pLineBuf, readBufSize) != NULL)
+  {
+    numLines++;
+  }
+
+  // Rewind reading pointer to start of file again
+  Seek(m_FileDescriptor, 0, OFFSET_BEGINNING);
+
+  return numLines;
+}
+
+ULONG AmigaFile::getByteSize() const
+{
+  ULONG size = (ULONG)m_pFib->fib_Size;
+  return size;
+}
+
+const struct DateStamp* AmigaFile::getDate() const
+{
+  return &m_pFib->fib_Date;
 }
