@@ -81,7 +81,8 @@ DiffWindow::DiffWindow(ScreenBase& screen,
            IDCMP_NEWSIZE |        // Inform about resizing
            IDCMP_MOUSEMOVE |      // Inform about mouse movement
            IDCMP_MOUSEBUTTONS |   // Inform about mouse buttons
-           IDCMP_INTUITICKS);
+           IDCMP_INTUITICKS |     // Inform every n ms 
+           IDCMP_ACTIVEWINDOW);   // Inform when window activated
 }
 
 
@@ -524,6 +525,22 @@ void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
 
   switch (pMsg->Class)
   {
+    case IDCMP_ACTIVEWINDOW:
+    {
+      if(m_pDocument != NULL)
+      {
+        if(m_pDocument->hasLeftFileDateChanged())
+        {
+          printf("Left file has changed\n");
+        }
+        else if(m_pDocument->hasRightFileDateChanged())
+        {
+          printf("Right file has changed\n");
+        }
+      }
+      break;
+    }
+
     case IDCMP_GADGETUP:
     {
       struct Gadget* pGadget = (struct Gadget*) pMsg->IAddress;

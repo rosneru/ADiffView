@@ -1,6 +1,7 @@
 #ifndef DIFF_INPUT_FILE_AMIGA_H
 #define DIFF_INPUT_FILE_AMIGA_H
 
+#include <dos/dos.h>
 #include <exec/types.h>
 
 #include "DiffInputFileBase.h"
@@ -27,9 +28,11 @@ public:
 
   virtual ~DiffInputFileAmiga();
 
+  const struct DateStamp* getFileDate() const;
 
 private:
   APTR m_pPoolHeader;
+  struct DateStamp m_FileDate;
 
   void collectLineNumbers(size_t maxNumLines);
 };

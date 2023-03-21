@@ -1,11 +1,14 @@
 #ifdef __clang__
+  #include <clib/dos_protos.h>
   #include <clib/exec_protos.h>
 #else
+  #include <proto/dos.h>
   #include <proto/exec.h>
 #endif
 
 #include <exec/memory.h>
 
+#include "AmigaFile.h"
 #include "DiffDocument.h"
 #include "DiffEngine.h"
 
@@ -162,4 +165,20 @@ const std::list<size_t>& DiffDocument::getDiffIndices() const
 bool DiffDocument::areLineNumbersEnabled() const
 {
   return m_LineNumbersEnabled;
+}
+
+bool DiffDocument::hasLeftFileDateChanged() const
+{
+  AmigaFile fileNow(m_LeftFileName.c_str());
+  const struct DateStamp* pDateNow = fileNow.getDate();
+  LONG compareResult = CompareDates(pDateNow, m_LeftSrcFile.getFileDate());
+  return compareResult != 0;
+}
+
+bool DiffDocument::hasRightFileDateChanged() const
+{
+  AmigaFile fileNow(m_RightFileName.c_str());
+  const struct DateStamp* pDateNow = fileNow.getDate();
+  LONG compareResult = CompareDates(pDateNow, m_RightSrcFile.getFileDate());
+  return compareResult != 0;
 }

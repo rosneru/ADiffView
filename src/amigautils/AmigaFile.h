@@ -41,7 +41,7 @@ public:
   /**
    * Reads the whole file into the given buffer.
    */
-  bool readFile(void* pBuffer, size_t bufferSize);
+  bool readFile(void* pBuffer, ULONG bufferSize);
 
   /**
    * Counts the number of lines in file. The file has to be opened

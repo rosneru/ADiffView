@@ -84,7 +84,7 @@ char* AmigaFile::readLine()
     return NULL;
   }
 
-  for(size_t i = 0; i < readBufSize; i++)
+  for(ULONG i = 0; i < readBufSize; i++)
   {
     if((m_pLineBuf[i] == '\r') ||
        (m_pLineBuf[i] == '\n'))
@@ -97,16 +97,16 @@ char* AmigaFile::readLine()
   return m_pLineBuf;
 }
 
-bool AmigaFile::readFile(void* pBuffer, size_t bufferSize)
+bool AmigaFile::readFile(void* pBuffer, ULONG bufferSize)
 {
   LONG bytesRead = Read(m_FileDescriptor, pBuffer, bufferSize);
   return bytesRead == static_cast<LONG>(bufferSize);
 }
-#include <stdio.h>
+
 ULONG AmigaFile::countLines()
 {
   ULONG numLines = 0;
-  size_t readBufSize = MAX_LINE_LENGTH - 1; // -1 => Workaround for a
+  ULONG readBufSize = MAX_LINE_LENGTH - 1; // -1 => Workaround for a
                                             // bug in AmigaOS v36/37
 
   // Rewind reading pointer to start of file

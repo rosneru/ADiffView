@@ -29,17 +29,25 @@ DiffInputFileAmiga::DiffInputFileAmiga(APTR pPoolHeader,
   progress.SetValue(formerProgress);
 
   // Create the opened input file
-  AmigaFile m_File(pFileName, MODE_OLDFILE);
+  AmigaFile file(pFileName, MODE_OLDFILE);
 
-  // Get file size and read whole file
-  m_FileBytes = m_File.getByteSize();
+  // Store the file size
+  m_FileBytes = file.getByteSize();
+
+  // Store the file date. NOTE: DateStamp struct must be copied because
+  // the file and the pointer destination returned by getDate() will be
+  // destroyed after this constructors lifetime.
+  CopyMem((APTR)file.getDate(), &m_FileDate, sizeof(struct DateStamp));
+
+  // Create memory buffer for file content
   m_pFileBuffer = static_cast<char*>(AllocPooled(pPoolHeader, m_FileBytes + 1));
   if(m_pFileBuffer == NULL)
   {
     throw "Failed to allocate memory for file buffer.";
   }
 
-  if(m_File.readFile(m_pFileBuffer, m_FileBytes) == false)
+  // Read whole file into memory buffer
+  if(file.readFile(m_pFileBuffer, m_FileBytes) == false)
   {
     throw "Failed to read file.";
   }
@@ -125,6 +133,11 @@ DiffInputFileAmiga::DiffInputFileAmiga(APTR pPoolHeader,
 DiffInputFileAmiga::~DiffInputFileAmiga()
 {
 
+}
+
+const struct DateStamp* DiffInputFileAmiga::getFileDate() const
+{
+  return &m_FileDate;
 }
 
 
