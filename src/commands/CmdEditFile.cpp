@@ -26,8 +26,9 @@ CmdEditFile::~CmdEditFile()
 void CmdEditFile::Execute(struct Window* pActiveWindow)
 {
     std::string systemCall = m_PathToEditor;
-    systemCall += " ";
+    systemCall += " \"";
     systemCall += m_PathToFile;
+    systemCall += "\"";
 
     if(SystemTagList(systemCall.c_str(), TAG_DONE) != 0)
     {
