@@ -20,12 +20,12 @@ public:
   MessageBox(struct Window* pWindow = NULL);
   virtual ~MessageBox();
 
-  void Show(const char* pWindowTitle,
+  LONG Show(const char* pWindowTitle,
             const char* pMessage,
             const char* pButtonText);
 
 
-  void Show(const char* pMessage,
+  LONG Show(const char* pMessage,
             const char* pButtonText);
 
 private:

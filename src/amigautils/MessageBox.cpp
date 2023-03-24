@@ -20,7 +20,7 @@ MessageBox::~MessageBox()
 
 }
 
-void MessageBox::Show(const char* pWindowTitle,
+LONG MessageBox::Show(const char* pWindowTitle,
                       const char* pMessage,
                       const char* pButtonText)
 {
@@ -28,16 +28,16 @@ void MessageBox::Show(const char* pWindowTitle,
   m_EasyStruct.es_TextFormat = (UBYTE*)pMessage;
   m_EasyStruct.es_GadgetFormat = (UBYTE*)pButtonText;
 
-  EasyRequest(m_pWindow, &m_EasyStruct, NULL);
+  return EasyRequest(m_pWindow, &m_EasyStruct, NULL);
 }
 
 
-void MessageBox::Show(const char* pMessage,
+LONG MessageBox::Show(const char* pMessage,
                       const char* pButtonText)
 {
   m_EasyStruct.es_Title = NULL;
   m_EasyStruct.es_TextFormat = (UBYTE*)pMessage;
   m_EasyStruct.es_GadgetFormat = (UBYTE*)pButtonText;
 
-  EasyRequest(m_pWindow, &m_EasyStruct, NULL);
+  return EasyRequest(m_pWindow, &m_EasyStruct, NULL);
 }
