@@ -140,6 +140,11 @@ const struct DateStamp* DiffInputFileAmiga::getFileDate() const
   return &m_FileDate;
 }
 
+void DiffInputFileAmiga::setFakeFileDate(const struct DateStamp* pFakeDate)
+{
+  CopyMem((APTR)pFakeDate, &m_FileDate, sizeof(struct DateStamp));
+}
+
 
 void DiffInputFileAmiga::collectLineNumbers(size_t maxNumLines)
 {

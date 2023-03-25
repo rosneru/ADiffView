@@ -167,18 +167,20 @@ bool DiffDocument::areLineNumbersEnabled() const
   return m_LineNumbersEnabled;
 }
 
-bool DiffDocument::hasLeftFileDateChanged() const
+bool DiffDocument::hasLeftFileDateChanged()
 {
   AmigaFile fileNow(m_LeftFileName.c_str());
   const struct DateStamp* pFileDateNow = fileNow.getDate();
   LONG compareResult = CompareDates(pFileDateNow, m_LeftSrcFile.getFileDate());
+  m_LeftSrcFile.setFakeFileDate(pFileDateNow);
   return compareResult != 0;
 }
 
-bool DiffDocument::hasRightFileDateChanged() const
+bool DiffDocument::hasRightFileDateChanged()
 {
   AmigaFile fileNow(m_RightFileName.c_str());
   const struct DateStamp* pFileDateNow = fileNow.getDate();
   LONG compareResult = CompareDates(pFileDateNow, m_RightSrcFile.getFileDate());
+  m_RightSrcFile.setFakeFileDate(pFileDateNow);
   return compareResult != 0;
 }

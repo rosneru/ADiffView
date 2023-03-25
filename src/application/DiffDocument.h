@@ -75,8 +75,8 @@ public:
 
   bool areLineNumbersEnabled() const;
 
-  bool hasLeftFileDateChanged() const;
-  bool hasRightFileDateChanged() const;
+  bool hasLeftFileDateChanged();
+  bool hasRightFileDateChanged();
 
 private:
   std::string m_LeftFileName;

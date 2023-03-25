@@ -534,22 +534,22 @@ void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
           printf("\n");
           MessageBox request(m_pWindow);
           long result = request.Show("ADiffView",
-                                     "Left file has changed.\n\nCompare again?",
+                                     "Left file date has changed.\n\nCompare again?",
                                      "Yes|No");
-          if(result == 0) // First button 'Yes' pressed
+          if(result == 1) // Button 'Yes' pressed
           {
-            printf("TODO Re-compare\n");
+            printf("Re-compare %ld\n", result);
           }
         }
         else if(m_pDocument->hasRightFileDateChanged())
         {
           MessageBox request(m_pWindow);
           long result = request.Show("ADiffView",
-                                     "Right file has changed.\n\nCompare again?",
+                                     "Right file date has changed.\n\nCompare again?",
                                      "Yes|No");
-          if(result == 0) // First button 'Yes' pressed
+          if(result == 1) // Button 'Yes' pressed
           {
-            printf("TODO Re-compare\n");
+            printf("Re-compare %ld\n", result);
           }
         }
       }

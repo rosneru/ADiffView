@@ -29,6 +29,7 @@ public:
   virtual ~DiffInputFileAmiga();
 
   const struct DateStamp* getFileDate() const;
+  void setFakeFileDate(const struct DateStamp* pFakeDate);
 
 private:
   APTR m_pPoolHeader;
