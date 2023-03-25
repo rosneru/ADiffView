@@ -833,8 +833,8 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
         return;
       }
 
-      bool doUpdateSelection = pMsg->Qualifier & 
-                               (IEQUALIFIER_LSHIFT | IEQUALIFIER_RSHIFT);
+      bool doUpdateSelection = pMsg->Qualifier 
+                             & (IEQUALIFIER_LSHIFT | IEQUALIFIER_RSHIFT);
 
       // Calculate mouseX and mouseY relative to the top left corner of
       // *inside* the DiffWindow (without the borders)
@@ -890,7 +890,7 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
           m_SelectionMode = SM_SELECTION_RIGHT_STARTED;
 
           m_pRightTextArea->activateDynamicSelection();
-          m_pRightTextArea->startDynamicSelection(pMsg->MouseX, pMsg->MouseY);
+          m_pRightTextArea->startDynamicSelection(mouseXRel, mouseYRel);
 
           m_pLeftTextArea->clearDynamicSelection();
           m_pLeftTextArea->activateDynamicSelection();
