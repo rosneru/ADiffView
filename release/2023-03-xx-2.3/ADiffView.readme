@@ -23,11 +23,19 @@ CHANGES
 =======
 
 2.3 (xx.03.2023)
-- Added the possibility to select text and copy it to the clipboard.
 - Navigation: Text search now highlights all matches at once, not just
   the current one. Therefore, 'Find next' and 'Find prev' also no longer
   show the next/previous match on the current page, but instead scroll
   up/down the page to the next match.
+- New edit menu: Added the possibility to select text and copy it to the
+  clipboard (new menu item 'Edit->Copy').
+- New edit menu: Added commands 'Edit -> Edit left file' and 'Edit -> 
+  Edit right file' to call an external editor for the file in question. 
+  Default editor is C:Ed. Can be changed using the new (ToolType / CLI) 
+  argument EDITOR.
+- Behavior: Added a check if a file date has changed that is done on 
+  every Activation of DiffWindow. If date changed, the user is given the 
+  opportunity to quickly start a new comparison.
 
 2.2 (09.04.2022)
 - Navigation: Added the shortcuts SPACE and BACKSPACE to navigate
