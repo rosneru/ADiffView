@@ -31,11 +31,13 @@ DiffWindow::DiffWindow(ScreenBase& screen,
                        const ADiffViewPens& pens,
                        struct MsgPort* pIdcmpMsgPort,
                        MenuBase* pMenu,
-                       ULONG tabSize)
+                       ULONG tabSize,
+                       CommandBase& cmdDiff)
   : ScrollbarWindow(screen, pIdcmpMsgPort, pMenu),
     m_Pens(pens),
     m_TabSize(tabSize),
     m_pMenuDiffWindow((MenuDiffWindow*)pMenu),
+    m_CmdCompare(cmdDiff),
     m_pRPorts(NULL),
     m_pDocument(NULL),
     m_EmptyChar('\0'),
@@ -50,7 +52,8 @@ DiffWindow::DiffWindow(ScreenBase& screen,
     m_TextAreasHeight(0),
     m_pLeftTextArea(NULL),
     m_pRightTextArea(NULL),
-    m_SelectionMode(DiffWindow::SM_NONE)
+    m_SelectionMode(DiffWindow::SM_NONE),
+    m_ScrollToLineAfterLoad(0)
 {
   // If parent window already defined gadgets, we store the last of
   // these gadgets and the count of defined gadgets. They are needed
@@ -329,6 +332,12 @@ bool DiffWindow::setDocument(DiffDocument* pDiffDocument)
   setXScrollTop(0);
   setYScrollTop(0);
 
+  if(m_ScrollToLineAfterLoad > 0)
+  {
+    scrollTopTo(m_ScrollToLineAfterLoad);
+    m_ScrollToLineAfterLoad = 0;
+  }
+
   return true;
 }
 
@@ -531,14 +540,14 @@ void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
       {
         if(m_pDocument->hasLeftFileDateChanged())
         {
-          printf("\n");
           MessageBox request(m_pWindow);
           long result = request.Show("ADiffView",
                                      "Left file date has changed.\n\nCompare again?",
                                      "Yes|No");
           if(result == 1) // Button 'Yes' pressed
           {
-            printf("Re-compare %ld\n", result);
+            m_ScrollToLineAfterLoad = m_pLeftTextArea->getY();
+            m_CmdCompare.Execute(NULL);
           }
         }
         else if(m_pDocument->hasRightFileDateChanged())
@@ -549,7 +558,8 @@ void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
                                      "Yes|No");
           if(result == 1) // Button 'Yes' pressed
           {
-            printf("Re-compare %ld\n", result);
+            m_ScrollToLineAfterLoad = m_pLeftTextArea->getY();
+            m_CmdCompare.Execute(NULL);
           }
         }
       }

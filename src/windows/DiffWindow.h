@@ -7,6 +7,7 @@
 #include <intuition/screens.h>
 
 #include "ADiffViewPens.h"
+#include "CommandBase.h"
 #include "DiffDocument.h"
 #include "DiffLine.h"
 #include "DiffWindowRastports.h"
@@ -28,7 +29,8 @@ public:
              const ADiffViewPens& pens,
              struct MsgPort* pIdcmpMsgPort,
              MenuBase* pMenu,
-             ULONG tabSize);
+             ULONG tabSize,
+             CommandBase& cmdDiff);
 
   virtual ~DiffWindow();
 
@@ -163,7 +165,7 @@ private:
   const ADiffViewPens& m_Pens;
   ULONG m_TabSize;
   MenuDiffWindow* m_pMenuDiffWindow;
-
+  CommandBase& m_CmdCompare;
 
   DiffWindowRastports* m_pRPorts;
   DiffDocument* m_pDocument;
@@ -201,6 +203,8 @@ private:
   char m_StatusBarText[60];
 
   struct TextAttr m_TextAttr;
+
+  long m_ScrollToLineAfterLoad;
 
   //
   // The next two are called from HandleIDCMP() to get that method not
