@@ -13,7 +13,7 @@ Many thanks to Mason for creating a color icon for ADiffView in AmigaOS 3.2 styl
 
 @{b}3rd party license@{ub}
 
-The diff engine uses Eugene Myers' diff algorithm and also uses some third-party code in its implementation. See the LICENSE-3RD-PARTY file for more information.
+The diff engine uses Eugene Myers' diff algorithm and also third-party code in its implementation. See the LICENSE-3RD-PARTY file for more information.
 
 @{"How to use" link usage}
 @{"Menus and functions" link menus}
@@ -38,7 +38,7 @@ After the differences are calculated successfully, both files are shown next to 
 
 Use the cursor keys or the arrow keys to scroll through the files in small steps. Use the SPACE and BACKSPACE keys to scroll back and forth page by page.
 
-Use the mouse to select text, or expand a selection by holding down the Shift key and clicking on unselected text in the same pane that already contains a block of selected text.
+Use the mouse to select text, or expand a selection by holding down the Shift key and clicking on unselected text in the same pane that already contains a block of selected text. Click on a selection to unselect.
 
 @{b}No more progress, is it frozen?@{ub}
 The time needed to calculate the differences increases with the number of differences in the files and also with their size. So if you compare large files that contain many differences it can take a while depending on the CPU. Since the algorithm is not linear, it may seem that the program is frozen during this time. Then please be patient: in most cases it is not.
@@ -50,6 +50,7 @@ The time needed to calculate the differences increases with the number of differ
 @{b}Edit@{ub}
 With 'Copy' you can copy the marked text to the clipboard to use it in other applications. This menu item is only enabled when text is selected.
 
+'Edit left file' / 'Edit right file' open the left or right file in a text editor. The default text editor is C:Ed. A custom editor can be specified with the tool type / CLI argument EDITOR. If as a result of the editing process a file has been modified (according to its date stamp), ADiffView allows the user to quickly start a new comparison. After this has been completed successfully, ADiffView scrolls back to the top line that was active before the re-comparison.
 @{b}Navigation@{ub}
 In the diff result window you can use the navigation menu to display the first, last, next or previous difference block. Note the behavior of the navigation functions. When you call 'Next difference' it will jump to the next one according @{i}to your position in text@{ui}, not according to the last hit you jumped to. If no next / previous difference block exists, the screen flashes briefly and a notification appears in the window title.
 
@@ -111,6 +112,9 @@ If this is set, the number of differences reported is counted per lines, not per
 
 @{i}DONOTASK@{ui}
 The file comparison starts immediately after the program start. The window for selecting the files will not be shown. This only will work if the files to compare also are provided.
+
+@{i}EDITOR@{ui}
+The text editor to be used by menu items 'Edit -> Edit left file' and 'Edit -> Edit right file'. If Not specified, C:Ed is used.
 
 @{i}IGNORETRAILINGSPACES@{ui}
 If this is set, spaces or tabs at line ends are not recognized as differences.

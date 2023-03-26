@@ -29,14 +29,12 @@ CHANGES
   up/down the page to the next match.
 - New edit menu: Added the possibility to select text and copy it to the
   clipboard (new menu item 'Edit->Copy').
-- New edit menu: Added commands 'Edit -> Edit left file' and 'Edit -> 
-  Edit right file' to call an external editor for the file in question. 
+- New edit menu: Added 'Edit -> Edit left file' and 'Edit -> Edit right 
+  file' commands to call an external editor for the file in question. 
   Default editor is C:Ed. Can be changed using the new (ToolType / CLI) 
   argument EDITOR.
-- Behavior: Added a check if a file date has changed that is done on 
-  every Activation of DiffWindow. If date changed, the user is given the 
-  opportunity to quickly start a new comparison.
-
+- Behavior: Added a check if an open file has been modified, and if so, 
+  allows the user to quickly start a new comparison.
 2.2 (09.04.2022)
 - Navigation: Added the shortcuts SPACE and BACKSPACE to navigate
   forward and backward one page.
