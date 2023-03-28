@@ -3,7 +3,7 @@
 @wordwrap
 @node Main "ADiffView - Introduction"
 
-@{fg shine}ADiffView 2.2 released on 09.04.2022.@{fg text}
+@{fg shine}ADiffView 2.3 released on 28.03.2023.@{fg text}
 
 @{b}About@{ub}
 
@@ -50,7 +50,12 @@ The time needed to calculate the differences increases with the number of differ
 @{b}Edit@{ub}
 With 'Copy' you can copy the marked text to the clipboard to use it in other applications. This menu item is only enabled when text is selected.
 
-'Edit left file' / 'Edit right file' open the left or right file in a text editor. The default text editor is C:Ed. A custom editor can be specified with the tool type / CLI argument EDITOR. If as a result of the editing process a file has been modified (according to its date stamp), ADiffView allows the user to quickly start a new comparison. After this has been completed successfully, ADiffView scrolls back to the top line that was active before the re-comparison.
+Please note that the copied text may have been modified internally and may not exactly match the original file. For example, if you use the IGNORETRAILINGSPACES option, the copied text will no longer contain spaces at the end of lines, unlike the original.
+
+'Edit left file' / 'Edit right file' open the left or right file in a text editor. The default text editor is C:Ed. A custom editor can be specified with the tool type / CLI argument EDITOR.
+
+If as a result of the editing process a file has been modified (according to its date stamp), ADiffView allows the user to quickly start a new comparison. After this has been completed successfully, ADiffView scrolls back to the top line that was active before the re-comparison.
+
 @{b}Navigation@{ub}
 In the diff result window you can use the navigation menu to display the first, last, next or previous difference block. Note the behavior of the navigation functions. When you call 'Next difference' it will jump to the next one according @{i}to your position in text@{ui}, not according to the last hit you jumped to. If no next / previous difference block exists, the screen flashes briefly and a notification appears in the window title.
 
@@ -85,10 +90,10 @@ If you use DOpus 5.x you can setup a button to run ADiffView from there:
 1) Edit the file DOpus/ARexx/Compare.dopus5 until the line at the bottom which starts with 'Address Command' looks like this:
 @{fg shine}Address Command 'SYS:Tools/ADiffView "' || First_Name || '" "' || Second_Name || '"' DONOTASK@{fg text}
 
-2) In DOpus create or edit a button, name it e.g. "Diff" and set this ARexx script to be executed on the button click:
+2) In DOpus create or edit a button, name it e.g. "Compare" and set this ARexx script to be executed on the button click:
 @{fg shine}DOpus5:ARexx/Compare.dopus5 {Qp}@{fg text}
 
-Now when clicking on "Diff" ADiffView will be started, immediately comparing the first two selected files. The files to compare can be selected from one lister or from two different listers.
+Now when clicking on "Comapre" ADiffView will be started, immediately comparing the first two selected files. The files to compare can be selected from one lister or from two different listers.
 
 @endnode
 
@@ -139,6 +144,12 @@ The tabulator width used when rendering text that contains tabulator characters.
 @node changelog "Changelog"
 
 @{b}Changelog@{ub}
+
+2.3 (28.03.2023)
+- Navigation: Text search now highlights all matches at once, not just the current one. Therefore, 'Find next' and 'Find prev' also no longer show the next/previous match on the current page, but instead scroll up/down the page to the next match.
+- New edit menu: Added the possibility to select text and copy it to the clipboard (new menu item 'Edit->Copy').
+- New edit menu: Added 'Edit -> Edit left file' and 'Edit -> Edit right file' commands to call an external editor for the file in question. Default editor is C:Ed. Can be changed using the new (ToolType / CLI) argument EDITOR.
+- Behavior: Added a check if an open file has been modified, and if so, allows the user to quickly start a new comparison.
 
 2.2 (09.04.2022)
 - Navigation: Added the shortcuts SPACE and BACKSPACE to navigate forward and backward one page.

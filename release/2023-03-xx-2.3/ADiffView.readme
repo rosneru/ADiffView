@@ -10,19 +10,18 @@ Distribution: Aminet
 =====
 ABOUT
 =====
-ADiffView compares two ASCII text files and graphically displays the
-differences.
+ADiffView compares two ASCII text files and displays the differences 
+graphically.
 
-The diff engine uses a custom implementation of Eugene Myers' diff
-algorithm. In addition, the algorithm has been optimized for
-non-recursive processing, as described on Matthias Hertel's website
-www.mathertel.de. See the file LICENSE-3RD-PARTY for more information.
+The diff engine uses Eugene Myers' diff algorithm and also third-party 
+code in its implementation. See the LICENSE-3RD-PARTY file for more 
+information.
 
 ======= 
 CHANGES
 =======
 
-2.3 (xx.03.2023)
+2.3 (28.03.2023)
 - Navigation: Text search now highlights all matches at once, not just
   the current one. Therefore, 'Find next' and 'Find prev' also no longer
   show the next/previous match on the current page, but instead scroll
@@ -35,6 +34,7 @@ CHANGES
   argument EDITOR.
 - Behavior: Added a check if an open file has been modified, and if so, 
   allows the user to quickly start a new comparison.
+
 2.2 (09.04.2022)
 - Navigation: Added the shortcuts SPACE and BACKSPACE to navigate
   forward and backward one page.
