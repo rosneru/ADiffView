@@ -25,17 +25,17 @@ CmdEditFile::~CmdEditFile()
 
 void CmdEditFile::Execute(struct Window* pActiveWindow)
 {
-    std::string systemCall = m_PathToEditor;
-    systemCall += " \"";
-    systemCall += m_PathToFile;
-    systemCall += "\"";
+  std::string systemCall = m_PathToEditor;
+  systemCall += " \"";
+  systemCall += m_PathToFile;
+  systemCall += "\"";
 
-    if(SystemTagList(systemCall.c_str(), TAG_DONE) != 0)
-    {
-      std::string msg = "Starting the editor with the following command failed:\n";
-      msg += systemCall.c_str();
-      
-      CmdRequester cmdRequester(m_pAllWindowsVector, msg, "Error", "Ok");
-      cmdRequester.Execute(pActiveWindow);
-    }
+  if(SystemTagList(systemCall.c_str(), TAG_DONE) != 0)
+  {
+    std::string msg = "Starting the editor with the following command failed:\n";
+    msg += systemCall.c_str();
+    
+    CmdRequester cmdRequester(m_pAllWindowsVector, msg, "Error", "Ok");
+    cmdRequester.Execute(pActiveWindow);
+  }
 }
