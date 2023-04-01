@@ -60,6 +60,11 @@ public:
    * If empty a own screen will be opened (Workbench clone, 8 colors)
    */
   const std::string& getPubScreenName() const;
+  
+  /**
+   * Set the name of the public screen ADiffView will open by itself
+   */
+  void setPubScreenName(const char* pName);
 
   /**
    * Returns the tab size specified by startup argument or the default

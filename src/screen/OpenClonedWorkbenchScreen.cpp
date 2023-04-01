@@ -9,8 +9,9 @@
 #include "OpenClonedWorkbenchScreen.h"
 
 OpenClonedWorkbenchScreen::OpenClonedWorkbenchScreen(const ADiffViewSettings& settings,
-                                             const char* pTitle,
-                                             short depth)
+                                                     const char* pTitle,
+                                                     const char* pPubScreenName,
+                                                     short depth)
   : ScreenBase(settings),
     m_pTitle(pTitle),
     m_Depth(depth)
@@ -28,6 +29,7 @@ OpenClonedWorkbenchScreen::OpenClonedWorkbenchScreen(const ADiffViewSettings& se
                                   SA_SharePens,TRUE,
                                   SA_Title, (ULONG)m_pTitle,
                                   SA_Colors32, (ULONG)m_Settings.GetColorArray(),
+                                  SA_PubName, (ULONG)pPubScreenName,
                                   TAG_DONE);
 
   if(m_pIntuiScreen == NULL)

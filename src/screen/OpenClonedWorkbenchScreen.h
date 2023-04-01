@@ -6,9 +6,10 @@
 class OpenClonedWorkbenchScreen : public ScreenBase
 {
 public:
-  OpenClonedWorkbenchScreen(const ADiffViewSettings& settings, 
-                        const char* pTitle,
-                        short depth);
+  OpenClonedWorkbenchScreen(const ADiffViewSettings& settings,
+                            const char* pTitle,
+                            const char* pPubScreenName,
+                            short depth);
   virtual ~OpenClonedWorkbenchScreen();
 
   bool Open();

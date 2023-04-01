@@ -85,6 +85,11 @@ const std::string& ADiffViewArgs::getPubScreenName() const
   return m_PubScreenName;
 }
 
+void ADiffViewArgs::setPubScreenName(const char* pName)
+{
+  m_PubScreenName = pName;
+}
+
 long ADiffViewArgs::getTabSize() const
 {
   return m_TabSize;
