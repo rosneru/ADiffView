@@ -34,13 +34,6 @@ public:
   virtual ~ADiffViewArgs();
 
   /**
-   * When started from workbench this returns the DiscObject associated
-   * with the application icon. Returns NULL when started from Shell or
-   * when it failed to get the disc object.
-   */
-  DiskObject* getDiscObject() const;
-
-  /**
    * Path to left file
    */
   const std::string& getLeftFile() const;
@@ -51,16 +44,36 @@ public:
   const std::string& getRightFile() const;
 
   /**
-   * Name of the public screen to run ADiffView on
-   * If empty a own screen will be opened (Workbench clone, 8 colors)
+   * When started from workbench this returns the DiscObject associated
+   * with the application icon. Returns NULL when started from Shell or
+   * when it failed to get the disc object.
    */
-  const std::string& getPubScreenName() const;
+  DiskObject* getDiscObject() const;
 
   /**
    * Path to a text editor
    */
   const std::string& getEditorPath() const;
 
+  /**
+   * Name of the public screen to run ADiffView on
+   * If empty a own screen will be opened (Workbench clone, 8 colors)
+   */
+  const std::string& getPubScreenName() const;
+
+  /**
+   * Returns the tab size specified by startup argument or the default
+   * value.
+   */
+  long getTabSize() const;
+
+  /**
+   * If true, the number of differences reported is counted per lines,
+   * not per 'groups of difference blocks' as it is the default.
+   *
+   * Defaults to false.
+   */
+  bool isCountByLines() const;
 
   /**
    * If true, the diff will be performed immediately without waiting
@@ -72,6 +85,20 @@ public:
    * Defaults to false.
    */
   bool isDontAsk() const;
+
+  /**
+   * If true the editor to edit files will be started on the same screen
+   * as ADiffView by starting it with the PUBSCREEN argument.
+   */
+  bool isEditorOnPubScreen() const;
+
+  /**
+   * If true, whitespaces on line endings are not taken into account
+   * when the diff is being calculated.
+   *
+   * Defaults to false.
+   */
+  bool isIgnoreTrailingSpaces() const;
 
   /**
    * If true, no AppIcon for file drag'n'drop is installed on the
@@ -86,27 +113,6 @@ public:
    */
   bool isShowLineNumbers() const;
 
-  /**
-   * If true, whitespaces on line endings are not taken into account
-   * when the diff is being calculated.
-   *
-   * Defaults to false.
-   */
-  bool isIgnoreTrailingSpaces() const;
-
-  /**
-   * If true, the number of differences reported is counted per lines,
-   * not per 'groups of difference blocks' as it is the default.
-   *
-   * Defaults to false.
-   */
-  bool isCountByLines() const;
-
-  /**
-   * Returns the tab size specified by startup argument or the default
-   * value.
-   */
-  long getTabSize() const;
 
 private:
   int m_ArgC;
@@ -117,11 +123,12 @@ private:
   std::string m_LeftFilePath;
   std::string m_RightFilePath;
   std::string m_EditorPath;
+  bool m_bCountByLines;
   bool m_bDontAsk;
+  bool m_bEditorOnPubscreen;
+  bool m_bIgnoreTrailingSpaces;
   bool m_bNoAppIcon;
   bool m_bShowLineNumbers;
-  bool m_bIgnoreTrailingSpaces;
-  bool m_bCountByLines;
   long m_TabSize;
 
   void readWorkbenchArgs();

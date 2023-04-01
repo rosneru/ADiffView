@@ -24,11 +24,12 @@ ADiffViewArgs::ADiffViewArgs(int argc, char **argv)
     m_pArgV(argv),
     m_pDiskObject(NULL),
     m_EditorPath("Ed"),
+    m_bCountByLines(false),
     m_bDontAsk(false),
+    m_bEditorOnPubscreen(false),
+    m_bIgnoreTrailingSpaces(false),
     m_bNoAppIcon(false),
     m_bShowLineNumbers(true),
-    m_bIgnoreTrailingSpaces(false),
-    m_bCountByLines(false),
     m_TabSize(8)
 {
   if(argc == 0)
@@ -58,12 +59,6 @@ ADiffViewArgs::~ADiffViewArgs()
   }
 }
 
-DiskObject* ADiffViewArgs::getDiscObject() const
-{
-  return m_pDiskObject;
-}
-
-
 const std::string& ADiffViewArgs::getLeftFile() const
 {
   return m_LeftFilePath;
@@ -75,21 +70,44 @@ const std::string& ADiffViewArgs::getRightFile() const
   return m_RightFilePath;
 }
 
-
-const std::string& ADiffViewArgs::getPubScreenName() const
+DiskObject* ADiffViewArgs::getDiscObject() const
 {
-  return m_PubScreenName;
+  return m_pDiskObject;
 }
-
 
 const std::string& ADiffViewArgs::getEditorPath() const
 {
   return m_EditorPath;
 }
 
+const std::string& ADiffViewArgs::getPubScreenName() const
+{
+  return m_PubScreenName;
+}
+
+long ADiffViewArgs::getTabSize() const
+{
+  return m_TabSize;
+}
+
+bool ADiffViewArgs::isCountByLines() const
+{
+  return m_bCountByLines;
+}
+
 bool ADiffViewArgs::isDontAsk() const
 {
   return m_bDontAsk;
+}
+
+bool ADiffViewArgs::isEditorOnPubScreen() const
+{
+  return m_bEditorOnPubscreen;
+}
+
+bool ADiffViewArgs::isIgnoreTrailingSpaces() const
+{
+  return m_bIgnoreTrailingSpaces;
 }
 
 bool ADiffViewArgs::isNoAppIcon() const
@@ -100,22 +118,6 @@ bool ADiffViewArgs::isNoAppIcon() const
 bool ADiffViewArgs::isShowLineNumbers() const
 {
   return m_bShowLineNumbers;
-}
-
-
-long ADiffViewArgs::getTabSize() const
-{
-  return m_TabSize;
-}
-
-bool ADiffViewArgs::isIgnoreTrailingSpaces() const
-{
-  return m_bIgnoreTrailingSpaces;
-}
-
-bool ADiffViewArgs::isCountByLines() const
-{
-  return m_bCountByLines;
 }
 
 void ADiffViewArgs::readWorkbenchArgs()
@@ -161,6 +163,10 @@ void ADiffViewArgs::readWorkbenchArgs()
             m_EditorPath = pValue;
           }
 
+          if(toolTypeValue(ppTooltypeArray, "EDITORONPUBSCREEN") != NULL)
+          {
+            m_bEditorOnPubscreen = true;
+          }
 
           if(toolTypeValue(ppTooltypeArray, "DONOTASK") != NULL)
           {
@@ -232,8 +238,8 @@ void ADiffViewArgs::readWorkbenchArgs()
 void ADiffViewArgs::readCommandLineArgs()
 {
     // Reading the command line arguments
-    const char argTempl[] = "FILES/M,PUBSCREEN/K,EDITOR/K,DONOTASK/S,NOAPPICON/S,NOLINENUMBERS/S,IGNORETRAILINGSPACES/S,COUNTBYLINES/S,TABSIZE/K/N";
-    LONG args[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+    const char argTempl[] = "FILES/M,PUBSCREEN/K,EDITOR/K,EDITORONPUBSCREEN/S,DONOTASK/S,NOAPPICON/S,NOLINENUMBERS/S,IGNORETRAILINGSPACES/S,COUNTBYLINES/S,TABSIZE/K/N";
+    LONG args[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     struct RDArgs* pReadArgs = ReadArgs(argTempl, args, NULL);
     if(pReadArgs == NULL)
@@ -272,32 +278,37 @@ void ADiffViewArgs::readCommandLineArgs()
 
     if(args[3] != 0)
     {
-      m_bDontAsk = true;
+      m_bEditorOnPubscreen = true;
     }
 
     if(args[4] != 0)
     {
-      m_bNoAppIcon = true;
+      m_bDontAsk = true;
     }
 
     if(args[5] != 0)
     {
-      m_bShowLineNumbers = false;
+      m_bNoAppIcon = true;
     }
 
     if(args[6] != 0)
     {
-      m_bIgnoreTrailingSpaces = true;
+      m_bShowLineNumbers = false;
     }
 
     if(args[7] != 0)
     {
-      m_bCountByLines = true;
+      m_bIgnoreTrailingSpaces = true;
     }
 
     if(args[8] != 0)
     {
-      LONG parsedTabSize = *((LONG*)args[8]);
+      m_bCountByLines = true;
+    }
+
+    if(args[9] != 0)
+    {
+      LONG parsedTabSize = *((LONG*)args[9]);
       if(parsedTabSize > 0)
       {
         m_TabSize = parsedTabSize;
