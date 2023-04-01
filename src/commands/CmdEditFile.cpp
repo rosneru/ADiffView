@@ -9,11 +9,11 @@
 
 
 CmdEditFile::CmdEditFile(std::vector<WindowBase*>* pAllWindowsVector,
-                         const std::string& pathToFile,
-                         const std::string& pathToEditor)
+                         const ADiffViewArgs& args,
+                         const std::string& pathToFile)
   : CommandBase(pAllWindowsVector),
-    m_PathToFile(pathToFile),
-    m_PathToEditor(pathToEditor)
+    m_Args(args),
+    m_PathToFile(pathToFile)
 {
 
 }
@@ -25,10 +25,16 @@ CmdEditFile::~CmdEditFile()
 
 void CmdEditFile::Execute(struct Window* pActiveWindow)
 {
-  std::string systemCall = m_PathToEditor;
+  std::string systemCall = m_Args.getEditorPath();
   systemCall += " \"";
   systemCall += m_PathToFile;
   systemCall += "\"";
+
+  if(m_Args.isEditorOnPubScreen())
+  {
+    systemCall += " PUBSCREEN ";
+    systemCall += m_Args.getPubScreenName();
+  }
 
   if(SystemTagList(systemCall.c_str(), TAG_DONE) != 0)
   {

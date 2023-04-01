@@ -1,6 +1,7 @@
 #ifndef CMD_EDIT_FILE_H
 #define CMD_EDIT_FILE_H
 
+#include "ADiffViewArgs.h"
 #include "CommandBase.h"
 
 /**
@@ -13,16 +14,16 @@ class CmdEditFile : public CommandBase
 {
 public:
   CmdEditFile(std::vector<WindowBase*>* pAllWindowsVector,
-              const std::string& pathToFile,
-              const std::string& pathToEditor);
+              const ADiffViewArgs& args,
+              const std::string& pathToFile);
   
   virtual ~CmdEditFile();
 
   virtual void Execute(struct Window* pActiveWindow);
 
 private:
+  const ADiffViewArgs& m_Args;
   const std::string& m_PathToFile;
-  const std::string& m_PathToEditor;
 };
 
 #endif

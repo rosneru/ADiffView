@@ -52,6 +52,8 @@ OpenClonedWorkbenchScreen::OpenClonedWorkbenchScreen(const ADiffViewSettings& se
     CloseScreen(m_pIntuiScreen);
     throw "Failed to get the visual info.";
   }
+
+  PubScreenStatus(m_pIntuiScreen, 0);
 }
 
 
