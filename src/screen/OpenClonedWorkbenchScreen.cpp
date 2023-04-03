@@ -19,7 +19,7 @@ OpenClonedWorkbenchScreen::OpenClonedWorkbenchScreen(const ADiffViewSettings& se
   //
   // Opening a nearly-copy of the Workbench screen
   //
-  // It is only *nearly* a copy because it'll have 8 colors instead
+  // This is only an approximate copy, as it'll have 8 colors instead
   // of how many the Workbench screen might have.
   //
   m_pIntuiScreen = OpenScreenTags(NULL,
@@ -30,6 +30,7 @@ OpenClonedWorkbenchScreen::OpenClonedWorkbenchScreen(const ADiffViewSettings& se
                                   SA_Title, (ULONG)m_pTitle,
                                   SA_Colors32, (ULONG)m_Settings.GetColorArray(),
                                   SA_PubName, (ULONG)pPubScreenName,
+                                  SA_OffScreenDragging, TRUE,
                                   TAG_DONE);
 
   if(m_pIntuiScreen == NULL)
