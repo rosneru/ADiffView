@@ -167,7 +167,7 @@ Application::Application(ScreenBase& screen,
     {
       m_pAppIcon = AddAppIcon(0L,
                               0L,
-                              (UBYTE*)"ADiffView",
+                              "ADiffView",
                               m_Ports.Workbench(),
                               0,
                               m_Args.getDiscObject(),

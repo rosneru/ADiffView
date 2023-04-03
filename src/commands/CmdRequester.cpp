@@ -66,9 +66,9 @@ long CmdRequester::showRequester(struct Window* pActiveWindow)
   struct EasyStruct easyStruct;
   easyStruct.es_StructSize = sizeof(easyStruct);
   easyStruct.es_Flags = 0;
-  easyStruct.es_Title = (UBYTE*)m_pTitle;
-  easyStruct.es_TextFormat = (UBYTE*)m_Message.c_str();
-  easyStruct.es_GadgetFormat = (UBYTE*)m_pButtons;
+  easyStruct.es_Title = m_pTitle;
+  easyStruct.es_TextFormat = m_Message.c_str();
+  easyStruct.es_GadgetFormat = m_pButtons;
 
   struct Window* pRequesterWindow = BuildEasyRequestArgs(pActiveWindow, 
                                                          &easyStruct, 

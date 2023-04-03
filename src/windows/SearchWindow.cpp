@@ -145,7 +145,7 @@ SearchWindow::SearchWindow(std::vector<WindowBase*>& windowArray,
   newGadget.ng_TopEdge    = top;
   newGadget.ng_Width      = contentWidth;
   newGadget.ng_Height     = fontHeight + 5;
-  newGadget.ng_GadgetText = (UBYTE*) "Search _for";
+  newGadget.ng_GadgetText = "Search _for";
   newGadget.ng_GadgetID   = GID_StrSearchText;
 
   m_pGadStrSearchText = CreateGadget(STRING_KIND,
@@ -161,7 +161,7 @@ SearchWindow::SearchWindow(std::vector<WindowBase*>& windowArray,
 
   newGadget.ng_TopEdge    += buttonsHeight + vSpace;
   newGadget.ng_Width      = cycWidth;
-  newGadget.ng_GadgetText = (UBYTE*) "_Location";
+  newGadget.ng_GadgetText = "_Location";
   newGadget.ng_GadgetID   = GID_CycLocation;
 
   m_pGadCycLocation = CreateGadget(CYCLE_KIND,
@@ -183,7 +183,7 @@ SearchWindow::SearchWindow(std::vector<WindowBase*>& windowArray,
                               // GadTools doesn't do it
 
   newGadget.ng_Width = newGadget.ng_Height + 3;
-  newGadget.ng_GadgetText = (UBYTE*) "Ignore _case";
+  newGadget.ng_GadgetText = "Ignore _case";
   newGadget.ng_GadgetID   = GID_CbxIgnoreCase;
 
   m_pGadCbxIgnoreCase = CreateGadget(CHECKBOX_KIND,
@@ -204,7 +204,7 @@ SearchWindow::SearchWindow(std::vector<WindowBase*>& windowArray,
   newGadget.ng_TopEdge    += buttonsHeight + vSpace + vSpace;
   newGadget.ng_LeftEdge   = left + hSpace;
   newGadget.ng_Width      = buttonsWidth;
-  newGadget.ng_GadgetText = (UBYTE*) "Find";
+  newGadget.ng_GadgetText = "Find";
   newGadget.ng_GadgetID   = GID_BtnFind;
 
   m_pGadBtnFind = CreateGadget(BUTTON_KIND,
@@ -236,7 +236,7 @@ SearchWindow::SearchWindow(std::vector<WindowBase*>& windowArray,
   // Create the 'From start' button
   newGadget.ng_LeftEdge += btnsLeftEdgeDist;
 
-  newGadget.ng_GadgetText = (UBYTE*) "From _start";
+  newGadget.ng_GadgetText = "From _start";
   newGadget.ng_GadgetID   = GID_BtnFromStart;
 
   m_pGadBtnFromStart = CreateGadget(BUTTON_KIND,
@@ -254,7 +254,7 @@ SearchWindow::SearchWindow(std::vector<WindowBase*>& windowArray,
 
   // Create the 'Backwards' button
   newGadget.ng_LeftEdge  += btnsLeftEdgeDist;
-  newGadget.ng_GadgetText = (UBYTE*) "_Backwards";
+  newGadget.ng_GadgetText = "_Backwards";
   newGadget.ng_GadgetID   = GID_BtnBackwards;
 
   m_pGadBtnBackwards = CreateGadget(BUTTON_KIND,

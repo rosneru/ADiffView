@@ -141,7 +141,7 @@ FilesWindow::FilesWindow(std::vector<WindowBase*>& windowArray,
   newGadget.ng_TopEdge    = top;
   newGadget.ng_Width      = stringGadWidth;
   newGadget.ng_Height     = fontHeight;
-  newGadget.ng_GadgetText = (UBYTE*) "_Left file";
+  newGadget.ng_GadgetText = "_Left file";
   newGadget.ng_Flags = PLACETEXT_RIGHT | PLACETEXT_LEFT | NG_HIGHLABEL;
 
   struct Gadget* pLabelGadget = CreateGadget(TEXT_KIND,
@@ -183,7 +183,7 @@ FilesWindow::FilesWindow(std::vector<WindowBase*>& windowArray,
   // Create the Select button
   newGadget.ng_LeftEdge   = btnSelectLeft;
   newGadget.ng_Width      = btnSelectWidth;
-  newGadget.ng_GadgetText = (UBYTE*) "...";
+  newGadget.ng_GadgetText = "...";
   newGadget.ng_GadgetID   = GID_BtnLeftFile;
   newGadget.ng_Flags      = 0;
 
@@ -204,7 +204,7 @@ FilesWindow::FilesWindow(std::vector<WindowBase*>& windowArray,
   newGadget.ng_TopEdge    += buttonsHeight + vSpace;
   newGadget.ng_Width      = stringGadWidth;
   newGadget.ng_Height     = fontHeight;
-  newGadget.ng_GadgetText = (UBYTE*) "_Right file";
+  newGadget.ng_GadgetText = "_Right file";
   newGadget.ng_Flags = PLACETEXT_RIGHT | PLACETEXT_LEFT | NG_HIGHLABEL;
 
   pLabelGadget = CreateGadget(TEXT_KIND,
@@ -246,7 +246,7 @@ FilesWindow::FilesWindow(std::vector<WindowBase*>& windowArray,
   // Create the Select button
   newGadget.ng_LeftEdge   = btnSelectLeft;
   newGadget.ng_Width      = btnSelectWidth;
-  newGadget.ng_GadgetText = (UBYTE*) "...";
+  newGadget.ng_GadgetText = "...";
   newGadget.ng_GadgetID   = GID_BtnRightFile;
   newGadget.ng_Flags      = 0;
 
@@ -274,7 +274,7 @@ FilesWindow::FilesWindow(std::vector<WindowBase*>& windowArray,
   newGadget.ng_LeftEdge   = left;
   newGadget.ng_TopEdge    += buttonsHeight + vSpace + vSpace;
   newGadget.ng_Width      = buttonsWidth;
-  newGadget.ng_GadgetText = (UBYTE*) "Compare";
+  newGadget.ng_GadgetText = "Compare";
   newGadget.ng_GadgetID   = GID_BtnDiff;
 
   m_pGadBtnDiff = CreateGadget(BUTTON_KIND,
@@ -290,7 +290,7 @@ FilesWindow::FilesWindow(std::vector<WindowBase*>& windowArray,
 
   // Creating the Swap button
   newGadget.ng_LeftEdge   += buttonsWidth + bottomButtonDistances;
-  newGadget.ng_GadgetText = (UBYTE*) "_Swap";
+  newGadget.ng_GadgetText = "_Swap";
   newGadget.ng_GadgetID   = GID_BtnSwap;
 
   m_pGadBtnSwap = CreateGadget(BUTTON_KIND,
@@ -306,7 +306,7 @@ FilesWindow::FilesWindow(std::vector<WindowBase*>& windowArray,
 
   // Create the Clear button
   newGadget.ng_LeftEdge   += buttonsWidth + bottomButtonDistances;
-  newGadget.ng_GadgetText = (UBYTE*) "Cl_ear";
+  newGadget.ng_GadgetText = "Cl_ear";
   newGadget.ng_GadgetID   = GID_BtnClear;
 
   m_pGadBtnClear = CreateGadget(BUTTON_KIND,
@@ -322,7 +322,7 @@ FilesWindow::FilesWindow(std::vector<WindowBase*>& windowArray,
 
   // Creating the Cancel button
   newGadget.ng_LeftEdge   += buttonsWidth + bottomButtonDistances;
-  newGadget.ng_GadgetText = (UBYTE*) "Cancel";
+  newGadget.ng_GadgetText = "Cancel";
   newGadget.ng_GadgetID   = GID_BtnCancel;
 
   m_pGadBtnCancel = CreateGadget(BUTTON_KIND,

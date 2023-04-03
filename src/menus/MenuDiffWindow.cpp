@@ -36,14 +36,19 @@ MenuDiffWindow::MenuDiffWindow(CommandBase* pCmdOpenFilesWindow,
   // define 4 variables for the "Tabulator width" menu and set one of
   // them to CHECKED depending on the current tab size (read from args).
   // Set the others to 0.
-  ULONG is2CheckedValue = args.getTabSize() == 2 ? CHECKED : 0;
-  ULONG is4CheckedValue = args.getTabSize() == 4 ? CHECKED : 0;
-  ULONG is8CheckedValue = args.getTabSize() == 8 ? CHECKED : 0;
-  ULONG isCustomCheckedValue = 0;
+  UWORD is2CheckedValue = args.getTabSize() == 2 ? CHECKED : 0;
+  UWORD is4CheckedValue = args.getTabSize() == 4 ? CHECKED : 0;
+  UWORD is8CheckedValue = args.getTabSize() == 8 ? CHECKED : 0;
+  UWORD isCustomCheckedValue = 0;
   if((is2CheckedValue + is4CheckedValue + is8CheckedValue) == 0)
   {
     isCustomCheckedValue = CHECKED;
   }
+
+  is2CheckedValue = is2CheckedValue|CHECKIT|MENUTOGGLE;
+  is4CheckedValue = is4CheckedValue|CHECKIT|MENUTOGGLE;
+  is8CheckedValue = is8CheckedValue|CHECKIT|MENUTOGGLE;
+  isCustomCheckedValue = isCustomCheckedValue|CHECKIT|MENUTOGGLE;
 
   // The finalizing NewMenu entry will be added separately
   struct NewMenu newMenuFinalizingTag = {NM_END, NULL, 0 , 0, 0, 0};
@@ -72,10 +77,10 @@ MenuDiffWindow::MenuDiffWindow(CommandBase* pCmdOpenFilesWindow,
     {   NM_ITEM,    "Find next",               "n", 0, 0, pCmdFindNext },
     { NM_TITLE,   "View",                       0 , 0, 0, 0 },
     {   NM_ITEM,    "Tabulator width",          0, 0, 0, 0 },
-    {     NM_SUB,    "2",                       0, CHECKIT|MENUTOGGLE|is2CheckedValue,      ~1, pCmdTabWidth2 },
-    {     NM_SUB,    "4",                       0, CHECKIT|MENUTOGGLE|is4CheckedValue,      ~2, pCmdTabWidth4 },
-    {     NM_SUB,    "8",                       0, CHECKIT|MENUTOGGLE|is8CheckedValue,      ~4, pCmdTabWidth8 },
-    {     NM_SUB,    (STRPTR)m_CustomTabWidth,  0, CHECKIT|MENUTOGGLE|isCustomCheckedValue, ~8, pCmdTabWidthCustom },
+    {     NM_SUB,    "2",                       0, is2CheckedValue,      ~1, pCmdTabWidth2 },
+    {     NM_SUB,    "4",                       0, is4CheckedValue,      ~2, pCmdTabWidth4 },
+    {     NM_SUB,    "8",                       0, is8CheckedValue,      ~4, pCmdTabWidth8 },
+    {     NM_SUB,    (STRPTR)m_CustomTabWidth,  0, isCustomCheckedValue, ~8, pCmdTabWidthCustom },
     newMenuFinalizingTag
   };
 

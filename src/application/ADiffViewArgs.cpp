@@ -327,5 +327,5 @@ void ADiffViewArgs::readCommandLineArgs()
 char* ADiffViewArgs::toolTypeValue(const STRPTR* ppTooltypeArray, 
                                    const char* pTooltypeName)
 {
-  return (char*)FindToolType(ppTooltypeArray, (STRPTR)pTooltypeName);
+  return (char*)FindToolType((CONST_STRPTR*)ppTooltypeArray, (STRPTR)pTooltypeName);
 }

@@ -24,9 +24,9 @@ LONG MessageBox::Show(const char* pWindowTitle,
                       const char* pMessage,
                       const char* pButtonText)
 {
-  m_EasyStruct.es_Title = (UBYTE*) pWindowTitle;
-  m_EasyStruct.es_TextFormat = (UBYTE*)pMessage;
-  m_EasyStruct.es_GadgetFormat = (UBYTE*)pButtonText;
+  m_EasyStruct.es_Title = pWindowTitle;
+  m_EasyStruct.es_TextFormat = pMessage;
+  m_EasyStruct.es_GadgetFormat = pButtonText;
 
   return EasyRequest(m_pWindow, &m_EasyStruct, NULL);
 }
@@ -36,8 +36,8 @@ LONG MessageBox::Show(const char* pMessage,
                       const char* pButtonText)
 {
   m_EasyStruct.es_Title = NULL;
-  m_EasyStruct.es_TextFormat = (UBYTE*)pMessage;
-  m_EasyStruct.es_GadgetFormat = (UBYTE*)pButtonText;
+  m_EasyStruct.es_TextFormat = pMessage;
+  m_EasyStruct.es_GadgetFormat = pButtonText;
 
   return EasyRequest(m_pWindow, &m_EasyStruct, NULL);
 }

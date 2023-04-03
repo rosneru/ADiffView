@@ -1135,24 +1135,24 @@ void DiffWindow::paintStatusBar()
 
   intuiText.TopEdge   = top;
   intuiText.LeftEdge  = left;
-  intuiText.IText = (UBYTE*) m_StatusBarText;
+  intuiText.IText = m_StatusBarText;
   PrintIText(m_pRPorts->Window(), &intuiText, 0, 0);
 
   left += IntuiTextLength(&intuiText);
   intuiText.LeftEdge = left;
   intuiText.BackPen = m_Pens.Green();
-  intuiText.IText = (UBYTE*) m_AddedText;
+  intuiText.IText = m_AddedText;
   PrintIText(m_pRPorts->Window(), &intuiText, 0, 0);
 
   left += IntuiTextLength(&intuiText) + 5;
   intuiText.LeftEdge = left;
   intuiText.BackPen = m_Pens.Yellow();
-  intuiText.IText = (UBYTE*) m_ChangedText;
+  intuiText.IText = m_ChangedText;
   PrintIText(m_pRPorts->Window(), &intuiText, 0, 0);
 
   left += IntuiTextLength(&intuiText) + 5;
   intuiText.LeftEdge = left;
   intuiText.BackPen = m_Pens.Red();
-  intuiText.IText = (UBYTE*) m_DeletedText;
+  intuiText.IText = m_DeletedText;
   PrintIText(m_pRPorts->Window(), &intuiText, 0, 0);
 }

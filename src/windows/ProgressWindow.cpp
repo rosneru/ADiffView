@@ -92,7 +92,7 @@ ProgressWindow::ProgressWindow(ScreenBase& screen,
   m_NewGadget.ng_Width      = buttonWidth;
   m_NewGadget.ng_Height     = m_pTextFont->tf_YSize + 2 * yOffset;
   m_NewGadget.ng_GadgetID   = GID_BtnStop;
-  m_NewGadget.ng_GadgetText = (UBYTE*) "Stop";
+  m_NewGadget.ng_GadgetText = "Stop";
   m_NewGadget.ng_Flags      = 0;
 
   m_Height = m_NewGadget.ng_TopEdge + m_NewGadget.ng_Height + yOffset + pScr->WBorBottom;
