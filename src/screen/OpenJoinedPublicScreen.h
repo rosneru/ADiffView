@@ -9,6 +9,8 @@ public:
   OpenJoinedPublicScreen(const ADiffViewSettings& settings,
                          const char* pPubScreenName);
 
+  virtual bool close();
+
   virtual ~OpenJoinedPublicScreen();
 
 };

@@ -69,7 +69,7 @@ int main(int argc, char **argv)
     return RETURN_FAIL;
   }
 
-  ScreenBase* pScreenBase = NULL;
+  ScreenBase* pScreen = NULL;
   Application* pApplication = NULL;
 
   ULONG exitCode = RETURN_OK;
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
     if(args.getPubScreenName().length() > 0)
     {
       // Use a given public screen
-      pScreenBase = new OpenJoinedPublicScreen(settings, args.getPubScreenName().c_str());
+      pScreen = new OpenJoinedPublicScreen(settings, args.getPubScreenName().c_str());
     }
     else
     {
@@ -95,14 +95,14 @@ int main(int argc, char **argv)
 
       // Clone the Workbench screen onto an own public screen but with
       // only 8 colors
-      pScreenBase = new OpenClonedWorkbenchScreen(settings,
+      pScreen = new OpenClonedWorkbenchScreen(settings,
                                                   VERS,
                                                   args.getPubScreenName().c_str(),
                                                   3);
     }
 
     // Create and run the application
-    pApplication = new Application(*pScreenBase, args, settings);
+    pApplication = new Application(*pScreen, args, settings);
     pApplication->Run();
   }
   catch(const char* pMsg)
@@ -120,9 +120,25 @@ int main(int argc, char **argv)
     delete pApplication;
   }
 
-  if(pScreenBase != NULL)
+  if(pScreen != NULL)
   {
-    delete pScreenBase;
+    bool isScreenClosed = false;
+    while(!isScreenClosed)
+    {
+      isScreenClosed = pScreen->close();
+      if(isScreenClosed)
+      {
+        break;
+      }
+
+      request.Show("Failed to close screen",
+                     "ADiffView failed to close its public screen.\n\n"
+                     "Please close all windows on ADiffView screen and "
+                     "try again to close it.",
+                   "Close screen");
+    };
+
+    delete pScreen;
   }
   
   return exitCode;

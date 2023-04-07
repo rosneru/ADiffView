@@ -38,6 +38,11 @@ OpenJoinedPublicScreen::OpenJoinedPublicScreen(const ADiffViewSettings& settings
 
 OpenJoinedPublicScreen::~OpenJoinedPublicScreen()
 {
+  close();
+}
+
+bool OpenJoinedPublicScreen::close()
+{
   if(m_pVisualInfo != NULL)
   {
     FreeVisualInfo(m_pVisualInfo);
@@ -55,4 +60,6 @@ OpenJoinedPublicScreen::~OpenJoinedPublicScreen()
     UnlockPubScreen(NULL, m_pIntuiScreen);
     m_pIntuiScreen = NULL;
   }
+
+  return true;
 }

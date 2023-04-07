@@ -10,10 +10,10 @@ public:
                             const char* pTitle,
                             const char* pPubScreenName,
                             short depth);
+
   virtual ~OpenClonedWorkbenchScreen();
 
-  bool Open();
-  void Close();
+  virtual bool close();
 
 private:
   const char* m_pTitle;

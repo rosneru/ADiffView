@@ -60,6 +60,11 @@ OpenClonedWorkbenchScreen::OpenClonedWorkbenchScreen(const ADiffViewSettings& se
 
 OpenClonedWorkbenchScreen::~OpenClonedWorkbenchScreen()
 {
+  close();
+}
+
+bool OpenClonedWorkbenchScreen::close()
+{
   if(m_pVisualInfo != NULL)
   {
     FreeVisualInfo(m_pVisualInfo);
@@ -74,7 +79,13 @@ OpenClonedWorkbenchScreen::~OpenClonedWorkbenchScreen()
 
   if(m_pIntuiScreen != NULL)
   {
-    CloseScreen(m_pIntuiScreen);
+    if(CloseScreen(m_pIntuiScreen) == FALSE)
+    {
+      return false;
+    }
+
     m_pIntuiScreen = NULL;
   }
+
+  return true;
 }

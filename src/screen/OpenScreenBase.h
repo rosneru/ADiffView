@@ -23,6 +23,8 @@ public:
   ScreenBase(const ADiffViewSettings& settings);
   virtual ~ScreenBase();
 
+  virtual bool close() = 0;
+
   /**
    * Returns the intuition screen structure or NULL if screen is not open
    */
