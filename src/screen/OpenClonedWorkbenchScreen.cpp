@@ -8,12 +8,11 @@
 
 #include "OpenClonedWorkbenchScreen.h"
 
-OpenClonedWorkbenchScreen::OpenClonedWorkbenchScreen(const ADiffViewSettings& settings,
-                                                     const char* pTitle,
+OpenClonedWorkbenchScreen::OpenClonedWorkbenchScreen(const char* pTitle,
                                                      const char* pPubScreenName,
-                                                     short depth)
-  : ScreenBase(settings),
-    m_pTitle(pTitle),
+                                                     short depth,
+                                                     const ULONG* pColors32Array)
+  : m_pTitle(pTitle),
     m_Depth(depth)
 {
   //
@@ -28,7 +27,7 @@ OpenClonedWorkbenchScreen::OpenClonedWorkbenchScreen(const ADiffViewSettings& se
                                   SA_Depth, (ULONG)m_Depth,
                                   SA_SharePens,TRUE,
                                   SA_Title, (ULONG)m_pTitle,
-                                  SA_Colors32, (ULONG)m_Settings.GetColorArray(),
+                                  SA_Colors32, (ULONG)pColors32Array,
                                   SA_PubName, (ULONG)pPubScreenName,
                                   SA_OffScreenDragging, TRUE,
                                   TAG_DONE);

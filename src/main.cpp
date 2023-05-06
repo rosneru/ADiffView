@@ -86,13 +86,16 @@ int main(int argc, char **argv)
     if(args.getPubScreenName().length() > 0)
     {
       // Use a given public screen
-      pScreen = new OpenJoinedPublicScreen(settings, args.getPubScreenName().c_str());
+      pScreen = new OpenJoinedPublicScreen(args.getPubScreenName().c_str());
     }
     else
     {
       // Clone the Workbench screen onto an own public screen but with
       // only 8 colors
-      pScreen = new OpenClonedWorkbenchScreen(settings, VERS, "ADIFFVIEW", 3);
+      pScreen = new OpenClonedWorkbenchScreen(VERS,
+                                              "ADIFFVIEW",
+                                              3,
+                                              settings.GetColorArray());
       const OpenClonedWorkbenchScreen* pPublicScreen = 
         static_cast<const OpenClonedWorkbenchScreen*>(pScreen);
       if(pPublicScreen != NULL)

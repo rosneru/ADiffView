@@ -8,9 +8,7 @@
 
 #include "OpenJoinedPublicScreen.h"
 
-OpenJoinedPublicScreen::OpenJoinedPublicScreen(const ADiffViewSettings& settings,
-                                               const char* pPubScreenName)
-  : ScreenBase(settings)
+OpenJoinedPublicScreen::OpenJoinedPublicScreen(const char* pPubScreenName)
 {
   m_pIntuiScreen = LockPubScreen(pPubScreenName);
 

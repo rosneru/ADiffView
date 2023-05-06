@@ -15,10 +15,9 @@
 
 extern struct IntuitionBase* IntuitionBase;
 
-ScreenBase::ScreenBase(const ADiffViewSettings& settings)
+ScreenBase::ScreenBase()
   : m_pIntuiScreen(NULL),
     m_pDrawInfo(NULL),
-    m_Settings(settings),
     m_NumWindowsOpen(0),
     m_pVisualInfo(NULL)
 {

@@ -6,8 +6,7 @@
 class OpenJoinedPublicScreen : public ScreenBase
 {
 public:
-  OpenJoinedPublicScreen(const ADiffViewSettings& settings,
-                         const char* pPubScreenName);
+  OpenJoinedPublicScreen(const char* pPubScreenName);
 
   virtual bool close();
 

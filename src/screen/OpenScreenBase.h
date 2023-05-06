@@ -20,7 +20,7 @@
 class ScreenBase
 {
 public:
-  ScreenBase(const ADiffViewSettings& settings);
+  ScreenBase();
   virtual ~ScreenBase();
 
   virtual bool close() = 0;
@@ -84,8 +84,6 @@ protected:
   struct Screen* m_pIntuiScreen;
   struct DrawInfo* m_pDrawInfo;
   struct TextFont* m_pTextFont;
-
-  const ADiffViewSettings& m_Settings;
 
   size_t m_NumWindowsOpen;
 

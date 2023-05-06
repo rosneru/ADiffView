@@ -14,10 +14,10 @@ public:
    * opening there's a number from 1..99 attached. Get the final public
    * screen name after opening with getPubScreenName().
    */
-  OpenClonedWorkbenchScreen(const ADiffViewSettings& settings,
-                            const char* pTitle,
+  OpenClonedWorkbenchScreen(const char* pTitle,
                             const char* pPubScreenName,
-                            short depth);
+                            short depth,
+                            const ULONG* pColors32Array);
 
   virtual ~OpenClonedWorkbenchScreen();
 
