@@ -89,3 +89,8 @@ bool OpenClonedWorkbenchScreen::close()
 
   return true;
 }
+
+const char* OpenClonedWorkbenchScreen::getPubScreenName() const
+{
+  return m_PubScreenName.c_str();
+}

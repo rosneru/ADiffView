@@ -90,15 +90,15 @@ int main(int argc, char **argv)
     }
     else
     {
-      // 'Create' a public screen name
-      args.setPubScreenName("ADIFFVIEW.1");
-
       // Clone the Workbench screen onto an own public screen but with
       // only 8 colors
-      pScreen = new OpenClonedWorkbenchScreen(settings,
-                                                  VERS,
-                                                  args.getPubScreenName().c_str(),
-                                                  3);
+      pScreen = new OpenClonedWorkbenchScreen(settings, VERS, "ADIFFVIEW", 3);
+      const OpenClonedWorkbenchScreen* pPublicScreen = 
+        static_cast<const OpenClonedWorkbenchScreen*>(pScreen);
+      if(pPublicScreen != NULL)
+      {
+        args.setPubScreenName(pPublicScreen->getPubScreenName());
+      }
     }
 
     // Create and run the application
