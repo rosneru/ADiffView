@@ -6,6 +6,7 @@
   #include <proto/intuition.h>
 #endif
 
+#include <stdio.h>
 #include "OpenClonedWorkbenchScreen.h"
 
 OpenClonedWorkbenchScreen::OpenClonedWorkbenchScreen(const char* pTitle,
@@ -15,6 +16,31 @@ OpenClonedWorkbenchScreen::OpenClonedWorkbenchScreen(const char* pTitle,
   : m_pTitle(pTitle),
     m_Depth(depth)
 {
+  // Trying to find a public screen name that isn't already in use
+  char numBuf[3];
+  Screen* pScreenAlreadyInUse;
+  for(int i=1; i < 100; i++)
+  {
+    sprintf(numBuf, "%d", i);
+    m_PubScreenName = pPubScreenName;
+    m_PubScreenName += ".";
+    m_PubScreenName += numBuf;
+    pScreenAlreadyInUse = LockPubScreen(m_PubScreenName.c_str());
+    if(pScreenAlreadyInUse == NULL)
+    {
+      // A public screen with this name could not be locked. So this
+      // name is free to be used for this public screen.
+      break;
+    }
+
+    UnlockPubScreen(NULL, pScreenAlreadyInUse);
+    if(i == 99)
+    {
+      throw "Failed to find an unused name for public screen.";
+    }
+  }
+  
+
   //
   // Opening a nearly-copy of the Workbench screen
   //
@@ -28,7 +54,7 @@ OpenClonedWorkbenchScreen::OpenClonedWorkbenchScreen(const char* pTitle,
                                   SA_SharePens,TRUE,
                                   SA_Title, (ULONG)m_pTitle,
                                   SA_Colors32, (ULONG)pColors32Array,
-                                  SA_PubName, (ULONG)pPubScreenName,
+                                  SA_PubName, (ULONG)m_PubScreenName.c_str(),
                                   SA_OffScreenDragging, TRUE,
                                   TAG_DONE);
 
