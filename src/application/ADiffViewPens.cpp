@@ -21,10 +21,10 @@ ADiffViewPens::ADiffViewPens(ScreenBase& screenBase,
     throw "Failed to create pens. Missing ColorMap in ViewPort.";
   }
 
-  const ULONG* pColRed = m_Settings.GetColorRedArray();
-  const ULONG* pColGreen = m_Settings.GetColorGreenArray();
-  const ULONG* pColYellow = m_Settings.GetColorYellowArray();
-  const ULONG* pColGray = m_Settings.GetColorGrayArray();
+  const ULONG* pColRed = m_Settings.getColorRedArray();
+  const ULONG* pColGreen = m_Settings.getColorGreenArray();
+  const ULONG* pColYellow = m_Settings.getColorYellowArray();
+  const ULONG* pColGray = m_Settings.getColorGrayArray();
 
   // Find the best pens for the needed colors
   m_RedPen = ObtainBestPen(m_ScreenBase.getIntuiScreen()->ViewPort.ColorMap,

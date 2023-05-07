@@ -146,7 +146,9 @@ Application::Application(ScreenBase& screen,
   m_AboutMsg += "\n\n";
   m_AboutMsg += "This release of ADiffView may be freely distributed.\n";
   m_AboutMsg += "It may not be commercially distributed without the\n";
-  m_AboutMsg += "explicit permission of the author.\n";
+  m_AboutMsg += "explicit permission of the author.\n\n\n";
+  m_AboutMsg += "Screen name: ";
+  m_AboutMsg += m_Args.getPubScreenName();
 
   // Add all windows to the array
   m_AllWindowsList.push_back(&m_DiffWindow);

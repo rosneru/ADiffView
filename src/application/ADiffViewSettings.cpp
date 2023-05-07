@@ -51,31 +51,31 @@ bool ADiffViewSettings::Load()
   return true;
 }
 
-const ULONG* ADiffViewSettings::GetColorArray() const
+const ULONG* ADiffViewSettings::getColorArray() const
 {
   return m_ColorArray.elem;
 }
 
 
-const ULONG* ADiffViewSettings::GetColorRedArray() const
+const ULONG* ADiffViewSettings::getColorRedArray() const
 {
   return m_ColorArray.elem + 1;
 }
 
 
-const ULONG* ADiffViewSettings::GetColorGreenArray() const
+const ULONG* ADiffViewSettings::getColorGreenArray() const
 {
   return m_ColorArray.elem + 4;
 }
 
 
-const ULONG* ADiffViewSettings::GetColorYellowArray() const
+const ULONG* ADiffViewSettings::getColorYellowArray() const
 {
   return m_ColorArray.elem + 7;
 }
 
 
-const ULONG* ADiffViewSettings::GetColorGrayArray() const
+const ULONG* ADiffViewSettings::getColorGrayArray() const
 {
   return m_ColorArray.elem + 10;
 }

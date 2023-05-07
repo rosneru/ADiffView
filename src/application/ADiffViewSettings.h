@@ -28,35 +28,35 @@ public:
   /**
    * Return the ColorArray as Amiga-LoadRGB32-compliant array
    */
-  const ULONG* GetColorArray() const;
+  const ULONG* getColorArray() const;
 
   /**
    * Return the start of the array for color red.
    * 
    * Use it with the indexes [0], [1], [2] for single rgb components.
    */
-  const ULONG* GetColorRedArray() const;
+  const ULONG* getColorRedArray() const;
 
   /**
    * Return the start of the array for color green.
    * 
    * Use it with the indexes [0], [1], [2] for single rgb components.
    */
-  const ULONG* GetColorGreenArray() const;
+  const ULONG* getColorGreenArray() const;
 
   /**
    * Return the start of the array for color yellow.
    * 
    * Use it with the indexes [0], [1], [2] for single rgb components.
    */
-  const ULONG* GetColorYellowArray() const;
+  const ULONG* getColorYellowArray() const;
 
   /**
    * Return the start of the array for color gray.
    * 
    * Use it with the indexes [0], [1], [2] for single rgb components.
    */
-  const ULONG* GetColorGrayArray() const;
+  const ULONG* getColorGrayArray() const;
 
 private:
   // It's useful to store the colors at a central place

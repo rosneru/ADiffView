@@ -95,7 +95,7 @@ int main(int argc, char **argv)
       pScreen = new OpenClonedWorkbenchScreen(VERS,
                                               "ADIFFVIEW",
                                               3,
-                                              settings.GetColorArray());
+                                              settings.getColorArray());
       const OpenClonedWorkbenchScreen* pPublicScreen = 
         static_cast<const OpenClonedWorkbenchScreen*>(pScreen);
       if(pPublicScreen != NULL)
