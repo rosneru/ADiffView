@@ -390,8 +390,8 @@ void ScrollbarWindow::calcSizes()
                      - m_Screen.getIntuiScreen()->WBorLeft
                      - m_SizeGadWidth;
 
-  m_InnerWindowBottom = m_pWindow->Height
-                      - m_Screen.getIntuiScreen()->BarHeight
+  m_InnerWindowBottom = m_pWindow->Height //- m_Screen.getIntuiScreen()->BarHeight
+                      - m_pWindow->BorderTop
                       - m_SizeGadHeight;
 }
 

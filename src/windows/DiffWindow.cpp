@@ -839,8 +839,7 @@ void DiffWindow::handleMouseButtons(const struct IntuiMessage* pMsg)
       // Calculate mouseX and mouseY relative to the top left corner of
       // *inside* the DiffWindow (without the borders)
       ULONG mouseXRel =  pMsg->MouseX - m_pWindow->WScreen->WBorLeft;
-      ULONG mouseYRel = pMsg->MouseY - m_pWindow->WScreen->WBorTop
-                                     - m_pWindow->WScreen->BarHeight
+      ULONG mouseYRel = pMsg->MouseY - m_pWindow->BorderTop
                                      + 1;
 
       if(m_pLeftTextArea->isPointInTextArea(mouseXRel, mouseYRel))
@@ -957,9 +956,7 @@ void DiffWindow::handleMouseMove(const struct IntuiMessage* pMsg)
   // Calculate mouseX and mouseY relative to the top left corner of
   // *inside* the DiffWindow (without the borders)
   ULONG mouseXRel =  pMsg->MouseX - m_pWindow->WScreen->WBorLeft;
-  ULONG mouseYRel = pMsg->MouseY - m_pWindow->WScreen->WBorTop
-                                 - m_pWindow->WScreen->BarHeight
-                                 + 1;
+  ULONG mouseYRel = pMsg->MouseY - m_pWindow->BorderTop + 1;
 
   if(m_SelectionMode == SM_SELECTION_LEFT_STARTED)
   {
