@@ -21,7 +21,7 @@ information.
 CHANGES
 =======
 
-2.4 (xx.05.2023)
+2.4 (10.05.2023)
 
 - Behavior: When ADiffView opens its own screen it is now a public 
   screen named ADIFFVIEW.1. This number is incremented for each 
@@ -34,6 +34,7 @@ CHANGES
   is set and the editor (see EDITOR argument) supports a PUBSCREEN 
   argument it will be opened on the ADiffView screen. The default editor
   C:Ed doest't support it, but OS3.1.4+ Tools/TextEdit does.
+- Behavior: The editor is now started asynchronously.
 - Fixed user interface and selection glitches that occurred when 
   different screen or window title bar heights were set in OS3.1.4.+
   Prefs/IControl.

@@ -3,7 +3,7 @@
 @wordwrap
 @node Main "ADiffView - Introduction"
 
-@{fg shine}ADiffView 2.3 released on 28.03.2023.@{fg text}
+@{fg shine}ADiffView 2.4 released on 10.05.2023.@{fg text}
 
 @{b}About@{ub}
 
@@ -52,7 +52,11 @@ With 'Copy' you can copy the marked text to the clipboard to use it in other app
 
 Please note that the copied text may have been modified internally and may not exactly match the original file. For example, if you use the IGNORETRAILINGSPACES option, the copied text will no longer contain spaces at the end of lines, unlike the original.
 
-'Edit left file' / 'Edit right file' open the left or right file in a text editor. The default text editor is C:Ed. A custom editor can be specified with the tool type / CLI argument EDITOR.
+'Edit left file' / 'Edit right file' open the left or right file in a text editor. The default text editor is C:Ed. A custom editor can be specified with the tool type / CLI argument EDITOR. With tool type / CLI argument EDITORONPUBSCREEN it can be specified that the editor opens on the same screen as ADiffView. This only works if the editor supports a PUBSCREEN argument.
+
+Please note that this way (far too) many instances of the editor could be started for the same file.
+
+As long as an editor (or another program) is still running on the ADiffview screen, ADiffView cannot be terminated. In this case, a requester prompts to quit the programs.
 
 If as a result of the editing process a file has been modified (according to its date stamp), ADiffView allows the user to quickly start a new comparison. After this has been completed successfully, ADiffView scrolls back to the top line that was active before the re-comparison.
 
@@ -87,13 +91,18 @@ Selecting a different tab width has no effect if the text does not contain tab c
 @node dopus "Using ADiffView with DOpus 5.x"
 If you use DOpus 5.x you can setup a button to run ADiffView from there:
 
-1) Edit the file DOpus/ARexx/Compare.dopus5 until the line at the bottom which starts with 'Address Command' looks like this:
+1) Edit the file DOpus/ARexx/Compare.dopus5. Change the line starting with "Address Command", which is almost at the bottom, so that it looks like this:
+
 @{fg shine}Address Command 'SYS:Tools/ADiffView "' || First_Name || '" "' || Second_Name || '"' DONOTASK@{fg text}
+
+Alternately, if you want to use SYS:Tools/TextEdit (Os 3.1.4 or later needed) and open it on the same screen as ADiffViews runs on:
+
+@{fg shine}Address Command 'DH0:Tools/ADiffView "' || First_Name || '" "' || Second_Name || '"' DONOTASK EDITOR 'SYS:Tools/TextEdit' EDITORONPUBSCREEN@{fg text}
 
 2) In DOpus create or edit a button, name it e.g. "Compare" and set this ARexx script to be executed on the button click:
 @{fg shine}DOpus5:ARexx/Compare.dopus5 {Qp}@{fg text}
 
-Now when clicking on "Comapre" ADiffView will be started, immediately comparing the first two selected files. The files to compare can be selected from one lister or from two different listers.
+Now when clicking on "Compare" ADiffView will be started, immediately comparing the first two selected files. The files to compare can be selected from one lister or from two different listers.
 
 @endnode
 
@@ -121,6 +130,9 @@ The file comparison starts immediately after the program start. The window for s
 @{i}EDITOR@{ui}
 The text editor to be used by menu items 'Edit -> Edit left file' and 'Edit -> Edit right file'. If Not specified, C:Ed is used.
 
+@{i}EDITOREDITORONPUBSCREEN@{ui}
+The editor will be opened on the ADiffView screen using its PUBSCREEN argument. If the editor doesn't support PUBSCREEN an error (maybe misleading message) will be diplayed in a console window. The default editor C:Ed doest't support it, but OS3.1.4+ Tools/TextEdit does.
+
 @{i}IGNORETRAILINGSPACES@{ui}
 If this is set, spaces or tabs at line ends are not recognized as differences.
 
@@ -131,9 +143,11 @@ No appicon is displayed when started from Workbench. (When started from CLI an A
 The line numbers are not displayed. Saves a little memory and processing time.
 
 @{i}PUBSCREEN@{ui}
-The program will be opened on the provided public screen. If this is not set ADiffView will open its own screen which will mostly be a clone of the Workbench screen but with the exception that it will have eight colors.
+The program will be opened on the provided public screen.
 
-On non RTG systems I recommend not to use a public screen, but to open ADiffView on its own screen. This is the only way to be sure that all colors/pens are correct.
+If this is not set ADiffView will open its own public screen which will mostly be a clone of the Workbench screen but with the exception that it will have eight colors. The name of the public screen starts with ADIFFVIEW.1, with the final number incremented for each running instance. The actual name of the public screen is displayed in the About requester.
+
+On non RTG systems I recommend not to use an existing public screen, but to open ADiffView on its own (public) screen. This is the only way to be sure that all colors/pens are correct.
 
 @{i}TABSIZE@{ui}
 The tabulator width used when rendering text that contains tabulator characters. If this is not specified, the default value of "8" is used.
@@ -144,6 +158,16 @@ The tabulator width used when rendering text that contains tabulator characters.
 @node changelog "Changelog"
 
 @{b}Changelog@{ub}
+
+2.4 (10.05.2023)
+
+- Behavior: When ADiffView opens its own screen it is now a public screen named ADIFFVIEW.1. This number is incremented for each instance. The name of the screen where ADiffView is actually running is displayed in the About requester.
+- Behavior: On AmigaOS 3.1.4 and newer when ADiffView opens its own screen the new off-screen dragging mode is enabled. This allows windows to be dragged beyond the screen borders.
+- Behavior: Added (ToolType / CLI) argument EDITORONPUBSCREEN. When this is set and the editor (see EDITOR argument) supports a PUBSCREEN argument it will be opened on the ADiffView screen. The default editor C:Ed doest't support it, but OS3.1.4+ Tools/TextEdit does.
+- Behavior: The editor is now started asynchronously.
+- Fixed user interface and selection glitches that occurred when different screen or window title bar heights were set in OS3.1.4.+ Prefs/IControl.
+- Fixed that running a text editor from Edit menu didn't lock ADiffView user interface.
+- Built with the OS3.2 NDK.
 
 2.3 (28.03.2023)
 - Navigation: Text search now highlights all matches at once, not just the current one. Therefore, 'Find next' and 'Find prev' also no longer show the next/previous match on the current page, but instead scroll up/down the page to the next match.
