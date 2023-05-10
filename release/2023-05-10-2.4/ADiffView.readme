@@ -38,8 +38,6 @@ CHANGES
 - Fixed user interface and selection glitches that occurred when 
   different screen or window title bar heights were set in OS3.1.4.+
   Prefs/IControl.
-- Fixed that running a text editor from Edit menu didn't lock ADiffView
-  user interface.
 - Built with the OS3.2 NDK.
 
 2.3 (28.03.2023)
