@@ -1,7 +1,7 @@
 /**
  * ADiffView
  *
- * A simple graphical viewer for Differences in ASCII text files.
+ * A graphical viewer for Differences in ASCII text files.
  *
  * Running on AMIGA computers with at least OS 3.0 / v39.
  *
@@ -109,10 +109,7 @@ int main(int argc, char **argv)
   }
   catch(const char* pMsg)
   {
-    request.Show("ADiffView internal error",
-                 pMsg,
-                 "Exit");
-
+    request.Show("ADiffView internal error", pMsg, "Exit");
     exitCode = RETURN_FAIL;
   }
 
@@ -127,8 +124,8 @@ int main(int argc, char **argv)
     std::string msgString = "ADiffView failed to close its public screen '";
     msgString += args.getPubScreenName();
     msgString += "'.\n\n";
-    msgString += "Please close all windows on this screen and try again "
-                 "to close it.";
+    msgString += "Please close all windows on this screen and click on "
+                 "'Close screen'";
 
     while(!isScreenClosed)
     {
