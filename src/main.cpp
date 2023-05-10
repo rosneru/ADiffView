@@ -71,17 +71,16 @@ int main(int argc, char **argv)
 
   ScreenBase* pScreen = NULL;
   Application* pApplication = NULL;
-
   ULONG exitCode = RETURN_OK;
+
+  // Parse the command line or Workbench start arguments
+  ADiffViewArgs args(argc, argv);
+
+  // Create a settings instance
+  ADiffViewSettings settings;
 
   try
   {
-    // Parse the command line or Workbench start arguments
-    ADiffViewArgs args(argc, argv);
-
-    // Create a settings instance
-    ADiffViewSettings settings;
-
     // Create (and open) the screen depending on args
     if(args.getPubScreenName().length() > 0)
     {
@@ -110,7 +109,6 @@ int main(int argc, char **argv)
   }
   catch(const char* pMsg)
   {
-    std::string msgString = pMsg;
     request.Show("ADiffView internal error",
                  pMsg,
                  "Exit");
@@ -126,6 +124,12 @@ int main(int argc, char **argv)
   if(pScreen != NULL)
   {
     bool isScreenClosed = false;
+    std::string msgString = "ADiffView failed to close its public screen '";
+    msgString += args.getPubScreenName();
+    msgString += "'.\n\n";
+    msgString += "Please close all windows on this screen and try again "
+                 "to close it.";
+
     while(!isScreenClosed)
     {
       isScreenClosed = pScreen->close();
@@ -134,11 +138,8 @@ int main(int argc, char **argv)
         break;
       }
 
-      request.Show("Failed to close screen",
-                     "ADiffView failed to close its public screen.\n\n"
-                     "Please close all windows on ADiffView screen and "
-                     "try again to close it.",
-                   "Close screen");
+
+      request.Show("Failed to close screen", msgString.c_str(), "Close screen");
     };
 
     delete pScreen;
