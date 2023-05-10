@@ -542,7 +542,9 @@ void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
         {
           MessageBox request(m_pWindow);
           long result = request.Show("ADiffView",
-                                     "Left file date has changed.\n\nCompare again?",
+                                      "The left file has changed "
+                                      "according to its date stamp."
+                                      "\n\nCompare again?",
                                      "Yes|No");
           if(result == 1) // Button 'Yes' pressed
           {
@@ -554,7 +556,9 @@ void DiffWindow::handleIDCMP(const struct IntuiMessage* pMsg)
         {
           MessageBox request(m_pWindow);
           long result = request.Show("ADiffView",
-                                     "Right file date has changed.\n\nCompare again?",
+                                      "The right file has changed "
+                                      "according to its date stamp."
+                                      "\n\nCompare again?",
                                      "Yes|No");
           if(result == 1) // Button 'Yes' pressed
           {
