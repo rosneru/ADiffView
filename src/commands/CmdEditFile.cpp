@@ -25,7 +25,8 @@ CmdEditFile::~CmdEditFile()
 
 void CmdEditFile::Execute(struct Window* pActiveWindow)
 {
-  std::string systemCall = m_Args.getEditorPath();
+  std::string systemCall = "Run ";
+  systemCall += m_Args.getEditorPath();
   systemCall += " \"";
   systemCall += m_PathToFile;
   systemCall += "\"";
@@ -36,12 +37,6 @@ void CmdEditFile::Execute(struct Window* pActiveWindow)
     systemCall += m_Args.getPubScreenName();
   }
 
-  // Disable the "About..." item (this command) in all menus
-  DisableInAllWindowMenus();
-
-  // Set the busy pointer for all windows
-  enableBusyPointerForAllWindows();
-
   if(SystemTagList(systemCall.c_str(), TAG_DONE) != 0)
   {
     std::string msg = "Starting the editor with the following command failed:\n";
@@ -50,10 +45,4 @@ void CmdEditFile::Execute(struct Window* pActiveWindow)
     CmdRequester cmdRequester(m_pAllWindowsVector, msg, "Error", "Ok");
     cmdRequester.Execute(pActiveWindow);
   }
-
-  // Set the normal pointer for all windows
-  disableBusyPointerForAllWindows();
-
-  // Enable the "About..." item (this command) in all menus
-  EnableInAllWindowMenus();
 }
