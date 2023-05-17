@@ -1,0 +1,6 @@
+email
+FROM: Gerben van Kesteren
+ON: May 14th 2023
+
+Now the strange thing is that ADiffView thinks Serial is "Added", but 
+actually that should have been serbia.country (see attached screenshot).
