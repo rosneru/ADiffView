@@ -147,7 +147,7 @@ void ADiffViewArgs::readWorkbenchArgs()
         // the PUBSCREEN tooltype from it
         //
 
-        // Make the directory of the icon to the current dir (cd)
+        // Change current directory the application location
         BPTR oldDir = CurrentDir(pWbArg[i].wa_Lock);
 
         m_pDiskObject = GetDiskObjectNew((STRPTR) pWbArg[i].wa_Name);
@@ -208,7 +208,7 @@ void ADiffViewArgs::readWorkbenchArgs()
           }
         }
 
-        // Change back to the formerly current directory
+        // Change current directory back to the former one
         CurrentDir(oldDir);
       }
       else if(i < 3)
@@ -243,7 +243,10 @@ void ADiffViewArgs::readWorkbenchArgs()
 void ADiffViewArgs::readCommandLineArgs()
 {
     // Reading the command line arguments
-    const char argTempl[] = "FILES/M,PUBSCREEN/K,EDITOR/K,EDITORONPUBSCREEN/S,DONOTASK/S,NOAPPICON/S,NOLINENUMBERS/S,IGNORETRAILINGSPACES/S,COUNTBYLINES/S,TABSIZE/K/N";
+    const char argTempl[] =
+      "FILES/M,PUBSCREEN/K,EDITOR/K,EDITORONPUBSCREEN/S,DONOTASK/S,"
+      "NOAPPICON/S,NOLINENUMBERS/S,IGNORETRAILINGSPACES/S,"
+      "COUNTBYLINES/S,TABSIZE/K/N";
     LONG args[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     struct RDArgs* pReadArgs = ReadArgs(argTempl, args, NULL);
