@@ -3897,6 +3897,7 @@ BOOST_AUTO_TEST_CASE( test_36_IgnoreTrailingSpaces )
 {
   try
   {
+    bool ignoreLeadingSpaces = false;
     bool ignoreTrailingSpaces = true;
     bool lineNumbersEnabled = true;
     bool cancelRequested = false;
@@ -3905,11 +3906,13 @@ BOOST_AUTO_TEST_CASE( test_36_IgnoreTrailingSpaces )
     DiffInputFileLinux srcA(cancelRequested, 
                             "testfiles/testcase_36_trailing_spaces_left.txt",
                             lineNumbersEnabled,
+                            ignoreLeadingSpaces,
                             ignoreTrailingSpaces);
 
     DiffInputFileLinux srcB(cancelRequested, 
                             "testfiles/testcase_36_trailing_spaces_right.txt",
                             lineNumbersEnabled,
+                            ignoreLeadingSpaces,
                             ignoreTrailingSpaces);
 
     DiffOutputFileLinux diffA(srcA);
@@ -3919,6 +3922,58 @@ BOOST_AUTO_TEST_CASE( test_36_IgnoreTrailingSpaces )
     diffEngine.startCompare();
 
     // Should be 0 when IGNORETRAILINGSPACES set 
+    long numDifferences = diffEngine.getNumDifferences();
+    BOOST_CHECK_EQUAL(numDifferences, 1);
+  }
+  catch(const char* pError)
+  {
+    auto locationBoost = boost::unit_test::framework::current_test_case().p_name;
+    std::string location(locationBoost);
+    printf("Exception in test %s: %s\n", 
+           location.c_str(),
+           pError);
+
+    // To let the test fail
+    BOOST_CHECK_EQUAL(1, 2);
+  }
+}
+
+
+/**
+ * testcase_42
+ *
+ * Test the IGNORELEADINGSPACES parameter. If it is set, comparing the
+ * both files of testcase_36 should result in just one difference.
+ */
+BOOST_AUTO_TEST_CASE( test_42_IgnoreLeadingSpaces )
+{
+  try
+  {
+    bool ignoreLeadingSpaces = true;
+    bool ignoreTrailingSpaces = false;
+    bool lineNumbersEnabled = true;
+    bool cancelRequested = false;
+    std::list<size_t> m_DiffIndices;
+
+    DiffInputFileLinux srcA(cancelRequested, 
+                            "testfiles/testcase_42_leading_spaces_left.c",
+                            lineNumbersEnabled,
+                            ignoreLeadingSpaces,
+                            ignoreTrailingSpaces);
+
+    DiffInputFileLinux srcB(cancelRequested, 
+                            "testfiles/testcase_42_leading_spaces_right.c",
+                            lineNumbersEnabled,
+                            ignoreLeadingSpaces,
+                            ignoreTrailingSpaces);
+
+    DiffOutputFileLinux diffA(srcA);
+    DiffOutputFileLinux diffB(srcB);
+    DiffEngine diffEngine(srcA, srcB, diffA, diffB, progress,
+                          "Comparing...", cancelRequested, m_DiffIndices);
+    diffEngine.startCompare();
+
+    // Should be 1 when IGNORELEADINGSPACES set 
     long numDifferences = diffEngine.getNumDifferences();
     BOOST_CHECK_EQUAL(numDifferences, 1);
   }

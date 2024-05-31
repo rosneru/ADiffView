@@ -1,7 +1,7 @@
 #include <string.h>
 #include "DiffLine.h"
 
-DiffLine::DiffLine(const char* pText)
+DiffLine::DiffLine(const char* pText, bool doSkipLeadingSpaces)
   : m_Text(pText),
     m_TextLength(strlen(pText)),
     m_State(Normal),
@@ -10,7 +10,17 @@ DiffLine::DiffLine(const char* pText)
     m_bIsLinked(false)
 {
   const char* pBuf = pText;
-  for(size_t i = 0; i < m_TextLength; i++)
+  size_t i = 0;
+  if(doSkipLeadingSpaces)
+  {
+    while(*pBuf == ' ' || *pBuf == '\t')
+    {
+      i++;
+      pBuf++;
+    }
+  }
+
+  for(i = i; i < m_TextLength; i++)
   {
     m_Token += 2 * m_Token + *(pBuf++); // (George V. Reilly hint)
   }

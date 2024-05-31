@@ -6,6 +6,7 @@
 DiffInputFileLinux::DiffInputFileLinux(bool& isCancelRequested, 
                                        const char* pFileName,
                                        bool lineNumbersEnabled,
+                                       bool ignoreLeadingSpaces,
                                        bool ignoreTrailingSpaces)
   : DiffInputFileBase(isCancelRequested),
     m_pLineNumberBuffer(NULL)
@@ -66,7 +67,7 @@ DiffInputFileLinux::DiffInputFileLinux(bool& isCancelRequested,
       m_pFileBuffer[i] = 0;
 
       // Create DiffLine from curren line
-      DiffLine* pDiffLine = new DiffLine(pLineStart);
+      DiffLine* pDiffLine = new DiffLine(pLineStart, ignoreLeadingSpaces);
 
       // Append DiffLine to list
       m_Lines.push_back(pDiffLine);

@@ -27,6 +27,7 @@ ADiffViewArgs::ADiffViewArgs(int argc, char **argv)
     m_bCountByLines(false),
     m_bDontAsk(false),
     m_bEditorOnPubscreen(false),
+    m_bIgnoreLeadingSpaces(false),
     m_bIgnoreTrailingSpaces(false),
     m_bNoAppIcon(false),
     m_bShowLineNumbers(true),
@@ -110,6 +111,11 @@ bool ADiffViewArgs::isEditorOnPubScreen() const
   return m_bEditorOnPubscreen;
 }
 
+bool ADiffViewArgs::isIgnoreLeadingSpaces() const
+{
+  return m_bIgnoreLeadingSpaces;
+}
+
 bool ADiffViewArgs::isIgnoreTrailingSpaces() const
 {
   return m_bIgnoreTrailingSpaces;
@@ -188,6 +194,11 @@ void ADiffViewArgs::readWorkbenchArgs()
              m_bShowLineNumbers = false;
           }
 
+          if(toolTypeValue(ppTooltypeArray, "IGNORELEADINGSPACES") != NULL)
+          {
+             m_bIgnoreLeadingSpaces = true;
+          }
+
           if(toolTypeValue(ppTooltypeArray, "IGNORETRAILINGSPACES") != NULL)
           {
              m_bIgnoreTrailingSpaces = true;
@@ -245,9 +256,9 @@ void ADiffViewArgs::readCommandLineArgs()
     // Reading the command line arguments
     const char argTempl[] =
       "FILES/M,PUBSCREEN/K,EDITOR/K,EDITORONPUBSCREEN/S,DONOTASK/S,"
-      "NOAPPICON/S,NOLINENUMBERS/S,IGNORETRAILINGSPACES/S,"
-      "COUNTBYLINES/S,TABSIZE/K/N";
-    LONG args[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+      "NOAPPICON/S,NOLINENUMBERS/S,IGNORELEADINGSPACES/S,"
+      "IGNORETRAILINGSPACES/S,COUNTBYLINES/S,TABSIZE/K/N";
+    LONG args[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     struct RDArgs* pReadArgs = ReadArgs(argTempl, args, NULL);
     if(pReadArgs == NULL)
@@ -306,17 +317,22 @@ void ADiffViewArgs::readCommandLineArgs()
 
     if(args[7] != 0)
     {
-      m_bIgnoreTrailingSpaces = true;
+      m_bIgnoreLeadingSpaces = true;
     }
 
     if(args[8] != 0)
     {
-      m_bCountByLines = true;
+      m_bIgnoreTrailingSpaces = true;
     }
 
     if(args[9] != 0)
     {
-      LONG parsedTabSize = *((LONG*)args[9]);
+      m_bCountByLines = true;
+    }
+
+    if(args[10] != 0)
+    {
+      LONG parsedTabSize = *((LONG*)args[10]);
       if(parsedTabSize > 0)
       {
         m_TabSize = parsedTabSize;

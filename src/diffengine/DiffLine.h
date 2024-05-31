@@ -52,16 +52,22 @@ public:
   /**
    * Creates a new DiffLine with the given text.
    *
-   * IMPORTANT: Sets the IsLinked flag to false so that this DiffLine
-   * is considered as 'owner' of the given text and line number.
+   * When `doSkipLeadingSpaces` is set to true, the whole `pText` is
+   * applied but the the spaces / tabs until the first non-whitespace
+   * character are skipped for token generation.
+   *
+   * IMPORTANT: This constructor sets the `IsLinked` field to false so
+   * that this `DiffLine` is considered as 'owner' of the given text and
+   * line number.
    */
-  DiffLine(const char* pText);
+  DiffLine(const char* pText, bool doSkipLeadingSpaces = false);
 
   /**
    * Creates a new DiffLine with given text and state.
    *
-   * IMPORTANT: Sets the IsLinked flag to true so that another DiffLine
-   * is considered as 'owner' of the given text.
+   * IMPORTANT: This constructor sets the `IsLinked` field to true so
+   * that another DiffLine is considered as owner of the given text and
+   * is responsible to free it after use.
    */
   DiffLine(const char* pText,
            LineState state,

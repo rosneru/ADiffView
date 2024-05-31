@@ -98,6 +98,14 @@ public:
   bool isEditorOnPubScreen() const;
 
   /**
+   * If true, whitespaces on the beginnings of the lines are not taken
+   * into account when the diff is being calculated.
+   *
+   * Defaults to false.
+   */
+  bool isIgnoreLeadingSpaces() const;
+
+  /**
    * If true, whitespaces on line endings are not taken into account
    * when the diff is being calculated.
    *
@@ -131,6 +139,7 @@ private:
   bool m_bCountByLines;
   bool m_bDontAsk;
   bool m_bEditorOnPubscreen;
+  bool m_bIgnoreLeadingSpaces;
   bool m_bIgnoreTrailingSpaces;
   bool m_bNoAppIcon;
   bool m_bShowLineNumbers;

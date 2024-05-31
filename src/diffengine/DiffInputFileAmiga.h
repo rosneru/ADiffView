@@ -24,6 +24,7 @@ public:
                      const char* pProgressDescription,
                      const char* pFileName,
                      bool lineNumbersEnabled,
+                     bool ignoreLeadingSpaces,
                      bool ignoreTrailingSpaces);
 
   virtual ~DiffInputFileAmiga();

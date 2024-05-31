@@ -31,6 +31,7 @@ public:
                StopWatch& stopWatch,
                ProgressReporter& progress,
                bool lineNumbersEnabled,
+               bool ignoreLeadingSpaces,
                bool ignoreTrailingSpaces,
                bool countByLines);
 

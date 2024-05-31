@@ -20,6 +20,7 @@ DiffInputFileAmiga::DiffInputFileAmiga(APTR pPoolHeader,
                                        const char* pProgressDescription,
                                        const char* pFileName,
                                        bool lineNumbersEnabled,
+                                       bool ignoreLeadingSpaces,
                                        bool ignoreTrailingSpaces)
   : DiffInputFileBase(isCancelRequested),
     m_pPoolHeader(pPoolHeader)
@@ -95,7 +96,7 @@ DiffInputFileAmiga::DiffInputFileAmiga(APTR pPoolHeader,
       // of DiffLine on the known address pDiffLine and calls the
       // constructor. This must be used here because the memory pool
       // doesn't work with normal 'new' operator.
-      new (pDiffLine) DiffLine(pLineStart);
+      new (pDiffLine) DiffLine(pLineStart, ignoreLeadingSpaces);
 
       // Append DiffLine to list
       m_Lines.push_back(pDiffLine);

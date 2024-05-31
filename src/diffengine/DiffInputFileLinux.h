@@ -16,6 +16,7 @@ public:
   DiffInputFileLinux(bool& isCancelRequested, 
                      const char* pFileName,
                      bool lineNumbersEnabled,
+                     bool ignoreLeadingSpaces = false,
                      bool ignoreTrailingSpaces = false);
 
   virtual ~DiffInputFileLinux();

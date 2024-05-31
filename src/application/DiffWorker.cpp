@@ -112,6 +112,7 @@ bool DiffWorker::compare()
                                        m_StopWatch,
                                        m_Progress,
                                        m_Args.isShowLineNumbers(),
+                                       m_Args.isIgnoreLeadingSpaces(),
                                        m_Args.isIgnoreTrailingSpaces(),
                                        m_Args.isCountByLines());
 
