@@ -3388,6 +3388,41 @@ BOOST_AUTO_TEST_CASE( test_DiffLine_getRenderColumn )
 }
 
 
+BOOST_AUTO_TEST_CASE( test_DiffLine_getDocumentColumn )
+{
+  const int TAB_WIDTH = 8;
+  DiffLine line("\tThis\tis\ta\ttab\ttest\tyeah", 
+                DiffLine::Normal,
+                "001");
+
+  BOOST_CHECK_EQUAL(line.getNumChars(), 24);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(0, TAB_WIDTH), 0);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(1, TAB_WIDTH), 0);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(2, TAB_WIDTH), 0);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(3, TAB_WIDTH), 0);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(4, TAB_WIDTH), 0);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(5, TAB_WIDTH), 0);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(6, TAB_WIDTH), 0);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(7, TAB_WIDTH), 0);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(8, TAB_WIDTH), 9);     // The 'T' of 'This'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(9, TAB_WIDTH), 10);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(10, TAB_WIDTH), 11);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(11, TAB_WIDTH), 12);   // The 's' of 'This'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(12, TAB_WIDTH), 13);   // 4 more to fulfill the TAB after 'This'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(13, TAB_WIDTH), 13);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(14, TAB_WIDTH), 13);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(15, TAB_WIDTH), 13);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(16, TAB_WIDTH), 14);   // The 'i'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(17, TAB_WIDTH), 15);   // The 's'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(18, TAB_WIDTH), 16);   // 46 more to fulfill the TAB after 'is'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(19, TAB_WIDTH), 16);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(20, TAB_WIDTH), 16);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(21, TAB_WIDTH), 16);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(22, TAB_WIDTH), 16);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(23, TAB_WIDTH), 16);
+}
+
+
 unsigned long getMaxRenderedLineLength(DiffFileBase& m_LeftDiffFile, 
                                        DiffFileBase& m_RightDiffFile,
                                        unsigned long tabSize)

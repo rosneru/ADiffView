@@ -146,10 +146,10 @@ void DiffLine::getTextPositionInfo(TextPositionInfo* pInfo,
   pInfo->numRemainingSpaces = 0;
 }
 
-unsigned long DiffLine::getRenderColumn(unsigned long originalColumn,
+unsigned long DiffLine::getRenderColumn(unsigned long documentColumn,
                                         unsigned long tabSize) const
 {
-  if(originalColumn > m_TextLength)
+  if(documentColumn > m_TextLength)
   {
     return 0;
   }
@@ -157,7 +157,7 @@ unsigned long DiffLine::getRenderColumn(unsigned long originalColumn,
   unsigned long renderColumn = 0;
   for(unsigned long i = 0; i < m_TextLength; i++)
   {
-    if(i == originalColumn)
+    if(i == documentColumn)
     {
       return renderColumn;
     }
@@ -174,4 +174,10 @@ unsigned long DiffLine::getRenderColumn(unsigned long originalColumn,
   }
 
   return renderColumn;
+}
+
+unsigned long DiffLine::getDocumentColumn(unsigned long renderColumn,
+                                          unsigned long tabSize) const
+{
+  return 0;
 }

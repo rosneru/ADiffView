@@ -129,12 +129,18 @@ public:
                            unsigned long tabSize) const;
 
   /**
-   * Returns the column position on which the given originalColumn would
-   * be rendered, respecting all previous TABulator chars.
+   * Returns the column position on which the given `documentColumn`
+   * would be rendered, respecting all previous TABulator chars.
    */
-  unsigned long getRenderColumn(unsigned long originalColumn,
+  unsigned long getRenderColumn(unsigned long documentColumn,
                                 unsigned long tabSize) const;
 
+  /**
+   * Returns the column position of given `renderColumn` in the original document,
+   * respecting all previous TABulator chars.
+   */
+  unsigned long getDocumentColumn(unsigned long renderColumn,
+                                  unsigned long tabSize) const;
 protected:
   const char* m_Text;
   const unsigned long m_TextLength;
