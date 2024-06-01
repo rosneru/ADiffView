@@ -241,14 +241,14 @@ private:
   Rect m_VScrollRect;     ///> Vertical scroll region
 
   /**
-   * Contains the line id of the text to which the mouse points. 
-   * NOTE: @ref calcMouseInTextPosition() must be called before.
+   * Contains the column id of the text to which the mouse points. 
+   * NOTE: `calcMouseInTextPosition()` must be called before.
    */
   long m_MouseTextColumn;
 
   /**
-   * Contains the column id of the text to which the mouse points. 
-   * NOTE: @ref calcMouseInTextPosition() must be called before.
+   * Contains the line id of the text to which the mouse points. 
+   * NOTE: `calcMouseInTextPosition()` must be called before.
    */
   long m_MouseTextLine;
 

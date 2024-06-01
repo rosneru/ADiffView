@@ -181,6 +181,15 @@ void DiffWindowTextArea::calcMouseInTextPosition(WORD mouseX, WORD mouseY)
 void DiffWindowTextArea::startDynamicSelection(WORD mouseX, WORD mouseY)
 {
   calcMouseInTextPosition(mouseX, mouseY);
+
+  const DiffLine* pLine = m_DiffFile[m_MouseTextLine];
+  if (pLine != NULL)
+  {
+    ULONG resultingTextColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
+    m_MouseTextColumn = resultingTextColumn;
+  }
+  
+
   m_DiffFile.startDynamicSelection(m_MouseTextLine, m_MouseTextColumn);
   renderSelectionUpdatedLines();
 }
@@ -191,6 +200,14 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateDynamicSelection(
 {
   DiffWindowTextArea::ScrollRequest result = SR_NONE;
   calcMouseInTextPosition(mouseX, mouseY);
+
+  const DiffLine* pLine = m_DiffFile[m_MouseTextLine];
+  if (pLine != NULL)
+  {
+    ULONG resultingTextColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
+    // printf("line %d: m_MouseTextColumn = %d, resulting = %d\n", m_MouseTextLine, m_MouseTextColumn, resultingTextColumn);
+    m_MouseTextColumn = resultingTextColumn;
+  }
 
   long bottomLine = m_Y + m_AreaMaxLines - 1;
   long rightmostColumn = m_X + m_AreaMaxChars;
@@ -734,9 +751,9 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
 
     Text(pRPort, pTextToPrint, numNextCharsToRender);
 
-    /*
-      * After-rendering checks
-      */
+    /**
+     * After-rendering checks
+     */
     if (hasNumCharsBeenLimited)
     {
       // Line finished
