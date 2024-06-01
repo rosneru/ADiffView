@@ -139,7 +139,7 @@ public:
    * Returns the column position of given `renderColumn` in the original document,
    * respecting all previous TABulator chars.
    */
-  unsigned long getDocumentColumn(unsigned long renderColumn,
+  unsigned long getDocumentColumn(unsigned long requestedRenderColumn,
                                   unsigned long tabSize) const;
 protected:
   const char* m_Text;

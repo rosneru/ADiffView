@@ -3404,22 +3404,22 @@ BOOST_AUTO_TEST_CASE( test_DiffLine_getDocumentColumn )
   BOOST_CHECK_EQUAL(line.getDocumentColumn(5, TAB_WIDTH), 0);
   BOOST_CHECK_EQUAL(line.getDocumentColumn(6, TAB_WIDTH), 0);
   BOOST_CHECK_EQUAL(line.getDocumentColumn(7, TAB_WIDTH), 0);
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(8, TAB_WIDTH), 9);     // The 'T' of 'This'
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(9, TAB_WIDTH), 10);
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(10, TAB_WIDTH), 11);
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(11, TAB_WIDTH), 12);   // The 's' of 'This'
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(12, TAB_WIDTH), 13);   // 4 more to fulfill the TAB after 'This'
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(13, TAB_WIDTH), 13);
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(14, TAB_WIDTH), 13);
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(15, TAB_WIDTH), 13);
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(16, TAB_WIDTH), 14);   // The 'i'
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(17, TAB_WIDTH), 15);   // The 's'
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(18, TAB_WIDTH), 16);   // 46 more to fulfill the TAB after 'is'
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(19, TAB_WIDTH), 16);
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(20, TAB_WIDTH), 16);
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(21, TAB_WIDTH), 16);
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(22, TAB_WIDTH), 16);
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(23, TAB_WIDTH), 16);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(8, TAB_WIDTH), 1);     // The 'T' of 'This'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(9, TAB_WIDTH), 2);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(10, TAB_WIDTH), 3);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(11, TAB_WIDTH), 4);   // The 's' of 'This'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(12, TAB_WIDTH), 5);   // 4 more to fulfill the TAB after 'This'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(13, TAB_WIDTH), 5);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(14, TAB_WIDTH), 5);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(15, TAB_WIDTH), 5);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(16, TAB_WIDTH), 6);   // The 'i'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(17, TAB_WIDTH), 7);   // The 's'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(18, TAB_WIDTH), 8);   // 46 more to fulfill the TAB after 'is'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(19, TAB_WIDTH), 8);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(20, TAB_WIDTH), 8);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(21, TAB_WIDTH), 8);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(22, TAB_WIDTH), 8);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(23, TAB_WIDTH), 8);
 }
 
 
