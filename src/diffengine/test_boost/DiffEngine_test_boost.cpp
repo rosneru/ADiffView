@@ -3388,7 +3388,45 @@ BOOST_AUTO_TEST_CASE( test_DiffLine_getRenderColumn )
 }
 
 
-BOOST_AUTO_TEST_CASE( test_DiffLine_getDocumentColumn )
+BOOST_AUTO_TEST_CASE( test_DiffLine_getDocumentColumn_1 )
+{
+  const int TAB_WIDTH = 8;
+  DiffLine line("This is a test without TABs", 
+                DiffLine::Normal,
+                "001");
+
+  BOOST_CHECK_EQUAL(line.getNumChars(), 27);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(0, TAB_WIDTH), 0);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(1, TAB_WIDTH), 1);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(2, TAB_WIDTH), 2);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(3, TAB_WIDTH), 3);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(4, TAB_WIDTH), 4);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(5, TAB_WIDTH), 5);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(6, TAB_WIDTH), 6);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(7, TAB_WIDTH), 7);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(8, TAB_WIDTH), 8);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(9, TAB_WIDTH), 9);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(10, TAB_WIDTH), 10);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(11, TAB_WIDTH), 11);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(12, TAB_WIDTH), 12);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(13, TAB_WIDTH), 13);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(14, TAB_WIDTH), 14);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(15, TAB_WIDTH), 15);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(16, TAB_WIDTH), 16);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(17, TAB_WIDTH), 17);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(18, TAB_WIDTH), 18);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(19, TAB_WIDTH), 19);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(20, TAB_WIDTH), 20);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(21, TAB_WIDTH), 21);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(22, TAB_WIDTH), 22);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(23, TAB_WIDTH), 23);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(24, TAB_WIDTH), 24);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(25, TAB_WIDTH), 25);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(26, TAB_WIDTH), 26);
+}
+
+
+BOOST_AUTO_TEST_CASE( test_DiffLine_getDocumentColumn_2 )
 {
   const int TAB_WIDTH = 8;
   DiffLine line("\tThis\tis\ta\ttab\ttest\tyeah", 
