@@ -3975,12 +3975,12 @@ BOOST_AUTO_TEST_CASE( test_36_IgnoreTrailingSpaces )
 
 
 /**
- * testcase_42
+ * testcase_37
  *
  * Test the IGNORELEADINGSPACES parameter. If it is set, comparing the
- * both files of testcase_36 should result in just one difference.
+ * both files of testcase_37 should result in just one difference.
  */
-BOOST_AUTO_TEST_CASE( test_42_IgnoreLeadingSpaces )
+BOOST_AUTO_TEST_CASE( test_37_IgnoreLeadingSpaces )
 {
   try
   {
@@ -3991,13 +3991,13 @@ BOOST_AUTO_TEST_CASE( test_42_IgnoreLeadingSpaces )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_42_leading_spaces_left.c",
+                            "testfiles/testcase_37_leading_spaces_left.c",
                             lineNumbersEnabled,
                             ignoreLeadingSpaces,
                             ignoreTrailingSpaces);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_42_leading_spaces_right.c",
+                            "testfiles/testcase_37_leading_spaces_right.c",
                             lineNumbersEnabled,
                             ignoreLeadingSpaces,
                             ignoreTrailingSpaces);
@@ -4026,7 +4026,7 @@ BOOST_AUTO_TEST_CASE( test_42_IgnoreLeadingSpaces )
 }
 
 
-BOOST_AUTO_TEST_CASE( testcase_37_combined_added_lines )
+BOOST_AUTO_TEST_CASE( testcase_38_combined_added_lines )
 {
   try
   {
@@ -4034,11 +4034,11 @@ BOOST_AUTO_TEST_CASE( testcase_37_combined_added_lines )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_37_combined_added_lines_left.txt",
+                            "testfiles/testcase_38_combined_added_lines_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_37_combined_added_lines_right.txt",
+                            "testfiles/testcase_38_combined_added_lines_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
