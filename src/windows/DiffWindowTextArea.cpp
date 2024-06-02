@@ -186,7 +186,7 @@ void DiffWindowTextArea::startDynamicSelection(WORD mouseX, WORD mouseY)
   if (pLine != NULL)
   {
     ULONG resultingTextColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
-    printf("line %d: m_MouseTextColumn = %d, resulting = %d\n", m_MouseTextLine, m_MouseTextColumn, resultingTextColumn);
+    // printf("line %d: m_MouseTextColumn = %d, resulting = %d\n", m_MouseTextLine, m_MouseTextColumn, resultingTextColumn);
     m_MouseTextColumn = resultingTextColumn;
   }
   
@@ -206,7 +206,7 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateDynamicSelection(
   if (pLine != NULL)
   {
     ULONG resultingTextColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
-    printf("line %d: m_MouseTextColumn = %d, resulting = %d\n", m_MouseTextLine, m_MouseTextColumn, resultingTextColumn);
+    // printf("line %d: m_MouseTextColumn = %d, resulting = %d\n", m_MouseTextLine, m_MouseTextColumn, resultingTextColumn);
     m_MouseTextColumn = resultingTextColumn;
   }
 

@@ -180,6 +180,7 @@ unsigned long DiffLine::getDocumentColumn(unsigned long requestedRenderColumn,
                                           unsigned long tabSize) const
 {
   unsigned long actualRenderColumn = 0;
+  bool isTabBorder = false;
   for(unsigned long documentColumn = 0; documentColumn < m_TextLength; documentColumn++)
   {
     if(m_Text[documentColumn] == '\t')
@@ -187,17 +188,26 @@ unsigned long DiffLine::getDocumentColumn(unsigned long requestedRenderColumn,
       unsigned long tabRemainingChars = (tabSize - (documentColumn % tabSize));
       while (tabRemainingChars-- > 0)
       {
-        actualRenderColumn++;
-        if(actualRenderColumn > requestedRenderColumn)
+        if(actualRenderColumn == requestedRenderColumn)
         {
           return documentColumn;
         }
+        actualRenderColumn++;
       }
+      
+      isTabBorder = true;
     }
 
-    if(actualRenderColumn > requestedRenderColumn)
+    if(actualRenderColumn == requestedRenderColumn)
     {
-      return documentColumn;
+      if(isTabBorder)
+      {
+        return documentColumn + 1;
+      }
+      else
+      {
+        return documentColumn;
+      }
     }
 
     actualRenderColumn++;

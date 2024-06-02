@@ -3445,8 +3445,7 @@ BOOST_AUTO_TEST_CASE( test_DiffLine_getDocumentColumn_2 )
   BOOST_CHECK_EQUAL(line.getDocumentColumn(8, TAB_WIDTH), 1);     // The 'T' of 'This'
   BOOST_CHECK_EQUAL(line.getDocumentColumn(9, TAB_WIDTH), 2);
   BOOST_CHECK_EQUAL(line.getDocumentColumn(10, TAB_WIDTH), 3);
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(11, TAB_WIDTH), 4);   // The 's' of 'This'
-  BOOST_CHECK_EQUAL(line.getDocumentColumn(12, TAB_WIDTH), 5);   // 4 more to fulfill the TAB width of 8 after 'This'
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(11, TAB_WIDTH), 4);   // The 's' of 'This'  BOOST_CHECK_EQUAL(line.getDocumentColumn(12, TAB_WIDTH), 5);   // 4 more to fulfill the TAB width of 8 after 'This'
   BOOST_CHECK_EQUAL(line.getDocumentColumn(13, TAB_WIDTH), 5);
   BOOST_CHECK_EQUAL(line.getDocumentColumn(14, TAB_WIDTH), 5);
   BOOST_CHECK_EQUAL(line.getDocumentColumn(15, TAB_WIDTH), 5);
