@@ -183,15 +183,15 @@ void DiffWindowTextArea::startDynamicSelection(WORD mouseX, WORD mouseY)
   calcMouseInTextPosition(mouseX, mouseY);
 
   const DiffLine* pLine = m_DiffFile[m_MouseTextLine];
-  if (pLine != NULL)
+  if (pLine == NULL)
   {
-    ULONG resultingTextColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
-    // printf("line %d: m_MouseTextColumn = %d, resulting = %d\n", m_MouseTextLine, m_MouseTextColumn, resultingTextColumn);
-    m_MouseTextColumn = resultingTextColumn;
+    return;
   }
-  
 
-  m_DiffFile.startDynamicSelection(m_MouseTextLine, m_MouseTextColumn);
+  ULONG documentColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
+  // printf("line %d: m_MouseTextColumn = %d, resulting = %d\n", m_MouseTextLine, m_MouseTextColumn, documentColumn);
+
+  m_DiffFile.startDynamicSelection(m_MouseTextLine, documentColumn);
   renderSelectionUpdatedLines();
 }
 
@@ -203,12 +203,13 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateDynamicSelection(
   calcMouseInTextPosition(mouseX, mouseY);
 
   const DiffLine* pLine = m_DiffFile[m_MouseTextLine];
-  if (pLine != NULL)
+  if (pLine == NULL)
   {
-    ULONG resultingTextColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
-    // printf("line %d: m_MouseTextColumn = %d, resulting = %d\n", m_MouseTextLine, m_MouseTextColumn, resultingTextColumn);
-    m_MouseTextColumn = resultingTextColumn;
+    return SR_NONE;
   }
+
+  ULONG documentColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
+  // printf("line %d: m_MouseTextColumn = %d, resulting = %d\n", m_MouseTextLine, m_MouseTextColumn, documentColumn);
 
   long bottomLine = m_Y + m_AreaMaxLines - 1;
   long rightmostColumn = m_X + m_AreaMaxChars;
@@ -231,7 +232,7 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateDynamicSelection(
     result = SR_RIGHT;
   }
 
-  m_DiffFile.updateDynamicSelection(m_MouseTextLine, m_MouseTextColumn);
+  m_DiffFile.updateDynamicSelection(m_MouseTextLine, documentColumn);
   renderSelectionUpdatedLines();
 
   return result;
