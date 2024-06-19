@@ -189,7 +189,6 @@ void DiffWindowTextArea::startDynamicSelection(WORD mouseX, WORD mouseY)
   }
 
   ULONG documentColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
-  // printf("line %d: m_MouseTextColumn = %d, resulting = %d\n", m_MouseTextLine, m_MouseTextColumn, documentColumn);
 
   m_DiffFile.startDynamicSelection(m_MouseTextLine, documentColumn);
   renderSelectionUpdatedLines();
@@ -209,7 +208,6 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateDynamicSelection(
   }
 
   ULONG documentColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
-  // printf("line %d: m_MouseTextColumn = %d, resulting = %d\n", m_MouseTextLine, m_MouseTextColumn, documentColumn);
 
   long bottomLine = m_Y + m_AreaMaxLines - 1;
   long rightmostColumn = m_X + m_AreaMaxChars;
@@ -400,9 +398,13 @@ ULONG DiffWindowTextArea::scrollLeft(ULONG numChars)
   }
 
   // Move text area content left by n * the width of one char
-  ScrollRasterBF(m_pRPorts->Window(), numChars * m_FontWidth_pix, 0,
-                 m_HScrollRect.getLeft(), m_HScrollRect.getTop(),
-                 m_HScrollRect.getRight() - 1, m_HScrollRect.getBottom());
+  ScrollRasterBF(m_pRPorts->Window(),
+                 numChars * m_FontWidth_pix,
+                 0,
+                 m_HScrollRect.getLeft(),
+                 m_HScrollRect.getTop(),
+                 m_HScrollRect.getRight() - 1,
+                 m_HScrollRect.getBottom());
 
   // Fill the gap with the following chars
   for (ULONG lineId = m_Y; lineId < m_Y + m_AreaMaxLines; lineId++)
@@ -444,8 +446,11 @@ ULONG DiffWindowTextArea::scrollRight(ULONG numChars)
   // Move text area content right by n * the height of one text line
   ScrollRasterBF(m_pRPorts->Window(),
                  -numChars * m_FontWidth_pix, // n * width
-                 0, m_HScrollRect.getLeft(), m_HScrollRect.getTop(),
-                 m_HScrollRect.getRight() - 1, m_HScrollRect.getBottom());
+                 0,
+                 m_HScrollRect.getLeft(),
+                 m_HScrollRect.getTop(),
+                 m_HScrollRect.getRight() - 1,
+                 m_HScrollRect.getBottom());
 
   // fill the gap with the previous chars
   for (ULONG lineId = m_Y; lineId < m_Y + m_AreaMaxLines; lineId++)
@@ -485,9 +490,13 @@ ULONG DiffWindowTextArea::scrollUp(ULONG numLines)
   }
 
   // Move each text area upward by n * the height of one text line
-  ScrollRasterBF(m_pRPorts->Window(), 0, numLines * m_FontHeight_pix,
-                 m_VScrollRect.getLeft(), m_VScrollRect.getTop(),
-                 m_VScrollRect.getRight(), m_VScrollRect.getBottom());
+  ScrollRasterBF(m_pRPorts->Window(),
+                 0,
+                 numLines * m_FontHeight_pix,
+                 m_VScrollRect.getLeft(),
+                 m_VScrollRect.getTop(),
+                 m_VScrollRect.getRight(),
+                 m_VScrollRect.getBottom());
 
   // Fill the now empty lines at the bottom with the next lines
   for (ULONG i = 0; i < numLines; i++)
@@ -526,10 +535,13 @@ ULONG DiffWindowTextArea::scrollDown(ULONG numLines)
 
 
   // Move each text area downward by n * the height of one text line
-  ScrollRasterBF(m_pRPorts->Window(), 0,
+  ScrollRasterBF(m_pRPorts->Window(),
+                 0,
                  -numLines * m_FontHeight_pix, // n * height
-                 m_VScrollRect.getLeft(), m_VScrollRect.getTop(),
-                 m_VScrollRect.getRight(), m_VScrollRect.getBottom());
+                 m_VScrollRect.getLeft(),
+                 m_VScrollRect.getTop(),
+                 m_VScrollRect.getRight(),
+                 m_VScrollRect.getBottom());
 
   // Fill the now empty lines at the top with the previous text lines
   for (ULONG i = 0; i < numLines; i++)
@@ -670,12 +682,10 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
   // Get the text position info of resulting text column. This also
   // calculates the srcTextColumn which is needed next.
   ULONG resultingTextColumn = srcTextStartColumn;
-
   pLine->getTextPositionInfo(&m_PositionInfo, resultingTextColumn, m_TabSize);
-  
-  while (maxRemainingCharsToRender > 0 &&
-          (m_PositionInfo.numRemainingChars > 0 ||
-          m_PositionInfo.numRemainingSpaces > 0))
+
+  while (maxRemainingCharsToRender > 0
+  && (m_PositionInfo.numRemainingChars > 0 || m_PositionInfo.numRemainingSpaces > 0))
   {
     // Get the RastPort (with the appropriate color) to render the
     // next block of marked / not marked text in the line.
@@ -699,7 +709,7 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
       return;
     }
 
-    ULONG numNextCharsToRender;
+    LONG numNextCharsToRender;
     ULONG numSrcCharsIncreased;
     const char* pTextToPrint;
     bool hasMarkedNormalBlockLimitReached = false;
@@ -748,8 +758,9 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
     /**
      * Move rastport cursor to render position and render the text
      */
-    Move(pRPort, m_HScrollRect.getLeft() + m_FontWidth_pix * currentDisplayColumn,
-          getTop() + lineTop + m_FontBaseline_pix + 1);
+    Move(pRPort,
+         m_HScrollRect.getLeft() + m_FontWidth_pix * currentDisplayColumn,
+         getTop() + lineTop + m_FontBaseline_pix + 1);
 
     Text(pRPort, pTextToPrint, numNextCharsToRender);
 
