@@ -656,8 +656,8 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
   ULONG maxRemainingCharsToRender;
   if (numCharLimit < 0)
   {
-    // Only render 'numCharLimit' chars  at the right of the lines
-    // visible area
+    // Only render 'numCharLimit' chars  at the right of the text area
+    // (Done when rendering after scrolling the content to left)
     maxRemainingCharsToRender = -numCharLimit;
 
     srcTextStartColumn = m_AreaMaxChars + m_X;
@@ -665,8 +665,8 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
   }
   else if (numCharLimit > 0)
   {
-    // Only render 'numCharLimit' chars at the left of the lines visible
-    // area
+    // Only render 'numCharLimit' chars  at the left of the text area
+    // (Done when rendering after scrolling the content to right)
     maxRemainingCharsToRender = numCharLimit;
     srcTextStartColumn = m_X - maxRemainingCharsToRender;
     currentDisplayColumn = 0;
