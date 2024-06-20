@@ -189,7 +189,6 @@ void DiffWindowTextArea::startDynamicSelection(WORD mouseX, WORD mouseY)
   }
 
   ULONG documentColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
-
   m_DiffFile.startDynamicSelection(m_MouseTextLine, documentColumn);
   renderSelectionUpdatedLines();
 }
@@ -208,7 +207,6 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateDynamicSelection(
   }
 
   ULONG documentColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
-
   long bottomLine = m_Y + m_AreaMaxLines - 1;
   long rightmostColumn = m_X + m_AreaMaxChars;
 
@@ -653,7 +651,7 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
 
   ULONG srcTextStartColumn;
   ULONG currentDisplayColumn;
-  ULONG maxRemainingCharsToRender;
+  long maxRemainingCharsToRender;
   if (numCharLimit < 0)
   {
     // Only render 'numCharLimit' chars  at the right of the text area
@@ -683,17 +681,18 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
   // calculates the srcTextColumn which is needed next.
   ULONG resultingTextColumn = srcTextStartColumn;
   pLine->getTextPositionInfo(&m_PositionInfo, resultingTextColumn, m_TabSize);
-
+printf("\n");
   while (maxRemainingCharsToRender > 0
   && (m_PositionInfo.numRemainingChars > 0 || m_PositionInfo.numRemainingSpaces > 0))
   {
     // Get the RastPort (with the appropriate color) to render the
     // next block of marked / not marked text in the line.
-    ULONG numCharsInBlock;
+    long numCharsInBlock;
     RastPort* pRPort;
     if ((numCharsInBlock = m_DiffFile.getNumNormalChars(
             lineId, m_PositionInfo.srcTextColumn)) > 0)
     {
+printf("getNumNORMALChars(scrTextColumn = %d) = %d\n", m_PositionInfo.srcTextColumn, numCharsInBlock);
       // The RastPort of the normal, not marked text depends on the
       // diff state of the line.
       pRPort = diffStateToRastPort(pLine->getState());
@@ -701,10 +700,12 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
     else if ((numCharsInBlock = m_DiffFile.getNumMarkedChars(
                 lineId, m_PositionInfo.srcTextColumn)) > 0)
     {
+printf("getNumMARKEDChars(scrTextColumn = %d) = %d\n", m_PositionInfo.srcTextColumn, numCharsInBlock);
       pRPort = m_pRPorts->TextSelected();
     }
     else
     {
+printf("numCharsInBlock = 0!! (m_PositionInfo.srcTextColumn = %d)\n", m_PositionInfo.srcTextColumn);
       // Line finished
       return;
     }
