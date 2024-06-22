@@ -3423,6 +3423,8 @@ BOOST_AUTO_TEST_CASE( test_DiffLine_getDocumentColumn_1 )
   BOOST_CHECK_EQUAL(line.getDocumentColumn(24, TAB_WIDTH), 24);
   BOOST_CHECK_EQUAL(line.getDocumentColumn(25, TAB_WIDTH), 25);
   BOOST_CHECK_EQUAL(line.getDocumentColumn(26, TAB_WIDTH), 26);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(27, TAB_WIDTH), 27);
+  BOOST_CHECK_EQUAL(line.getDocumentColumn(28, TAB_WIDTH), 27);
 }
 
 

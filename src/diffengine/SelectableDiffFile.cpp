@@ -182,7 +182,7 @@ long SelectableDiffFile::getNumNormalChars(unsigned long lineId,
   long nextSelStart = m_pCurrentSelection->getNextSelectionStart(lineId, columnId);
   if(nextSelStart > 0)
   {
-    return nextSelStart - columnId;
+    return nextSelStart;
   }
   
   return m_DiffFile[lineId]->getNumChars() - columnId;

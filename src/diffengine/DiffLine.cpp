@@ -213,5 +213,5 @@ unsigned long DiffLine::getDocumentColumn(unsigned long requestedRenderColumn,
     actualRenderColumn++;
   }
 
-  return 0;
+  return m_TextLength;
 }

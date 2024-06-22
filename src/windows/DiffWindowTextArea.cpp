@@ -681,7 +681,6 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
   // calculates the srcTextColumn which is needed next.
   ULONG resultingTextColumn = srcTextStartColumn;
   pLine->getTextPositionInfo(&m_PositionInfo, resultingTextColumn, m_TabSize);
-printf("\n");
   while (maxRemainingCharsToRender > 0
   && (m_PositionInfo.numRemainingChars > 0 || m_PositionInfo.numRemainingSpaces > 0))
   {
@@ -692,7 +691,6 @@ printf("\n");
     if ((numCharsInBlock = m_DiffFile.getNumNormalChars(
             lineId, m_PositionInfo.srcTextColumn)) > 0)
     {
-printf("getNumNORMALChars(scrTextColumn = %d) = %d\n", m_PositionInfo.srcTextColumn, numCharsInBlock);
       // The RastPort of the normal, not marked text depends on the
       // diff state of the line.
       pRPort = diffStateToRastPort(pLine->getState());
@@ -700,12 +698,10 @@ printf("getNumNORMALChars(scrTextColumn = %d) = %d\n", m_PositionInfo.srcTextCol
     else if ((numCharsInBlock = m_DiffFile.getNumMarkedChars(
                 lineId, m_PositionInfo.srcTextColumn)) > 0)
     {
-printf("getNumMARKEDChars(scrTextColumn = %d) = %d\n", m_PositionInfo.srcTextColumn, numCharsInBlock);
       pRPort = m_pRPorts->TextSelected();
     }
     else
     {
-printf("numCharsInBlock = 0!! (m_PositionInfo.srcTextColumn = %d)\n", m_PositionInfo.srcTextColumn);
       // Line finished
       return;
     }

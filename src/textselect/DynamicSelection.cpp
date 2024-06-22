@@ -57,7 +57,7 @@ void DynamicSelection::startSelection(long lineId,long columnId)
   // there to the m_UpdatedLineIds
   m_UpdatedLineIds.push_back(lineId);
 }
-
+#include <stdio.h>
 void DynamicSelection::updateSelection(long lineId, long columnId)
 {
   long maxAllowedColumnId = m_TextLines[lineId]->getNumChars();
