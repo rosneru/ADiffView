@@ -206,6 +206,9 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateDynamicSelection(
     return SR_NONE;
   }
 
+  ULONG numDocumentChars = pLine->getNumChars();
+  ULONG numRenderChars = pLine->getRenderColumn(numDocumentChars, m_TabSize);
+
   ULONG documentColumn = pLine->getDocumentColumn(m_MouseTextColumn, m_TabSize);
   long bottomLine = m_Y + m_AreaMaxLines - 1;
   long rightmostColumn = m_X + m_AreaMaxChars;
@@ -219,7 +222,7 @@ DiffWindowTextArea::ScrollRequest DiffWindowTextArea::updateDynamicSelection(
     result = SR_DOWN;
   }
   else if(m_MouseTextColumn > rightmostColumn 
-       && m_X + m_AreaMaxChars < m_DiffFile[m_MouseTextLine]->getNumChars())
+       && m_X + m_AreaMaxChars < numRenderChars)
   {
     result = SR_LEFT;
   }
