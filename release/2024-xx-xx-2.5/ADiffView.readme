@@ -26,6 +26,10 @@ CHANGES
   this is set all white spaces at the beginning of lines are skipped for
   comparison. So for example, files that differ only by spaces / tabs at
   the beginning of lines are considered as being equal.
+- Fixed a problem when selecting text in documents that contain TAB
+characters
+- Fixed a problem when selecting text when the document was scrolled 
+horizontally
 
 2.4 (10.05.2023)
 - Behavior: When ADiffView opens its own screen it is now a public 
