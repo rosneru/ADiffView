@@ -114,6 +114,13 @@ public:
   bool isIgnoreTrailingSpaces() const;
 
   /**
+   * If true the older file is automatically set as the left file. Works
+   * only for files that are given as (Workbench or CLI) arguments; not
+   * for the ones selected the "Open files window".
+   */
+  bool isOlderToLeft() const;
+
+  /**
    * If true, no AppIcon for file drag'n'drop is installed on the
    * Workbench
    */
@@ -141,6 +148,7 @@ private:
   bool m_bEditorOnPubscreen;
   bool m_bIgnoreLeadingSpaces;
   bool m_bIgnoreTrailingSpaces;
+  bool m_bOlderToLeft;
   bool m_bNoAppIcon;
   bool m_bShowLineNumbers;
   long m_TabSize;

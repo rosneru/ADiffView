@@ -56,6 +56,12 @@ AmigaFile::~AmigaFile()
   cleanup();
 }
 
+bool AmigaFile::isOlderThan(const AmigaFile& other)
+{
+  LONG diff = CompareDates(&m_pFib->fib_Date, &other.m_pFib->fib_Date);
+  return diff > 0;
+}
+
 void AmigaFile::cleanup()
 {
   if(m_FileDescriptor != 0)

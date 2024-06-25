@@ -13,6 +13,7 @@
 #endif
 
 #include "ADiffView_rev.h"
+#include "AmigaFile.h"
 #include "ProgressMessage.h"
 
 #include "Application.h"
@@ -181,23 +182,44 @@ Application::Application(ScreenBase& screen,
   m_FilesWindow.setMenu(&m_FilesWindowMenu);
   m_DiffWindow.setMenu(&m_DiffWindowMenu);
 
-  if((m_LeftFilePath.length() > 0) &&
-     (m_RightFilePath.length() > 0) &&
-     (m_Args.isDontAsk() == true))
+
+  if(m_LeftFilePath.length() > 0 && m_RightFilePath.length() > 0)
   {
-    //
-    // The DONTASK argument has been set and left and right file are
-    // also given: Start the diff immediately
-    //
-    m_CmdDiff.Execute(NULL);
+    if(args.isOlderToLeft() == true)
+    {
+      try
+      {
+        AmigaFile leftFile(m_LeftFilePath.c_str());
+        AmigaFile rightFile(m_RightFilePath.c_str());
+        if(rightFile.isOlderThan(leftFile))
+        {
+          std::string temporaryFilePath = m_LeftFilePath;
+          m_LeftFilePath = m_RightFilePath;
+          m_RightFilePath = temporaryFilePath;
+        }
+      }
+      catch(const char* pError)
+      {
+
+      }
+      
+    }
+
+    if(m_Args.isDontAsk() == true)
+    {
+      //
+      // The DONTASK argument has been set and left and right file are
+      // also given: Start the diff immediately
+      //
+      m_CmdDiff.Execute(NULL);
+    }
+    else
+    {
+      m_CmdOpenFilesWindow.Execute(NULL);
+    }
   }
   else
   {
-    //
-    // Fallback / default: Open the FilesWindow
-    //
-    // Passing a pointer to the command "Open files" to disable that
-    // menu item at opening.
     m_CmdOpenFilesWindow.Execute(NULL);
   }
 }
