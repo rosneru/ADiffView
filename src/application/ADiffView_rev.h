@@ -1,6 +1,6 @@
 #define VERSION		2
-#define REVISION	4
-#define DATE		"10.5.2023"
-#define VERS		"ADiffView 2.4"
-#define VSTRING		"ADiffView 2.4 (10.5.2023)\r\n"
-#define VERSTAG		"\0$VER: ADiffView 2.4 (10.5.2023)"
+#define REVISION	5
+#define DATE		"25.6.2024"
+#define VERS		"ADiffView 2.5"
+#define VSTRING		"ADiffView 2.5 (25.6.2024)\r\n"
+#define VERSTAG		"\0$VER: ADiffView 2.5 (25.6.2024)"

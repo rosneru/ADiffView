@@ -1,18 +1,18 @@
 VERSION		EQU	2
-REVISION	EQU	4
+REVISION	EQU	5
 
 DATE	MACRO
-		dc.b '10.5.2023'
+		dc.b '25.6.2024'
 		ENDM
 
 VERS	MACRO
-		dc.b 'ADiffView 2.4'
+		dc.b 'ADiffView 2.5'
 		ENDM
 
 VSTRING	MACRO
-		dc.b 'ADiffView 2.4 (10.5.2023)',13,10,0
+		dc.b 'ADiffView 2.5 (25.6.2024)',13,10,0
 		ENDM
 
 VERSTAG	MACRO
-		dc.b 0,'$VER: ADiffView 2.4 (10.5.2023)',0
+		dc.b 0,'$VER: ADiffView 2.5 (25.6.2024)',0
 		ENDM
