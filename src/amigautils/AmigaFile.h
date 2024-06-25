@@ -30,6 +30,13 @@ public:
   virtual ~AmigaFile();
 
   /**
+   * Returns true if this file has an older DateStamp then the file
+   * given as parameter.
+   * 
+   **/
+  bool isOlderThan(const AmigaFile& other);
+
+  /**
    * Reads the next line of the file into an internal line buffer and
    * returns the buffer address.
    *
