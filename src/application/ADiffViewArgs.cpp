@@ -348,7 +348,7 @@ void ADiffViewArgs::readCommandLineArgs()
 
     if(args[11] != 0)
     {
-      LONG parsedTabSize = *((LONG*)args[10]);
+      LONG parsedTabSize = *((LONG*)args[11]);
       if(parsedTabSize > 0)
       {
         m_TabSize = parsedTabSize;

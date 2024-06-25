@@ -185,10 +185,10 @@ Application::Application(ScreenBase& screen,
 
   if(m_LeftFilePath.length() > 0 && m_RightFilePath.length() > 0)
   {
-    if(args.isOlderToLeft() == true)
-    {
-      AmigaFile firstFile(m_LeftFilePath.c_str());
-    }
+    // if(args.isOlderToLeft() == true)
+    // {
+    //   AmigaFile firstFile(m_LeftFilePath.c_str());
+    // }
 
     if(m_Args.isDontAsk() == true)
     {
@@ -198,14 +198,13 @@ Application::Application(ScreenBase& screen,
       //
       m_CmdDiff.Execute(NULL);
     }
+    else
+    {
+      m_CmdOpenFilesWindow.Execute(NULL);
+    }
   }
   else
   {
-    //
-    // Fallback / default: Open the FilesWindow
-    //
-    // Passing a pointer to the command "Open files" to disable that
-    // menu item at opening.
     m_CmdOpenFilesWindow.Execute(NULL);
   }
 }
