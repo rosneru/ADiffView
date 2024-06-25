@@ -114,9 +114,9 @@ public:
   bool isIgnoreTrailingSpaces() const;
 
   /**
-   * If true the older file is automatically set as the left file. 
-   * Works only for files that com as (Workbench or CLI) arguments; 
-   * not for 
+   * If true the older file is automatically set as the left file. Works
+   * only for files that are given as (Workbench or CLI) arguments; not
+   * for the ones selected the "Open files window".
    */
   bool isOlderToLeft() const;
 

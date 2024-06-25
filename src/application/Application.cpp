@@ -185,10 +185,25 @@ Application::Application(ScreenBase& screen,
 
   if(m_LeftFilePath.length() > 0 && m_RightFilePath.length() > 0)
   {
-    // if(args.isOlderToLeft() == true)
-    // {
-    //   AmigaFile firstFile(m_LeftFilePath.c_str());
-    // }
+    if(args.isOlderToLeft() == true)
+    {
+      try
+      {
+        AmigaFile leftFile(m_LeftFilePath.c_str());
+        AmigaFile rightFile(m_RightFilePath.c_str());
+        if(rightFile.isOlderThan(leftFile))
+        {
+          std::string temporaryFilePath = m_LeftFilePath;
+          m_LeftFilePath = m_RightFilePath;
+          m_RightFilePath = temporaryFilePath;
+        }
+      }
+      catch(const char* pError)
+      {
+
+      }
+      
+    }
 
     if(m_Args.isDontAsk() == true)
     {
