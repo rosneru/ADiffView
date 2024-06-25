@@ -29,9 +29,10 @@ CHANGES
 - Behavior: Added (ToolType / CLI) argument OLDERTOLEFT. When this is 
   set, the older file is automatically loaded as the left file. Works
   only for files that are given as (Workbench or CLI) arguments; not
-  for the ones selected the open files window.
+  for the ones selected the in open files window.
 - Fixed an issue when selecting text in documents with tab characters
 - Fixed an issue when selecting text in documents that were scrolled 
+  horizontally
 
 2.4 (10.05.2023)
 - Behavior: When ADiffView opens its own screen it is now a public 

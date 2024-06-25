@@ -3,7 +3,7 @@
 @wordwrap
 @node Main "ADiffView - Introduction"
 
-@{fg shine}ADiffView 2.4 released on 10.05.2023.@{fg text}
+@{fg shine}ADiffView 2.5 released on 25.06.2024.@{fg text}
 
 @{b}About@{ub}
 
@@ -93,11 +93,11 @@ If you use DOpus 5.x you can setup a button to run ADiffView from there:
 
 1) Edit the file DOpus/ARexx/Compare.dopus5. Change the line starting with "Address Command", which is almost at the bottom, so that it looks like this:
 
-@{fg shine}Address Command 'SYS:Tools/ADiffView "' || First_Name || '" "' || Second_Name || '"' DONOTASK@{fg text}
+@{fg shine}Address Command 'SYS:Tools/ADiffView "' || First_Name || '" "' || Second_Name || '"' IGNORELEADINGSPACES IGNORETRAILINGSPACES OLDERTOLEFT DONOTASK@{fg text}
 
 Alternately, if you want to use SYS:Tools/TextEdit (Os 3.1.4 or later needed) and open it on the same screen as ADiffViews runs on:
 
-@{fg shine}Address Command 'DH0:Tools/ADiffView "' || First_Name || '" "' || Second_Name || '"' DONOTASK EDITOR 'SYS:Tools/TextEdit' EDITORONPUBSCREEN@{fg text}
+@{fg shine}Address Command 'DH0:Tools/ADiffView "' || First_Name || '" "' || Second_Name || '"' IGNORELEADINGSPACES IGNORETRAILINGSPACES OLDERTOLEFT DONOTASK EDITOR 'SYS:Tools/TextEdit' EDITORONPUBSCREEN@{fg text}
 
 2) In DOpus create or edit a button, name it e.g. "Compare" and set this ARexx script to be executed on the button click:
 @{fg shine}DOpus5:ARexx/Compare.dopus5 {Qp}@{fg text}
@@ -133,6 +133,9 @@ The text editor to be used by menu items 'Edit -> Edit left file' and 'Edit -> E
 @{i}EDITOREDITORONPUBSCREEN@{ui}
 The editor will be opened on the ADiffView screen using its PUBSCREEN argument. If the editor doesn't support PUBSCREEN an error (maybe misleading message) will be diplayed in a console window. The default editor C:Ed doest't support it, but OS3.1.4+ Tools/TextEdit does.
 
+@{i}IGNORELEADINGSPACES@{ui}
+When this is set all white spaces at the beginning of lines are skipped for comparison. So for example, files that differ only by spaces or tabs at the beginning of lines are considered as being equal.
+
 @{i}IGNORETRAILINGSPACES@{ui}
 If this is set, spaces or tabs at line ends are not recognized as differences.
 
@@ -141,6 +144,9 @@ No appicon is displayed when started from Workbench. (When started from CLI an A
 
 @{i}NOLINENUMBERS@{ui}
 The line numbers are not displayed. Saves a little memory and processing time.
+
+@{i}OLDERTOLEFT@{ui}
+When this is set, the older file is automatically loaded as the left file. Works only for files that are given as (Workbench or CLI) arguments; not for the ones selected in the open files window.
 
 @{i}PUBSCREEN@{ui}
 The program will be opened on the provided public screen.
@@ -159,8 +165,14 @@ The tabulator width used when rendering text that contains tabulator characters.
 
 @{b}Changelog@{ub}
 
-2.4 (10.05.2023)
+2.5 (25.06.2024)
+- Behavior: Added (ToolType / CLI) argument IGNORELEADINGSPACES. When this is set all white spaces at the beginning of lines are skipped for comparison. So for example, files that differ only by spaces / tabs at the beginning of lines are considered as being equal.
+- Behavior: Added (ToolType / CLI) argument OLDERTOLEFT. When this is set, the older file is automatically loaded as the left file. Works only for files that are given as (Workbench or CLI) arguments; not for the ones selected the open files window.
+- Fixed an issue when selecting text in documents with tab characters
+- Fixed an issue when selecting text in documents that were scrolled 
+  horizontally
 
+2.4 (10.05.2023)
 - Behavior: When ADiffView opens its own screen it is now a public screen named ADIFFVIEW.1. This number is incremented for each instance. The name of the screen where ADiffView is actually running is displayed in the About requester.
 - Behavior: On AmigaOS 3.1.4 and newer when ADiffView opens its own screen the new off-screen dragging mode is enabled. This allows windows to be dragged beyond the screen borders.
 - Behavior: Added (ToolType / CLI) argument EDITORONPUBSCREEN. When this is set and the editor (see EDITOR argument) supports a PUBSCREEN argument it will be opened on the ADiffView screen. The default editor C:Ed doest't support it, but OS3.1.4+ Tools/TextEdit does.
