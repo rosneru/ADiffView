@@ -79,7 +79,7 @@ long TextSelectionLine::getNextSelectionStart(long columnId)
     long fromColumn = (*it)->getFromColumn();
     if(fromColumn >= columnId)
     {
-      return fromColumn;
+      return fromColumn - columnId;
     }
   }
 
