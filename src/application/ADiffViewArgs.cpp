@@ -29,6 +29,7 @@ ADiffViewArgs::ADiffViewArgs(int argc, char **argv)
     m_bEditorOnPubscreen(false),
     m_bIgnoreLeadingSpaces(false),
     m_bIgnoreTrailingSpaces(false),
+    m_bOlderToLeft(false),
     m_bNoAppIcon(false),
     m_bShowLineNumbers(true),
     m_TabSize(8)
@@ -39,7 +40,6 @@ ADiffViewArgs::ADiffViewArgs(int argc, char **argv)
     // Started from Workbench
     //
     readWorkbenchArgs();
-
   }
   else
   {
@@ -119,6 +119,11 @@ bool ADiffViewArgs::isIgnoreLeadingSpaces() const
 bool ADiffViewArgs::isIgnoreTrailingSpaces() const
 {
   return m_bIgnoreTrailingSpaces;
+}
+
+bool ADiffViewArgs::isOlderToLeft() const
+{
+  return m_bOlderToLeft;
 }
 
 bool ADiffViewArgs::isNoAppIcon() const
@@ -204,6 +209,11 @@ void ADiffViewArgs::readWorkbenchArgs()
              m_bIgnoreTrailingSpaces = true;
           }
 
+          if(toolTypeValue(ppTooltypeArray, "OLDERTOLEFT") != NULL)
+          {
+             m_bOlderToLeft = true;
+          }
+
           if(toolTypeValue(ppTooltypeArray, "COUNTBYLINES") != NULL)
           {
              m_bCountByLines = true;
@@ -257,8 +267,9 @@ void ADiffViewArgs::readCommandLineArgs()
     const char argTempl[] =
       "FILES/M,PUBSCREEN/K,EDITOR/K,EDITORONPUBSCREEN/S,DONOTASK/S,"
       "NOAPPICON/S,NOLINENUMBERS/S,IGNORELEADINGSPACES/S,"
-      "IGNORETRAILINGSPACES/S,COUNTBYLINES/S,TABSIZE/K/N";
-    LONG args[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+      "IGNORETRAILINGSPACES/S,OLDERTOLEFT/S,COUNTBYLINES/S,"
+      "TABSIZE/K/N";
+    LONG args[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     struct RDArgs* pReadArgs = ReadArgs(argTempl, args, NULL);
     if(pReadArgs == NULL)
@@ -327,10 +338,15 @@ void ADiffViewArgs::readCommandLineArgs()
 
     if(args[9] != 0)
     {
-      m_bCountByLines = true;
+      m_bOlderToLeft = true;
     }
 
     if(args[10] != 0)
+    {
+      m_bCountByLines = true;
+    }
+
+    if(args[11] != 0)
     {
       LONG parsedTabSize = *((LONG*)args[10]);
       if(parsedTabSize > 0)

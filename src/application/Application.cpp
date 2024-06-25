@@ -13,6 +13,7 @@
 #endif
 
 #include "ADiffView_rev.h"
+#include "AmigaFile.h"
 #include "ProgressMessage.h"
 
 #include "Application.h"
@@ -181,15 +182,22 @@ Application::Application(ScreenBase& screen,
   m_FilesWindow.setMenu(&m_FilesWindowMenu);
   m_DiffWindow.setMenu(&m_DiffWindowMenu);
 
-  if((m_LeftFilePath.length() > 0) &&
-     (m_RightFilePath.length() > 0) &&
-     (m_Args.isDontAsk() == true))
+
+  if(m_LeftFilePath.length() > 0 && m_RightFilePath.length() > 0)
   {
-    //
-    // The DONTASK argument has been set and left and right file are
-    // also given: Start the diff immediately
-    //
-    m_CmdDiff.Execute(NULL);
+    if(args.isOlderToLeft() == true)
+    {
+      AmigaFile firstFile(m_LeftFilePath.c_str());
+    }
+
+    if(m_Args.isDontAsk() == true)
+    {
+      //
+      // The DONTASK argument has been set and left and right file are
+      // also given: Start the diff immediately
+      //
+      m_CmdDiff.Execute(NULL);
+    }
   }
   else
   {
