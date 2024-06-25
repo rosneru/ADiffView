@@ -2,7 +2,7 @@ Short:        Graphical ASCII file compare/diff viewer
 Author:       Uwe Rosner
 Uploader:     u.rosner@ymail.com (Uwe Rosner)
 Type:         util/misc
-Version:      2.4
+Version:      2.5
 Architecture: m68k-amigaos >= 3.0
 Distribution: Aminet
 
@@ -21,14 +21,17 @@ information.
 CHANGES
 =======
 
-2.5 (xx.xx.2024)
+2.5 (25.06.2024)
 - Behavior: Added (ToolType / CLI) argument IGNORELEADINGSPACES. When
   this is set all white spaces at the beginning of lines are skipped for
   comparison. So for example, files that differ only by spaces / tabs at
   the beginning of lines are considered as being equal.
-- Fixed a problem when selecting text in documents that contain TAB
-  characters
-- Fixed a problem when selecting text when the document was scrolled 
+- Behavior: Added (ToolType / CLI) argument OLDERTOLEFT. When this is 
+  set, the older file is automatically loaded as the left file. Works
+  only for files that are given as (Workbench or CLI) arguments; not
+  for the ones selected the open files window.
+- Fixed an issue when selecting text in documents with tab characters
+- Fixed an issue when selecting text in documents that were scrolled 
   horizontally
 
 2.4 (10.05.2023)
