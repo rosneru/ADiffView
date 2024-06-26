@@ -5,7 +5,7 @@ set(CROSS_COMPILE m68k-amigaos-)
 
 SET(CMAKE_CXX_COMPILER m68k-amigaos-g++)
 
-SET(CMAKE_CXX_FLAGS "-noixemul -Wall -O2 -s")
+SET(CMAKE_CXX_FLAGS "-Wall -O2 -s -noixemul")
 
 set(CMAKE_CXX_LINK_EXECUTABLE "<CMAKE_CXX_COMPILER> <FLAGS> <CMAKE_CXX_LINK_FLAGS> <OBJECTS> -o <TARGET>")
 
