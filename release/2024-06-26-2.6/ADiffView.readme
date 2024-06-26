@@ -1,0 +1,173 @@
+Short:        Graphical ASCII file compare/diff viewer
+Author:       Uwe Rosner
+Uploader:     u.rosner@ymail.com (Uwe Rosner)
+Type:         util/misc
+Version:      2.6
+Architecture: m68k-amigaos >= 3.0
+Distribution: Aminet
+
+
+=====
+ABOUT
+=====
+ADiffView compares two ASCII text files and displays the differences 
+graphically.
+
+The diff engine uses Eugene Myers' diff algorithm and also third-party 
+code in its implementation. See the LICENSE-3RD-PARTY file for more 
+information.
+
+======= 
+CHANGES
+=======
+
+2.6 (26.06.2024)
+- Fixed a problem that was quietly introduced in yesterday's version 2.5
+  without me noticing: Due to an wrong compiler setting all actions that
+  internally use c++ exceptions on failure (e.g. pressing the "Stop" 
+  button, trying to open a non-existing file, ...) led to unexpected
+  behavior, program exit or crash. This is now fixed.
+
+2.5 (25.06.2024)
+- Behavior: Added (ToolType / CLI) argument IGNORELEADINGSPACES. When
+  this is set all white spaces at the beginning of lines are skipped for
+  comparison. So for example, files that differ only by spaces / tabs at
+  the beginning of lines are considered as being equal.
+- Behavior: Added (ToolType / CLI) argument OLDERTOLEFT. When this is 
+  set, the older file is automatically loaded as the left file. Works
+  only for files that are given as (Workbench or CLI) arguments; not
+  for the ones selected the in open files window.
+- Fixed an issue when selecting text in documents with tab characters
+- Fixed an issue when selecting text in documents that were scrolled 
+  horizontally
+
+2.4 (10.05.2023)
+- Behavior: When ADiffView opens its own screen it is now a public 
+  screen named ADIFFVIEW.1. This number is incremented for each 
+  instance. The name of the screen where ADiffView is actually running
+  is displayed in the About requester.
+- Behavior: On AmigaOS 3.1.4 and newer when ADiffView opens its own 
+  screen the new off-screen dragging mode is enabled. This allows 
+  windows to be dragged beyond the screen borders.
+- Behavior: Added (ToolType / CLI) argument EDITORONPUBSCREEN. When this
+  is set and the editor (see EDITOR argument) supports a PUBSCREEN 
+  argument it will be opened on the ADiffView screen. The default editor
+  C:Ed doest't support it, but OS3.1.4+ Tools/TextEdit does.
+- Behavior: The editor is now started asynchronously.
+- Fixed user interface and selection glitches that occurred when 
+  different screen or window title bar heights were set in OS3.1.4.+
+  Prefs/IControl.
+- Built with the OS3.2 NDK.
+
+2.3 (28.03.2023)
+- Navigation: Text search now highlights all matches at once, not just
+  the current one. Therefore, 'Find next' and 'Find prev' also no longer
+  show the next/previous match on the current page, but instead scroll
+  up/down the page to the next match.
+- New edit menu: Added the possibility to select text and copy it to the
+  clipboard (new menu item 'Edit->Copy').
+- New edit menu: Added 'Edit -> Edit left file' and 'Edit -> Edit right 
+  file' commands to call an external editor for the file in question. 
+  Default editor is C:Ed. Can be changed using the new (ToolType / CLI) 
+  argument EDITOR.
+- Behavior: Added a check if an open file has been modified, and if so, 
+  allows the user to quickly start a new comparison.
+
+2.2 (09.04.2022)
+- Navigation: Added the shortcuts SPACE and BACKSPACE to navigate
+  forward and backward one page.
+- Navigation: Added an option to the text search function to search only
+  in difference lines. See the cycle gadget in the search window.
+- Behavior: Added (ToolType / CLI) argument COUNTBYLINES. When this is
+  set, the number of differences reported is counted per lines, not per
+  'groups of difference blocks' as it is the default.
+- Fixed a crash due to a stack overflow if aborted during the 
+  comparison process
+- Fixed an issue where other search parameter changes were not applied
+  when the search keyword was empty 
+- Fixed an issue where the last line of a file was not recognized by
+  ADiffView when it hadn't been finalized with a newline.
+
+2.1 (02.12.2021)
+- Navigation: Now displays a message in the window title if no 
+  next/previous difference or search pattern match was found.
+- View: Added the 'View' menu with currently the only function to switch
+  between different tabulator widths
+- Behavior: Added (ToolType / CLI) argument IGNORETRAILINGSPACES. When
+  this is set all white spaces at line endings are skipped for
+  comparison. So for example, files that differ only by spaces at the
+  end of lines are displayed as if they had no differences.
+- Behavior: Added support for selecting multiple menu items at one time
+  as it is common on the Amiga.
+- Behavior: Now starting the comparison will be prevented if the same
+  file name is selected for the left and right file (only string 
+  comparison of the filenames).
+- Fixed an issue where window titles were broken after comparing files 
+  without differences.
+- Fixed a MuForce hit when 'Navigate to last diff' was called.
+
+2.0 (27.07.2021)
+- Added new color icon in AmigaOS3.2 style - many thanks to Mason!
+- Rendering: Added tabulator support, defaults to 8 spaces for each tab.
+  Can be configured with the (ToolType / CLI) argument TABSIZE.
+- Navigation: Added a text search function.
+- Navigation: Added more commands to navigate between diff blocks. 
+- Layout: Improved the progress window layout.
+- Behavior: Removed the (ToolType / CLI) argument ASKONWORKBENCH. 
+  An AppIcon is used instead but only available when ADiffView is 
+  started from the Workbench. Double clicking on the AppIcon brings 
+  ADiffView to front. When files are dropped on the AppIcon, their 
+  names are inserted into the open files window on an empty file name 
+  gadget. The AppIcon can be disabled with the ToolType NOAPPICON.
+- Performance: Improved the reading of input files. Now each file is 
+  read as a whole and no unnecessary string copying is done anymore.
+- Development: Widely changed the internal application structure.
+  Now using C++ exceptions and some basic STL - cleaner code and more 
+  coding fun for me. But this comes at a cost. The binary size increased
+  from about 70k to 190k even before new features were implemented. 
+  The use of exceptions also drops MC68000 compatibility, so at least 
+  a 68020 CPU is needed now.
+
+1.2 (01.01.2020)
+- Fixed a bug introduced in version 1.1 which produced Enforcer hits in 
+  progress window.
+- Fixed problem in text rendering where some lines were displayed 
+  intermeshed.
+- The Line numbers of the source files are now displayed in diff result.
+- Added the (ToolType / CLI) argument NOLINENUMBERS to turn of the
+  display of the line numbers.
+
+1.1 (22.12.2019)
+- Now using the Myers diff algorithm for better results.
+- File select window: When a file was selected with the file request, 
+  the request for the other file opens in the same directory.
+- File select window: Keyboard shortcuts are now working.
+- File select window: Added a feature to swap left and right file.
+- File select window: Added support for Drag'n drop. If the program 
+  runs on Workbench you can drag the files to compare into that window.
+- Diff result window: Added a feature to navigate to next / previous 
+  difference.
+- Now OS3.0+ memory pools are used. Speeds up the freeing of memory. 
+  There's a noticeable speed improvement on exit after big files have 
+  been compared.
+
+1.0.1 (13.03.2019)
+- Fixed a bug which caused a crash when comparing long files
+- Fixed a minor problem in the about window where the title was always 
+  inherited by the parent window.
+- Added some more info into the manual chapter about ADiffView and 
+  Directory Opus
+
+1.0.0 (21.02.2019)
+- Initial version
+
+
+===========
+DEVELOPMENT
+===========
+Development was done on an Amiga with StormC4 in C++/gcc mode and also
+in Linux with Visual Studio Code. Unit tests for the diff engine were 
+done in Linux with QtCreator and the BOOST framework.
+
+Starting with version 1.1 the build of the release binary is done with
+gcc 6.5 on Linux using this toolchain: https://github.com/bebbo/amiga-gcc
