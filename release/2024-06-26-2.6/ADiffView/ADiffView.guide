@@ -166,7 +166,7 @@ The tabulator width used when rendering text that contains tabulator characters.
 @{b}Changelog@{ub}
 
 2.6 (26.06.2024)
-- Fixed a problem that was quietly introduced in yesterday's version 2.5 without me noticing: Due to an wrong compiler setting all actions that internally use c++ exceptions on failure (e.g. pressing the "Stop" button, trying to open a non-existing file, ...) led to unexpected behavior, program exit or crash. This is now fixed.
+- Fixed a bug that was quietly introduced in yesterday's version 2.5 without me noticing: Due to a wrong compiler setting all actions that internally use c++ exceptions on failure (e.g. pressing the "Stop" button, trying to open a non-existing file, ...) led to unexpected behavior, program exit or crash. This is now fixed.
 
 2.5 (25.06.2024)
 - Behavior: Added (ToolType / CLI) argument IGNORELEADINGSPACES. When this is set all white spaces at the beginning of lines are skipped for comparison. So for example, files that differ only by spaces / tabs at the beginning of lines are considered as being equal.
