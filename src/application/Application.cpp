@@ -143,7 +143,7 @@ Application::Application(ScreenBase& screen,
   m_AboutMsg = VERSTAG + 7;   // Skip the first 7 chars of pVersTag
                               // which is only "\0$VER: "
   m_AboutMsg += "\n\n";
-  m_AboutMsg += "Copyright(c) 2023 Uwe Rosner (u.rosner@ymail.com)";
+  m_AboutMsg += "Copyright(c) 2024 Uwe Rosner (u.rosner@ymail.com)";
   m_AboutMsg += "\n\n";
   m_AboutMsg += "This release of ADiffView may be freely distributed.\n";
   m_AboutMsg += "It may not be commercially distributed without the\n";
