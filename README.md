@@ -5,6 +5,8 @@
 ADiffView compares two ASCII text files and displays the differences 
 graphically.
 
+![Screenshot](doc/screenshots/ADiffView-v2.6.png)
+
 The diff engine uses Eugene Myers' diff algorithm and also third-party 
 code in its implementation. See the LICENSE-3RD-PARTY file for more 
 information.
