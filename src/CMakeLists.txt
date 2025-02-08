@@ -24,7 +24,7 @@ add_executable (ADiffView_gcc
                 application/Application.cpp
                 application/DiffDocument.cpp
                 application/DiffWorker.cpp
-                application/DiffWorkerProgressReporter.cpp
+                application/DiffProgressReporter.cpp
                 application/TextFinder.cpp
                 commands/CmdChangeTabulatorWidth.cpp
                 commands/CmdCloseWindow.cpp

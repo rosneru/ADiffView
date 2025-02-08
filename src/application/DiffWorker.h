@@ -10,7 +10,7 @@
 #include "DiffOutputFileAmiga.h"
 #include "DiffInputFileAmiga.h"
 #include "DiffWindow.h"
-#include "DiffWorkerProgressReporter.h"
+#include "DiffProgressReporter.h"
 #include "FilesWindow.h"
 #include "ProgressWindow.h"
 #include "StopWatch.h"
@@ -56,7 +56,7 @@ public:
 private:
   std::string& m_LeftSrcFilePath;
   std::string& m_RightSrcFilePath;
-  DiffWorkerProgressReporter m_Progress;
+  DiffProgressReporter m_Progress;
   StopWatch m_StopWatch;
   DiffWindow& m_DiffWindow;
   ProgressWindow& m_ProgressWindow;

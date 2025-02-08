@@ -29,7 +29,7 @@ C/C++ Environment
 0
 Includepath (End)
 0 "" 80
-1 "build-stromc"
+1 "build-stormc"
 1 0 "makelog.txt"
 ""
 0
@@ -112,7 +112,7 @@ File
 "src/amigautils/AmigaFile.cpp"
 "src/amigautils/AmigaFile.h"
 Storm Shell Project (Dependencies)
-"build-stromc/AmigaFile.o" "build-stromc/AmigaFile.debug"
+"build-stormc/AmigaFile.o" "build-stormc/AmigaFile.debug"
 ""
 1 1
 File
@@ -120,7 +120,7 @@ File
 "src/amigautils/Clipboard.cpp"
 "src/amigautils/Clipboard.h"
 Storm Shell Project (Dependencies)
-"build-stromc/Clipboard.o" "build-stromc/Clipboard.debug"
+"build-stormc/Clipboard.o" "build-stormc/Clipboard.debug"
 ""
 1 1
 File
@@ -128,7 +128,7 @@ File
 "src/amigautils/MemoryPool.cpp"
 "src/amigautils/MemoryPool.h"
 Storm Shell Project (Dependencies)
-"build-stromc/MemoryPool.o" "build-stromc/MemoryPool.debug"
+"build-stormc/MemoryPool.o" "build-stormc/MemoryPool.debug"
 ""
 1 1
 File
@@ -136,7 +136,7 @@ File
 "src/amigautils/MessageBox.cpp"
 "src/amigautils/MessageBox.h"
 Storm Shell Project (Dependencies)
-"build-stromc/MessageBox.o" "build-stromc/MessageBox.debug"
+"build-stormc/MessageBox.o" "build-stormc/MessageBox.debug"
 ""
 1 1
 File
@@ -144,7 +144,7 @@ File
 "src/amigautils/StopWatch.cpp"
 "src/amigautils/StopWatch.h"
 Storm Shell Project (Dependencies)
-"build-stromc/StopWatch.o" "build-stromc/StopWatch.debug"
+"build-stormc/StopWatch.o" "build-stormc/StopWatch.debug"
 ""
 1 1
 File
@@ -152,7 +152,7 @@ File
 "src/application/ADiffViewArgs.cpp"
 "src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
-"build-stromc/ADiffViewArgs.o" "build-stromc/ADiffViewArgs.debug"
+"build-stormc/ADiffViewArgs.o" "build-stormc/ADiffViewArgs.debug"
 ""
 1 1
 File
@@ -160,7 +160,7 @@ File
 "src/application/ADiffViewPens.cpp"
 "src/application/ADiffViewPens.h"
 Storm Shell Project (Dependencies)
-"build-stromc/ADiffViewPens.o" "build-stromc/ADiffViewPens.debug"
+"build-stormc/ADiffViewPens.o" "build-stormc/ADiffViewPens.debug"
 ""
 1 1
 File
@@ -168,7 +168,7 @@ File
 "src/application/ADiffViewPorts.cpp"
 "src/application/ADiffViewPorts.h"
 Storm Shell Project (Dependencies)
-"build-stromc/ADiffViewPorts.o" "build-stromc/ADiffViewPorts.debug"
+"build-stormc/ADiffViewPorts.o" "build-stormc/ADiffViewPorts.debug"
 ""
 1 1
 File
@@ -176,7 +176,7 @@ File
 "src/application/ADiffViewSettings.cpp"
 "src/application/ADiffViewSettings.h"
 Storm Shell Project (Dependencies)
-"build-stromc/ADiffViewSettings.o" "build-stromc/ADiffViewSettings.debug"
+"build-stormc/ADiffViewSettings.o" "build-stormc/ADiffViewSettings.debug"
 ""
 1 1
 File
@@ -191,7 +191,7 @@ File
 "src/diffengine/DiffFileBase.h"
 "src/diffengine/DiffLine.h"
 "src/diffengine/DiffOutputFileBase.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/windows/ScrollbarWindow.h"
 "src/application/ADiffViewPens.h"
@@ -203,7 +203,7 @@ File
 "src/textsearch/SearchOptions.h"
 "src/commands/CmdNavigateBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/Application.o" "build-stromc/Application.debug"
+"build-stormc/Application.o" "build-stormc/Application.debug"
 ""
 1 1
 File
@@ -215,7 +215,7 @@ File
 "src/diffengine/DiffLine.h"
 "src/diffengine/DiffOutputFileBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffDocument.o" "build-stromc/DiffDocument.debug"
+"build-stormc/DiffDocument.o" "build-stormc/DiffDocument.debug"
 ""
 1 1
 File
@@ -229,7 +229,7 @@ File
 "src/diffengine/DiffFileBase.h"
 "src/diffengine/DiffLine.h"
 "src/diffengine/DiffOutputFileBase.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/windows/ScrollbarWindow.h"
 "src/windows/DiffWindowRastports.h"
@@ -238,15 +238,15 @@ File
 "src/textselect/TextSelectionRange.h"
 "src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffWorker.o" "build-stromc/DiffWorker.debug"
+"build-stormc/DiffWorker.o" "build-stormc/DiffWorker.debug"
 ""
 1 1
 File
-1 "src/application/DiffWorkerProgressReporter.cpp"
-"src/application/DiffWorkerProgressReporter.cpp"
-"src/application/DiffWorkerProgressReporter.h"
+1 "src/application/DiffProgressReporter.cpp"
+"src/application/DiffProgressReporter.cpp"
+"src/application/DiffProgressReporter.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffWorkerProgressReporter.o" "build-stromc/DiffWorkerProgressReporter.debug"
+"build-stormc/DiffProgressReporter.o" "build-stormc/DiffProgressReporter.debug"
 ""
 1 1
 File
@@ -267,10 +267,10 @@ File
 "src/application/DiffWorker.h"
 "src/commands/CmdOpenWindow.h"
 "src/commands/CommandBase.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 Storm Shell Project (Dependencies)
-"build-stromc/TextFinder.o" "build-stromc/TextFinder.debug"
+"build-stormc/TextFinder.o" "build-stormc/TextFinder.debug"
 ""
 1 1
 File
@@ -288,10 +288,10 @@ File
 "src/textselect/TextSelectionRange.h"
 "src/windows/ScrollbarWindow.h"
 "src/commands/CmdOpenWindow.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdChangeTabulatorWidth.o" "build-stromc/CmdChangeTabulatorWidth.debug"
+"build-stormc/CmdChangeTabulatorWidth.o" "build-stormc/CmdChangeTabulatorWidth.debug"
 ""
 1 1
 File
@@ -301,7 +301,7 @@ File
 "src/commands/CmdOpenWindow.h"
 "src/commands/CommandBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdCloseWindow.o" "build-stromc/CmdCloseWindow.debug"
+"build-stormc/CmdCloseWindow.o" "build-stormc/CmdCloseWindow.debug"
 ""
 1 1
 File
@@ -318,7 +318,7 @@ File
 "src/windows/DiffWindowTextArea.h"
 "src/windows/ScrollbarWindow.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdCopySelection.o" "build-stromc/CmdCopySelection.debug"
+"build-stormc/CmdCopySelection.o" "build-stormc/CmdCopySelection.debug"
 ""
 1 1
 File
@@ -332,7 +332,7 @@ File
 "src/diffengine/DiffFileBase.h"
 "src/diffengine/DiffLine.h"
 "src/diffengine/DiffOutputFileBase.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/windows/ScrollbarWindow.h"
 "src/windows/DiffWindowRastports.h"
@@ -341,7 +341,7 @@ File
 "src/textselect/TextSelectionRange.h"
 "src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdDiff.o" "build-stromc/CmdDiff.debug"
+"build-stormc/CmdDiff.o" "build-stormc/CmdDiff.debug"
 ""
 1 1
 File
@@ -350,7 +350,7 @@ File
 "src/commands/CmdFileRequester.h"
 "src/commands/CommandBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdFileRequester.o" "build-stromc/CmdFileRequester.debug"
+"build-stormc/CmdFileRequester.o" "build-stormc/CmdFileRequester.debug"
 ""
 1 1
 File
@@ -372,10 +372,10 @@ File
 "src/application/DiffWorker.h"
 "src/commands/CmdOpenWindow.h"
 "src/commands/CommandBase.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdFindNext.o" "build-stromc/CmdFindNext.debug"
+"build-stormc/CmdFindNext.o" "build-stormc/CmdFindNext.debug"
 ""
 1 1
 File
@@ -397,10 +397,10 @@ File
 "src/application/DiffWorker.h"
 "src/commands/CmdOpenWindow.h"
 "src/commands/CommandBase.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdFindPrev.o" "build-stromc/CmdFindPrev.debug"
+"build-stormc/CmdFindPrev.o" "build-stormc/CmdFindPrev.debug"
 ""
 1 1
 File
@@ -419,12 +419,12 @@ File
 "src/textselect/TextSelectionLine.h"
 "src/textselect/TextSelectionRange.h"
 "src/windows/ScrollbarWindow.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/commands/CmdWindowTitleQuickMsg.h"
 "src/application/ADiffViewArgs.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdNavigateBase.o" "build-stromc/CmdNavigateBase.debug"
+"build-stormc/CmdNavigateBase.o" "build-stormc/CmdNavigateBase.debug"
 ""
 1 1
 File
@@ -442,11 +442,11 @@ File
 "src/windows/ScrollbarWindow.h"
 "src/commands/CmdNavigateBase.h"
 "src/commands/CmdOpenWindow.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/commands/CmdWindowTitleQuickMsg.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdNavigateFirstDiff.o" "build-stromc/CmdNavigateFirstDiff.debug"
+"build-stormc/CmdNavigateFirstDiff.o" "build-stormc/CmdNavigateFirstDiff.debug"
 ""
 1 1
 File
@@ -464,11 +464,11 @@ File
 "src/windows/ScrollbarWindow.h"
 "src/commands/CmdNavigateBase.h"
 "src/commands/CmdOpenWindow.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/commands/CmdWindowTitleQuickMsg.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdNavigateLastDiff.o" "build-stromc/CmdNavigateLastDiff.debug"
+"build-stormc/CmdNavigateLastDiff.o" "build-stormc/CmdNavigateLastDiff.debug"
 ""
 1 1
 File
@@ -486,11 +486,11 @@ File
 "src/textselect/TextSelectionRange.h"
 "src/commands/CmdNavigateBase.h"
 "src/commands/CmdOpenWindow.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/commands/CmdWindowTitleQuickMsg.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdNavigateNextDiff.o" "build-stromc/CmdNavigateNextDiff.debug"
+"build-stormc/CmdNavigateNextDiff.o" "build-stormc/CmdNavigateNextDiff.debug"
 ""
 1 1
 File
@@ -508,11 +508,11 @@ File
 "src/textselect/TextSelectionRange.h"
 "src/commands/CmdNavigateBase.h"
 "src/commands/CmdOpenWindow.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/commands/CmdWindowTitleQuickMsg.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdNavigatePrevDiff.o" "build-stromc/CmdNavigatePrevDiff.debug"
+"build-stormc/CmdNavigatePrevDiff.o" "build-stormc/CmdNavigatePrevDiff.debug"
 ""
 1 1
 File
@@ -521,7 +521,7 @@ File
 "src/commands/CmdOpenWindow.h"
 "src/commands/CommandBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdOpenWindow.o" "build-stromc/CmdOpenWindow.debug"
+"build-stormc/CmdOpenWindow.o" "build-stormc/CmdOpenWindow.debug"
 ""
 1 1
 File
@@ -530,7 +530,7 @@ File
 "src/commands/CmdQuit.h"
 "src/commands/CommandBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdQuit.o" "build-stromc/CmdQuit.debug"
+"build-stormc/CmdQuit.o" "build-stormc/CmdQuit.debug"
 ""
 1 1
 File
@@ -539,7 +539,7 @@ File
 "src/commands/CmdRequester.h"
 "src/commands/CommandBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdRequester.o" "build-stromc/CmdRequester.debug"
+"build-stormc/CmdRequester.o" "build-stormc/CmdRequester.debug"
 ""
 1 1
 File
@@ -548,7 +548,7 @@ File
 "src/commands/CmdWindowTitleQuickMsg.h"
 "src/commands/CommandBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CmdWindowTitleQuickMsg.o" "build-stromc/CmdWindowTitleQuickMsg.debug"
+"build-stormc/CmdWindowTitleQuickMsg.o" "build-stormc/CmdWindowTitleQuickMsg.debug"
 ""
 1 1
 File
@@ -556,7 +556,7 @@ File
 "src/commands/CommandBase.cpp"
 "src/commands/CommandBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/CommandBase.o" "build-stromc/CommandBase.debug"
+"build-stormc/CommandBase.o" "build-stormc/CommandBase.debug"
 ""
 1 1
 File
@@ -568,7 +568,7 @@ File
 "src/diffengine/DiffFileBase.h"
 "src/diffengine/DiffOutputFileBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffEngine.o" "build-stromc/DiffEngine.debug"
+"build-stormc/DiffEngine.o" "build-stormc/DiffEngine.debug"
 ""
 1 1
 File
@@ -577,7 +577,7 @@ File
 "src/diffengine/DiffFileBase.h"
 "src/diffengine/DiffLine.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffFileBase.o" "build-stromc/DiffFileBase.debug"
+"build-stormc/DiffFileBase.o" "build-stormc/DiffFileBase.debug"
 ""
 1 1
 File
@@ -588,7 +588,7 @@ File
 "src/diffengine/DiffFileBase.h"
 "src/diffengine/DiffLine.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffInputFileAmiga.o" "build-stromc/DiffInputFileAmiga.debug"
+"build-stormc/DiffInputFileAmiga.o" "build-stormc/DiffInputFileAmiga.debug"
 ""
 1 1
 File
@@ -598,7 +598,7 @@ File
 "src/diffengine/DiffFileBase.h"
 "src/diffengine/DiffLine.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffInputFileBase.o" "build-stromc/DiffInputFileBase.debug"
+"build-stormc/DiffInputFileBase.o" "build-stormc/DiffInputFileBase.debug"
 ""
 1 1
 File
@@ -609,7 +609,7 @@ File
 "src/diffengine/DiffFileBase.h"
 "src/diffengine/DiffLine.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffInputFileLinux.o" "build-stromc/DiffInputFileLinux.debug"
+"build-stormc/DiffInputFileLinux.o" "build-stormc/DiffInputFileLinux.debug"
 ""
 1 1
 File
@@ -617,7 +617,7 @@ File
 "src/diffengine/DiffLine.cpp"
 "src/diffengine/DiffLine.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffLine.o" "build-stromc/DiffLine.debug"
+"build-stormc/DiffLine.o" "build-stormc/DiffLine.debug"
 ""
 1 1
 File
@@ -629,7 +629,7 @@ File
 "src/diffengine/DiffFileBase.h"
 "src/diffengine/DiffLine.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffOutputFileAmiga.o" "build-stromc/DiffOutputFileAmiga.debug"
+"build-stormc/DiffOutputFileAmiga.o" "build-stormc/DiffOutputFileAmiga.debug"
 ""
 1 1
 File
@@ -640,7 +640,7 @@ File
 "src/diffengine/DiffFileBase.h"
 "src/diffengine/DiffLine.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffOutputFileBase.o" "build-stromc/DiffOutputFileBase.debug"
+"build-stormc/DiffOutputFileBase.o" "build-stormc/DiffOutputFileBase.debug"
 ""
 1 1
 File
@@ -652,7 +652,7 @@ File
 "src/diffengine/DiffFileBase.h"
 "src/diffengine/DiffLine.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffOutputFileLinux.o" "build-stromc/DiffOutputFileLinux.debug"
+"build-stormc/DiffOutputFileLinux.o" "build-stormc/DiffOutputFileLinux.debug"
 ""
 1 1
 File
@@ -664,7 +664,7 @@ File
 "src/textselect/TextSelectionLine.h"
 "src/textselect/TextSelectionRange.h"
 Storm Shell Project (Dependencies)
-"build-stromc/SelectableDiffFile.o" "build-stromc/SelectableDiffFile.debug"
+"build-stormc/SelectableDiffFile.o" "build-stormc/SelectableDiffFile.debug"
 ""
 1 1
 File
@@ -676,7 +676,7 @@ File
 "src/diffengine/DiffFileBase.h"
 "src/diffengine/DiffLine.h"
 "src/diffengine/DiffOutputFileBase.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/windows/ScrollbarWindow.h"
 "src/application/ADiffViewPens.h"
@@ -688,7 +688,7 @@ File
 "src/textsearch/SearchOptions.h"
 "src/commands/CmdNavigateBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/main.o" "build-stromc/main.debug"
+"build-stormc/main.o" "build-stormc/main.debug"
 ""
 1 1
 File
@@ -696,7 +696,7 @@ File
 "src/menus/MenuBase.cpp"
 "src/menus/MenuBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/MenuBase.o" "build-stromc/MenuBase.debug"
+"build-stormc/MenuBase.o" "build-stormc/MenuBase.debug"
 ""
 1 1
 File
@@ -704,7 +704,7 @@ File
 "src/menus/MenuDiffWindow.cpp"
 "src/menus/MenuDiffWindow.h"
 Storm Shell Project (Dependencies)
-"build-stromc/MenuDiffWindow.o" "build-stromc/MenuDiffWindow.debug"
+"build-stormc/MenuDiffWindow.o" "build-stormc/MenuDiffWindow.debug"
 ""
 1 1
 File
@@ -712,7 +712,7 @@ File
 "src/menus/MenuFilesWindow.cpp"
 "src/menus/MenuFilesWindow.h"
 Storm Shell Project (Dependencies)
-"build-stromc/MenuFilesWindow.o" "build-stromc/MenuFilesWindow.debug"
+"build-stormc/MenuFilesWindow.o" "build-stormc/MenuFilesWindow.debug"
 ""
 1 1
 File
@@ -720,7 +720,7 @@ File
 "src/model/Pair.cpp"
 "src/model/Pair.h"
 Storm Shell Project (Dependencies)
-"build-stromc/Pair.o" "build-stromc/Pair.debug"
+"build-stormc/Pair.o" "build-stormc/Pair.debug"
 ""
 1 1
 File
@@ -728,7 +728,7 @@ File
 "src/model/Rect.cpp"
 "src/model/Rect.h"
 Storm Shell Project (Dependencies)
-"build-stromc/Rect.o" "build-stromc/Rect.debug"
+"build-stormc/Rect.o" "build-stormc/Rect.debug"
 ""
 1 1
 File
@@ -737,7 +737,7 @@ File
 "src/screen/OpenClonedWorkbenchScreen.h"
 "src/screen/OpenScreenBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/OpenClonedWorkbenchScreen.o" "build-stromc/OpenClonedWorkbenchScreen.debug"
+"build-stormc/OpenClonedWorkbenchScreen.o" "build-stormc/OpenClonedWorkbenchScreen.debug"
 ""
 1 1
 File
@@ -746,7 +746,7 @@ File
 "src/screen/OpenJoinedPublicScreen.h"
 "src/screen/OpenScreenBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/OpenJoinedPublicScreen.o" "build-stromc/OpenJoinedPublicScreen.debug"
+"build-stormc/OpenJoinedPublicScreen.o" "build-stormc/OpenJoinedPublicScreen.debug"
 ""
 1 1
 File
@@ -754,7 +754,7 @@ File
 "src/screen/OpenScreenBase.cpp"
 "src/screen/OpenScreenBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/OpenScreenBase.o" "build-stromc/OpenScreenBase.debug"
+"build-stormc/OpenScreenBase.o" "build-stormc/OpenScreenBase.debug"
 ""
 1 1
 File
@@ -765,7 +765,7 @@ File
 "src/textsearch/DiffFileSearchResult.h"
 "src/textsearch/SearchOptions.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffFileSearchEngine.o" "build-stromc/DiffFileSearchEngine.debug"
+"build-stormc/DiffFileSearchEngine.o" "build-stormc/DiffFileSearchEngine.debug"
 ""
 1 1
 File
@@ -773,14 +773,14 @@ File
 "src/textsearch/DiffFileSearchResult.cpp"
 "src/textsearch/DiffFileSearchResult.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffFileSearchResult.o" "build-stromc/DiffFileSearchResult.debug"
+"build-stormc/DiffFileSearchResult.o" "build-stormc/DiffFileSearchResult.debug"
 ""
 1 1
 File
 1 "src/textselect/DynamicSelection.cpp"
 "src/textselect/DynamicSelection.cpp"
 Storm Shell Project (Dependencies)
-"build-stromc/DynamicSelection.o" "build-stromc/DynamicSelection.debug"
+"build-stormc/DynamicSelection.o" "build-stormc/DynamicSelection.debug"
 ""
 1 1
 File
@@ -790,7 +790,7 @@ File
 "src/textselect/TextSelectionLine.h"
 "src/textselect/TextSelectionRange.h"
 Storm Shell Project (Dependencies)
-"build-stromc/SelectionBase.o" "build-stromc/SelectionBase.debug"
+"build-stormc/SelectionBase.o" "build-stormc/SelectionBase.debug"
 ""
 1 1
 File
@@ -801,7 +801,7 @@ File
 "src/textselect/TextSelectionLine.h"
 "src/textselect/TextSelectionRange.h"
 Storm Shell Project (Dependencies)
-"build-stromc/StaticSelection.o" "build-stromc/StaticSelection.debug"
+"build-stormc/StaticSelection.o" "build-stormc/StaticSelection.debug"
 ""
 1 1
 File
@@ -810,7 +810,7 @@ File
 "src/textselect/TextSelectionLine.h"
 "src/textselect/TextSelectionRange.h"
 Storm Shell Project (Dependencies)
-"build-stromc/TextSelectionLine.o" "build-stromc/TextSelectionLine.debug"
+"build-stormc/TextSelectionLine.o" "build-stormc/TextSelectionLine.debug"
 ""
 1 1
 File
@@ -818,7 +818,7 @@ File
 "src/textselect/TextSelectionRange.cpp"
 "src/textselect/TextSelectionRange.h"
 Storm Shell Project (Dependencies)
-"build-stromc/TextSelectionRange.o" "build-stromc/TextSelectionRange.debug"
+"build-stormc/TextSelectionRange.o" "build-stormc/TextSelectionRange.debug"
 ""
 1 1
 File
@@ -835,7 +835,7 @@ File
 "src/textselect/TextSelectionLine.h"
 "src/textselect/TextSelectionRange.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffWindow.o" "build-stromc/DiffWindow.debug"
+"build-stormc/DiffWindow.o" "build-stormc/DiffWindow.debug"
 ""
 1 1
 File
@@ -843,7 +843,7 @@ File
 "src/windows/DiffWindowRastports.cpp"
 "src/windows/DiffWindowRastports.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffWindowRastports.o" "build-stromc/DiffWindowRastports.debug"
+"build-stormc/DiffWindowRastports.o" "build-stormc/DiffWindowRastports.debug"
 ""
 1 1
 File
@@ -857,7 +857,7 @@ File
 "src/textselect/TextSelectionLine.h"
 "src/textselect/TextSelectionRange.h"
 Storm Shell Project (Dependencies)
-"build-stromc/DiffWindowTextArea.o" "build-stromc/DiffWindowTextArea.debug"
+"build-stormc/DiffWindowTextArea.o" "build-stormc/DiffWindowTextArea.debug"
 ""
 1 1
 File
@@ -865,7 +865,7 @@ File
 "src/windows/FilesWindow.cpp"
 "src/windows/FilesWindow.h"
 Storm Shell Project (Dependencies)
-"build-stromc/FilesWindow.o" "build-stromc/FilesWindow.debug"
+"build-stormc/FilesWindow.o" "build-stormc/FilesWindow.debug"
 ""
 1 1
 File
@@ -874,7 +874,7 @@ File
 "src/windows/ProgressWindow.h"
 "src/windows/WindowBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/ProgressWindow.o" "build-stromc/ProgressWindow.debug"
+"build-stormc/ProgressWindow.o" "build-stormc/ProgressWindow.debug"
 ""
 1 1
 File
@@ -883,7 +883,7 @@ File
 "src/windows/ScrollbarWindow.h"
 "src/windows/WindowBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/ScrollbarWindow.o" "build-stromc/ScrollbarWindow.debug"
+"build-stormc/ScrollbarWindow.o" "build-stormc/ScrollbarWindow.debug"
 ""
 1 1
 File
@@ -900,14 +900,14 @@ File
 "src/textselect/TextSelectionRange.h"
 "src/windows/ScrollbarWindow.h"
 "src/commands/CmdOpenWindow.h"
-"src/application/DiffWorkerProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 "src/worker/WorkerStartupMsg.h"
 "src/textsearch/DiffFileSearchResult.h"
 "src/textsearch/SearchOptions.h"
 "src/application/DiffDocument.h"
 "src/application/DiffWorker.h"
 Storm Shell Project (Dependencies)
-"build-stromc/SearchWindow.o" "build-stromc/SearchWindow.debug"
+"build-stormc/SearchWindow.o" "build-stormc/SearchWindow.debug"
 ""
 1 1
 File
@@ -915,7 +915,7 @@ File
 "src/windows/WindowBase.cpp"
 "src/windows/WindowBase.h"
 Storm Shell Project (Dependencies)
-"build-stromc/WindowBase.o" "build-stromc/WindowBase.debug"
+"build-stormc/WindowBase.o" "build-stormc/WindowBase.debug"
 ""
 1 1
 File
@@ -924,7 +924,7 @@ File
 "src/worker/ProgressMessage.h"
 "src/worker/ProgressReporter.h"
 Storm Shell Project (Dependencies)
-"build-stromc/ProgressReporter.o" "build-stromc/ProgressReporter.debug"
+"build-stormc/ProgressReporter.o" "build-stormc/ProgressReporter.debug"
 ""
 1 1
 File
@@ -934,7 +934,7 @@ File
 "src/worker/WorkerStartupMsg.h"
 "src/worker/ProgressMessage.h"
 Storm Shell Project (Dependencies)
-"build-stromc/WorkerBase.o" "build-stromc/WorkerBase.debug"
+"build-stormc/WorkerBase.o" "build-stormc/WorkerBase.debug"
 ""
 1 1
 Section
@@ -1033,8 +1033,8 @@ Storm Shell Project (Dependencies)
 ""
 0 0
 File
-2 "src/application/DiffWorkerProgressReporter.h"
-"src/application/DiffWorkerProgressReporter.h"
+2 "src/application/DiffProgressReporter.h"
+"src/application/DiffProgressReporter.h"
 Storm Shell Project (Dependencies)
 "" ""
 ""
