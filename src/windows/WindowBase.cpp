@@ -1,6 +1,6 @@
 #ifdef __clang__
   #include <clib/exec_protos.h>
-  #include <clib/gadtools_protos.h>>
+  #include <clib/gadtools_protos.h>
   #include <clib/graphics_protos.h>
   #include <clib/intuition_protos.h>
   #include <clib/wb_protos.h>
