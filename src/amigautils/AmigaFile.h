@@ -85,6 +85,8 @@ public:
 private:
   const ULONG MAX_LINE_LENGTH;
   STRPTR m_pLineBuf;
+  BPTR m_CurrentDirLock;
+  BPTR m_FileLock;
   BPTR m_FileDescriptor;
   struct FileInfoBlock* m_pFib;
 

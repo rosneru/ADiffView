@@ -8,41 +8,59 @@
 
 #include <dos/dosextens.h>
 
+#include <stdio.h>
+#include <string.h>
+
 #include "AmigaFile.h"
 
-AmigaFile::AmigaFile(const char* pFileName, ULONG accessMode)
+AmigaFile::AmigaFile(const char* pPath, ULONG accessMode)
   : MAX_LINE_LENGTH(1024), // TODO A better solution needed?
     m_pLineBuf((STRPTR) AllocVec(MAX_LINE_LENGTH, MEMF_ANY|MEMF_CLEAR)),
+    m_CurrentDirLock(0),
+    m_FileLock(0),
     m_FileDescriptor(0),
     m_pFib((struct FileInfoBlock*) AllocVec((sizeof(struct FileInfoBlock)), 
                                             MEMF_ANY|MEMF_CLEAR))
 {
+  printf("[%lu] %s\n", strlen(pPath), pPath);
   if(m_pLineBuf == NULL)
   {
     cleanup();
-    throw "Failed to alloc line buffer memory in AmigaFile class.";
+    throw "Failed to open file. (AllocVec for line buffer)";
   }
 
   if(m_pFib == NULL)
   {
     cleanup();
-    throw "Failed to fib memory in AmigaFile class.";
+    throw "Failed to open file. (AllocVec for fib)";
   }
-
-  BPTR pLock = getLockFromLongName(pFileName); // Lock(pFileName, ACCESS_READ);
-  if(pLock != 0)
+  
+  struct Process* pProc;
+  if(!(pProc = (struct Process *)FindTask(NULL)))
   {
-    if(Examine(pLock, m_pFib) == DOSFALSE)
-    {
-      UnLock(pLock);
-      cleanup();
-      throw "Failed to examine in AmigaFile class.";
-    }
+    cleanup();
+    throw "Failed to open file. (FindTask)";
   }
 
-  UnLock(pLock);
+  m_CurrentDirLock = pProc->pr_CurrentDir;
+  m_FileLock = getLockFromLongName(pPath);
+  if(!m_FileLock)
+  {
+    cleanup();
+    throw "Failed to open file.";
+  }
 
-  m_FileDescriptor = Open(pFileName, accessMode);
+  if(DOSFALSE == Examine(m_FileLock, m_pFib))
+  {
+    cleanup();
+    throw "Failed to open file. (Examine)";
+  }
+
+  STRPTR pName = FilePart(pPath);
+  BPTR pOldDirLock = CurrentDir(ParentDir(m_FileLock));
+
+  m_FileDescriptor = Open(pName, accessMode);
+  CurrentDir(pOldDirLock);
   if(m_FileDescriptor == 0)
   {
     cleanup();
@@ -78,6 +96,11 @@ void AmigaFile::cleanup()
   if(m_pLineBuf != NULL)
   {
     FreeVec(m_pLineBuf);
+  }
+
+  if(m_FileLock)
+  {
+    UnLock(m_FileLock);
   }
 }
 
@@ -144,16 +167,8 @@ const struct DateStamp* AmigaFile::getDate() const
 BPTR AmigaFile::getLockFromLongName(const char* pPath)
 {
   LONG pos = 0;
-  BPTR currentDirLock = -1L, oldLock = -1L, lock = -1L; // -1L never a valid lock
-  struct Process *pProc;
+  BPTR oldLock = -1L, lock = -1L; // -1L never a valid lock
   char buffer[108 + 32]; // Long enough for a component and a device pPath
-
-  if(!(pProc = (struct Process *)FindTask(NULL)))
-  {
-    return 0;
-  }
-
-  currentDirLock = pProc->pr_CurrentDir;
 
   do
   {
@@ -165,7 +180,7 @@ BPTR AmigaFile::getLockFromLongName(const char* pPath)
         break;
       }
 
-      CurrentDir(currentDirLock);
+      CurrentDir(m_CurrentDirLock);
       return lock;
     }
     else
@@ -188,11 +203,11 @@ BPTR AmigaFile::getLockFromLongName(const char* pPath)
   }
   while (1);
 
-  if (oldLock >= 0 && oldLock != currentDirLock)
+  if (oldLock >= 0)
   {
     UnLock(CurrentDir(oldLock));
   }
 
-  CurrentDir(currentDirLock);
+  CurrentDir(m_CurrentDirLock);
   return 0;
 }
