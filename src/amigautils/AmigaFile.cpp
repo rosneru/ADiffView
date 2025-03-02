@@ -6,7 +6,7 @@
   #include <proto/exec.h>
 #endif
 
-#include <stddef.h>
+#include <dos/dosextens.h>
 
 #include "AmigaFile.h"
 
@@ -29,7 +29,7 @@ AmigaFile::AmigaFile(const char* pFileName, ULONG accessMode)
     throw "Failed to fib memory in AmigaFile class.";
   }
 
-  BPTR pLock = Lock(pFileName, ACCESS_READ);
+  BPTR pLock = getLockFromLongName(pFileName); // Lock(pFileName, ACCESS_READ);
   if(pLock != 0)
   {
     if(Examine(pLock, m_pFib) == DOSFALSE)
@@ -139,4 +139,60 @@ ULONG AmigaFile::getByteSize() const
 const struct DateStamp* AmigaFile::getDate() const
 {
   return &m_pFib->fib_Date;
+}
+
+BPTR AmigaFile::getLockFromLongName(const char* pPath)
+{
+  LONG pos = 0;
+  BPTR currentDirLock = -1L, oldLock = -1L, lock = -1L; // -1L never a valid lock
+  struct Process *pProc;
+  char buffer[108 + 32]; // Long enough for a component and a device pPath
+
+  if(!(pProc = (struct Process *)FindTask(NULL)))
+  {
+    return 0;
+  }
+
+  currentDirLock = pProc->pr_CurrentDir;
+
+  do
+  {
+    pos = SplitName(pPath,'/', buffer, pos, sizeof(buffer));
+    if (pos < 0)
+    {
+      if (!(lock = Lock(buffer, SHARED_LOCK)))
+      {
+        break;
+      }
+
+      CurrentDir(currentDirLock);
+      return lock;
+    }
+    else
+    {
+      if (!(lock = Lock(buffer, SHARED_LOCK)))
+      {
+        break;
+      }
+
+      lock = CurrentDir(lock);
+      if (oldLock >= 0)
+      {
+        UnLock(lock);
+      }
+      else
+      {
+        oldLock = lock;
+      }
+    }
+  }
+  while (1);
+
+  if (oldLock >= 0 && oldLock != currentDirLock)
+  {
+    UnLock(CurrentDir(oldLock));
+  }
+
+  CurrentDir(currentDirLock);
+  return 0;
 }

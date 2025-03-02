@@ -89,6 +89,8 @@ private:
   struct FileInfoBlock* m_pFib;
 
   void cleanup();
+
+  BPTR getLockFromLongName(const char* pPath);
 };
 
 #endif
