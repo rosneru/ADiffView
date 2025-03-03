@@ -8,21 +8,17 @@
 
 #include <dos/dosextens.h>
 
-#include <stdio.h>
-#include <string.h>
-
 #include "AmigaFile.h"
 
 AmigaFile::AmigaFile(const char* pPath, ULONG accessMode)
   : MAX_LINE_LENGTH(1024), // TODO A better solution needed?
     m_pLineBuf((STRPTR) AllocVec(MAX_LINE_LENGTH, MEMF_ANY|MEMF_CLEAR)),
-    m_CurrentDirLock(0),
+    m_OriginalCurrentDirLock(0),
     m_FileLock(0),
     m_FileDescriptor(0),
     m_pFib((struct FileInfoBlock*) AllocVec((sizeof(struct FileInfoBlock)), 
                                             MEMF_ANY|MEMF_CLEAR))
 {
-  printf("[%lu] %s\n", strlen(pPath), pPath);
   if(m_pLineBuf == NULL)
   {
     cleanup();
@@ -42,7 +38,7 @@ AmigaFile::AmigaFile(const char* pPath, ULONG accessMode)
     throw "Failed to open file. (FindTask)";
   }
 
-  m_CurrentDirLock = pProc->pr_CurrentDir;
+  m_OriginalCurrentDirLock = pProc->pr_CurrentDir;
   m_FileLock = getLockFromLongName(pPath);
   if(!m_FileLock)
   {
@@ -57,10 +53,14 @@ AmigaFile::AmigaFile(const char* pPath, ULONG accessMode)
   }
 
   STRPTR pName = FilePart(pPath);
-  BPTR pOldDirLock = CurrentDir(ParentDir(m_FileLock));
+  BPTR pFileDirLock = ParentDir(m_FileLock);
+  CurrentDir(pFileDirLock);
 
   m_FileDescriptor = Open(pName, accessMode);
-  CurrentDir(pOldDirLock);
+
+  CurrentDir(m_OriginalCurrentDirLock);
+  UnLock(pFileDirLock);
+
   if(m_FileDescriptor == 0)
   {
     cleanup();
@@ -180,7 +180,7 @@ BPTR AmigaFile::getLockFromLongName(const char* pPath)
         break;
       }
 
-      CurrentDir(m_CurrentDirLock);
+      CurrentDir(m_OriginalCurrentDirLock);
       return lock;
     }
     else
@@ -208,6 +208,6 @@ BPTR AmigaFile::getLockFromLongName(const char* pPath)
     UnLock(CurrentDir(oldLock));
   }
 
-  CurrentDir(m_CurrentDirLock);
+  CurrentDir(m_OriginalCurrentDirLock);
   return 0;
 }
