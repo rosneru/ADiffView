@@ -31,14 +31,17 @@ AmigaFile::AmigaFile(const char* pPath, ULONG accessMode)
     throw "Failed to open file. (AllocVec for fib)";
   }
   
-  struct Process* pProc;
-  if(!(pProc = (struct Process *)FindTask(NULL)))
+  struct Process* pProcess;
+  if(!(pProcess = (struct Process *)FindTask(NULL)))
   {
     cleanup();
     throw "Failed to open file. (FindTask)";
   }
 
-  m_OriginalCurrentDirLock = pProc->pr_CurrentDir;
+  m_OriginalCurrentDirLock = pProcess->pr_CurrentDir;
+
+  // Lock the file
+  // (Will be released when this object is destroyed in ::cleanup)
   m_FileLock = getLockFromLongName(pPath);
   if(!m_FileLock)
   {
@@ -52,12 +55,17 @@ AmigaFile::AmigaFile(const char* pPath, ULONG accessMode)
     throw "Failed to open file. (Examine)";
   }
 
-  STRPTR pName = FilePart(pPath);
+  // Enter the directory of the file
   BPTR pFileDirLock = ParentDir(m_FileLock);
   CurrentDir(pFileDirLock);
-
+  
+  // Open the file relatively, only by its name. This should work as
+  // the file dir has made current dir in the step above.
+  STRPTR pName = FilePart(pPath);
   m_FileDescriptor = Open(pName, accessMode);
 
+  // Change current dir to the formerly, original one and release lock
+  // to the file dir.
   CurrentDir(m_OriginalCurrentDirLock);
   UnLock(pFileDirLock);
 
