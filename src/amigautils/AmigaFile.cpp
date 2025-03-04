@@ -188,7 +188,8 @@ BPTR AmigaFile::getLockFromLongName(const char* pPath)
         break;
       }
 
-      CurrentDir(m_OriginalCurrentDirLock);
+      oldLock = CurrentDir(m_OriginalCurrentDirLock);
+      UnLock(oldLock);
       return lock;
     }
     else
