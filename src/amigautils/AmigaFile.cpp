@@ -40,8 +40,8 @@ AmigaFile::AmigaFile(const char* pPath, ULONG accessMode)
 
   m_OriginalCurrentDirLock = pProcess->pr_CurrentDir;
 
-  // Lock the file
-  // (Will be released when this object is destroyed in ::cleanup)
+  // Lock the file (Will be released when this AmigaFile object is
+  // destroyed in AmigaFile::cleanup)
   m_FileLock = getLockFromLongName(pPath);
   if(!m_FileLock)
   {
