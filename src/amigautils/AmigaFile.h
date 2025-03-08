@@ -92,7 +92,7 @@ private:
 
   void cleanup();
 
-  BPTR getLockFromLongName(const char* pPath);
+  BPTR lockFromLongName(const char* pPath);
 };
 
 #endif

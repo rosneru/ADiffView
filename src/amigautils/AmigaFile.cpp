@@ -42,7 +42,7 @@ AmigaFile::AmigaFile(const char* pPath, ULONG accessMode)
 
   // Lock the file (Will be released when this AmigaFile object is
   // destroyed in AmigaFile::cleanup)
-  m_FileLock = getLockFromLongName(pPath);
+  m_FileLock = lockFromLongName(pPath);
   if(!m_FileLock)
   {
     cleanup();
@@ -172,34 +172,35 @@ const struct DateStamp* AmigaFile::getDate() const
   return &m_pFib->fib_Date;
 }
 
-BPTR AmigaFile::getLockFromLongName(const char* pPath)
+BPTR AmigaFile::lockFromLongName(const char* name)
 {
   LONG pos = 0;
-  BPTR oldLock = -1L, lock = -1L; // -1L never a valid lock
-  char buffer[108 + 32]; // Long enough for a component and a device pPath
+  BPTR resultLock = 0, lock = 0;
+  BPTR oldLock = -1L;     // Never a valid lock
+  char buffer[108 + 32];  // Long enough for a component and a device name
 
   do
   {
-    pos = SplitName(pPath,'/', buffer, pos, sizeof(buffer));
+    pos = SplitName(name,'/', buffer, pos, sizeof(buffer));
     if (pos < 0)
     {
-      if (!(lock = Lock(buffer, SHARED_LOCK)))
-      {
-        break;
-      }
-
-      oldLock = CurrentDir(m_OriginalCurrentDirLock);
-      UnLock(oldLock);
-      return lock;
+      // No separator found, call now Lock
+      resultLock = Lock(buffer, SHARED_LOCK);
+      break;
     }
     else
     {
-      if (!(lock = Lock(buffer, SHARED_LOCK)))
+      // Lock the partial path so far and abort on error If two slashes
+      // are next to each other, go to the parent directory.
+      if (!(lock = Lock(*buffer ? buffer : "/", SHARED_LOCK)))
       {
         break;
       }
 
+      // Rotate directories
       lock = CurrentDir(lock);
+
+      // Unlock previous directory, keep the old directory
       if (oldLock >= 0)
       {
         UnLock(lock);
@@ -209,14 +210,14 @@ BPTR AmigaFile::getLockFromLongName(const char* pPath)
         oldLock = lock;
       }
     }
-  }
-  while (1);
+  } while (1);
 
+  // Restore the current directory if any. None of the functions touch
+  // IoErr().
   if (oldLock >= 0)
   {
     UnLock(CurrentDir(oldLock));
   }
 
-  CurrentDir(m_OriginalCurrentDirLock);
-  return 0;
+  return resultLock;
 }
