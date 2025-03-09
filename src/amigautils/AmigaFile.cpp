@@ -172,7 +172,7 @@ const struct DateStamp* AmigaFile::getDate() const
   return &m_pFib->fib_Date;
 }
 
-BPTR AmigaFile::lockFromLongName(const char* name)
+BPTR AmigaFile::lockFromLongName(const char* pPath)
 {
   LONG pos = 0;
   BPTR resultLock = 0, lock = 0;
@@ -181,7 +181,7 @@ BPTR AmigaFile::lockFromLongName(const char* name)
 
   do
   {
-    pos = SplitName(name,'/', buffer, pos, sizeof(buffer));
+    pos = SplitName(pPath,'/', buffer, pos, sizeof(buffer));
     if (pos < 0)
     {
       // No separator found, call now Lock
