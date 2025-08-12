@@ -631,17 +631,15 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
     return;
   }
 
-  const char* pLineText = pLine->getText();
-  const char* pLineNum = pLine->getLineNumText();
-  RastPort* pLineNumPort = m_pRPorts->getLineNumText();
-  RastPort* pSelectedPort = m_pRPorts->TextSelected();
-
   /**
    * Render the line numbers
    */
-
+  
   if (doDisplayLineNumbers && m_AreLineNumbersEnabled)
   {
+    const char* pLineNum = pLine->getLineNumText();
+    RastPort* pLineNumPort = m_pRPorts->getLineNumText();
+
     // Move rastport cursor to start of line numbers block
     Move(pLineNumPort, m_VScrollRect.getLeft(),
          getTop() + lineTop + m_FontBaseline_pix + 1);
@@ -715,8 +713,9 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
     }
 
     /*
-     * Prepeare text block
+     * Prepare text block
      */
+    const char* pLineText = pLine->getText();
     const char* pTextToPrint = NULL;
     LONG numNextCharsToRender = 0;
     ULONG numSrcCharsIncreased = 0;
