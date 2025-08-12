@@ -634,7 +634,6 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
   /**
    * Render the line numbers
    */
-  
   if (doDisplayLineNumbers && m_AreLineNumbersEnabled)
   {
     const char* pLineNum = pLine->getLineNumText();
@@ -651,7 +650,6 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
   /**
    * Prepare scroll context
    */
-  
   ULONG srcTextStartColumn, currentDisplayColumn;
   long maxRemainingCharsToRender;
   if (numCharLimit < 0)
@@ -683,7 +681,7 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
    * Render the line
    */
 
-   // Get the text position info of resulting text column. This also
+  // Get the text position info of resulting text column. This also
   // calculates the srcTextColumn which is needed next.
   ULONG resultingTextColumn = srcTextStartColumn;
   pLine->getTextPositionInfo(&m_PositionInfo, resultingTextColumn, m_TabSize);
