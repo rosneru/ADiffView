@@ -107,8 +107,8 @@ private:
   long m_NumChanged;
 
   long m_Max;
-  std::vector<long> m_pDownVector;
-  std::vector<long> m_pUpVector;
+  std::vector<long> m_DownVector;
+  std::vector<long> m_UpVector;
 
   // The next four fields are for progress notification
   long m_Percent;

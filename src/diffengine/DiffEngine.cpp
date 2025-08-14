@@ -23,8 +23,8 @@ DiffEngine::DiffEngine(DiffInputFileBase& leftInFile,
     m_NumDeletedA(0),
     m_NumChanged(0),
     m_Max(m_LeftInFile.getNumLines() + m_RightInFile.getNumLines() + 1),
-    m_pDownVector(2 * m_Max + 2),
-    m_pUpVector(2 * m_Max + 2)
+    m_DownVector(2 * m_Max + 2),
+    m_UpVector(2 * m_Max + 2)
 { 
   m_Progress.SetDescription(pProgressDescription);
 
@@ -324,8 +324,8 @@ Pair DiffEngine::sms(long lowerA, long upperA, long lowerB, long upperB)
   long maxD = ((upperA - lowerA + upperB - lowerB) / 2) + 1;
 
   // init vectors
-  m_pDownVector[downOffset + downK + 1] = lowerA;
-  m_pUpVector[upOffset + upK - 1] = upperA;
+  m_DownVector[downOffset + downK + 1] = lowerA;
+  m_UpVector[upOffset + upK - 1] = upperA;
 
   for (long D = 0; D <= maxD; D++)
   {
@@ -341,15 +341,15 @@ Pair DiffEngine::sms(long lowerA, long upperA, long lowerB, long upperB)
       long x, y;
       if (k == downK - D)
       {
-        x = m_pDownVector[downOffset + k + 1]; // down
+        x = m_DownVector[downOffset + k + 1]; // down
       }
       else
       {
-        x = m_pDownVector[downOffset + k - 1] + 1; // a step to the right
+        x = m_DownVector[downOffset + k - 1] + 1; // a step to the right
 
-        if ((k < downK + D) && (m_pDownVector[downOffset + k + 1] >= x))
+        if ((k < downK + D) && (m_DownVector[downOffset + k + 1] >= x))
         {
-          x = m_pDownVector[downOffset + k + 1]; // down
+          x = m_DownVector[downOffset + k + 1]; // down
         }
       }
 
@@ -364,15 +364,15 @@ Pair DiffEngine::sms(long lowerA, long upperA, long lowerB, long upperB)
         y++;
       }
 
-      m_pDownVector[downOffset + k] = x;
+      m_DownVector[downOffset + k] = x;
 
       // overlap ?
       if (bOddDelta && (upK - D < k) && (k < upK + D))
       {
-        if (m_pUpVector[upOffset + k] <= m_pDownVector[downOffset + k])
+        if (m_UpVector[upOffset + k] <= m_DownVector[downOffset + k])
         {
-          result.Set(m_pDownVector[downOffset + k],
-                     m_pDownVector[downOffset + k] - k);
+          result.Set(m_DownVector[downOffset + k],
+                     m_DownVector[downOffset + k] - k);
 
           return result;
         }
@@ -386,15 +386,15 @@ Pair DiffEngine::sms(long lowerA, long upperA, long lowerB, long upperB)
       long x, y;
       if (k == upK + D)
       {
-        x = m_pUpVector[upOffset + k - 1]; // up
+        x = m_UpVector[upOffset + k - 1]; // up
       }
       else
       {
-        x = m_pUpVector[upOffset + k + 1] - 1; // left
+        x = m_UpVector[upOffset + k + 1] - 1; // left
 
-        if ((k > upK - D) && (m_pUpVector[upOffset + k - 1] < x))
+        if ((k > upK - D) && (m_UpVector[upOffset + k - 1] < x))
         {
-          x = m_pUpVector[upOffset + k - 1]; // up
+          x = m_UpVector[upOffset + k - 1]; // up
         }
       }
 
@@ -409,15 +409,15 @@ Pair DiffEngine::sms(long lowerA, long upperA, long lowerB, long upperB)
         y--;
       }
 
-      m_pUpVector[upOffset + k] = x;
+      m_UpVector[upOffset + k] = x;
 
       // overlap ?
       if (!bOddDelta && (downK - D <= k) && (k <= downK + D))
       {
-        if (m_pUpVector[upOffset + k] <= m_pDownVector[downOffset + k])
+        if (m_UpVector[upOffset + k] <= m_DownVector[downOffset + k])
         {
-          result.Set(m_pDownVector[downOffset + k],
-                     m_pDownVector[downOffset + k] - k);
+          result.Set(m_DownVector[downOffset + k],
+                     m_DownVector[downOffset + k] - k);
 
           return result;
         }
