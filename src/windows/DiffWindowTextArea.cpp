@@ -634,33 +634,30 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
   /**
    * Render the line numbers
    */
-
   if (doDisplayLineNumbers && m_AreLineNumbersEnabled)
   {
+    const char* pLineNum = pLine->getLineNumText();
+    RastPort* pLineNumPort = m_pRPorts->getLineNumText();
+
     // Move rastport cursor to start of line numbers block
-    Move(m_pRPorts->getLineNumText(), m_VScrollRect.getLeft(),
+    Move(pLineNumPort, m_VScrollRect.getLeft(),
          getTop() + lineTop + m_FontBaseline_pix + 1);
 
-    // Get the text or set to empty spaces when there is none
-    const char* pLineNum = pLine->getLineNumText();
-
     // Print line's original line number
-    Text(m_pRPorts->getLineNumText(), pLineNum, m_LineNumsWidth_chars);
+    Text(pLineNumPort, pLineNum, m_LineNumsWidth_chars);
   }
 
   /**
-   * Render the line
+   * Prepare scroll context
    */
-
-  ULONG srcTextStartColumn;
-  ULONG currentDisplayColumn;
+  ULONG srcTextStartColumn, currentDisplayColumn;
   long maxRemainingCharsToRender;
   if (numCharLimit < 0)
   {
     // Only render 'numCharLimit' chars  at the right of the text area
     // (Done when rendering after scrolling the content to left)
     maxRemainingCharsToRender = -numCharLimit;
-
+    
     srcTextStartColumn = m_AreaMaxChars + m_X;
     currentDisplayColumn = m_AreaMaxChars - maxRemainingCharsToRender;
   }
@@ -679,6 +676,10 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
     srcTextStartColumn = m_X;
     currentDisplayColumn = 0;
   }
+  
+  /**
+   * Render the line
+   */
 
   // Get the text position info of resulting text column. This also
   // calculates the srcTextColumn which is needed next.
@@ -705,101 +706,58 @@ void DiffWindowTextArea::renderLine(ULONG lineId,
     }
     else
     {
-      // Line finished
-      return;
+      // No remaining blocks in line
+      break;
     }
 
-    LONG numNextCharsToRender;
-    ULONG numSrcCharsIncreased;
-    const char* pTextToPrint;
-    bool hasMarkedNormalBlockLimitReached = false;
-    bool hasNumCharsBeenLimited = false;
+    /*
+     * Prepare text block
+     */
+    const char* pLineText = pLine->getText();
+    const char* pTextToPrint = NULL;
+    LONG numNextCharsToRender = 0;
+    ULONG numSrcCharsIncreased = 0;
 
     if (m_PositionInfo.numRemainingChars > 0)
     {
-      // Set the text print pointer to te next char to be rendered
-      numNextCharsToRender = m_PositionInfo.numRemainingChars;
-      pTextToPrint = pLine->getText() + m_PositionInfo.srcTextColumn;
-
-      // Check if block limit {marked test|normal text} reached 
-      // NOTE: Only checked and limited when chars are printed. When
-      //       remainingSpaces are printed they are not limited 
-      //       because they all belong to the same tabulator-block.
-      if (numNextCharsToRender > numCharsInBlock)
-      {
-        numNextCharsToRender = numCharsInBlock;
-        hasMarkedNormalBlockLimitReached = true;
-      }
-
+      numNextCharsToRender = std::min<long>(m_PositionInfo.numRemainingChars, numCharsInBlock);
+      pTextToPrint = pLineText + m_PositionInfo.srcTextColumn;
       numSrcCharsIncreased = numNextCharsToRender;
     }
-    else 
+    else
     {
-      // Here m_PositionInfo.numRemainingSpaces is greater than 0.
-      
-      // Set the text print pointer to the line of spaces
-      pTextToPrint = m_pLineOfSpaces;
-
-      // And apply the number of spaces to print. (They fill the 
-      // remaining space of a tabulator column)
       numNextCharsToRender = m_PositionInfo.numRemainingSpaces;
-
+      pTextToPrint = m_pLineOfSpaces;
       numSrcCharsIncreased = 1;
     }
 
-
-    // Check if max remaining chars limit reached
+    // Apply char limit
     if (numNextCharsToRender > maxRemainingCharsToRender)
     {
       numNextCharsToRender = maxRemainingCharsToRender;
-      hasNumCharsBeenLimited = true;
     }
 
-    /**
-     * Move rastport cursor to render position and render the text
-     */
-    Move(pRPort,
-         m_HScrollRect.getLeft() + m_FontWidth_pix * currentDisplayColumn,
-         getTop() + lineTop + m_FontBaseline_pix + 1);
-
-    Text(pRPort, pTextToPrint, numNextCharsToRender);
-
-    /**
-     * After-rendering checks
-     */
-    if (hasNumCharsBeenLimited)
+    // Render the text (in case there is some)
+    if (numNextCharsToRender > 0)
     {
-      // Line finished
-      return;
-    }
-    
-    if (hasMarkedNormalBlockLimitReached)
-    {
-      maxRemainingCharsToRender -= numNextCharsToRender;
-      currentDisplayColumn += numNextCharsToRender;
-      resultingTextColumn += numNextCharsToRender;
-
-      if(maxRemainingCharsToRender < 1)
-      {
-        // Line finished
-        return;
-      }
-
-      // Block {normal text|marked text} finished; continue on top of loop
-      pLine->getTextPositionInfo(&m_PositionInfo, resultingTextColumn, m_TabSize);
-      continue;
+      Move(pRPort,
+           m_HScrollRect.getLeft() + m_FontWidth_pix * currentDisplayColumn,
+           getTop() + lineTop + m_FontBaseline_pix + 1);
+      Text(pRPort, pTextToPrint, numNextCharsToRender);
     }
 
-    if(m_PositionInfo.srcTextColumn + numSrcCharsIncreased >= pLine->getNumChars())
-    {
-      // Line finished
-      return;
-    }
-
+    // Update position
     maxRemainingCharsToRender -= numNextCharsToRender;
     currentDisplayColumn += numNextCharsToRender;
     resultingTextColumn += numNextCharsToRender;
 
+    // Line finished?
+    if (m_PositionInfo.srcTextColumn + numSrcCharsIncreased >= pLine->getNumChars())
+    {
+      break;
+    }
+
+    // Prepare next block
     pLine->getTextPositionInfo(&m_PositionInfo, resultingTextColumn, m_TabSize);
   }
 }

@@ -83,65 +83,56 @@ void DiffLine::getTextPositionInfo(TextPositionInfo* pInfo,
                                    unsigned long resultingTextColumn,
                                    unsigned long tabSize) const
 {
-  unsigned long i, accumulatedColumn, tabIndent;
+  unsigned long accumulatedColumn = 0;
 
-  accumulatedColumn = 0;
-
-  // Parse each character of input text
-  for(pInfo->srcTextColumn = 0; pInfo->srcTextColumn < m_TextLength; pInfo->srcTextColumn++)
+  for (pInfo->srcTextColumn = 0; pInfo->srcTextColumn < m_TextLength; ++pInfo->srcTextColumn)
   {
-    if(accumulatedColumn >= resultingTextColumn)
+    char c = m_Text[pInfo->srcTextColumn];
+    unsigned long nextColumn;
+
+    if (c == '\t')
     {
-      tabIndent = tabSize - (unsigned long)(resultingTextColumn % tabSize);
-
-      if(accumulatedColumn > resultingTextColumn)
-      {
-        // In midst of / among a tabulator block
-        pInfo->srcTextColumn--;
-        pInfo->numRemainingChars = 0;
-        pInfo->numRemainingSpaces = tabIndent;
-      }
-      else
-      {
-        if(m_Text[pInfo->srcTextColumn] == '\t')
-        {
-          // Directly on the start of a tabulator block
-          pInfo->numRemainingChars = 0;
-          pInfo->numRemainingSpaces = tabIndent;
-        }
-        else
-        {
-          // A printable character, no tabulator block
-          
-          // Check how many chars / spaces until next tab position or eol
-          for(i = pInfo->srcTextColumn; i < m_TextLength; i++)
-          {
-            if(m_Text[i] == '\t')
-            {
-              break;
-            }
-          }
-
-          pInfo->numRemainingChars = i - pInfo->srcTextColumn;
-          pInfo->numRemainingSpaces = 0;
-        }
-      }
-
-      return;
-    }
-
-    if(m_Text[pInfo->srcTextColumn] == '\t')
-    {
-      // Increase actual result column by current position tabulator indent
-      accumulatedColumn += (size_t)( tabSize - (accumulatedColumn % tabSize));
+      nextColumn = accumulatedColumn + (tabSize - (accumulatedColumn % tabSize));
     }
     else
     {
-      // Increase actual result column by one
-      accumulatedColumn++;
+      nextColumn = accumulatedColumn + 1;
     }
+
+    if (accumulatedColumn > resultingTextColumn)
+    {
+      // Wir sind mitten in einem Tabulatorblock
+      pInfo->srcTextColumn--;
+      pInfo->numRemainingChars = 0;
+      pInfo->numRemainingSpaces = tabSize - (resultingTextColumn % tabSize);
+      return;
+    }
+    else if (accumulatedColumn == resultingTextColumn)
+    {
+      if (c == '\t')
+      {
+        // Direkt am Anfang eines Tabulatorblocks
+        pInfo->numRemainingChars = 0;
+        pInfo->numRemainingSpaces = tabSize - (accumulatedColumn % tabSize);
+      }
+      else
+      {
+        // Normales Zeichen, zähle bis zum nächsten Tabulator
+        size_t i = pInfo->srcTextColumn;
+        while (i < m_TextLength && m_Text[i] != '\t')
+        {
+          ++i;
+        }
+        pInfo->numRemainingChars = i - pInfo->srcTextColumn;
+        pInfo->numRemainingSpaces = 0;
+      }
+      return;
+    }
+
+    accumulatedColumn = nextColumn;
   }
 
+  // EOL erreicht
   pInfo->numRemainingChars = 0;
   pInfo->numRemainingSpaces = 0;
 }
@@ -149,27 +140,22 @@ void DiffLine::getTextPositionInfo(TextPositionInfo* pInfo,
 unsigned long DiffLine::getRenderColumn(unsigned long documentColumn,
                                         unsigned long tabSize) const
 {
-  if(documentColumn > m_TextLength)
+  if (documentColumn > m_TextLength)
   {
     return 0;
   }
 
   unsigned long renderColumn = 0;
-  for(unsigned long i = 0; i < m_TextLength; i++)
-  {
-    if(i == documentColumn)
-    {
-      return renderColumn;
-    }
 
-    if(m_Text[i] == '\t')
+  for (unsigned long i = 0; i < documentColumn && i < m_TextLength; ++i)
+  {
+    if (m_Text[i] == '\t')
     {
-      unsigned long  indent = tabSize - (renderColumn % tabSize);
-      renderColumn += indent;
+      renderColumn += tabSize - (renderColumn % tabSize);
     }
     else
     {
-      renderColumn++;
+      ++renderColumn;
     }
   }
 
