@@ -339,41 +339,42 @@ Pair DiffEngine::sms(long lowerA, long upperA, long lowerB, long upperB)
     {
       // find the only or better starting point
       long x, y;
+      const long dk = downOffset + k;
+      const long dk_plus_1 = dk + 1;
+
       if (k == downK - D)
       {
-        x = m_DownVector[downOffset + k + 1]; // down
+        x = m_DownVector[dk_plus_1];  // down
       }
       else
       {
-        x = m_DownVector[downOffset + k - 1] + 1; // a step to the right
+        x = m_DownVector[dk - 1] + 1; // a step to the right
 
-        if ((k < downK + D) && (m_DownVector[downOffset + k + 1] >= x))
+        if ((k < downK + D) && (m_DownVector[dk_plus_1] >= x))
         {
-          x = m_DownVector[downOffset + k + 1]; // down
+          x = m_DownVector[dk_plus_1]; // down
         }
       }
 
       y = x - k;
 
       // find the end of the furthest reaching forward D-path in diagonal k.
-      while ((x < upperA) && (y < upperB)
-          && (m_LeftInFile[x]->getToken() == m_RightInFile[y]->getToken()))
+      while ((x < upperA) && (y < upperB) &&
+             (m_LeftInFile[x]->getToken() == m_RightInFile[y]->getToken()))
           //&& (m_A[x]->Text() == m_B[y]->Text()))
       {
         x++;
         y++;
       }
 
-      m_DownVector[downOffset + k] = x;
+      m_DownVector[dk] = x;
 
       // overlap ?
       if (bOddDelta && (upK - D < k) && (k < upK + D))
       {
-        if (m_UpVector[upOffset + k] <= m_DownVector[downOffset + k])
+        if (m_UpVector[upOffset + k] <= m_DownVector[dk])
         {
-          result.Set(m_DownVector[downOffset + k],
-                     m_DownVector[downOffset + k] - k);
-
+          result.Set(m_DownVector[dk], m_DownVector[dk] - k);
           return result;
         }
       }
@@ -384,24 +385,28 @@ Pair DiffEngine::sms(long lowerA, long upperA, long lowerB, long upperB)
     {
       // find the only or better starting point
       long x, y;
+      const long dk = downOffset + k;
+      const long uk = upOffset + k;
+      const long uk_minus_1 = uk - 1;
+
       if (k == upK + D)
       {
-        x = m_UpVector[upOffset + k - 1]; // up
+        x = m_UpVector[uk_minus_1];   // up
       }
       else
       {
-        x = m_UpVector[upOffset + k + 1] - 1; // left
+        x = m_UpVector[uk + 1] - 1;   // left
 
-        if ((k > upK - D) && (m_UpVector[upOffset + k - 1] < x))
+        if ((k > upK - D) && (m_UpVector[uk_minus_1] < x))
         {
-          x = m_UpVector[upOffset + k - 1]; // up
+          x = m_UpVector[uk_minus_1]; // up
         }
       }
 
       y = x - k;
 
-      while ((x > lowerA) && (y > lowerB)
-          && (m_LeftInFile[x - 1]->getToken() == m_RightInFile[y - 1]->getToken()))
+      while ((x > lowerA) && (y > lowerB) &&
+             (m_LeftInFile[x - 1]->getToken() == m_RightInFile[y - 1]->getToken()))
           //&& (m_A[x - 1]->Text() == m_B[y - 1]->Text()))
       {
         // diagonal
@@ -409,16 +414,14 @@ Pair DiffEngine::sms(long lowerA, long upperA, long lowerB, long upperB)
         y--;
       }
 
-      m_UpVector[upOffset + k] = x;
+      m_UpVector[uk] = x;
 
       // overlap ?
       if (!bOddDelta && (downK - D <= k) && (k <= downK + D))
       {
-        if (m_UpVector[upOffset + k] <= m_DownVector[downOffset + k])
+        if (m_UpVector[uk] <= m_DownVector[dk])
         {
-          result.Set(m_DownVector[downOffset + k],
-                     m_DownVector[downOffset + k] - k);
-
+          result.Set(m_DownVector[dk], m_DownVector[dk] - k);
           return result;
         }
       }
