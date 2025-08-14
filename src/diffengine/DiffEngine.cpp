@@ -231,75 +231,147 @@ void DiffEngine::populateOutputFiles()
 
 
 
-void DiffEngine::lcs(long lowerA, long upperA, long lowerB, long upperB)
+// void DiffEngine::lcs(long lowerA, long upperA, long lowerB, long upperB)
+// {
+//   //
+//   // Notify
+//   //
+//   if((m_NotifyIncrement > 0)
+//    &&(lowerA > m_NextNotifyPosition))
+//   {
+//     if(m_IsCancelRequested)
+//     {
+//       return;
+//     }
+
+//     m_Percent += m_PercentIncrement;
+//     m_NextNotifyPosition += m_NotifyIncrement;
+//     m_Progress.SetValue(m_Percent);
+//   }
+
+//   // Fast walkthrough equal lines at the start
+//   while((lowerA < upperA) && (lowerB < upperB)
+//      && (m_LeftInFile[lowerA]->getToken() == m_RightInFile[lowerB]->getToken()))
+//   {
+//     lowerA++;
+//     lowerB++;
+//   }
+
+//   // Fast walkthrough equal lines at the end
+//   while((lowerA < upperA) && (lowerB < upperB)
+//      && (m_LeftInFile[upperA - 1]->getToken() == m_RightInFile[upperB - 1]->getToken()))
+//   {
+//     --upperA;
+//     --upperB;
+//   }
+
+//   if(lowerA == upperA)
+//   {
+//     while(lowerB < upperB)
+//     {
+//       m_RightInFile[lowerB++]->setState(DiffLine::Added);
+//       m_NumInsertedB++;
+//     }
+//   }
+//   else if(lowerB == upperB)
+//   {
+//     while(lowerA < upperA)
+//     {
+//       m_LeftInFile[lowerA++]->setState(DiffLine::Deleted);
+//       m_NumDeletedA++;
+//     }
+//   }
+//   else
+//   {
+//     if(m_IsCancelRequested)
+//     {
+//       return;
+//     }
+
+//     Pair smsrd = sms(lowerA, upperA, lowerB, upperB);
+
+//     if(m_IsCancelRequested)
+//     {
+//       return;
+//     }
+
+//     lcs(lowerA, smsrd.Left(), lowerB, smsrd.Top());
+//     lcs(smsrd.Left(), upperA, smsrd.Top(), upperB);
+//   }
+// }
+
+struct Frame {
+    long lowerA, upperA;
+    long lowerB, upperB;
+};
+
+void DiffEngine::lcs(long lowerA, long upperA,
+                     long lowerB, long upperB)
 {
-  //
-  // Notify
-  //
-  if((m_NotifyIncrement > 0)
-   &&(lowerA > m_NextNotifyPosition))
-  {
-    if(m_IsCancelRequested)
+    // Stack mit dem initialen Aufgabenbereich
+    std::vector<Frame> stack;
+    stack.push_back({ lowerA, upperA, lowerB, upperB });
+
+    while (!stack.empty())
     {
-      return;
+        // Aufgabe holen
+        Frame f = stack.back();
+        stack.pop_back();
+
+        // Abbruchbedingungen und Notify
+        if ((m_NotifyIncrement > 0) && (f.lowerA > m_NextNotifyPosition)) {
+            if (m_IsCancelRequested) return;
+            m_Percent += m_PercentIncrement;
+            m_NextNotifyPosition += m_NotifyIncrement;
+            m_Progress.SetValue(m_Percent);
+        }
+
+        long a1 = f.lowerA, a2 = f.upperA;
+        long b1 = f.lowerB, b2 = f.upperB;
+
+        // Gleichlauf am Anfang
+        while ((a1 < a2) && (b1 < b2) &&
+               m_LeftInFile[a1]->getToken() == m_RightInFile[b1]->getToken())
+        {
+            ++a1; ++b1;
+        }
+
+        // Gleichlauf am Ende
+        while ((a1 < a2) && (b1 < b2) &&
+               m_LeftInFile[a2-1]->getToken() == m_RightInFile[b2-1]->getToken())
+        {
+            --a2; --b2;
+        }
+
+        // Triviale Fälle: nur Löschen oder Einfügen
+        if (a1 == a2) {
+            while (b1 < b2) {
+                m_RightInFile[b1++]->setState(DiffLine::Added);
+                ++m_NumInsertedB;
+            }
+            continue;
+        }
+        if (b1 == b2) {
+            while (a1 < a2) {
+                m_LeftInFile[a1++]->setState(DiffLine::Deleted);
+                ++m_NumDeletedA;
+            }
+            continue;
+        }
+
+        if (m_IsCancelRequested) return;
+
+        // Kern: sms() auf dem Teilbereich
+        Pair split = sms(a1, a2, b1, b2);
+        if (m_IsCancelRequested) return;
+
+        // Nun die beiden Subbereiche als neue Aufgaben pushen.
+        // Rechts-Bereich zuerst, damit der Linke als nächstes bearbeitet wird.
+        stack.push_back({ split.Left(),  a2,    split.Top(), b2 });
+        stack.push_back({ a1,            split.Left(),
+                          b1,            split.Top() });
     }
-
-    m_Percent += m_PercentIncrement;
-    m_NextNotifyPosition += m_NotifyIncrement;
-    m_Progress.SetValue(m_Percent);
-  }
-
-  // Fast walkthrough equal lines at the start
-  while((lowerA < upperA) && (lowerB < upperB)
-     && (m_LeftInFile[lowerA]->getToken() == m_RightInFile[lowerB]->getToken()))
-  {
-    lowerA++;
-    lowerB++;
-  }
-
-  // Fast walkthrough equal lines at the end
-  while((lowerA < upperA) && (lowerB < upperB)
-     && (m_LeftInFile[upperA - 1]->getToken() == m_RightInFile[upperB - 1]->getToken()))
-  {
-    --upperA;
-    --upperB;
-  }
-
-  if(lowerA == upperA)
-  {
-    while(lowerB < upperB)
-    {
-      m_RightInFile[lowerB++]->setState(DiffLine::Added);
-      m_NumInsertedB++;
-    }
-  }
-  else if(lowerB == upperB)
-  {
-    while(lowerA < upperA)
-    {
-      m_LeftInFile[lowerA++]->setState(DiffLine::Deleted);
-      m_NumDeletedA++;
-    }
-  }
-  else
-  {
-    if(m_IsCancelRequested)
-    {
-      return;
-    }
-
-    Pair smsrd = sms(lowerA, upperA, lowerB, upperB);
-
-    if(m_IsCancelRequested)
-    {
-      return;
-    }
-
-    lcs(lowerA, smsrd.Left(), lowerB, smsrd.Top());
-    lcs(smsrd.Left(), upperA, smsrd.Top(), upperB);
-  }
 }
-
 
 // Pair DiffEngine::sms(long lowerA, long upperA, long lowerB, long upperB)
 // {
