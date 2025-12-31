@@ -127,13 +127,13 @@ bool WindowBase::open(InitialPosition initialPos)
 
   if(!m_bIsFixed)
   {
-    // Add a dragbar -> make window movable
+    // Add a dragbar -> make window moveable
     m_WindowFlags |= WFLG_DRAGBAR;
   }
 
-  // Define a minimum height that won't crash ADiffViewwhen 
+  // Define a minimum height that won't crash ADiffView when 
   // performResize() is called in DiffWindow. 
-  // TODO: This is just a quick fix. Find something better.B
+  // TODO: This is just a quick fix. Find something better.
   ULONG minHeight = 8 * m_Screen.getIntuiDrawInfo()->dri_Font->tf_YSize;
 
   // Open the window
