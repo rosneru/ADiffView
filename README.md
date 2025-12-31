@@ -46,7 +46,7 @@ with
 git clone https://franke.ms/git/bebbo/amiga-gcc.git
 ```
 
-As shown in an [Amiga forum](https://www.a1k.org/forum/index.php?threads/94725/post-1882035).
+(as shown in an [Amiga forum](https://www.a1k.org/forum/index.php?threads/94725/post-1882035).)
 
 ### Build
 The Makefile to build this project must be created with cmake.
