@@ -6,10 +6,10 @@
             "label": "Make project",
             "command": "/usr/bin/make",
             "args": [
-                "-j3"
+                "-j4"
             ],
             "options": {
-                "cwd": "${workspaceFolder}/build/"
+                "cwd": "${workspaceFolder}/build-gcc/"
             },
             "problemMatcher": {
                 "base": "$gcc",

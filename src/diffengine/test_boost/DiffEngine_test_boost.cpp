@@ -97,11 +97,11 @@ BOOST_AUTO_TEST_CASE( testcase_02 )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_02_left.txt",
+                            "testfiles/02_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_02_right.txt",
+                            "testfiles/02_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -202,11 +202,11 @@ BOOST_AUTO_TEST_CASE( testcase_03_simple )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_03_FB101-02-Simple_left.txt",
+                            "testfiles/03_FB101-02-Simple_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_03_FB101-02-Simple_right.txt",
+                            "testfiles/03_FB101-02-Simple_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -288,11 +288,11 @@ BOOST_AUTO_TEST_CASE( testcase_03_var2 )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_03_var2_left.txt",
+                            "testfiles/03_var2_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_03_var2_right.txt",
+                            "testfiles/03_var2_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -388,11 +388,11 @@ BOOST_AUTO_TEST_CASE( testcase_04 )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_04_left.txt",
+                            "testfiles/04_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_04_right.txt",
+                            "testfiles/04_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -457,11 +457,11 @@ BOOST_AUTO_TEST_CASE( testcase_05 )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_05_left.txt",
+                            "testfiles/05_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_05_right.txt",
+                            "testfiles/05_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -529,11 +529,11 @@ BOOST_AUTO_TEST_CASE( DiffTest_06_Mixed )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_06_left.txt",
+                            "testfiles/06_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_06_right.txt",
+                            "testfiles/06_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -659,11 +659,11 @@ BOOST_AUTO_TEST_CASE( testcase_12_endless_loop )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_12_endless_loop_left.txt",
+                            "testfiles/12_endless_loop_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_12_endless_loop_right.txt",
+                            "testfiles/12_endless_loop_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -737,11 +737,11 @@ BOOST_AUTO_TEST_CASE( testcase_12a )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_12a_left.txt",
+                            "testfiles/12a_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_12a_right.txt",
+                            "testfiles/12a_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -847,11 +847,11 @@ BOOST_AUTO_TEST_CASE( testcase_24_1500_numbers )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_24_1500_numbers_left.txt",
+                            "testfiles/24_1500_numbers_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_24_1500_numbers_right.txt",
+                            "testfiles/24_1500_numbers_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -2593,11 +2593,11 @@ BOOST_AUTO_TEST_CASE( test_32_SelectableDiffFile )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_32_numChars_left.txt",
+                            "testfiles/32_numChars_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_32_numChars_right.txt",
+                            "testfiles/32_numChars_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -2659,11 +2659,11 @@ BOOST_AUTO_TEST_CASE( testcase_search_algorithm_basic )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_23_RealLifeApp-left.cs",
+                            "testfiles/23_RealLifeApp-left.cs",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_23_RealLifeApp-right.cs",
+                            "testfiles/23_RealLifeApp-right.cs",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -2716,11 +2716,11 @@ BOOST_AUTO_TEST_CASE( search_algorithm_extended_1 )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_33_search_left.txt",
+                            "testfiles/33_search_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_33_search_right.txt",
+                            "testfiles/33_search_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -2860,11 +2860,11 @@ BOOST_AUTO_TEST_CASE( search_algorithm_case_ignored )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_33_search_left.txt",
+                            "testfiles/33_search_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_33_search_right.txt",
+                            "testfiles/33_search_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -2951,11 +2951,11 @@ BOOST_AUTO_TEST_CASE( search_algorithm_get_prev_result )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_33_search_left.txt",
+                            "testfiles/33_search_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_33_search_right.txt",
+                            "testfiles/33_search_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -3050,11 +3050,11 @@ BOOST_AUTO_TEST_CASE( search_algorithm_get_next_and_prev_from_current_position )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_33_search_left.txt",
+                            "testfiles/33_search_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_33_search_right.txt",
+                            "testfiles/33_search_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -3502,11 +3502,11 @@ BOOST_AUTO_TEST_CASE( testcase_DiffWindowTextArea_NonTabulatorText )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_23_RealLifeApp-left.cs",
+                            "testfiles/23_RealLifeApp-left.cs",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_23_RealLifeApp-right.cs",
+                            "testfiles/23_RealLifeApp-right.cs",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -3597,11 +3597,11 @@ BOOST_AUTO_TEST_CASE( testcase_DiffWindowTextArea_TabulatorText )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_35_tabs_asm_left.asm",
+                            "testfiles/35_tabs_asm_left.asm",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_35_tabs_asm_right.asm",
+                            "testfiles/35_tabs_asm_right.asm",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -3692,11 +3692,11 @@ BOOST_AUTO_TEST_CASE( testcase_DiffWindowTextArea_NonTabulator_MARKED_Text )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_23_RealLifeApp-left.cs",
+                            "testfiles/23_RealLifeApp-left.cs",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_23_RealLifeApp-right.cs",
+                            "testfiles/23_RealLifeApp-right.cs",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -3791,11 +3791,11 @@ BOOST_AUTO_TEST_CASE( testcase_DiffWindowTextArea_Tabulator_MARKED_Text )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_35_tabs_asm_left.asm",
+                            "testfiles/35_tabs_asm_left.asm",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_35_tabs_asm_right.asm",
+                            "testfiles/35_tabs_asm_right.asm",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -3888,11 +3888,11 @@ BOOST_AUTO_TEST_CASE( testcase_DiffWindowTextArea_TabulatorRenderingProblem )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_35_tabs_asm_left.asm",
+                            "testfiles/35_tabs_asm_left.asm",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_35_tabs_asm_right.asm",
+                            "testfiles/35_tabs_asm_right.asm",
                             true);
 
     DiffOutputFileLinux diffA(srcA);
@@ -3978,13 +3978,13 @@ BOOST_AUTO_TEST_CASE( test_36_IgnoreTrailingSpaces )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_36_trailing_spaces_left.txt",
+                            "testfiles/36_trailing_spaces_left.txt",
                             lineNumbersEnabled,
                             ignoreLeadingSpaces,
                             ignoreTrailingSpaces);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_36_trailing_spaces_right.txt",
+                            "testfiles/36_trailing_spaces_right.txt",
                             lineNumbersEnabled,
                             ignoreLeadingSpaces,
                             ignoreTrailingSpaces);
@@ -4030,13 +4030,13 @@ BOOST_AUTO_TEST_CASE( test_37_IgnoreLeadingSpaces )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_37_leading_spaces_left.c",
+                            "testfiles/37_leading_spaces_left.c",
                             lineNumbersEnabled,
                             ignoreLeadingSpaces,
                             ignoreTrailingSpaces);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_37_leading_spaces_right.c",
+                            "testfiles/37_leading_spaces_right.c",
                             lineNumbersEnabled,
                             ignoreLeadingSpaces,
                             ignoreTrailingSpaces);
@@ -4073,11 +4073,11 @@ BOOST_AUTO_TEST_CASE( testcase_38_combined_added_lines )
     std::list<size_t> m_DiffIndices;
 
     DiffInputFileLinux srcA(cancelRequested, 
-                            "testfiles/testcase_38_combined_added_lines_left.txt",
+                            "testfiles/38_comb_added_lines_left.txt",
                             true);
 
     DiffInputFileLinux srcB(cancelRequested, 
-                            "testfiles/testcase_38_combined_added_lines_right.txt",
+                            "testfiles/38_comb_added_lines_right.txt",
                             true);
 
     DiffOutputFileLinux diffA(srcA);

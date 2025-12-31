@@ -1,7 +1,7 @@
-#include "DiffWorkerProgressReporter.h"
+#include "DiffProgressReporter.h"
 
 
-DiffWorkerProgressReporter::DiffWorkerProgressReporter(struct MsgPort* pProgressPort, 
+DiffProgressReporter::DiffProgressReporter(struct MsgPort* pProgressPort, 
                                                        struct MsgPort*& pReplyPort)
   : ProgressReporter(pProgressPort, pReplyPort),
     m_ProgressOffset(0)
@@ -9,7 +9,7 @@ DiffWorkerProgressReporter::DiffWorkerProgressReporter(struct MsgPort* pProgress
 
 }
 
-void DiffWorkerProgressReporter::SetValue(int progress)
+void DiffProgressReporter::SetValue(int progress)
 {
   //
   // Reporting the 3 stages of diff-progress (preprocessing left file,
@@ -43,7 +43,7 @@ void DiffWorkerProgressReporter::SetValue(int progress)
   ProgressReporter::SetValue(m_ProgressOffset + progress);
 }
 
-void DiffWorkerProgressReporter::Reset()
+void DiffProgressReporter::Reset()
 {
   m_ProgressOffset = 0;
 }

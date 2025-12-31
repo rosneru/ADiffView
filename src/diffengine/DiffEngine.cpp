@@ -23,8 +23,8 @@ DiffEngine::DiffEngine(DiffInputFileBase& leftInFile,
     m_NumDeletedA(0),
     m_NumChanged(0),
     m_Max(m_LeftInFile.getNumLines() + m_RightInFile.getNumLines() + 1),
-    m_pDownVector(2 * m_Max + 2),
-    m_pUpVector(2 * m_Max + 2)
+    m_DownVector(2 * m_Max + 2),
+    m_UpVector(2 * m_Max + 2)
 { 
   m_Progress.SetDescription(pProgressDescription);
 
@@ -231,204 +231,395 @@ void DiffEngine::populateOutputFiles()
 
 
 
-void DiffEngine::lcs(long lowerA, long upperA, long lowerB, long upperB)
+// void DiffEngine::lcs(long lowerA, long upperA, long lowerB, long upperB)
+// {
+//   //
+//   // Notify
+//   //
+//   if((m_NotifyIncrement > 0)
+//    &&(lowerA > m_NextNotifyPosition))
+//   {
+//     if(m_IsCancelRequested)
+//     {
+//       return;
+//     }
+
+//     m_Percent += m_PercentIncrement;
+//     m_NextNotifyPosition += m_NotifyIncrement;
+//     m_Progress.SetValue(m_Percent);
+//   }
+
+//   // Fast walkthrough equal lines at the start
+//   while((lowerA < upperA) && (lowerB < upperB)
+//      && (m_LeftInFile[lowerA]->getToken() == m_RightInFile[lowerB]->getToken()))
+//   {
+//     lowerA++;
+//     lowerB++;
+//   }
+
+//   // Fast walkthrough equal lines at the end
+//   while((lowerA < upperA) && (lowerB < upperB)
+//      && (m_LeftInFile[upperA - 1]->getToken() == m_RightInFile[upperB - 1]->getToken()))
+//   {
+//     --upperA;
+//     --upperB;
+//   }
+
+//   if(lowerA == upperA)
+//   {
+//     while(lowerB < upperB)
+//     {
+//       m_RightInFile[lowerB++]->setState(DiffLine::Added);
+//       m_NumInsertedB++;
+//     }
+//   }
+//   else if(lowerB == upperB)
+//   {
+//     while(lowerA < upperA)
+//     {
+//       m_LeftInFile[lowerA++]->setState(DiffLine::Deleted);
+//       m_NumDeletedA++;
+//     }
+//   }
+//   else
+//   {
+//     if(m_IsCancelRequested)
+//     {
+//       return;
+//     }
+
+//     Pair smsrd = sms(lowerA, upperA, lowerB, upperB);
+
+//     if(m_IsCancelRequested)
+//     {
+//       return;
+//     }
+
+//     lcs(lowerA, smsrd.Left(), lowerB, smsrd.Top());
+//     lcs(smsrd.Left(), upperA, smsrd.Top(), upperB);
+//   }
+// }
+
+struct Frame {
+    long lowerA, upperA;
+    long lowerB, upperB;
+};
+
+void DiffEngine::lcs(long lowerA, long upperA,
+                     long lowerB, long upperB)
 {
-  //
-  // Notify
-  //
-  if((m_NotifyIncrement > 0)
-   &&(lowerA > m_NextNotifyPosition))
-  {
-    if(m_IsCancelRequested)
+    // Stack mit dem initialen Aufgabenbereich
+    std::vector<Frame> stack;
+    stack.push_back({ lowerA, upperA, lowerB, upperB });
+
+    while (!stack.empty())
     {
-      return;
+        // Aufgabe holen
+        Frame f = stack.back();
+        stack.pop_back();
+
+        // Abbruchbedingungen und Notify
+        if ((m_NotifyIncrement > 0) && (f.lowerA > m_NextNotifyPosition)) {
+            if (m_IsCancelRequested) return;
+            m_Percent += m_PercentIncrement;
+            m_NextNotifyPosition += m_NotifyIncrement;
+            m_Progress.SetValue(m_Percent);
+        }
+
+        long a1 = f.lowerA, a2 = f.upperA;
+        long b1 = f.lowerB, b2 = f.upperB;
+
+        // Gleichlauf am Anfang
+        while ((a1 < a2) && (b1 < b2) &&
+               m_LeftInFile[a1]->getToken() == m_RightInFile[b1]->getToken())
+        {
+            ++a1; ++b1;
+        }
+
+        // Gleichlauf am Ende
+        while ((a1 < a2) && (b1 < b2) &&
+               m_LeftInFile[a2-1]->getToken() == m_RightInFile[b2-1]->getToken())
+        {
+            --a2; --b2;
+        }
+
+        // Triviale Fälle: nur Löschen oder Einfügen
+        if (a1 == a2) {
+            while (b1 < b2) {
+                m_RightInFile[b1++]->setState(DiffLine::Added);
+                ++m_NumInsertedB;
+            }
+            continue;
+        }
+        if (b1 == b2) {
+            while (a1 < a2) {
+                m_LeftInFile[a1++]->setState(DiffLine::Deleted);
+                ++m_NumDeletedA;
+            }
+            continue;
+        }
+
+        if (m_IsCancelRequested) return;
+
+        // Kern: sms() auf dem Teilbereich
+        Pair split = sms(a1, a2, b1, b2);
+        if (m_IsCancelRequested) return;
+
+        // Nun die beiden Subbereiche als neue Aufgaben pushen.
+        // Rechts-Bereich zuerst, damit der Linke als nächstes bearbeitet wird.
+        stack.push_back({ split.Left(),  a2,    split.Top(), b2 });
+        stack.push_back({ a1,            split.Left(),
+                          b1,            split.Top() });
     }
-
-    m_Percent += m_PercentIncrement;
-    m_NextNotifyPosition += m_NotifyIncrement;
-    m_Progress.SetValue(m_Percent);
-  }
-
-  // Fast walkthrough equal lines at the start
-  while((lowerA < upperA) && (lowerB < upperB)
-     && (m_LeftInFile[lowerA]->getToken() == m_RightInFile[lowerB]->getToken()))
-  {
-    lowerA++;
-    lowerB++;
-  }
-
-  // Fast walkthrough equal lines at the end
-  while((lowerA < upperA) && (lowerB < upperB)
-     && (m_LeftInFile[upperA - 1]->getToken() == m_RightInFile[upperB - 1]->getToken()))
-  {
-    --upperA;
-    --upperB;
-  }
-
-  if(lowerA == upperA)
-  {
-    while(lowerB < upperB)
-    {
-      m_RightInFile[lowerB++]->setState(DiffLine::Added);
-      m_NumInsertedB++;
-    }
-  }
-  else if(lowerB == upperB)
-  {
-    while(lowerA < upperA)
-    {
-      m_LeftInFile[lowerA++]->setState(DiffLine::Deleted);
-      m_NumDeletedA++;
-    }
-  }
-  else
-  {
-    if(m_IsCancelRequested)
-    {
-      return;
-    }
-
-    Pair smsrd = sms(lowerA, upperA, lowerB, upperB);
-
-    if(m_IsCancelRequested)
-    {
-      return;
-    }
-
-    lcs(lowerA, smsrd.Left(), lowerB, smsrd.Top());
-    lcs(smsrd.Left(), upperA, smsrd.Top(), upperB);
-  }
 }
 
+// Pair DiffEngine::sms(long lowerA, long upperA, long lowerB, long upperB)
+// {
+//   Pair result;
 
+//   // the k-line to start the forward search
+//   long downK = lowerA - lowerB;
+
+//   // the k-line to start the reverse search
+//   long upK = upperA - upperB;
+
+//   long delta = (upperA - lowerA) - (upperB - lowerB);
+//   bool bOddDelta = (delta & 1) != 0;
+
+//   // The vectors in Myers' publication accept negative indexes.
+//   // The vectors implemented here are 0-based and are accessed using
+//   // a specific offset: UpOffset for m_pUpVector and DownOffset for
+//   // m_pDownVector
+//   long downOffset = m_Max - downK;
+//   long upOffset = m_Max - upK;
+
+//   long maxD = ((upperA - lowerA + upperB - lowerB) / 2) + 1;
+
+//   // init vectors
+//   m_DownVector[downOffset + downK + 1] = lowerA;
+//   m_UpVector[upOffset + upK - 1] = upperA;
+
+//   for (long D = 0; D <= maxD; D++)
+//   {
+//     if(m_IsCancelRequested)
+//     {
+//       return result;
+//     }
+
+//     // Extend the forward path
+//     for (long k = downK - D; k <= downK + D; k += 2)
+//     {
+//       // find the only or better starting point
+//       long x, y;
+//       const long dk = downOffset + k;
+//       const long dk_plus_1 = dk + 1;
+
+//       if (k == downK - D)
+//       {
+//         x = m_DownVector[dk_plus_1];  // down
+//       }
+//       else
+//       {
+//         x = m_DownVector[dk - 1] + 1; // a step to the right
+
+//         if ((k < downK + D) && (m_DownVector[dk_plus_1] >= x))
+//         {
+//           x = m_DownVector[dk_plus_1]; // down
+//         }
+//       }
+
+//       y = x - k;
+
+//       // find the end of the furthest reaching forward D-path in diagonal k.
+//       while ((x < upperA) && (y < upperB) &&
+//              (m_LeftInFile[x]->getToken() == m_RightInFile[y]->getToken()))
+//           //&& (m_A[x]->Text() == m_B[y]->Text()))
+//       {
+//         x++;
+//         y++;
+//       }
+
+//       m_DownVector[dk] = x;
+
+//       // overlap ?
+//       if (bOddDelta && (upK - D < k) && (k < upK + D))
+//       {
+//         if (m_UpVector[upOffset + k] <= m_DownVector[dk])
+//         {
+//           result.Set(m_DownVector[dk], m_DownVector[dk] - k);
+//           return result;
+//         }
+//       }
+//     }
+
+//     // Extend the reverse path.
+//     for (long k = upK - D; k <= upK + D; k += 2)
+//     {
+//       // find the only or better starting point
+//       long x, y;
+//       const long dk = downOffset + k;
+//       const long uk = upOffset + k;
+//       const long uk_minus_1 = uk - 1;
+
+//       if (k == upK + D)
+//       {
+//         x = m_UpVector[uk_minus_1];   // up
+//       }
+//       else
+//       {
+//         x = m_UpVector[uk + 1] - 1;   // left
+
+//         if ((k > upK - D) && (m_UpVector[uk_minus_1] < x))
+//         {
+//           x = m_UpVector[uk_minus_1]; // up
+//         }
+//       }
+
+//       y = x - k;
+
+//       while ((x > lowerA) && (y > lowerB) &&
+//              (m_LeftInFile[x - 1]->getToken() == m_RightInFile[y - 1]->getToken()))
+//           //&& (m_A[x - 1]->Text() == m_B[y - 1]->Text()))
+//       {
+//         // diagonal
+//         x--;
+//         y--;
+//       }
+
+//       m_UpVector[uk] = x;
+
+//       // overlap ?
+//       if (!bOddDelta && (downK - D <= k) && (k <= downK + D))
+//       {
+//         if (m_UpVector[uk] <= m_DownVector[dk])
+//         {
+//           result.Set(m_DownVector[dk], m_DownVector[dk] - k);
+//           return result;
+//         }
+//       }
+//     }
+//   }
+
+//   // The algorithm should never come here
+//   Pair resultInvalid;
+//   return resultInvalid;
+// }
 Pair DiffEngine::sms(long lowerA, long upperA, long lowerB, long upperB)
 {
-  Pair result;
+    Pair result;
 
-  // the k-line to start the forward search
-  long downK = lowerA - lowerB;
+    long downK   = lowerA - lowerB;
+    long upK     = upperA - upperB;
+    long delta   = (upperA - lowerA) - (upperB - lowerB);
+    bool bOddDelta = (delta & 1) != 0;
 
-  // the k-line to start the reverse search
-  long upK = upperA - upperB;
+    long downOffset = m_Max - downK;
+    long upOffset   = m_Max - upK;
 
-  long delta = (upperA - lowerA) - (upperB - lowerB);
-  bool bOddDelta = (delta & 1) != 0;
+    long maxD = ((upperA - lowerA + upperB - lowerB) / 2) + 1;
 
-  // The vectors in Myers' publication accept negative indexes.
-  // The vectors implemented here are 0-based and are accessed using
-  // a specific offset: UpOffset for m_pUpVector and DownOffset for
-  // m_pDownVector
-  long downOffset = m_Max - downK;
-  long upOffset = m_Max - upK;
+    // Raw pointers auf die Vektor-Daten mit Offset
+    long* downData = m_DownVector.data() + downOffset;
+    long* upData   = m_UpVector.data()   + upOffset;
 
-  long maxD = ((upperA - lowerA + upperB - lowerB) / 2) + 1;
+    // Initialisierung
+    downData[downK + 1] = lowerA;
+    upData[upK - 1]     = upperA;
 
-  // init vectors
-  m_pDownVector[downOffset + downK + 1] = lowerA;
-  m_pUpVector[upOffset + upK - 1] = upperA;
-
-  for (long D = 0; D <= maxD; D++)
-  {
-    if(m_IsCancelRequested)
+    for (long D = 0; D <= maxD; D++)
     {
-      return result;
+        if (m_IsCancelRequested)
+            return result;
+
+        // Vorwärts-Erweiterung
+        for (long k = downK - D; k <= downK + D; k += 2)
+        {
+            long x, y;
+
+            if (k == downK - D)
+            {
+                x = downData[k + 1];
+            }
+            else
+            {
+                // Schritt nach rechts
+                x = downData[k - 1] + 1;
+
+                // Schritt nach unten, falls besser
+                if ((k < downK + D) && (downData[k + 1] >= x))
+                    x = downData[k + 1];
+            }
+
+            y = x - k;
+
+            // Diagonales Vorankommen
+            while (x < upperA && y < upperB &&
+                   m_LeftInFile[x]->getToken() == m_RightInFile[y]->getToken())
+            {
+                ++x;
+                ++y;
+            }
+
+            downData[k] = x;
+
+            // Überlappung prüfen (odd Delta)
+            if (bOddDelta && (upK - D < k) && (k < upK + D))
+            {
+                if (upData[k] <= downData[k])
+                {
+                    result.Set(downData[k], downData[k] - k);
+                    return result;
+                }
+            }
+        }
+
+        // Rückwärts-Erweiterung
+        for (long k = upK - D; k <= upK + D; k += 2)
+        {
+            long x, y;
+
+            if (k == upK + D)
+            {
+                x = upData[k - 1];
+            }
+            else
+            {
+                // Schritt nach links
+                x = upData[k + 1] - 1;
+
+                // Schritt nach oben, falls besser
+                if ((k > upK - D) && (upData[k - 1] < x))
+                    x = upData[k - 1];
+            }
+
+            y = x - k;
+
+            // Diagonales Zurücklaufen
+            while (x > lowerA && y > lowerB &&
+                   m_LeftInFile[x - 1]->getToken() == m_RightInFile[y - 1]->getToken())
+            {
+                --x;
+                --y;
+            }
+
+            upData[k] = x;
+
+            // Überlappung prüfen (even Delta)
+            if (!bOddDelta && (downK - D <= k) && (k <= downK + D))
+            {
+                if (upData[k] <= downData[k])
+                {
+                    result.Set(downData[k], downData[k] - k);
+                    return result;
+                }
+            }
+        }
     }
 
-    // Extend the forward path
-    for (long k = downK - D; k <= downK + D; k += 2)
-    {
-      // find the only or better starting point
-      long x, y;
-      if (k == downK - D)
-      {
-        x = m_pDownVector[downOffset + k + 1]; // down
-      }
-      else
-      {
-        x = m_pDownVector[downOffset + k - 1] + 1; // a step to the right
-
-        if ((k < downK + D) && (m_pDownVector[downOffset + k + 1] >= x))
-        {
-          x = m_pDownVector[downOffset + k + 1]; // down
-        }
-      }
-
-      y = x - k;
-
-      // find the end of the furthest reaching forward D-path in diagonal k.
-      while ((x < upperA) && (y < upperB)
-          && (m_LeftInFile[x]->getToken() == m_RightInFile[y]->getToken()))
-          //&& (m_A[x]->Text() == m_B[y]->Text()))
-      {
-        x++;
-        y++;
-      }
-
-      m_pDownVector[downOffset + k] = x;
-
-      // overlap ?
-      if (bOddDelta && (upK - D < k) && (k < upK + D))
-      {
-        if (m_pUpVector[upOffset + k] <= m_pDownVector[downOffset + k])
-        {
-          result.Set(m_pDownVector[downOffset + k],
-                     m_pDownVector[downOffset + k] - k);
-
-          return result;
-        }
-      }
-    }
-
-    // Extend the reverse path.
-    for (long k = upK - D; k <= upK + D; k += 2)
-    {
-      // find the only or better starting point
-      long x, y;
-      if (k == upK + D)
-      {
-        x = m_pUpVector[upOffset + k - 1]; // up
-      }
-      else
-      {
-        x = m_pUpVector[upOffset + k + 1] - 1; // left
-
-        if ((k > upK - D) && (m_pUpVector[upOffset + k - 1] < x))
-        {
-          x = m_pUpVector[upOffset + k - 1]; // up
-        }
-      }
-
-      y = x - k;
-
-      while ((x > lowerA) && (y > lowerB)
-          && (m_LeftInFile[x - 1]->getToken() == m_RightInFile[y - 1]->getToken()))
-          //&& (m_A[x - 1]->Text() == m_B[y - 1]->Text()))
-      {
-        // diagonal
-        x--;
-        y--;
-      }
-
-      m_pUpVector[upOffset + k] = x;
-
-      // overlap ?
-      if (!bOddDelta && (downK - D <= k) && (k <= downK + D))
-      {
-        if (m_pUpVector[upOffset + k] <= m_pDownVector[downOffset + k])
-        {
-          result.Set(m_pDownVector[downOffset + k],
-                     m_pDownVector[downOffset + k] - k);
-
-          return result;
-        }
-      }
-    }
-  }
-
-  // The algorithm should never come here
-  Pair resultInvalid;
-  return resultInvalid;
+    // sollte nie erreicht werden
+    return Pair();
 }
+
 
 
 void DiffEngine::optimize(DiffFileBase& diffFile)

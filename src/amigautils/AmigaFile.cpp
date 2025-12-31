@@ -6,13 +6,15 @@
   #include <proto/exec.h>
 #endif
 
-#include <stddef.h>
+#include <dos/dosextens.h>
 
 #include "AmigaFile.h"
 
-AmigaFile::AmigaFile(const char* pFileName, ULONG accessMode)
+AmigaFile::AmigaFile(const char* pPath, ULONG accessMode)
   : MAX_LINE_LENGTH(1024), // TODO A better solution needed?
     m_pLineBuf((STRPTR) AllocVec(MAX_LINE_LENGTH, MEMF_ANY|MEMF_CLEAR)),
+    m_OriginalCurrentDirLock(0),
+    m_FileLock(0),
     m_FileDescriptor(0),
     m_pFib((struct FileInfoBlock*) AllocVec((sizeof(struct FileInfoBlock)), 
                                             MEMF_ANY|MEMF_CLEAR))
@@ -20,29 +22,53 @@ AmigaFile::AmigaFile(const char* pFileName, ULONG accessMode)
   if(m_pLineBuf == NULL)
   {
     cleanup();
-    throw "Failed to alloc line buffer memory in AmigaFile class.";
+    throw "Failed to open file. (AllocVec for line buffer)";
   }
 
   if(m_pFib == NULL)
   {
     cleanup();
-    throw "Failed to fib memory in AmigaFile class.";
+    throw "Failed to open file. (AllocVec for fib)";
   }
-
-  BPTR pLock = Lock(pFileName, ACCESS_READ);
-  if(pLock != 0)
+  
+  struct Process* pProcess;
+  if(!(pProcess = (struct Process *)FindTask(NULL)))
   {
-    if(Examine(pLock, m_pFib) == DOSFALSE)
-    {
-      UnLock(pLock);
-      cleanup();
-      throw "Failed to examine in AmigaFile class.";
-    }
+    cleanup();
+    throw "Failed to open file. (FindTask)";
   }
 
-  UnLock(pLock);
+  m_OriginalCurrentDirLock = pProcess->pr_CurrentDir;
 
-  m_FileDescriptor = Open(pFileName, accessMode);
+  // Lock the file (Will be released when this AmigaFile object is
+  // destroyed in AmigaFile::cleanup)
+  m_FileLock = lockFromLongName(pPath);
+  if(!m_FileLock)
+  {
+    cleanup();
+    throw "Failed to open file.";
+  }
+
+  if(DOSFALSE == Examine(m_FileLock, m_pFib))
+  {
+    cleanup();
+    throw "Failed to open file. (Examine)";
+  }
+
+  // Enter the directory of the file
+  BPTR pFileDirLock = ParentDir(m_FileLock);
+  CurrentDir(pFileDirLock);
+  
+  // Open the file relatively, only by its name. This should work as
+  // the file dir has made current dir in the step above.
+  STRPTR pName = FilePart(pPath);
+  m_FileDescriptor = Open(pName, accessMode);
+
+  // Change current dir to the formerly, original one and release lock
+  // to the file dir.
+  CurrentDir(m_OriginalCurrentDirLock);
+  UnLock(pFileDirLock);
+
   if(m_FileDescriptor == 0)
   {
     cleanup();
@@ -78,6 +104,11 @@ void AmigaFile::cleanup()
   if(m_pLineBuf != NULL)
   {
     FreeVec(m_pLineBuf);
+  }
+
+  if(m_FileLock)
+  {
+    UnLock(m_FileLock);
   }
 }
 
@@ -139,4 +170,54 @@ ULONG AmigaFile::getByteSize() const
 const struct DateStamp* AmigaFile::getDate() const
 {
   return &m_pFib->fib_Date;
+}
+
+BPTR AmigaFile::lockFromLongName(const char* pPath)
+{
+  LONG pos = 0;
+  BPTR resultLock = 0, lock = 0;
+  BPTR oldLock = -1L;     // Never a valid lock
+  char buffer[108 + 32];  // Long enough for a component and a device name
+
+  do
+  {
+    pos = SplitName(pPath,'/', buffer, pos, sizeof(buffer));
+    if (pos < 0)
+    {
+      // No separator found, call now Lock
+      resultLock = Lock(buffer, SHARED_LOCK);
+      break;
+    }
+    else
+    {
+      // Lock the partial path so far and abort on error If two slashes
+      // are next to each other, go to the parent directory.
+      if (!(lock = Lock(*buffer ? buffer : "/", SHARED_LOCK)))
+      {
+        break;
+      }
+
+      // Rotate directories
+      lock = CurrentDir(lock);
+
+      // Unlock previous directory, keep the old directory
+      if (oldLock >= 0)
+      {
+        UnLock(lock);
+      }
+      else
+      {
+        oldLock = lock;
+      }
+    }
+  } while (1);
+
+  // Restore the current directory if any. None of the functions touch
+  // IoErr().
+  if (oldLock >= 0)
+  {
+    UnLock(CurrentDir(oldLock));
+  }
+
+  return resultLock;
 }

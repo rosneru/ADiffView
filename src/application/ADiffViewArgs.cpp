@@ -155,7 +155,7 @@ void ADiffViewArgs::readWorkbenchArgs()
       {
         //
         // The first pWbArg is the application icon itself. Getting
-        // the PUBSCREEN tooltype from it
+        // the tooltypes from it
         //
 
         // Change current directory the application location

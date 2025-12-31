@@ -85,10 +85,21 @@ public:
 private:
   const ULONG MAX_LINE_LENGTH;
   STRPTR m_pLineBuf;
+  BPTR m_OriginalCurrentDirLock;
+  BPTR m_FileLock;
   BPTR m_FileDescriptor;
   struct FileInfoBlock* m_pFib;
 
   void cleanup();
+
+  /**
+   * Safely acquire a lock (`SHARED_LOCK`) even if the final path length
+   * is > 255 chars. If path object can't be locked, it returns ZERO.
+   * 
+   * This method originates from `OpenFromLongName()`, described in 
+   * "Rom Kernel Reference Manual: DOS" from 2024 by Thomas Richter.
+   */
+  BPTR lockFromLongName(const char* pPath);
 };
 
 #endif

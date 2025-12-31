@@ -57,8 +57,12 @@ changes made to the source code. This ia a stripped release build for
 ### Build and run the unit tests
 There are some unit tests in directory `src/diffengine/test_boost/`.
 
-To build them the *boost framework* and *qmake* must be installed on the
-developer machine.
+To build them the *boost framework* and *qt/qmake* must be installed on
+the developer machine. In Debian:
+
+```
+sudo apt install qt5-qmake qtbase5-dev libboost-all-dev
+```
 
 To prepare and build the unit tests, change to the project root
 directory and enter:
