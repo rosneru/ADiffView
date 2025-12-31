@@ -34,7 +34,7 @@ The project was built with Debian on Windows with the Linux subsystem
  - ([Bebbos gcc 6.5 toolchain @ Codeberg](https://codeberg.org/bebbo/amiga-gcc))
 which is expected to be installed in /opt
 
-**Note:** for the Codeberg variant, you'll have to replace
+**NOTE:** for the Codeberg variant, you'll have to replace
 
 ```bash
 git clone https://github.com/bebbo/amiga-gcc
@@ -46,7 +46,7 @@ with
 git clone https://franke.ms/git/bebbo/amiga-gcc.git
 ```
 
-As demonstrated in an [Amiga forum](https://www.a1k.org/forum/index.php?threads/94725/post-1882035).
+As shown in an [Amiga forum](https://www.a1k.org/forum/index.php?threads/94725/post-1882035).
 
 ### Build
 The Makefile to build this project must be created with cmake.
