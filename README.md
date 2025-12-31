@@ -84,7 +84,7 @@ There are some unit tests in directory `src/diffengine/test_boost/`.
 To build them the *boost framework* and *qt/qmake* must be installed on
 the developer machine. In Debian:
 
-```bash
+```
 sudo apt install qt5-qmake qtbase5-dev libboost-all-dev
 ```
 
