@@ -31,7 +31,7 @@ The project was built with Debian on Windows with the Linux subsystem
  - cmake
  - git
  - ([Bebbos gcc 6.5 toolchain @ Github, retired](https://github.com/bebbo/amiga-gcc))
- - ([Bebbos gcc 6.5 toolchain @ Codeberg](https://codeberg.org/bebbo/amiga-gcc))
+ - [Bebbos gcc 6.5 toolchain @ Codeberg](https://codeberg.org/bebbo/amiga-gcc)
 which is expected to be installed in /opt
 
 **NOTE:** for the Codeberg variant, you'll have to replace
