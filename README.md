@@ -18,8 +18,8 @@ information.
 ## Development environment
 
 ADiffView can be build under Linux with *cmake* and [Bebbos gcc 6.5
-toolchain](https://github.com/bebbo/amiga-gcc) or on an Amiga with
-*StormC4*.
+toolchain](https://mbergmann-sh.de/2025/10/04/bebbos-amiga-gcc-cross-compiler-toolchain-ist-umgezogen/)
+or on an Amiga with *StormC4*.
 
 ## Build with Linux
 ### Dependencies
